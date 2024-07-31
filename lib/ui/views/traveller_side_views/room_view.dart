@@ -11,7 +11,7 @@ import 'package:traveling/ui/shared/custom_widgets/custom_button.dart';
 import 'package:traveling/ui/shared/text_size.dart';
 import 'package:traveling/ui/shared/utils.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:traveling/ui/views/traveller_side_views/booking_summary_view.dart';
+import 'package:traveling/ui/views/traveller_side_views/hotel_summary_view.dart';
 
 class RoomView extends StatefulWidget {
   const RoomView({super.key});
@@ -530,7 +530,7 @@ class _RoomViewState extends State<RoomView> {
                     InkWell(
                       onTap: () {
                         Get.to(
-                          BookingSummaryView(),
+                          HotelSummartView(),
                         );
                       },
                       child: Container(
@@ -538,7 +538,7 @@ class _RoomViewState extends State<RoomView> {
                         child: CustomButton(
                             text: 'Booking Now',
                             textColor: Colors.white,
-                            widthPercent: 0,
+                            widthPercent: size.width,
                             heightPercent: 50,
                             backgroundColor: AppColors.purple),
                       ),

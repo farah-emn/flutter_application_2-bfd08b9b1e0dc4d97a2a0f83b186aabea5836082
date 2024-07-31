@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart';
 import 'package:traveling/classes/hotel.dart';
+import 'package:traveling/classes/hotel_room_details_class1.dart';
 import 'package:traveling/ui/shared/colors.dart';
 import 'package:traveling/ui/shared/text_size.dart';
 import 'package:traveling/ui/views/hotel_side_views/hotel_room_view.dart';
@@ -18,7 +19,7 @@ class HotelCard2 extends StatefulWidget {
   });
 
   final Size size;
-  final HotelRoomClass room;
+  final HotelRoomClass1 room;
   final int itemIndex;
 
   @override
@@ -36,7 +37,6 @@ class _HotelCard2State extends State<HotelCard2> {
         );
       },
       child: Container(
-        
         margin: const EdgeInsets.only(
           bottom: 20,
         ),

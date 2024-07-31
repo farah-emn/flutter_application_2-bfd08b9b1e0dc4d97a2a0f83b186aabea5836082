@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
 import 'package:traveling/classes/hotel_bookings_class.dart';
 import 'package:traveling/ui/shared/colors.dart';
@@ -9,8 +10,8 @@ import 'package:traveling/ui/views/traveller_side_views/hotel_booking_details_vi
 import 'package:traveling/ui/views/traveller_side_views/hotel_details_view.dart';
 import 'package:traveling/ui/views/traveller_side_views/room_view.dart';
 
-class HotelBookingCard extends StatefulWidget {
-  const HotelBookingCard({
+class HotelFinishedBookingCard extends StatefulWidget {
+  const HotelFinishedBookingCard({
     super.key,
     required this.size,
     required this.hotelBookingsDetails,
@@ -22,10 +23,13 @@ class HotelBookingCard extends StatefulWidget {
   final int itemIndex;
 
   @override
-  State<HotelBookingCard> createState() => _HotelBookingCardState();
+  State<HotelFinishedBookingCard> createState() =>
+      _HotelFinishedBookingCardState();
 }
 
-class _HotelBookingCardState extends State<HotelBookingCard> {
+class _HotelFinishedBookingCardState extends State<HotelFinishedBookingCard> {
+  double? _ratingValue;
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -274,6 +278,47 @@ class _HotelBookingCardState extends State<HotelBookingCard> {
                             color: AppColors.darkBlue,
                             fontSize: TextSize.header1,
                             fontWeight: FontWeight.w500),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  Row(
+                    children: [
+                      const Text(
+                        'How was your stay?',
+                        style: TextStyle(
+                          fontSize: TextSize.header1,
+                        ),
+                      ),
+                      Spacer(),
+                      RatingBar(
+                          initialRating: 1,
+                          direction: Axis.horizontal,
+                          allowHalfRating: true,
+                          itemCount: 5,
+                          itemSize: 30,
+                          ratingWidget: RatingWidget(
+                              full: const Icon(
+                                Icons.star_rate_rounded,
+                                color: AppColors.gold,
+                              ),
+                              half: const Icon(
+                                Icons.star_half_rounded,
+                                color: AppColors.gold,
+                              ),
+                              empty: const Icon(
+                                Icons.star_outline_rounded,
+                                color: AppColors.gold,
+                              )),
+                          onRatingUpdate: (value) {
+                            setState(() {
+                              _ratingValue = value;
+                            });
+                          }),
+                      const SizedBox(
+                        width: 10,
                       ),
                     ],
                   ),

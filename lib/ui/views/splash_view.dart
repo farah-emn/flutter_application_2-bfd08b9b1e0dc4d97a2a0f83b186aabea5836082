@@ -27,37 +27,15 @@ class _SplashViewState extends State<SplashView> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Container(
-              // child: const Image(
-              //   image: AssetImage('assets/image/png/Logo.png'),
-              // ),
-              child: Text('Travelling'),
-            ),
-            // Row(
-            //   mainAxisAlignment: MainAxisAlignment.center,
-            //   children: [
-            //     T ext(
-            //       "T",
-            //       style: TextStyle(
-            //           fontSize: 60,
-            //           fontWeight: FontWeight.w700,
-            //           color: AppColors.mainColorBlue),
-            //     ),
-            //     Text(
-            //       "ravell",
-            //       style: TextStyle(
-            //           fontSize: 60,
-            //           fontWeight: FontWeight.w700,
-            //           color: Color.fromARGB(255, 255, 170, 42)),
-            //     ),
-            //     Text(
-            //       "ing",
-            //       style: TextStyle(
-            //           fontSize: 60,
-            //           fontWeight: FontWeight.w700,
-            //           color: Colors.white),
-            //     ),
-            //   ],
-            // ),
+                  height: 80,
+                  width: 100,
+                  decoration: const BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage('assets/image/png/Logo.png'),
+                      fit: BoxFit.fill,
+                    ),
+                  ),
+                ),
           ],
         ),
         nextScreen: Home(),

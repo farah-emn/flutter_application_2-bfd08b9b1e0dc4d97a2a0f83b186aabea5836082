@@ -8,13 +8,14 @@ import 'package:traveling/ui/views/traveller_side_views/traveller_details_view2.
 import '../../shared/colors.dart';
 import '../../shared/custom_widgets/custom_button.dart';
 
-class TravellerDetailsView3 extends StatefulWidget {
-  const TravellerDetailsView3({super.key});
+class HotelBookingDetailsView extends StatefulWidget {
+  const HotelBookingDetailsView({super.key});
   @override
-  State<TravellerDetailsView3> createState() => _TravellerDetailsView3State();
+  State<HotelBookingDetailsView> createState() =>
+      _HotelBookingDetailsViewState();
 }
 
-class _TravellerDetailsView3State extends State<TravellerDetailsView3> {
+class _HotelBookingDetailsViewState extends State<HotelBookingDetailsView> {
   bool? isChecked = false;
   @override
   Widget build(BuildContext context) {
@@ -32,14 +33,14 @@ class _TravellerDetailsView3State extends State<TravellerDetailsView3> {
                 children: [
                   Icon(
                     Icons.arrow_back,
-                    color: Colors.white,
+                    color: AppColors.darkBlue,
                   ),
                   Text(
-                    'Travellers',
+                    'Booking Details',
                     style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.w700,
-                        color: Colors.white),
+                        color: AppColors.darkBlue),
                   ),
                   Icon(
                     Icons.arrow_back,
@@ -66,41 +67,7 @@ class _TravellerDetailsView3State extends State<TravellerDetailsView3> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  const Icon(
-                    Icons.supervised_user_circle_rounded,
-                    size: 100,
-                    color: AppColors.gold,
-                  ),
-                  const Text(
-                    'Your regular travellers',
-                    style: TextStyle(
-                        fontSize: TextSize.header1,
-                        fontWeight: FontWeight.w500),
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  const Text(
-                    'Save your regular travellers details to make bookings quick and easy',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: TextSize.header2,
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 40,
-                  ),
-                  InkWell(
-                    onTap: () => {Get.off(() => TravellerDetailsView2())},
-                    child: CustomButton(
-                        text: 'Add Traveller',
-                        textColor: Colors.white,
-                        widthPercent: size.width,
-                        heightPercent: 50,
-                        backgroundColor: AppColors.darkBlue),
-                  ),
-                ],
+                children: [],
               ),
             ),
           ],

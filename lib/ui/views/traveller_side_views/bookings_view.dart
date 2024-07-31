@@ -3,10 +3,17 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:traveling/cards/Hotel_booking_card.dart';
+import 'package:traveling/cards/flight_booking_card.dart';
+import 'package:traveling/cards/flight_finished_booking_card.dart';
+import 'package:traveling/cards/hotel_finished_booking_card.dart';
+import 'package:traveling/classes/flight_booking_class.dart';
 import 'package:traveling/classes/hotel_bookings_class.dart';
+import 'package:traveling/ui/shared/custom_widgets/white_container.dart';
+import 'package:traveling/ui/shared/text_size.dart';
 import '../../shared/colors.dart';
 import '../../shared/custom_widgets/custom_button.dart';
 import '../../shared/custom_widgets/custom_textfield2.dart';
@@ -20,6 +27,9 @@ class BookingsView extends StatefulWidget {
 class _BookingsViewState extends State<BookingsView>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
+  String? _flightSorteBy = 'Upcoming';
+  String? _hotelSorteBy = 'Upcoming';
+
   @override
   void initState() {
     super.initState();
@@ -29,15 +39,16 @@ class _BookingsViewState extends State<BookingsView>
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+
     return DefaultTabController(
       length: 3,
       child: Scaffold(
           resizeToAvoidBottomInset: false,
-          backgroundColor: AppColors.StatusBarColor,
+          backgroundColor: AppColors.lightBlue,
           body: SafeArea(
             child: Stack(children: [
               const Padding(
-                padding: EdgeInsets.only(left: 15, right: 15, top: 22),
+                padding: EdgeInsets.only(left: 15, right: 15, top: 10),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -46,14 +57,14 @@ class _BookingsViewState extends State<BookingsView>
                       style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.w700,
-                          color: AppColors.backgroundgrayColor),
+                          color: AppColors.darkBlue),
                     ),
                   ],
                 ),
               ),
               Padding(
                 padding: const EdgeInsets.only(
-                  top: 60,
+                  top: 50,
                 ),
                 child: Container(
                   decoration: const BoxDecoration(
@@ -84,7 +95,7 @@ class _BookingsViewState extends State<BookingsView>
                         indicatorColor: AppColors.darkBlue,
                         labelColor: AppColors.darkBlue,
                         unselectedLabelColor: AppColors.lightBlue,
-                        tabs: [
+                        tabs: const [
                           Tab(
                             text: 'Hotel',
                           ),
@@ -96,7 +107,7 @@ class _BookingsViewState extends State<BookingsView>
                   ),
                   Padding(
                     padding:
-                        const EdgeInsets.only(top: 180, left: 15, right: 15),
+                        const EdgeInsets.only(top: 170, left: 15, right: 15),
                     child: Expanded(
                       child: TabBarView(
                         controller: _tabController,
@@ -117,21 +128,156 @@ class _BookingsViewState extends State<BookingsView>
 
   Widget HotelBookings(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    return Container(
-      child: ListView.builder(
-        shrinkWrap: true,
-        itemCount: HotelbookingsDetails.length,
-        itemBuilder: (context, index) => HotelBookingCard(
-          size: size,
-          itemIndex: index,
-          hotelBookingsDetails: HotelbookingsDetails[index],
+    return Column(
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            Row(
+              children: [
+                Radio(
+                  activeColor: AppColors.purple,
+                  autofocus: true,
+                  value: 'Upcoming',
+                  groupValue: _hotelSorteBy,
+                  onChanged: (value) {
+                    setState(
+                      () {
+                        _hotelSorteBy = value.toString();
+                      },
+                    );
+                  },
+                ),
+                const Text(
+                  'Upcoming',
+                ),
+              ],
+            ),
+            Row(
+              children: [
+                Radio(
+                  activeColor: AppColors.purple,
+                  value: 'Finished',
+                  groupValue: _hotelSorteBy,
+                  onChanged: (value) {
+                    setState(
+                      () {
+                        _hotelSorteBy = value.toString();
+                      },
+                    );
+                  },
+                ),
+                const Text(
+                  'Finished',
+                ),
+              ],
+            ),
+          ],
         ),
-      ),
+        const SizedBox(
+          height: 20,
+        ),
+ _hotelSorteBy == 'Upcoming' ?
+        Expanded(
+          child: ListView.builder(
+            shrinkWrap: true,
+            itemCount: HotelbookingsDetails.length,
+            itemBuilder: (context, index) => HotelBookingCard(
+              size: size,
+              itemIndex: index,
+              hotelBookingsDetails: HotelbookingsDetails[index],
+            ),
+          ),
+        ) :
+        Expanded(
+          child: ListView.builder(
+            shrinkWrap: true,
+            itemCount: HotelbookingsDetails.length,
+            itemBuilder: (context, index) => HotelFinishedBookingCard(
+              size: size,
+              itemIndex: index,
+              hotelBookingsDetails: HotelbookingsDetails[index],
+            ),
+          ),
+        ) 
+      ],
     );
   }
 
   Widget FlightBookings(BuildContext context) {
-    return Container();
+    Size size = MediaQuery.of(context).size;
+    return Column(
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            Row(
+              children: [
+                Radio(
+                  activeColor: AppColors.darkBlue,
+                  autofocus: true,
+                  value: 'Upcoming',
+                  groupValue: _flightSorteBy,
+                  onChanged: (value) {
+                    setState(
+                      () {
+                        _flightSorteBy = value.toString();
+                      },
+                    );
+                  },
+                ),
+                const Text(
+                  'Upcoming',
+                ),
+              ],
+            ),
+            Row(
+              children: [
+                Radio(
+                  activeColor: AppColors.darkBlue,
+                  value: 'Finished',
+                  groupValue: _flightSorteBy,
+                  onChanged: (value) {
+                    setState(
+                      () {
+                        _flightSorteBy = value.toString();
+                      },
+                    );
+                  },
+                ),
+                const Text(
+                  'Finished',
+                ),
+              ],
+            ),
+          ],
+        ),
+        const SizedBox(
+          height: 20,
+        ),
+        _flightSorteBy == 'Upcoming'
+            ? Expanded(
+                child: ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: flightbookingsDetails.length,
+                  itemBuilder: (context, index) => FlightBookingCard(
+                    itemIndex: index,
+                    flightBookingModel: flightbookingsDetails[index],
+                  ),
+                ),
+              )
+            : Expanded(
+                child: ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: flightbookingsDetails.length,
+                  itemBuilder: (context, index) => FlightFinishedBookingCard(
+                    itemIndex: index,
+                    flightBookingModel: flightbookingsDetails[index],
+                  ),
+                ),
+              )
+      ],
+    );
   }
 
   Widget CarBookings(BuildContext context) {

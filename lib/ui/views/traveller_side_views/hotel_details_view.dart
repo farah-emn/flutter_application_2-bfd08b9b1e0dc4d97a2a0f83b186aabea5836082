@@ -5,6 +5,7 @@ import 'package:traveling/cards/amenities_card.dart';
 import 'package:traveling/cards/hotel_card2.dart';
 import 'package:traveling/cards/image_card.dart';
 import 'package:traveling/classes/amenities_class.dart';
+import 'package:traveling/classes/hotel_room_details_class1.dart';
 import 'package:traveling/classes/image.dart';
 import 'package:traveling/ui/shared/colors.dart';
 import 'package:traveling/ui/shared/custom_widgets/tab_item.dart';

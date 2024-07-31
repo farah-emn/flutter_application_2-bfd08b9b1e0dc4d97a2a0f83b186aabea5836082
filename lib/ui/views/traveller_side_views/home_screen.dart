@@ -28,13 +28,15 @@ class _HomeState extends State<Home> {
         data: const NavigationBarThemeData(
           indicatorColor: AppColors.darkBlue,
           backgroundColor: Colors.white,
-          shadowColor: AppColors.Blue,
+          indicatorShape: CircleBorder()
+
         ),
         child: NavigationBar(
-          elevation: 1,
+          backgroundColor: Colors.white,
           height: 60,
+
           selectedIndex: index,
-          labelBehavior: NavigationDestinationLabelBehavior.alwaysHide,
+          labelBehavior: NavigationDestinationLabelBehavior.alwaysShow,
           animationDuration: const Duration(seconds: 2),
           onDestinationSelected: (index) => setState(
             () {
@@ -49,6 +51,7 @@ class _HomeState extends State<Home> {
                 color: AppColors.backgroundgrayColor,
               ),
               label: 'Home',
+
             ),
             NavigationDestination(
               icon: Icon(Icons.search_outlined),
@@ -59,9 +62,9 @@ class _HomeState extends State<Home> {
               label: 'Search',
             ),
             NavigationDestination(
-              icon: Icon(Icons.notifications),
+              icon: Icon(Icons.bookmark_outlined),
               selectedIcon: Icon(
-                Icons.notifications,
+                Icons.bookmark_outlined,
                 color: AppColors.backgroundgrayColor,
               ),
               label: 'Bookings',
@@ -72,7 +75,7 @@ class _HomeState extends State<Home> {
                 Icons.person_2_rounded,
                 color: AppColors.backgroundgrayColor,
               ),
-              label: 'Menu',
+              label: 'Profile',
             ),
           ],
         ),

@@ -6,6 +6,7 @@ import 'package:traveling/ui/shared/custom_widgets/custom_button.dart';
 import 'package:traveling/ui/shared/custom_widgets/custom_image.dart';
 import 'package:traveling/ui/shared/custom_widgets/custom_textfiled.dart';
 import 'package:traveling/ui/shared/custom_widgets/custom_textgray.dart';
+import 'package:traveling/ui/shared/text_size.dart';
 import 'package:traveling/ui/shared/utils.dart';
 import 'package:traveling/ui/views/traveller_side_views/home_screen.dart';
 import 'package:traveling/ui/views/traveller_side_views/home_view.dart';
@@ -39,39 +40,89 @@ class _SignInViewState extends State<SignInView> {
     final size = MediaQuery.of(context).size;
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      backgroundColor: AppColors.StatusBarColor,
+      backgroundColor: AppColors.lightBlue,
       body: Stack(
         children: [
-          const Column(
+          Column(
             children: [
+              const Padding(
+                padding: EdgeInsets.all(15.0),
+                child: Column(
+                  children: [
+                    SizedBox(
+                      height: 110,
+                    ),
+                    Stack(
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            Icon(
+                              Icons.cloud,
+                              color: Color.fromARGB(76, 249, 249, 249),
+                              size: 60,
+                            ),
+                            SizedBox(
+                              width: 10,
+                            ),
+                          ],
+                        ),
+                        Column(
+                          children: [
+                            SizedBox(
+                              height: 40,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "Travelling",
+                                  style: TextStyle(
+                                      color: AppColors.backgroundgrayColor,
+                                      fontSize: 40,
+                                      fontWeight: FontWeight.w500),
+                                ),
+                                Spacer(),
+                                Icon(
+                                  Icons.cloud,
+                                  color: Color.fromARGB(76, 249, 249, 249),
+                                  size: 50,
+                                ),
+                                SizedBox(
+                                  width: 70,
+                                ),
+                              ],
+                            ),
+                            Row(
+                              children: [],
+                            ),
+                            Row(
+                              children: [
+                                Text(
+                                  "Wellcome",
+                                  style: TextStyle(
+                                    color: AppColors.backgroundgrayColor,
+                                    fontSize: 25,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
               SizedBox(
                 height: 100,
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    "T",
-                    style: TextStyle(
-                        fontSize: 60,
-                        fontWeight: FontWeight.w700,
-                        color: AppColors.mainColorBlue),
-                  ),
-                  Text(
-                    "ravell",
-                    style: TextStyle(
-                        fontSize: 60,
-                        fontWeight: FontWeight.w700,
-                        color: Color(0xFF9A9CC2)),
-                  ),
-                  Text(
-                    "ing",
-                    style: TextStyle(
-                        fontSize: 60,
-                        fontWeight: FontWeight.w700,
-                        color: Colors.white),
-                  ),
-                ],
+              Container(
+                decoration: const BoxDecoration(
+                  image: DecorationImage(
+                      image: AssetImage('assets/image/png/background1.png'),
+                      fit: BoxFit.fill),
+                ),
               ),
             ],
           ),
@@ -79,14 +130,13 @@ class _SignInViewState extends State<SignInView> {
             children: [
               Padding(
                 padding: const EdgeInsets.only(
-                  top: 200,
+                  top: 300,
                 ),
                 child: Container(
                   decoration: const BoxDecoration(
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(15),
-                      topRight: Radius.circular(15),
-                    ),
+                    image: DecorationImage(
+                        image: AssetImage('assets/image/png/background1.png'),
+                        fit: BoxFit.fill),
                   ),
                 ),
               ),
@@ -96,18 +146,18 @@ class _SignInViewState extends State<SignInView> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const SizedBox(
-                      height: 280,
+                      height: 350,
                     ),
-                    Text(
+                    const Text(
                       'Sign in ',
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: size.width / 20),
+                      style:
+                          TextStyle(fontWeight: FontWeight.w700, fontSize: 20),
                     ),
                     const SizedBox(
-                      height: 35,
+                      height: 30,
                     ),
                     const Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Text(
                           'Email',
@@ -143,7 +193,7 @@ class _SignInViewState extends State<SignInView> {
                     //   },
                     // ),
                     const SizedBox(
-                      height: 30,
+                      height: 20,
                     ),
                     const Row(
                       children: [
@@ -235,33 +285,35 @@ class _SignInViewState extends State<SignInView> {
                         widthPercent: size.width,
                       ),
                     ),
-                    SizedBox(
-                      height: screenHeight(20),
-                    ),
-                    const Center(
-                      child: CustomTextGray(
-                        mainText: 'or sign in with ',
-                      ),
-                    ),
-                    SizedBox(
-                      height: screenHeight(20),
-                    ),
-                    const Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        CustomImage(imagename: 'facebook_icon'),
-                        CustomImage(imagename: 'google_icon'),
-                        CustomImage(imagename: 'twitter_icon'),
-                      ],
-                    ),
-                    SizedBox(
-                      height: screenHeight(20),
+
+                    // const Center(
+                    //   child: CustomTextGray(
+                    //     mainText: 'or sign in with ',
+                    //   ),
+                    // ),
+                    // SizedBox(
+                    //   height: screenHeight(20),
+                    // ),
+                    // const Row(
+                    //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    //   children: [
+                    //     CustomImage(imagename: 'facebook_icon'),
+                    //     CustomImage(imagename: 'google_icon'),
+                    //     CustomImage(imagename: 'twitter_icon'),
+                    //   ],
+                    // ),
+                    const SizedBox(
+                      height: 20,
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        const CustomTextGray(
-                            mainText: 'You already have account? '),
+                        const Text(
+                          'You already have account?  ',
+                          style: TextStyle(
+                            color: AppColors.grayText,
+                          ),
+                        ),
                         InkWell(
                           onTap: () {
                             Get.offAll(const SignUpView());

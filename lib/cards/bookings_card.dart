@@ -137,7 +137,7 @@ class _BookingsCardState extends State<BookingsCard> {
               width: size.width,
               padding: EdgeInsets.only(right: 15),
               decoration: const BoxDecoration(
-                color: AppColors.Blue,
+                color: AppColors.darkBlue,
                 borderRadius: BorderRadius.only(
                   bottomLeft: Radius.circular(15),
                   bottomRight: Radius.circular(15),

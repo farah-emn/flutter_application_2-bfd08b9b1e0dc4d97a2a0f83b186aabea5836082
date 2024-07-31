@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:traveling/cards/hotel_card2.dart';
 import 'package:traveling/classes/hotel_room_details_class.dart';
+import 'package:traveling/classes/hotel_room_details_class1.dart';
 import '../../shared/colors.dart';
 
 import '../../shared/custom_widgets/custom_textfield2.dart';

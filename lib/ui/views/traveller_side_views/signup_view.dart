@@ -45,39 +45,89 @@ class _SignUpViewState extends State<SignUpView> {
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      backgroundColor: AppColors.StatusBarColor,
+      backgroundColor: AppColors.lightBlue,
       body: Stack(
         children: [
-          const Column(
+          Column(
             children: [
+              const Padding(
+                padding: EdgeInsets.all(15.0),
+                child: Column(
+                  children: [
+                    SizedBox(
+                      height: 110,
+                    ),
+                    Stack(
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            Icon(
+                              Icons.cloud,
+                              color: Color.fromARGB(76, 249, 249, 249),
+                              size: 60,
+                            ),
+                            SizedBox(
+                              width: 10,
+                            ),
+                          ],
+                        ),
+                        Column(
+                          children: [
+                            SizedBox(
+                              height: 40,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "Travelling",
+                                  style: TextStyle(
+                                      color: AppColors.backgroundgrayColor,
+                                      fontSize: 40,
+                                      fontWeight: FontWeight.w500),
+                                ),
+                                Spacer(),
+                                Icon(
+                                  Icons.cloud,
+                                  color: Color.fromARGB(76, 249, 249, 249),
+                                  size: 50,
+                                ),
+                                SizedBox(
+                                  width: 70,
+                                ),
+                              ],
+                            ),
+                            Row(
+                              children: [],
+                            ),
+                            Row(
+                              children: [
+                                Text(
+                                  "Wellcome back",
+                                  style: TextStyle(
+                                    color: AppColors.backgroundgrayColor,
+                                    fontSize: 25,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
               SizedBox(
                 height: 100,
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    "T",
-                    style: TextStyle(
-                        fontSize: 60,
-                        fontWeight: FontWeight.w700,
-                        color: AppColors.mainColorBlue),
-                  ),
-                  Text(
-                    "ravell",
-                    style: TextStyle(
-                        fontSize: 60,
-                        fontWeight: FontWeight.w700,
-                        color: Color.fromARGB(255, 219, 186, 223)),
-                  ),
-                  Text(
-                    "ing",
-                    style: TextStyle(
-                        fontSize: 60,
-                        fontWeight: FontWeight.w700,
-                        color: Colors.white),
-                  ),
-                ],
+              Container(
+                decoration: const BoxDecoration(
+                  image: DecorationImage(
+                      image: AssetImage('assets/image/png/background1.png'),
+                      fit: BoxFit.fill),
+                ),
               ),
             ],
           ),
@@ -85,12 +135,12 @@ class _SignUpViewState extends State<SignUpView> {
             children: [
               Padding(
                 padding: const EdgeInsets.only(
-                  top: 200,
+                  top: 300,
                 ),
                 child: Container(
                   decoration: const BoxDecoration(
                     image: DecorationImage(
-                        image: AssetImage('assets/image/png/back.png'),
+                        image: AssetImage('assets/image/png/background1.png'),
                         fit: BoxFit.fill),
                   ),
                 ),
@@ -101,7 +151,7 @@ class _SignUpViewState extends State<SignUpView> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const SizedBox(
-                      height: 280,
+                      height: 350,
                     ),
                     Text(
                       'Sign up ',
@@ -135,7 +185,7 @@ class _SignUpViewState extends State<SignUpView> {
                       ),
                     ),
                     const SizedBox(
-                      height: 30,
+                      height: 20,
                     ),
                     const Row(
                       children: [
@@ -160,7 +210,7 @@ class _SignUpViewState extends State<SignUpView> {
                       ),
                     ),
                     const SizedBox(
-                      height: 35,
+                      height: 20,
                     ),
                     const Row(
                       children: [
@@ -270,22 +320,22 @@ class _SignUpViewState extends State<SignUpView> {
                     const SizedBox(
                       height: 20,
                     ),
-                    const Center(
-                      child: CustomTextGray(
-                        mainText: 'or sign in with ',
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    const Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        CustomImage(imagename: 'facebook_icon'),
-                        CustomImage(imagename: 'google_icon'),
-                        CustomImage(imagename: 'twitter_icon'),
-                      ],
-                    ),
+                    // const Center(
+                    //   child: CustomTextGray(
+                    //     mainText: 'or sign in with ',
+                    //   ),
+                    // ),
+                    // const SizedBox(
+                    //   height: 20,
+                    // ),
+                    // const Row(
+                    //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    //   children: [
+                    //     CustomImage(imagename: 'facebook_icon'),
+                    //     CustomImage(imagename: 'google_icon'),
+                    //     CustomImage(imagename: 'twitter_icon'),
+                    //   ],
+                    // ),
                     SizedBox(
                       height: 15,
                     ),

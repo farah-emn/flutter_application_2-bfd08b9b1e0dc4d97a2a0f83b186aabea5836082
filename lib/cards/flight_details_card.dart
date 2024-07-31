@@ -98,7 +98,7 @@ class _FlightDetailsCardState extends State<FlightDetailsCard> {
                       ),
                       Container(
                         margin: const EdgeInsets.symmetric(horizontal: 15),
-                        color: AppColors.Blue,
+                        color: AppColors.darkBlue,
                         width: 1,
                         height: 130,
                       ),
@@ -176,7 +176,7 @@ class _FlightDetailsCardState extends State<FlightDetailsCard> {
               width: size.width,
               padding: EdgeInsets.only(right: 15),
               decoration: const BoxDecoration(
-                color: AppColors.Blue,
+                color: AppColors.darkBlue,
                 borderRadius: BorderRadius.only(
                   bottomLeft: Radius.circular(15),
                   bottomRight: Radius.circular(15),

@@ -1,151 +1,286 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
-import 'package:traveling/ui/shared/colors.dart';
-import 'package:traveling/ui/shared/custom_widgets/custom_button.dart';
-import 'package:traveling/ui/shared/custom_widgets/custom_image.dart';
-import 'package:traveling/ui/shared/custom_widgets/custom_search_comtainer.dart';
-import 'package:traveling/ui/shared/custom_widgets/custom_textfiled.dart';
-import 'package:traveling/ui/shared/custom_widgets/custom_textgray.dart';
-import 'package:traveling/ui/shared/utils.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:traveling/ui/shared/custom_widgets/custom_textfield2.dart';
+import 'package:traveling/ui/shared/text_size.dart';
 import 'package:traveling/ui/views/traveller_side_views/traveller_details_view3.dart';
+import '../../shared/colors.dart';
+import '../../shared/custom_widgets/custom_button.dart';
 
-class TravellerDetailsView2 extends StatelessWidget {
+class TravellerDetailsView2 extends StatefulWidget {
   const TravellerDetailsView2({super.key});
+  @override
+  State<TravellerDetailsView2> createState() => _TravellerDetailsView2State();
+}
 
+class _TravellerDetailsView2State extends State<TravellerDetailsView2> {
+  bool? isChecked = false;
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+    Size size = MediaQuery.of(context).size;
+    return Scaffold(
+      resizeToAvoidBottomInset: false,
+      backgroundColor: AppColors.lightBlue,
+      body: SafeArea(
+        child: Stack(
           children: [
-            SizedBox(
-              height: 15,
+            const Padding(
+              padding: EdgeInsets.only(left: 15, right: 15, top: 10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Icon(
+                    Icons.arrow_back,
+                    color: Colors.white,
+                  ),
+                  Text(
+                    'Traveller Details',
+                    style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w700,
+                        color: Colors.white),
+                  ),
+                  Icon(
+                    Icons.arrow_back,
+                    color: AppColors.darkBlue,
+                  ),
+                ],
+              ),
             ),
-            Container(
-                width: screenWidth(1.1),
-                height: screenWidth(3),
-                decoration: BoxDecoration(
-                    color: AppColors.babyblueColor,
-                    borderRadius: BorderRadiusDirectional.circular(25)),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  // crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Text(
-                      'Use your passport or GCC National ID to \nquickly and securely auto-fill traveller\n details',
-                      style: TextStyle(
-                          fontWeight: FontWeight.w500,
-                          color: Color.fromRGBO(96, 96, 96, 1),
-                          fontSize: screenWidth(25)),
-                      textAlign: TextAlign.center,
-                    ),
-                    Container(
-                      width: screenWidth(1.3),
-                      height: screenWidth(10),
-                      decoration: BoxDecoration(
-                          color: AppColors.backgroundgrayColor,
-                          borderRadius: BorderRadius.circular(20)),
-                      child: Padding(
-                        padding: EdgeInsetsDirectional.all(10),
-                        child: Center(
-                          child: Text(
-                            'Scan ID to add traveller',
+            Padding(
+              padding: const EdgeInsets.only(
+                top: 50,
+              ),
+              child: Container(
+                // width: size.width,
+                decoration: const BoxDecoration(
+                  image: DecorationImage(
+                      image: AssetImage('assets/image/png/background1.png'),
+                      fit: BoxFit.fill),
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 90, left: 15, right: 15),
+              child: ListView(
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      const Row(
+                        children: [
+                          Text(
+                            'First Name',
                             style: TextStyle(
-                                color: AppColors.mainColorBlue,
-                                fontSize: screenWidth(25)),
+                                fontSize: TextSize.header2,
+                                color: AppColors.grayText,
+                                fontWeight: FontWeight.w500),
                           ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 45,
+                        child: TextField(
+                          onChanged: (value) {},
+                          decoration: textFielDecoratiom.copyWith(),
                         ),
                       ),
-                    ),
-                  ],
-                )),
-            const SizedBox(
-              height: 20,
-            ),
-            const Text(
-              ' Traveller details ',
-              style: TextStyle(
-                fontWeight: FontWeight.w500,
-                fontSize: 18,
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      const Row(
+                        children: [
+                          Text(
+                            'Midle Name',
+                            style: TextStyle(
+                                fontSize: TextSize.header2,
+                                color: AppColors.grayText,
+                                fontWeight: FontWeight.w500),
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 45,
+                        child: TextField(
+                          onChanged: (value) {},
+                          decoration: textFielDecoratiom.copyWith(),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      const Row(
+                        children: [
+                          Text(
+                            'Last Name',
+                            style: TextStyle(
+                                fontSize: TextSize.header2,
+                                color: AppColors.grayText,
+                                fontWeight: FontWeight.w500),
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 45,
+                        child: TextField(
+                          onChanged: (value) {},
+                          decoration: textFielDecoratiom.copyWith(),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      const Row(
+                        children: [
+                          Text(
+                            'Date of Birth',
+                            style: TextStyle(
+                                fontSize: TextSize.header2,
+                                color: AppColors.grayText,
+                                fontWeight: FontWeight.w500),
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 45,
+                        child: TextField(
+                          onChanged: (value) {},
+                          decoration: textFielDecoratiom.copyWith(),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      const Row(
+                        children: [
+                          Text(
+                            'Nationality',
+                            style: TextStyle(
+                                fontSize: TextSize.header2,
+                                color: AppColors.grayText,
+                                fontWeight: FontWeight.w500),
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 45,
+                        child: TextField(
+                          onChanged: (value) {},
+                          decoration: textFielDecoratiom.copyWith(),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 40,
+                      ),
+                      const Row(
+                        children: [
+                          Text(
+                            'Traveller Document',
+                            style: TextStyle(
+                                fontSize: TextSize.header1,
+                                fontWeight: FontWeight.w500),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      const Row(
+                        children: [
+                          Text(
+                            'Passport Number',
+                            style: TextStyle(
+                                fontSize: TextSize.header2,
+                                color: AppColors.grayText,
+                                fontWeight: FontWeight.w500),
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 45,
+                        child: TextField(
+                          onChanged: (value) {},
+                          decoration: textFielDecoratiom.copyWith(),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      const Row(
+                        children: [
+                          Text(
+                            'Issuing Country',
+                            style: TextStyle(
+                                fontSize: TextSize.header2,
+                                color: AppColors.grayText,
+                                fontWeight: FontWeight.w500),
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 45,
+                        child: TextField(
+                          onChanged: (value) {},
+                          decoration: textFielDecoratiom.copyWith(),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      const Row(
+                        children: [
+                          Text(
+                            'Expiry Date',
+                            style: TextStyle(
+                                fontSize: TextSize.header2,
+                                color: AppColors.grayText,
+                                fontWeight: FontWeight.w500),
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 45,
+                        child: TextField(
+                          onChanged: (value) {},
+                          decoration: textFielDecoratiom.copyWith(),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 90,
+                      ),
+                    ],
+                  ),
+                ],
               ),
             ),
-            SizedBox(
-              height: 15,
-            ),
-            CustomTextField(
-              prefIcon: Icons.person_2,
-              colorIcon: AppColors.pinkColor,
-              hintText: 'First name',
-            ),
-            SizedBox(
-              height: 15,
-            ),
-            CustomTextField(
-              prefIcon: Icons.person_2,
-              colorIcon: AppColors.pinkColor,
-              hintText: 'Last name',
-            ),
-            SizedBox(
-              height: 15,
-            ),
-            CustomTextField(
-              prefIcon: Icons.public,
-              colorIcon: AppColors.IconBlueColor,
-              hintText: 'Nationalty',
-              suffIcon: Icons.keyboard_arrow_down,
-            ),
-            SizedBox(
-              height: 15,
-            ),
-            const CustomTextField(
-              prefIcon: Icons.calendar_today,
-              colorIcon: AppColors.IconPurpleColor,
-              hintText: 'Date of Birth',
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            const Text(
-              'Traveller details',
-              style: TextStyle(
-                fontWeight: FontWeight.w500,
-                fontSize: 18,
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 15),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  InkWell(
+                    onTap: () => {Get.off(() => const TravellerDetailsView3())},
+                    child: CustomButton(
+                        text: 'Save',
+                        textColor: Colors.white,
+                        widthPercent: size.width,
+                        heightPercent: 50,
+                        backgroundColor: AppColors.darkBlue),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                ],
               ),
-            ),
-            SizedBox(
-              height: 15,
-            ),
-            const CustomTextField(
-              prefIcon: Icons.email,
-              colorIcon: Color.fromARGB(255, 133, 251, 137),
-              hintText: 'Passport Number',
-              suffIcon: Icons.keyboard_arrow_down,
-            ),
-            SizedBox(
-              height: 15,
-            ),
-            CustomTextField(
-              prefIcon: Icons.public,
-              colorIcon: Color.fromARGB(255, 133, 251, 137),
-              hintText: 'Issuing country',
-              suffIcon: Icons.keyboard_arrow_down,
-            ),
-            SizedBox(
-              height: screenWidth(20),
-            ),
-            CustomTextField(
-              prefIcon: Icons.calendar_today,
-              colorIcon: Color.fromARGB(255, 133, 251, 137),
-              hintText: 'Expire date',
-              suffIcon: Icons.keyboard_arrow_down,
-            ),
-            SizedBox(
-              height: 15,
             ),
           ],
         ),
-      ],
+      ),
     );
   }
 }
