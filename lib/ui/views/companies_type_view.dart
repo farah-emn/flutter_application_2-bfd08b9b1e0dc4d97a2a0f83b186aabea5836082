@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:traveling/ui/shared/colors.dart';
-import 'package:traveling/ui/views/hotel_side_views/hotel_home_screen.dart';
+import 'package:traveling/ui/views/hotel_side_views/hotel_signup_view.dart';
 
 import 'flight_side_views/flight_welcome_view.dart';
 
@@ -46,7 +46,7 @@ class CompaniesTypeView extends StatelessWidget {
             ),
             InkWell(
               onTap: () {
-                Get.to(() => const HoteltHome());
+                Get.to(() => const HoteltSignUpView());
               },
               child: Container(
                 height: 200,

@@ -2,12 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:traveling/ui/views/flight_side_views/flight_booking_details_view.dart';
-import 'package:traveling/ui/views/traveller_side_views/flight_details._view.dart';
-
 import '../classes/Bookings_class.dart';
-import '../classes/flight_details_class.dart';
 import '../ui/shared/colors.dart';
-import '../ui/views/flight_side_views/flight_flight_details_view.dart';
 
 class BookingsCard extends StatefulWidget {
   BookingsCard(
@@ -87,7 +83,9 @@ class _BookingsCardState extends State<BookingsCard> {
                                         fontSize: 12,
                                         fontWeight: FontWeight.w500),
                                   ),
-                                  const SizedBox(width: 5,),
+                                  const SizedBox(
+                                    width: 5,
+                                  ),
                                   Text(
                                     widget.bookingsModel.audultNumber,
                                     style: const TextStyle(
@@ -110,7 +108,9 @@ class _BookingsCardState extends State<BookingsCard> {
                                         fontSize: 12,
                                         fontWeight: FontWeight.w500),
                                   ),
-                                  SizedBox(width: 5,),
+                                  SizedBox(
+                                    width: 5,
+                                  ),
                                   Text(
                                     widget.bookingsModel.childrenNumber,
                                     style: const TextStyle(

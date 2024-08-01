@@ -8,8 +8,6 @@ import 'package:traveling/classes/flight_booking_class.dart';
 import 'package:traveling/ui/shared/custom_widgets/white_container.dart';
 import 'package:traveling/ui/shared/text_size.dart';
 import 'package:traveling/ui/views/traveller_side_views/flight_booking_details_view.dart';
-
-import '../classes/flight_details_class.dart';
 import '../ui/shared/colors.dart';
 
 class FlightBookingCard extends StatefulWidget {
@@ -179,14 +177,13 @@ class _FlightBookingCardState extends State<FlightBookingCard> {
                         ),
                         Text(
                           'Flight No',
-                         
-                              style: TextStyle(
+                          style: TextStyle(
                               fontSize: TextSize.header2,
                               color: AppColors.grayText),
                         ),
                         Text(
                           'MI0987',
-                           style: TextStyle(
+                          style: TextStyle(
                               fontSize: TextSize.header1,
                               fontWeight: FontWeight.w500),
                         ),
@@ -250,7 +247,6 @@ class _FlightBookingCardState extends State<FlightBookingCard> {
                           style: TextStyle(
                               fontSize: TextSize.header1,
                               fontWeight: FontWeight.w500),
-                          
                         ),
                       ],
                     ),

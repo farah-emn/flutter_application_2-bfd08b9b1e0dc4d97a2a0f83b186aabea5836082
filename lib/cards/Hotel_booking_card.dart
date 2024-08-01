@@ -3,10 +3,7 @@ import 'package:get/get.dart';
 import 'package:traveling/classes/hotel_bookings_class.dart';
 import 'package:traveling/ui/shared/colors.dart';
 import 'package:traveling/ui/shared/custom_widgets/custom_button.dart';
-import 'package:traveling/ui/shared/custom_widgets/white_container.dart';
 import 'package:traveling/ui/shared/text_size.dart';
-import 'package:traveling/ui/views/traveller_side_views/hotel_booking_details_view.dart';
-import 'package:traveling/ui/views/traveller_side_views/hotel_details_view.dart';
 import 'package:traveling/ui/views/traveller_side_views/room_view.dart';
 
 class HotelBookingCard extends StatefulWidget {
@@ -32,14 +29,26 @@ class _HotelBookingCardState extends State<HotelBookingCard> {
     return InkWell(
       onTap: () {
         Get.to(
-          HotelBookingDetailsView(),
+          RoomView(),
         );
       },
       child: Container(
         margin: const EdgeInsets.only(
           bottom: 20,
         ),
-        decoration: decoration.copyWith(),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          boxShadow: List.filled(
+            10,
+            const BoxShadow(
+                color: AppColors.gray,
+                blurRadius: BorderSide.strokeAlignOutside,
+                blurStyle: BlurStyle.outer),
+          ),
+          borderRadius: const BorderRadius.all(
+            Radius.circular(20),
+          ),
+        ),
         width: widget.size.width - 30,
         child: Column(
           children: [
@@ -280,8 +289,30 @@ class _HotelBookingCardState extends State<HotelBookingCard> {
                   const SizedBox(
                     height: 10,
                   ),
+                  Row(
+                    children: [
+                      CustomButton(
+                          text: 'Edit Booking',
+                          textColor: Colors.white,
+                          widthPercent: size.width / 2 - 30,
+                          heightPercent: 50,
+                          backgroundColor: AppColors.darkBlue),
+                      const SizedBox(
+                        width: 5,
+                      ),
+                      CustomButton(
+                          text: 'Delete Booking',
+                          textColor: Colors.black,
+                          widthPercent: size.width / 2 - 30,
+                          heightPercent: 50,
+                          backgroundColor: AppColors.LightGrayColor),
+                    ],
+                  ),
                 ],
               ),
+            ),
+            SizedBox(
+              height: 15,
             ),
           ],
         ),

@@ -1,7 +1,12 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:traveling/ui/views/companies_type_view.dart';
+import 'package:traveling/ui/views/flight_side_views/flight_home_screen.dart';
+import 'package:traveling/ui/views/hotel_side_views/hotel_home_screen.dart';
+import 'package:traveling/ui/views/traveller_side_views/home_screen.dart';
 import 'package:traveling/ui/views/traveller_side_views/signin_view.dart';
 import 'package:traveling/ui/views/traveller_side_views/signup_view.dart';
 import 'package:traveling/ui/views/traveller_side_views/traveller_welcome_view.dart';
@@ -9,8 +14,27 @@ import 'package:traveling/ui/views/traveller_side_views/traveller_welcome_view.d
 import '../shared/colors.dart';
 import '../shared/custom_widgets/custom_button.dart';
 
-class FirstView extends StatelessWidget {
+late User loggedinUser;
+
+class FirstView extends StatefulWidget {
   const FirstView({super.key});
+
+  @override
+  State<FirstView> createState() => _FirstViewState();
+}
+
+class _FirstViewState extends State<FirstView> {
+  final _auth = FirebaseAuth.instance;
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  late DatabaseReference ref;
+  late final User? user;
+
+  @override
+  void initState() {
+    super.initState();
+
+    // test();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -40,15 +64,13 @@ class FirstView extends StatelessWidget {
                   onTap: () {
                     Get.to(() => const TravellerWelcomeView());
                   },
-                  child: Padding(
-                    padding: EdgeInsets.only(left: 15, right: 15),
+                  child: Center(
                     child: CustomButton(
-                          backgroundColor: AppColors.darkBlue,
-
                       text: 'Start',
                       textColor: AppColors.backgroundgrayColor,
                       heightPercent: 15,
                       widthPercent: size.width,
+                      backgroundColor: AppColors.mainColorBlue,
                     ),
                   ),
                 ),

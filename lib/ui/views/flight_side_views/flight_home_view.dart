@@ -139,7 +139,8 @@ class _FlightHomeViewState extends State<FlightHomeView> {
                 ),
               ),
               onTap: () {
-                Navigator.pop(context);
+                _auth.signOut();
+                Get.offAll(() => const FirstView());
               },
             ),
           ],
