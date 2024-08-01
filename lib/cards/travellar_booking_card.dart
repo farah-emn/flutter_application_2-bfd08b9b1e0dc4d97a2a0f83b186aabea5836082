@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:traveling/classes/travellar_booking_class.dart';
 import 'package:traveling/ui/shared/custom_widgets/white_container.dart';
 import 'package:traveling/ui/shared/text_size.dart';

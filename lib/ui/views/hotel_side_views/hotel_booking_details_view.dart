@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:traveling/cards/travellar_datails_card1.dart';
 import 'package:traveling/classes/travellars_class1.dart';
-
 import '../../shared/colors.dart';
 
 class HotelBookingDetails extends StatefulWidget {

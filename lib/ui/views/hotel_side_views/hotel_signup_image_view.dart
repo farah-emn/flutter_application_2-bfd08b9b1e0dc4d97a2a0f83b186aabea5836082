@@ -9,7 +9,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 // import 'package:permission_handler/permission_handler.dart';
-import 'package:path/path.dart';
+// import 'package:path/path.dart';
 import 'package:traveling/ui/views/hotel_side_views/hotel_home_screen.dart';
 
 class HotelSignUpImageView extends StatefulWidget {
@@ -41,15 +41,16 @@ class _HotelSignUpImageViewState extends State<HotelSignUpImageView> {
 
   Future<void> _uploadImageToFirebase(XFile image) async {
     File file = File(image.path);
-    var imagename = basename(image.path);
+    //image
+    // var imagename = basename(image.path);
     // var Firebase_Storage = FirebaseStorage.instance.ref(imagename);
     // await Firebase_Storage.putFile(file);
     // String url = await Firebase_Storage.getDownloadURL();
 
-    FirebaseDatabase.instance
-        .ref("Hotel")
-        .child(AirelineCompanyId)
-        .update({"image": url});
+    // FirebaseDatabase.instance
+    //     .ref("Hotel")
+    //     .child(AirelineCompanyId)
+    //     .update({"image": url});
   }
 
   @override

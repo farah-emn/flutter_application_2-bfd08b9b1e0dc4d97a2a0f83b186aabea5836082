@@ -1,16 +1,12 @@
 import 'dart:math';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:traveling/classes/flight_booking_class.dart';
 import 'package:traveling/ui/shared/custom_widgets/white_container.dart';
 import 'package:traveling/ui/shared/text_size.dart';
 import 'package:traveling/ui/views/traveller_side_views/flight_booking_details_view.dart';
-
-import '../classes/flight_details_class.dart';
 import '../ui/shared/colors.dart';
 
 class FlightFinishedBookingCard extends StatefulWidget {

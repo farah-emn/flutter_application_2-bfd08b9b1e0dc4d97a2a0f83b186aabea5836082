@@ -11,8 +11,6 @@ import 'package:traveling/ui/shared/text_size.dart';
 import '../../shared/colors.dart';
 import '../../shared/custom_widgets/custom_button.dart';
 import '../../shared/custom_widgets/custom_textfield2.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:path/path.dart';
 
 class HotelAddView extends StatefulWidget {
   const HotelAddView({super.key});
