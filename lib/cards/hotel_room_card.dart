@@ -102,7 +102,7 @@ class _RoomCardHotelState extends State<RoomCardHotel> {
     return InkWell(
       onTap: () {
         Get.to(
-          HotelRoomView(),
+          HotelRoomView(Room: widget.room, Amenities: Amenities),
         );
       },
       child: Container(

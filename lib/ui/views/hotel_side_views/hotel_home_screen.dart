@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:traveling/ui/shared/colors.dart';
-import 'package:traveling/ui/views/flight_side_views/flight_about_us_view.dart';
-import 'package:traveling/ui/views/flight_side_views/flight_add_view.dart';
-import 'package:traveling/ui/views/flight_side_views/flight_search_view.dart';
 import 'hotel_add_view.dart';
 import 'hotel_home_view.dart';
 import 'hotel_about_us_view.dart';

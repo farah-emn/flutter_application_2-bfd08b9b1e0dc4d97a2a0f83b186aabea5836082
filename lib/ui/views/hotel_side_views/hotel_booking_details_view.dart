@@ -1,14 +1,8 @@
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import '../../../cards/travellar_datails_card.dart';
-import '../../../classes/travellars_class.dart';
+import 'package:traveling/cards/travellar_datails_card1.dart';
+import 'package:traveling/classes/travellars_class1.dart';
+
 import '../../shared/colors.dart';
-import '../../shared/custom_widgets/custom_button.dart';
-import '../../shared/custom_widgets/custom_textfield2.dart';
 
 class HotelBookingDetails extends StatefulWidget {
   const HotelBookingDetails({super.key});
@@ -316,13 +310,13 @@ class _HotelBookingDetailsState extends State<HotelBookingDetails> {
                       const SizedBox(
                         height: 15,
                       ),
-                    
                       Expanded(
                         child: ListView.builder(
                           scrollDirection: Axis.vertical,
                           shrinkWrap: true,
                           itemCount: travellarsDetails.length,
-                          itemBuilder: (context, index) => TravellarDetailsCard(
+                          itemBuilder: (context, index) =>
+                              TravellarDetailsCard1(
                             itemIndex: index,
                             travellarsModel: travellarsDetails[index],
                           ),

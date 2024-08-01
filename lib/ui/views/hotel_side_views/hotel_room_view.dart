@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, avoid_unnecessary_containers
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, avoid_unnecessary_containers, must_be_immutable, non_constant_identifier_names
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -6,15 +6,25 @@ import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:traveling/cards/amenities_card.dart';
 import 'package:traveling/classes/amenities_class.dart';
+import 'package:traveling/classes/hotel_room_details_class.dart';
 import 'package:traveling/ui/shared/colors.dart';
-import 'package:traveling/ui/shared/custom_widgets/custom_button.dart';
 import 'package:traveling/ui/shared/text_size.dart';
-import 'package:traveling/ui/shared/utils.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:traveling/ui/views/hotel_side_views/hotel_room_photos.dart';
 
-class HotelRoomView extends StatelessWidget {
-  const HotelRoomView({super.key});
+class HotelRoomView extends StatefulWidget {
+  RoomDetailsClass Room;
+  List<AmenitiesClass> Amenities;
+  HotelRoomView({
+    super.key,
+    required this.Room,
+    required this.Amenities,
+  });
+  @override
+  State<HotelRoomView> createState() => _HotelRoomViewState();
+}
 
+class _HotelRoomViewState extends State<HotelRoomView> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -32,10 +42,10 @@ class HotelRoomView extends StatelessWidget {
               flexibleSpace: FlexibleSpaceBar(
                 background: Stack(
                   children: [
-                    Container(
+                    SizedBox(
                       height: 350,
                       child: Image(
-                        image: AssetImage('assets/image/png/room2.png'),
+                        image: NetworkImage(widget.Room.RoomPhoto!.first),
                         fit: BoxFit.fill,
                       ),
                     ),
@@ -59,7 +69,7 @@ class HotelRoomView extends StatelessWidget {
                         width: 15,
                       ),
                       Text(
-                        'Deluxe Room - 2 Twin Beds ',
+                        widget.Room.Overview,
                         style: TextStyle(
                           fontSize: TextSize.header1,
                           fontWeight: FontWeight.w600,
@@ -105,6 +115,7 @@ class HotelRoomView extends StatelessWidget {
             SliverToBoxAdapter(
               child: Container(
                 color: AppColors.backgroundgrayColor,
+                height: size.height,
                 child: Padding(
                   padding: const EdgeInsets.only(top: 15),
                   child: Column(
@@ -114,120 +125,158 @@ class HotelRoomView extends StatelessWidget {
                       ),
                       Stack(
                         children: [
-                          Container(
-                            width: size.width / 2.2,
-                            height: size.width / 2.2,
-                            // margin: EdgeInsets.only(top: 370),
-                            decoration: const BoxDecoration(
-                              borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(15),
-                                  bottomLeft: Radius.circular(15)),
-                              image: DecorationImage(
-                                  image:
-                                      AssetImage('assets/image/png/room1.png'),
-                                  fit: BoxFit.fill),
-                            ),
-                          ),
-                          Container(
-                            width: ((size.width / 2.2) / 2) - 5,
-                            height: ((size.width / 2.2) / 2) - 5,
-                            margin: EdgeInsets.only(
-                              left: (size.width / 2.2) + 10,
-                              //  top: 370
-                            ),
-                            decoration: const BoxDecoration(
-                              image: DecorationImage(
-                                  image:
-                                      AssetImage('assets/image/png/room2.png'),
-                                  fit: BoxFit.fill),
-                            ),
-                          ),
-                          Container(
-                            width: ((size.width / 2.2) / 2) - 5,
-                            height: ((size.width / 2.2) / 2) - 5,
-                            margin: EdgeInsets.only(
-                                left: (size.width / 2.2) + 10,
-                                top: ((size.width / 2.2) / 2) + 5),
-                            decoration: const BoxDecoration(
-                              image: DecorationImage(
-                                  image:
-                                      AssetImage('assets/image/png/room3.png'),
-                                  fit: BoxFit.fill),
-                            ),
-                          ),
-                          Container(
-                            width: ((size.width / 2.2) / 2) - 5,
-                            height: ((size.width / 2.2) / 2) - 5,
-                            margin: EdgeInsets.only(
-                              left: (size.width / 2.2) +
-                                  10 +
-                                  ((size.width / 2.2) / 2) +
-                                  5,
-                              // top: 370
-                            ),
-                            decoration: const BoxDecoration(
-                              borderRadius: BorderRadius.only(
-                                topRight: Radius.circular(15),
-                              ),
-                              image: DecorationImage(
-                                  image:
-                                      AssetImage('assets/image/png/room4.png'),
-                                  fit: BoxFit.fill),
-                            ),
-                          ),
+                          (widget.Room.RoomPhoto!.length >= 2)
+                              ? Container(
+                                  width: size.width / 2.2,
+                                  height: size.width / 2.2,
+                                  // margin: EdgeInsets.only(top: 370),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.only(
+                                        topLeft: Radius.circular(15),
+                                        bottomLeft: Radius.circular(15)),
+                                    image: DecorationImage(
+                                        image: NetworkImage(
+                                            widget.Room.RoomPhoto![1]),
+                                        fit: BoxFit.fill),
+                                  ),
+                                )
+                              : SizedBox(),
+                          (widget.Room.RoomPhoto!.length >= 3)
+                              ? Container(
+                                  width: ((size.width / 2.2) / 2) - 5,
+                                  height: ((size.width / 2.2) / 2) - 5,
+                                  margin: EdgeInsets.only(
+                                    left: (size.width / 2.2) + 10,
+                                    //  top: 370
+                                  ),
+                                  decoration: BoxDecoration(
+                                    image: DecorationImage(
+                                        image: NetworkImage(
+                                            widget.Room.RoomPhoto![2]),
+                                        fit: BoxFit.fill),
+                                  ),
+                                )
+                              : SizedBox(),
+                          (widget.Room.RoomPhoto!.length >= 4)
+                              ? Container(
+                                  width: ((size.width / 2.2) / 2) - 5,
+                                  height: ((size.width / 2.2) / 2) - 5,
+                                  margin: EdgeInsets.only(
+                                      left: (size.width / 2.2) + 10,
+                                      top: ((size.width / 2.2) / 2) + 5),
+                                  decoration: BoxDecoration(
+                                    image: DecorationImage(
+                                        image: NetworkImage(
+                                            widget.Room.RoomPhoto![3]),
+                                        fit: BoxFit.fill),
+                                  ),
+                                )
+                              : SizedBox(),
+                          (widget.Room.RoomPhoto!.length >= 5)
+                              ? Container(
+                                  width: ((size.width / 2.2) / 2) - 5,
+                                  height: ((size.width / 2.2) / 2) - 5,
+                                  margin: EdgeInsets.only(
+                                    left: (size.width / 2.2) +
+                                        10 +
+                                        ((size.width / 2.2) / 2) +
+                                        5,
+                                    // top: 370
+                                  ),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.only(
+                                      topRight: Radius.circular(15),
+                                    ),
+                                    image: DecorationImage(
+                                        image: NetworkImage(
+                                            widget.Room.RoomPhoto![4]),
+                                        fit: BoxFit.fill),
+                                  ),
+                                )
+                              : SizedBox(),
                           Stack(
                             children: [
-                              Container(
-                                width: ((size.width / 2.2) / 2) - 5,
-                                height: ((size.width / 2.2) / 2) - 5,
-                                margin: EdgeInsets.only(
-                                    left: (size.width / 2.2) +
-                                        10 +
-                                        ((size.width / 2.2) / 2) +
-                                        5,
-                                    top: ((size.width / 2.2) / 2) + 5),
-                                decoration: const BoxDecoration(
-                                  color: Color.fromARGB(88, 158, 158, 158),
-                                  borderRadius: BorderRadius.only(
-                                    bottomRight: Radius.circular(15),
-                                  ),
-                                  image: DecorationImage(
-                                      image: AssetImage(
-                                          'assets/image/png/room5.png'),
-                                      fit: BoxFit.fill),
-                                ),
-                              ),
-                              Container(
-                                width: ((size.width / 2.2) / 2) - 5,
-                                height: ((size.width / 2.2) / 2) - 5,
-                                margin: EdgeInsets.only(
-                                    left: (size.width / 2.2) +
-                                        10 +
-                                        ((size.width / 2.2) / 2) +
-                                        5,
-                                    top: ((size.width / 2.2) / 2) + 5),
-                                decoration: const BoxDecoration(
-                                  color: Color.fromARGB(178, 33, 33, 33),
-                                  borderRadius: BorderRadius.only(
-                                    bottomRight: Radius.circular(15),
-                                  ),
-                                ),
-                              ),
-                              Padding(
-                                padding: EdgeInsets.only(
-                                    left: (size.width / 2.2) +
-                                        10 +
-                                        ((size.width / 2.2) / 2) +
-                                        25,
-                                    top: ((size.width / 2.2) / 2) + 35),
-                                child: Text(
-                                  '+10',
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.w500),
-                                ),
-                              ),
+                              (widget.Room.RoomPhoto!.length >= 6)
+                                  ? Container(
+                                      width: ((size.width / 2.2) / 2) - 5,
+                                      height: ((size.width / 2.2) / 2) - 5,
+                                      margin: EdgeInsets.only(
+                                          left: (size.width / 2.2) +
+                                              10 +
+                                              ((size.width / 2.2) / 2) +
+                                              5,
+                                          top: ((size.width / 2.2) / 2) + 5),
+                                      decoration: BoxDecoration(
+                                        color:
+                                            Color.fromARGB(88, 158, 158, 158),
+                                        borderRadius: BorderRadius.only(
+                                          bottomRight: Radius.circular(15),
+                                        ),
+                                        image: DecorationImage(
+                                            image: NetworkImage(
+                                                widget.Room.RoomPhoto![5]),
+                                            fit: BoxFit.fill),
+                                      ),
+                                    )
+                                  : SizedBox(),
+                              (6 < widget.Room.RoomPhoto!.length &&
+                                      widget.Room.RoomPhoto![6].isNotEmpty)
+                                  ? InkWell(
+                                      onTap: () {
+                                        Get.to(
+                                          HotelRoomPhotos(
+                                            RoomPhotos: widget.Room.RoomPhoto!
+                                                .sublist(5),
+                                          ),
+                                        );
+                                      },
+                                      child: Container(
+                                        width: ((size.width / 2.2) / 2) - 5,
+                                        height: ((size.width / 2.2) / 2) - 5,
+                                        margin: EdgeInsets.only(
+                                            left: (size.width / 2.2) +
+                                                10 +
+                                                ((size.width / 2.2) / 2) +
+                                                5,
+                                            top: ((size.width / 2.2) / 2) + 5),
+                                        decoration: const BoxDecoration(
+                                          color:
+                                              Color.fromARGB(178, 33, 33, 33),
+                                          borderRadius: BorderRadius.only(
+                                            bottomRight: Radius.circular(15),
+                                          ),
+                                        ),
+                                      ),
+                                    )
+                                  : SizedBox(),
+                              (6 < widget.Room.RoomPhoto!.length &&
+                                      widget.Room.RoomPhoto![6].isNotEmpty)
+                                  ? InkWell(
+                                      onTap: () {
+                                        Get.to(
+                                          HotelRoomPhotos(
+                                            RoomPhotos: widget.Room.RoomPhoto!
+                                                .sublist(5),
+                                          ),
+                                        );
+                                      },
+                                      child: Padding(
+                                        padding: EdgeInsets.only(
+                                            left: (size.width / 2.2) +
+                                                10 +
+                                                ((size.width / 2.2) / 2) +
+                                                25,
+                                            top: ((size.width / 2.2) / 2) + 35),
+                                        child: Text(
+                                          '+${widget.Room.RoomPhoto!.sublist(5).length.toString()}',
+                                          style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.w500),
+                                        ),
+                                      ),
+                                    )
+                                  : SizedBox()
                             ],
                           ),
                         ],
@@ -250,17 +299,17 @@ class HotelRoomView extends StatelessWidget {
                       ),
                       Padding(
                         padding: EdgeInsets.only(top: 15, left: 15),
-                        child: Container(
-                          height: 60,
+                        child: SizedBox(
+                          height: 70,
                           width: size.width,
                           child: Expanded(
                             child: ListView.builder(
                               scrollDirection: Axis.horizontal,
                               shrinkWrap: true,
-                              itemCount: Amenities.length,
+                              itemCount: widget.Amenities.length,
                               itemBuilder: (context, index) => AmenitiesCard(
                                 itemIndex: index,
-                                amenitiesModel: Amenities[index],
+                                amenitiesModel: widget.Amenities[index],
                               ),
                             ),
                           ),

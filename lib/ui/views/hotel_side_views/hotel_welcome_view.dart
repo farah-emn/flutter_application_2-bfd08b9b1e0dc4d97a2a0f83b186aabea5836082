@@ -3,12 +3,7 @@ import 'package:get/get.dart';
 import 'package:traveling/ui/shared/custom_widgets/custom_button.dart';
 import 'package:traveling/ui/views/flight_side_views/flight_signin_view.dart';
 import 'package:traveling/ui/views/flight_side_views/flight_signup_view.dart';
-import 'package:traveling/ui/views/traveller_side_views/signin_view.dart';
-import 'package:traveling/ui/views/traveller_side_views/signup_view.dart';
-
 import '../../shared/colors.dart';
-import 'hotel_signin_view.dart';
-import 'hotel_signup_view.dart';
 
 class HotelWelcomeView extends StatelessWidget {
   const HotelWelcomeView({super.key});

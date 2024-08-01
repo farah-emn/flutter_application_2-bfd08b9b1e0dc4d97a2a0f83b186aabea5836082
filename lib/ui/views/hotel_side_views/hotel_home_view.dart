@@ -1,22 +1,15 @@
+// ignore_for_file: non_constant_identifier_names, prefer_const_constructors, unnecessary_string_interpolations, deprecated_member_use, prefer_typing_uninitialized_variables, prefer_const_literals_to_create_immutables
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:traveling/cards/hotel_info_home_view_card.dart';
+import 'package:traveling/classes/hotel_room_details_class.dart';
+import 'package:traveling/controllers/currency_controller.dart';
 import 'package:traveling/ui/shared/colors.dart';
-import 'package:traveling/ui/shared/custom_widgets/custom_image.dart';
-import 'package:traveling/ui/shared/custom_widgets/custom_servicetext.dart';
 import 'package:traveling/ui/shared/text_size.dart';
-
-import 'package:traveling/ui/shared/utils.dart';
-import 'package:traveling/ui/views/flight_side_views/flight_search_view.dart';
-import 'package:traveling/ui/views/traveller_side_views/menu_view.dart';
-import 'package:traveling/ui/views/traveller_side_views/traveller_welcome_view.dart';
-
+import 'package:traveling/ui/views/hotel_side_views/hotel_welcome_view.dart';
 import '../first_view.dart';
-import '../../../classes/hotel_info_class.dart';
-import 'hotel_search_view.dart';
 
 late User loggedinUser;
 
@@ -30,10 +23,101 @@ class HotelHomeView extends StatefulWidget {
 class _HotelHomeViewState extends State<HotelHomeView> {
   final _auth = FirebaseAuth.instance;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  late User loggedinUser;
+  String CompanyName = '';
+  late final User? user;
+  late DatabaseReference ref;
+  var Companyimage;
+  String HotelName = '';
+  var HotelPhoto;
+  var HotelId = '';
+  var CompanyId = '';
+  double incoming = 0.0;
+  int ReservedRooms = 0;
+  final CurrencyController HotelCurrency_Controller =
+      Get.put(CurrencyController());
+  ValueNotifier<List<RoomDetailsClass>> HotelRooms =
+      ValueNotifier<List<RoomDetailsClass>>([]);
+  @override
+  void initState() {
+    super.initState();
+    ref = FirebaseDatabase.instance.ref('Hotel');
+    user = _auth.currentUser;
+    getCurrentUser();
+    getData();
+
+    super.initState();
+  }
+
+  void getCurrentUser() async {
+    try {
+      final user = _auth.currentUser;
+      if (user != null) {
+        loggedinUser = user;
+      }
+      if (_auth.currentUser == null) {
+        Get.offAll(const HotelWelcomeView());
+      }
+    } catch (e) {}
+  }
+
+  void getData() async {
+    CompanyId = user!.uid.toString();
+    final event = await ref.child(CompanyId).get();
+    final userData = Map<dynamic, dynamic>.from(event.value as Map);
+    if (mounted) {
+      setState(() {
+        CompanyName = userData['HotelName'];
+        Companyimage = userData['image'];
+      });
+    }
+    getDataHoel().then((fetchedFlights) {});
+  }
+
+  Future<void> getDataHoel() async {
+    final ref = FirebaseDatabase.instance.reference().child('Room');
+    final refhotel_booking =
+        FirebaseDatabase.instance.reference().child('hotel_booking');
+
+    final results = await Future.wait([ref.once(), refhotel_booking.once()]);
+
+    final event = results[0];
+    final event_hotel_booking = results[1];
+
+    if (event.snapshot.exists) {
+      var roomData = Map<dynamic, dynamic>.from(event.snapshot.value as Map);
+      var roomEntries = roomData.entries.toList();
+
+      for (var entry in roomEntries) {
+        if (entry.value['HotelId'] == user!.uid.toString()) {
+          if (entry.value['is_reserved'] == true) {
+            if (mounted) {
+              setState(() {
+                ReservedRooms += 1;
+              });
+            }
+          }
+          if (event_hotel_booking.snapshot.exists) {
+            var hotel_booking = Map<dynamic, dynamic>.from(
+                event_hotel_booking.snapshot.value as Map);
+            for (var bookingRoom in hotel_booking.entries) {
+              if (bookingRoom.value['RoomId'] == entry.key) {
+                if (mounted) {
+                  setState(() {
+                    incoming += bookingRoom.value['TotalPrice'];
+                  });
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
 
   @override
-  @override
   Widget build(BuildContext context) {
+    print(incoming);
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       key: _scaffoldKey,
@@ -41,13 +125,15 @@ class _HotelHomeViewState extends State<HotelHomeView> {
         backgroundColor: AppColors.backgroundgrayColor,
         child: Column(
           children: [
-            const UserAccountsDrawerHeader(
-                decoration: BoxDecoration(color: AppColors.lightPurple),
-                currentAccountPicture: CircleAvatar(
-                  backgroundImage: AssetImage('assets/image/png/girlUser1.png'),
-                ),
-                accountName: Text('data'),
-                accountEmail: Text('data@gmail.com')),
+            UserAccountsDrawerHeader(
+                decoration: const BoxDecoration(color: AppColors.Blue),
+                currentAccountPicture: (Companyimage != null)
+                    ? CircleAvatar(backgroundImage: NetworkImage(Companyimage))
+                    : const CircleAvatar(
+                        backgroundImage:
+                            AssetImage('assets/image/png/girlUser1.png')),
+                accountName: Text('Company name'),
+                accountEmail: Text('$CompanyName')),
             ListTile(
               leading: const Icon(
                 Icons.add,
@@ -131,7 +217,8 @@ class _HotelHomeViewState extends State<HotelHomeView> {
                 ),
               ),
               onTap: () {
-                Navigator.pop(context);
+                _auth.signOut();
+                Get.offAll(() => const FirstView());
               },
             ),
           ],
@@ -243,17 +330,25 @@ class _HotelHomeViewState extends State<HotelHomeView> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Row(
+                      Row(
                         children: [
-                          SizedBox(
-                            width: 50,
-                            height: 50,
-                            child: CircleAvatar(
-                              radius: 20,
-                              backgroundImage:
-                                  AssetImage('assets/image/png/girlUser1.png'),
-                            ),
-                          ),
+                          if (Companyimage != null)
+                            SizedBox(
+                                width: 50,
+                                height: 50,
+                                child: CircleAvatar(
+                                  radius: 20,
+                                  backgroundImage: NetworkImage(Companyimage),
+                                ))
+                          else
+                            SizedBox(
+                                width: 50,
+                                height: 50,
+                                child: CircleAvatar(
+                                  radius: 20,
+                                  backgroundImage: AssetImage(
+                                      'assets/image/png/girlUser1.png'),
+                                )),
                           SizedBox(
                             width: 10,
                           ),
@@ -261,15 +356,16 @@ class _HotelHomeViewState extends State<HotelHomeView> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                'User Name',
+                                'Company Name',
                                 style: TextStyle(
-                                    color: AppColors.purple,
+                                    color: AppColors.backgroundgrayColor,
                                     fontSize: 17,
                                     fontWeight: FontWeight.w500),
                               ),
                               Text(
-                                'Username@gmail.com',
-                                style: TextStyle(color: AppColors.gray),
+                                CompanyName,
+                                style:
+                                    TextStyle(color: AppColors.LightGrayColor),
                               ),
                             ],
                           ),
@@ -311,7 +407,7 @@ class _HotelHomeViewState extends State<HotelHomeView> {
                               right: Radius.circular(30),
                             ),
                           ),
-                          child: const Padding(
+                          child: Padding(
                             padding: EdgeInsets.only(left: 10),
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
@@ -333,7 +429,7 @@ class _HotelHomeViewState extends State<HotelHomeView> {
                                 Row(
                                   children: [
                                     Text(
-                                      '\$526561',
+                                      '\ ${HotelCurrency_Controller.convert('USD', HotelCurrency_Controller.selectedCurrency.value, incoming)} ${HotelCurrency_Controller.selectedCurrency.value}',
                                       style: TextStyle(
                                           color: Colors.white, fontSize: 16),
                                     ),
@@ -353,7 +449,7 @@ class _HotelHomeViewState extends State<HotelHomeView> {
                               right: Radius.circular(30),
                             ),
                           ),
-                          child: const Padding(
+                          child: Padding(
                             padding: EdgeInsets.only(left: 10),
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
@@ -375,7 +471,7 @@ class _HotelHomeViewState extends State<HotelHomeView> {
                                 Row(
                                   children: [
                                     Text(
-                                      '251',
+                                      ReservedRooms.toString(),
                                       style: TextStyle(
                                           color: Colors.white, fontSize: 16),
                                     ),

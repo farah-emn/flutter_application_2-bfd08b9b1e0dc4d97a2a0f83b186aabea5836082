@@ -49,6 +49,7 @@ class RoomDetailsClass {
       NumberOfBedrooms:
           map['NumberOfBedrooms'] is int ? map['NumberOfBedrooms'] : 0,
       NumberOfBeds: map['NumberOfBeds'] is int ? map['NumberOfBeds'] : 0,
+      NumberOfRooms: map['NumberOfRooms'] is String ? map['NumberOfRooms'] : '',
       Price: map['Price'] is num ? map['Price'] : 0,
       RoomPhoto: map.containsKey('RoomPhoto') && map['RoomPhoto'] != null
           ? (map['RoomPhoto'] as List<dynamic>)
@@ -78,7 +79,6 @@ class RoomDetailsClass {
               .toList()
           : null,
       RoomNumber: map['RoomNumber'] is String ? map['RoomNumber'] : '',
-      NumberOfRooms: map['NumberOfRooms'] is String ? map['NumberOfRooms'] : '',
       is_reserved: map['is_reserved'] is bool ? map['is_reserved'] : false,
     );
   }

@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:firebase_core/firebase_core.dart';
-
+import 'package:traveling/controllers/currency_controller.dart';
 import 'package:traveling/core/data/repository/post_repository.dart';
 import 'package:traveling/core/data/repository/prodcut_repository.dart';
 import 'package:traveling/core/data/repository/shared_prefrence_repository.dart';
@@ -13,7 +13,7 @@ import '../../app/my_app.dart';
 late SharedPreferences prefs;
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  Firebase.initializeApp(
+  await Firebase.initializeApp(
     options: FirebaseOptions(
       apiKey: "AIzaSyCNAmw7EMRSuR2_fG40x08QbvWl8yH_6kg",
       appId: "1:969124608869:android:33cc44f88cb8edb3c9bf8c",
@@ -25,6 +25,7 @@ void main() async {
   Get.lazyPut(() => SharedPrefrenceRepository());
   Get.lazyPut(() => PostRepository());
   Get.lazyPut(() => ProductRepository());
+  Get.lazyPut(() => CurrencyController());
 
   await Get.putAsync(() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
