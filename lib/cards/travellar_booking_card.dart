@@ -6,10 +6,7 @@ import 'package:traveling/classes/travellar_booking_class.dart';
 import 'package:traveling/ui/shared/custom_widgets/white_container.dart';
 import 'package:traveling/ui/shared/text_size.dart';
 import 'package:traveling/ui/views/traveller_side_views/traveller_details_view3.dart';
-
-import '../classes/travellars_class.dart';
 import '../ui/shared/colors.dart';
-
 
 class TravellarBookingCard extends StatefulWidget {
   TravellarBookingCard(
@@ -109,11 +106,10 @@ class _TravellarBookingCardState extends State<TravellarBookingCard> {
                     ),
                   ],
                 ),
-                
               ],
             ),
           ),
-           InkWell(
+          InkWell(
             onTap: () {
               Get.to(const TravellerDetailsView3());
             },

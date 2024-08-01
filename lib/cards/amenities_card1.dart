@@ -1,5 +1,4 @@
 import 'package:flutter/cupertino.dart';
-import 'package:traveling/classes/amenities_class.dart';
 import 'package:traveling/classes/amenities_class1.dart';
 import 'package:traveling/ui/shared/colors.dart';
 

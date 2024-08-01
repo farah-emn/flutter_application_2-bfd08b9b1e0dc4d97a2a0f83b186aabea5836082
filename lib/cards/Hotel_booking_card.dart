@@ -4,7 +4,6 @@ import 'package:traveling/classes/hotel_bookings_class.dart';
 import 'package:traveling/ui/shared/colors.dart';
 import 'package:traveling/ui/shared/custom_widgets/custom_button.dart';
 import 'package:traveling/ui/shared/text_size.dart';
-import 'package:traveling/ui/views/traveller_side_views/hotel_details_view.dart';
 import 'package:traveling/ui/views/traveller_side_views/room_view.dart';
 
 class HotelBookingCard extends StatefulWidget {

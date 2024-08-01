@@ -1,11 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:traveling/classes/travellars_class1.dart';
-
-import '../classes/travellars_class.dart';
 import '../ui/shared/colors.dart';
-import '../ui/views/flight_side_views/flight_booking_details_view.dart';
 
 class TravellarDetailsCard1 extends StatefulWidget {
   TravellarDetailsCard1(
