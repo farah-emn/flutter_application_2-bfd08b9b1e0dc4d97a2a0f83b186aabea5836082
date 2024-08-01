@@ -1,4 +1,4 @@
-// ignore_for_file: library_private_types_in_public_api, prefer_const_literals_to_create_immutables, prefer_const_constructors, deprecated_member_use, non_constant_identifier_names, prefer_typing_uninitialized_variables, sized_box_for_whitespace
+// ignore_for_file: library_private_types_in_public_api, prefer_const_literals_to_create_immutables, prefer_const_constructors, deprecated_member_use, non_constant_identifier_names, prefer_typing_uninitialized_variables, unnecessary_string_interpolations
 
 import 'dart:io';
 import 'package:flutter/material.dart';
@@ -9,8 +9,12 @@ import 'package:image_picker/image_picker.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 // import 'package:permission_handler/permission_handler.dart';
-// import 'package:path/path.dart';
+import 'package:path/path.dart';
+import 'package:traveling/ui/shared/colors.dart';
+import 'package:traveling/ui/shared/custom_widgets/custom_button.dart';
+import 'package:traveling/ui/shared/custom_widgets/custom_textfield2.dart';
 import 'package:traveling/ui/views/hotel_side_views/hotel_home_screen.dart';
+// import 'package:traveling/ui/views/hotel_side_views/map_view.dart';
 
 class HotelSignUpImageView extends StatefulWidget {
   const HotelSignUpImageView({super.key});
@@ -30,6 +34,9 @@ class _HotelSignUpImageViewState extends State<HotelSignUpImageView> {
   final ImagePicker _picker = ImagePicker();
   XFile? _image;
   XFile? photo;
+  final _Country = TextEditingController();
+  final _Address = TextEditingController();
+  final _City = TextEditingController();
   @override
   void initState() {
     super.initState();
@@ -39,18 +46,31 @@ class _HotelSignUpImageViewState extends State<HotelSignUpImageView> {
     });
   }
 
-  Future<void> _uploadImageToFirebase(XFile image) async {
-    File file = File(image.path);
-    //image
-    // var imagename = basename(image.path);
-    // var Firebase_Storage = FirebaseStorage.instance.ref(imagename);
-    // await Firebase_Storage.putFile(file);
-    // String url = await Firebase_Storage.getDownloadURL();
-
-    // FirebaseDatabase.instance
-    //     .ref("Hotel")
-    //     .child(AirelineCompanyId)
-    //     .update({"image": url});
+  void _uploadImageToFirebase(XFile image) async {
+    if (_Address.text.isNotEmpty &&
+        _Country.text.isNotEmpty &&
+        _City.text.isNotEmpty) {
+      File file = File(image.path);
+      var imagename = basename(image.path);
+      // var Firebase_Storage = FirebaseStorage.instance.ref(imagename);
+      // await Firebase_Storage.putFile(file);
+      // String url = await Firebase_Storage.getDownloadURL();
+      FirebaseDatabase.instance.ref("Hotel").child(AirelineCompanyId).update({
+        "image": url,
+        "location": '${_City.text}, ${_Country.text}',
+        "address": '${_Address.text}'
+      });
+      Get.offAll(HoteltHome());
+    } else {
+      Fluttertoast.showToast(
+          msg: "Please enter all fields",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: const Color.fromARGB(255, 158, 165, 174),
+          textColor: Colors.white,
+          fontSize: 16.0);
+    }
   }
 
   @override
@@ -80,8 +100,168 @@ class _HotelSignUpImageViewState extends State<HotelSignUpImageView> {
                           : Container(),
                     )),
           SizedBox(
-            height: 300,
+            height: 30,
           ),
+          InkWell(
+            onTap: () {
+              // Get.to(MapView(
+              //   onLocationSelected: (newLocality, newStreet, newCountry) {
+              //     setState(() {
+              //       _City.text = newLocality;
+              //       _Address.text = newStreet;
+              //       _Country.text = newCountry;
+              //     });
+              //   },
+              // ));
+            },
+            child: const Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Text(
+                  'Show on map',
+                  style: TextStyle(
+                      fontSize: 13,
+                      color: AppColors.grayText,
+                      fontWeight: FontWeight.w500),
+                ),
+                SizedBox(
+                  width: 30,
+                ),
+              ],
+            ),
+          ),
+          const Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              SizedBox(
+                width: 30,
+              ),
+              Text(
+                'Country',
+                style: TextStyle(
+                    fontSize: 13,
+                    color: AppColors.grayText,
+                    fontWeight: FontWeight.w500),
+              ),
+            ],
+          ),
+          SizedBox(
+            height: 45,
+            width: size.width - 50,
+            child: TextField(
+              controller: _Country,
+              decoration: textFielDecoratiom.copyWith(
+                focusedBorder: const OutlineInputBorder(
+                  borderSide: BorderSide(
+                    color: AppColors.lightPurple,
+                  ),
+                  borderRadius: BorderRadius.all(Radius.circular(18)),
+                ),
+                fillColor: Colors.white,
+                prefixIcon: const Icon(
+                  Icons.description_rounded,
+                  color: AppColors.purple,
+                ),
+              ),
+              onChanged: (value) {},
+            ),
+          ),
+          const SizedBox(
+            height: 30,
+          ),
+          const Row(
+            children: [
+              SizedBox(
+                width: 30,
+              ),
+              Text(
+                'City',
+                style: TextStyle(
+                    fontSize: 13,
+                    color: AppColors.grayText,
+                    fontWeight: FontWeight.w500),
+              ),
+            ],
+          ),
+          SizedBox(
+            height: 45,
+            width: size.width - 50,
+            child: TextField(
+              controller: _City,
+              keyboardType: TextInputType.number,
+              decoration: textFielDecoratiom.copyWith(
+                  focusedBorder: const OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: AppColors.lightPurple,
+                    ),
+                    borderRadius: BorderRadius.all(Radius.circular(18)),
+                  ),
+                  fillColor: Colors.white,
+                  prefixIcon: const Icon(
+                    Icons.price_change,
+                    color: AppColors.purple,
+                  )),
+              onChanged: (value) {},
+            ),
+          ),
+          const SizedBox(
+            height: 30,
+          ),
+          const Row(
+            children: [
+              SizedBox(
+                width: 30,
+              ),
+              Text(
+                'Address',
+                style: TextStyle(
+                    fontSize: 13,
+                    color: AppColors.grayText,
+                    fontWeight: FontWeight.w500),
+              ),
+            ],
+          ),
+          SizedBox(
+            height: 45,
+            width: size.width - 50,
+            child: TextField(
+              controller: _Address,
+              keyboardType: TextInputType.number,
+              decoration: textFielDecoratiom.copyWith(
+                  focusedBorder: const OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: AppColors.lightPurple,
+                    ),
+                    borderRadius: BorderRadius.all(Radius.circular(18)),
+                  ),
+                  fillColor: Colors.white,
+                  prefixIcon: const Icon(
+                    Icons.price_change,
+                    color: AppColors.purple,
+                  )),
+              onChanged: (value) {},
+            ),
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          // ElevatedButton(
+          //     onPressed: () {
+          //       // if (photo != null) {
+          //       //   _uploadImageToFirebase(photo!);
+          //       //   Get.offAll(HoteltHome());
+          //       // } else {
+          //       //   Fluttertoast.showToast(
+          //       //       msg: "Please choose image",
+          //       //       toastLength: Toast.LENGTH_SHORT,
+          //       //       gravity: ToastGravity.BOTTOM,
+          //       //       timeInSecForIosWeb: 1,
+          //       //       backgroundColor: const Color.fromARGB(255, 158, 165, 174),
+          //       //       textColor: Colors.white,
+          //       //       fontSize: 16.0);
+          //       // }
+          //     },
+          //     child: Text('Save')),
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
@@ -118,27 +298,50 @@ class _HotelSignUpImageViewState extends State<HotelSignUpImageView> {
                   // }
                 },
               ),
-              SizedBox(
-                height: 10,
+              // SizedBox(
+              //   height: size.height - 600,
+              // ),
+              InkWell(
+                onTap: () {
+                  if (photo != null) {
+                    _uploadImageToFirebase(photo!);
+                  } else {
+                    Fluttertoast.showToast(
+                        msg: "Please choose image",
+                        toastLength: Toast.LENGTH_SHORT,
+                        gravity: ToastGravity.BOTTOM,
+                        timeInSecForIosWeb: 1,
+                        backgroundColor:
+                            const Color.fromARGB(255, 158, 165, 174),
+                        textColor: Colors.white,
+                        fontSize: 16.0);
+                  }
+                },
+                child: CustomButton(
+                    text: 'Confirm location',
+                    textColor: AppColors.backgroundgrayColor,
+                    backgroundColor: AppColors.purple,
+                    widthPercent: size.width,
+                    heightPercent: 15),
               ),
-              ElevatedButton(
-                  onPressed: () {
-                    if (photo != null) {
-                      _uploadImageToFirebase(photo!);
-                      Get.offAll(HoteltHome());
-                    } else {
-                      Fluttertoast.showToast(
-                          msg: "Please choose image",
-                          toastLength: Toast.LENGTH_SHORT,
-                          gravity: ToastGravity.BOTTOM,
-                          timeInSecForIosWeb: 1,
-                          backgroundColor:
-                              const Color.fromARGB(255, 158, 165, 174),
-                          textColor: Colors.white,
-                          fontSize: 16.0);
-                    }
-                  },
-                  child: Text('Save'))
+              // ElevatedButton(
+              //     onPressed: () {
+              //       if (photo != null) {
+              //         _uploadImageToFirebase(photo!);
+              //         Get.offAll(HoteltHome());
+              //       } else {
+              //         Fluttertoast.showToast(
+              //             msg: "Please choose image",
+              //             toastLength: Toast.LENGTH_SHORT,
+              //             gravity: ToastGravity.BOTTOM,
+              //             timeInSecForIosWeb: 1,
+              //             backgroundColor:
+              //                 const Color.fromARGB(255, 158, 165, 174),
+              //             textColor: Colors.white,
+              //             fontSize: 16.0);
+              //       }
+              //     },
+              //     child: Text('Save'))
             ],
           )
         ],
