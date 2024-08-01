@@ -16,7 +16,7 @@ class _HomeState extends State<Home> {
   int index = 0;
   final Screens = [
     const HomeView(),
-    const SearchView(),
+     SearchView(),
     const BookingsView(),
     const ProfileView(),
   ];
