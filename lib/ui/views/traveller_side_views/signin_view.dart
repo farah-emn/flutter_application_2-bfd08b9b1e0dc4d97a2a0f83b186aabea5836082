@@ -150,8 +150,9 @@ class _SignInViewState extends State<SignInView> {
                     ),
                     const Text(
                       'Sign in ',
-                      style:
-                          TextStyle(fontWeight: FontWeight.w700, fontSize: 20),
+                      style: TextStyle(
+                          fontSize: TextSize.header1,
+                          fontWeight: FontWeight.w700),
                     ),
                     const SizedBox(
                       height: 30,

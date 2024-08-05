@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../colors.dart';
 
 const textFielDecoratiom = InputDecoration(
+  contentPadding: EdgeInsets.zero,
   // hintStyle: TextStyle(fontSize: 15, color: AppColors.TextgrayColor),
   errorBorder: OutlineInputBorder(
     borderRadius: BorderRadius.all(Radius.circular(18)),

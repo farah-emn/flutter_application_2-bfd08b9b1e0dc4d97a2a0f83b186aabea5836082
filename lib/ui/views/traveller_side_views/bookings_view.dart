@@ -44,7 +44,7 @@ class _BookingsViewState extends State<BookingsView>
       length: 3,
       child: Scaffold(
           resizeToAvoidBottomInset: false,
-          backgroundColor: AppColors.lightBlue,
+          backgroundColor: AppColors.Blue,
           body: SafeArea(
             child: Stack(children: [
               const Padding(
@@ -57,7 +57,7 @@ class _BookingsViewState extends State<BookingsView>
                       style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.w700,
-                          color: AppColors.darkBlue),
+                          color: AppColors.backgroundgrayColor),
                     ),
                   ],
                 ),
@@ -177,29 +177,29 @@ class _BookingsViewState extends State<BookingsView>
         const SizedBox(
           height: 20,
         ),
- _hotelSorteBy == 'Upcoming' ?
-        Expanded(
-          child: ListView.builder(
-            shrinkWrap: true,
-            itemCount: HotelbookingsDetails.length,
-            itemBuilder: (context, index) => HotelBookingCard(
-              size: size,
-              itemIndex: index,
-              hotelBookingsDetails: HotelbookingsDetails[index],
-            ),
-          ),
-        ) :
-        Expanded(
-          child: ListView.builder(
-            shrinkWrap: true,
-            itemCount: HotelbookingsDetails.length,
-            itemBuilder: (context, index) => HotelFinishedBookingCard(
-              size: size,
-              itemIndex: index,
-              hotelBookingsDetails: HotelbookingsDetails[index],
-            ),
-          ),
-        ) 
+        _hotelSorteBy == 'Upcoming'
+            ? Expanded(
+                child: ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: HotelbookingsDetails.length,
+                  itemBuilder: (context, index) => HotelBookingCard(
+                    size: size,
+                    itemIndex: index,
+                    hotelBookingsDetails: HotelbookingsDetails[index],
+                  ),
+                ),
+              )
+            : Expanded(
+                child: ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: HotelbookingsDetails.length,
+                  itemBuilder: (context, index) => HotelFinishedBookingCard(
+                    size: size,
+                    itemIndex: index,
+                    hotelBookingsDetails: HotelbookingsDetails[index],
+                  ),
+                ),
+              )
       ],
     );
   }

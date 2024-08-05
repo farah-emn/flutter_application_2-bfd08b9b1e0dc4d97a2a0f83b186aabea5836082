@@ -8,6 +8,8 @@ import 'package:traveling/classes/hotel_room_details_class.dart';
 import 'package:traveling/controllers/currency_controller.dart';
 import 'package:traveling/ui/shared/colors.dart';
 import 'package:traveling/ui/shared/text_size.dart';
+import 'package:traveling/ui/views/hotel_side_views/hotel_booking_view.dart';
+import 'package:traveling/ui/views/hotel_side_views/hotel_currency.dart';
 import 'package:traveling/ui/views/hotel_side_views/hotel_welcome_view.dart';
 import '../first_view.dart';
 
@@ -126,7 +128,7 @@ class _HotelHomeViewState extends State<HotelHomeView> {
         child: Column(
           children: [
             UserAccountsDrawerHeader(
-                decoration: const BoxDecoration(color: AppColors.Blue),
+                decoration: const BoxDecoration(color: AppColors.lightPurple),
                 currentAccountPicture: (Companyimage != null)
                     ? CircleAvatar(backgroundImage: NetworkImage(Companyimage))
                     : const CircleAvatar(
@@ -152,50 +154,34 @@ class _HotelHomeViewState extends State<HotelHomeView> {
             ),
             ListTile(
               leading: const Icon(
-                Icons.login,
+                Icons.bookmark_outlined,
                 color: AppColors.purple,
               ),
               title: const Text(
-                'Check in',
+                'Bookings',
                 style: TextStyle(
                   fontSize: TextSize.header2,
                   fontWeight: FontWeight.w500,
                 ),
               ),
               onTap: () {
-                Navigator.pop(context);
+                Get.to(HotelBookingView());
               },
             ),
             ListTile(
               leading: const Icon(
-                Icons.logout_rounded,
+                Icons.currency_exchange_rounded,
                 color: AppColors.purple,
               ),
               title: const Text(
-                'Check out',
+                'Currency',
                 style: TextStyle(
                   fontSize: TextSize.header2,
                   fontWeight: FontWeight.w500,
                 ),
               ),
               onTap: () {
-                Navigator.pop(context);
-              },
-            ),
-            ListTile(
-              leading: const Icon(
-                Icons.settings,
-                color: AppColors.purple,
-              ),
-              title: const Text(
-                'Settings',
-                style: TextStyle(
-                  fontSize: TextSize.header2,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-              onTap: () {
-                Navigator.pop(context);
+                Get.to(CurrencyPage());
               },
             ),
             Container(

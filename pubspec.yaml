@@ -31,6 +31,7 @@ dependencies:
   flutter:
     sdk: flutter
     
+    
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -57,6 +58,10 @@ dependencies:
   animated_custom_dropdown:
   fluttertoast: ^8.2.5
   intl: ^0.17.0
+  firebase_storage: ^11.7.7
+  permission_handler: ^9.2.0
+  google_maps_flutter: ^2.6.1
+  geocoding: ^3.0.0
 
 
 

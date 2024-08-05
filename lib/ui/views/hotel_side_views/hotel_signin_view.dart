@@ -6,7 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:traveling/ui/shared/colors.dart';
 import 'package:traveling/ui/shared/custom_widgets/custom_button.dart';
+import 'package:traveling/ui/shared/custom_widgets/custom_image.dart';
 import 'package:traveling/ui/shared/custom_widgets/custom_textgray.dart';
+import 'package:traveling/ui/shared/text_size.dart';
 import 'package:traveling/ui/shared/utils.dart';
 import 'package:traveling/ui/views/hotel_side_views/hotel_home_screen.dart';
 import 'package:traveling/ui/views/hotel_side_views/hotel_signup_view.dart';
@@ -47,39 +49,89 @@ class _HotelSignInViewState extends State<HotelSignInView> {
     final DatabaseReference ref = FirebaseDatabase.instance.ref("Hotel");
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      backgroundColor: AppColors.StatusBarColor,
+      backgroundColor: AppColors.lightPurple,
       body: Stack(
         children: [
-          const Column(
+          Column(
             children: [
-              SizedBox(
+              const Padding(
+                padding: EdgeInsets.all(15.0),
+                child: Column(
+                  children: [
+                    SizedBox(
+                      height: 110,
+                    ),
+                    Stack(
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            Icon(
+                              Icons.cloud,
+                              color: Color.fromARGB(76, 249, 249, 249),
+                              size: 60,
+                            ),
+                            SizedBox(
+                              width: 10,
+                            ),
+                          ],
+                        ),
+                        Column(
+                          children: [
+                            SizedBox(
+                              height: 40,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "Travelling",
+                                  style: TextStyle(
+                                      color: AppColors.backgroundgrayColor,
+                                      fontSize: 40,
+                                      fontWeight: FontWeight.w500),
+                                ),
+                                Spacer(),
+                                Icon(
+                                  Icons.cloud,
+                                  color: Color.fromARGB(76, 249, 249, 249),
+                                  size: 50,
+                                ),
+                                SizedBox(
+                                  width: 70,
+                                ),
+                              ],
+                            ),
+                            Row(
+                              children: [],
+                            ),
+                            Row(
+                              children: [
+                                Text(
+                                  "Wellcome back",
+                                  style: TextStyle(
+                                    color: AppColors.backgroundgrayColor,
+                                    fontSize: 25,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(
                 height: 100,
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    "T",
-                    style: TextStyle(
-                        fontSize: 60,
-                        fontWeight: FontWeight.w700,
-                        color: AppColors.mainColorBlue),
-                  ),
-                  Text(
-                    "ravell",
-                    style: TextStyle(
-                        fontSize: 60,
-                        fontWeight: FontWeight.w700,
-                        color: Color(0xFF9A9CC2)),
-                  ),
-                  Text(
-                    "ing",
-                    style: TextStyle(
-                        fontSize: 60,
-                        fontWeight: FontWeight.w700,
-                        color: Colors.white),
-                  ),
-                ],
+              Container(
+                decoration: const BoxDecoration(
+                  image: DecorationImage(
+                      image: AssetImage('assets/image/png/background1.png'),
+                      fit: BoxFit.fill),
+                ),
               ),
             ],
           ),
@@ -87,7 +139,7 @@ class _HotelSignInViewState extends State<HotelSignInView> {
             children: [
               Padding(
                 padding: const EdgeInsets.only(
-                  top: 200,
+                  top: 280,
                 ),
                 child: Container(
                   decoration: const BoxDecoration(
@@ -103,22 +155,19 @@ class _HotelSignInViewState extends State<HotelSignInView> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const SizedBox(
-                      height: 280,
+                      height: 330,
                     ),
                     Text(
                       'Sign in ',
                       style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: size.width / 20),
+                          fontSize: TextSize.header1,
+                              fontWeight: FontWeight.w700),
                     ),
                     const SizedBox(
-                      height: 35,
+                      height: 20,
                     ),
                     const Row(
                       children: [
-                        SizedBox(
-                          width: 10,
-                        ),
                         Text(
                           'Email',
                           style: TextStyle(
@@ -129,13 +178,11 @@ class _HotelSignInViewState extends State<HotelSignInView> {
                       ],
                     ),
                     SizedBox(
-                      height: 30,
+                      height: 40,
                       child: TextFormField(
                         controller: _emailController,
                         keyboardType: TextInputType.emailAddress,
-                        decoration: textFielDecoratiom.copyWith(
-                          prefixIcon: Icon(Icons.email),
-                        ),
+                        decoration: textFielDecoratiom.copyWith(),
                         onChanged: (value) {
                           email = value;
                         },
@@ -146,8 +193,8 @@ class _HotelSignInViewState extends State<HotelSignInView> {
                     ),
                     (errorTextEmail.isNotEmpty)
                         ? Padding(
-                            padding:
-                                EdgeInsetsDirectional.only(start: 6, top: 10),
+                            padding: EdgeInsetsDirectional.only(
+                                start: 6, top: 5, bottom: 15),
                             child: Text(
                               errorTextEmail,
                               style: TextStyle(fontSize: 11, color: Colors.red),
@@ -156,14 +203,8 @@ class _HotelSignInViewState extends State<HotelSignInView> {
                         : SizedBox(
                             height: 20,
                           ),
-                    const SizedBox(
-                      height: 20,
-                    ),
                     const Row(
                       children: [
-                        SizedBox(
-                          width: 10,
-                        ),
                         Text(
                           'Password',
                           style: TextStyle(
@@ -174,25 +215,20 @@ class _HotelSignInViewState extends State<HotelSignInView> {
                       ],
                     ),
                     SizedBox(
-                      height: 30,
+                      height: 40,
                       child: TextFormField(
                         controller: _passwordController,
                         keyboardType: TextInputType.visiblePassword,
-                        decoration: textFielDecoratiom.copyWith(
-                          prefixIcon: Icon(Icons.lock),
-                        ),
+                        decoration: textFielDecoratiom.copyWith(),
                         onChanged: (value) {
                           password = value;
                         },
                       ),
                     ),
-                    SizedBox(
-                      height: 10,
-                    ),
                     (errorTextPassword != null)
                         ? Padding(
-                            padding:
-                                EdgeInsetsDirectional.only(start: 6, top: 10),
+                            padding: EdgeInsetsDirectional.only(
+                                start: 6, top: 5, bottom: 15),
                             child: Text(
                               errorTextPassword,
                               style: TextStyle(fontSize: 11, color: Colors.red),
@@ -204,9 +240,7 @@ class _HotelSignInViewState extends State<HotelSignInView> {
                     const SizedBox(
                       height: 10,
                     ),
-                    const SizedBox(
-                      height: 15,
-                    ),
+                  
                     Text(
                       errorText,
                       style: const TextStyle(color: Colors.red),
@@ -287,45 +321,33 @@ class _HotelSignInViewState extends State<HotelSignInView> {
                         } catch (e) {}
                       },
                       child: CustomButton(
-                        backgroundColor: AppColors.darkBlue,
+                        backgroundColor: AppColors.purple,
                         text: 'Sign in',
                         textColor: AppColors.backgroundgrayColor,
                         heightPercent: 15,
                         widthPercent: size.width,
                       ),
                     ),
-                    SizedBox(
-                      height: screenHeight(20),
+                    const SizedBox(
+                      height: 10,
                     ),
-                    // const Center(
-                    //   child: CustomTextGray(
-                    //     mainText: 'or sign in with ',
-                    //   ),
-                    // ),
-                    // SizedBox(
-                    //   height: screenHeight(20),
-                    // ),
-                    // const Row(
-                    //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    //   children: [
-                    //     CustomImage(imagename: 'facebook_icon'),
-                    //     CustomImage(imagename: 'google_icon'),
-                    //     CustomImage(imagename: 'twitter_icon'),
-                    //   ],
-                    // ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        const CustomTextGray(
-                            mainText: "You don't have account? "),
+                        const Text(
+                          'You already have account? ',
+                          style: TextStyle(
+                            color: AppColors.grayText,
+                          ),
+                        ),
                         InkWell(
                           onTap: () {
-                            Get.offAll(const HoteltSignUpView());
+                            Get.off(const HoteltSignUpView());
                           },
                           child: const Text(
                             'Sign up',
                             style: TextStyle(
-                              color: AppColors.mainColorBlue,
+                              color: AppColors.purple,
                               fontWeight: FontWeight.bold,
                             ),
                           ),

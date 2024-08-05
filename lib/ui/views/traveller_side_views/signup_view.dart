@@ -8,6 +8,7 @@ import 'package:traveling/ui/shared/colors.dart';
 import 'package:traveling/ui/shared/custom_widgets/custom_button.dart';
 import 'package:traveling/ui/shared/custom_widgets/custom_image.dart';
 import 'package:traveling/ui/shared/custom_widgets/custom_textgray.dart';
+import 'package:traveling/ui/shared/text_size.dart';
 import 'package:traveling/ui/shared/utils.dart';
 import 'package:traveling/ui/views/traveller_side_views/signin_view.dart';
 import '../../shared/custom_widgets/custom_textfield2.dart';
@@ -119,7 +120,7 @@ class _SignUpViewState extends State<SignUpView> {
                   ],
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 100,
               ),
               Container(
@@ -153,11 +154,11 @@ class _SignUpViewState extends State<SignUpView> {
                     const SizedBox(
                       height: 350,
                     ),
-                    Text(
+                    const Text(
                       'Sign up ',
                       style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: size.width / 20),
+                         fontSize: TextSize.header1,
+                              fontWeight: FontWeight.w700),
                     ),
                     const SizedBox(
                       height: 35,
@@ -346,7 +347,7 @@ class _SignUpViewState extends State<SignUpView> {
                             mainText: 'You already have account? '),
                         InkWell(
                           onTap: () {
-                            Get.offAll(const SignInView());
+                            Get.off(const SignInView());
                           },
                           child: const Text(
                             'Sign in',

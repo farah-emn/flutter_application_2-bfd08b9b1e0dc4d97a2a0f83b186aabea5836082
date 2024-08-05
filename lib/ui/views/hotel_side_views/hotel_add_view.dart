@@ -288,6 +288,7 @@ class _HotelAddViewState extends State<HotelAddView> {
                         height: 15,
                       ),
                       Container(
+                        width: size.width,
                         padding: EdgeInsets.all(15),
                         decoration: BoxDecoration(
                             boxShadow: List.filled(
@@ -303,27 +304,20 @@ class _HotelAddViewState extends State<HotelAddView> {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
+                                Text(
+                                  'Room photos',
+                                  style: TextStyle(
+                                      fontSize: 13,
+                                      color: AppColors.grayText,
+                                      fontWeight: FontWeight.w500),
+                                ),
                                 InkWell(
                                   onTap: _pickImages,
-                                  child: const Row(
-                                    children: [
-                                      Text(
-                                        'Add photos',
-                                        style: TextStyle(
-                                            fontSize: 13,
-                                            color: AppColors.grayText,
-                                            fontWeight: FontWeight.w500),
-                                      ),
-                                      SizedBox(
-                                        width: 260,
-                                      ),
-                                      Icon(
-                                        Icons.add,
-                                        color: AppColors.purple,
-                                      )
-                                    ],
+                                  child: Icon(
+                                    Icons.add,
+                                    color: AppColors.purple,
                                   ),
                                 )
                               ],
@@ -350,7 +344,7 @@ class _HotelAddViewState extends State<HotelAddView> {
                             ),
                             if (_images.isNotEmpty)
                               SizedBox(
-                                height: 260,
+                                height: 280,
                                 child: Column(
                                   children: [
                                     Column(children: [
@@ -371,6 +365,7 @@ class _HotelAddViewState extends State<HotelAddView> {
                                               icon: Icon(
                                                 Icons.keyboard_arrow_left_sharp,
                                                 color: AppColors.purple,
+                                                size: 25,
                                               ),
                                               onPressed: () {
                                                 setState(() {
@@ -390,6 +385,7 @@ class _HotelAddViewState extends State<HotelAddView> {
                                                 Icons
                                                     .keyboard_arrow_right_sharp,
                                                 color: AppColors.purple,
+                                                size: 25,
                                               ),
                                               onPressed: () {
                                                 setState(() {
@@ -470,7 +466,7 @@ class _HotelAddViewState extends State<HotelAddView> {
                               ],
                             ),
                             SizedBox(
-                              height: 45,
+                              height: 40,
                               width: size.width - 50,
                               child: TextField(
                                 controller: _Overview,
@@ -492,43 +488,7 @@ class _HotelAddViewState extends State<HotelAddView> {
                               ),
                             ),
                             const SizedBox(
-                              height: 30,
-                            ),
-                            const Row(
-                              children: [
-                                Text(
-                                  'Price',
-                                  style: TextStyle(
-                                      fontSize: 13,
-                                      color: AppColors.grayText,
-                                      fontWeight: FontWeight.w500),
-                                ),
-                              ],
-                            ),
-                            SizedBox(
-                              height: 45,
-                              width: size.width - 50,
-                              child: TextField(
-                                controller: _price,
-                                keyboardType: TextInputType.number,
-                                decoration: textFielDecoratiom.copyWith(
-                                    focusedBorder: const OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: AppColors.lightPurple,
-                                      ),
-                                      borderRadius:
-                                          BorderRadius.all(Radius.circular(18)),
-                                    ),
-                                    fillColor: Colors.white,
-                                    prefixIcon: const Icon(
-                                      Icons.price_change,
-                                      color: AppColors.purple,
-                                    )),
-                                onChanged: (value) {},
-                              ),
-                            ),
-                            const SizedBox(
-                              height: 30,
+                              height: 20,
                             ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -536,19 +496,50 @@ class _HotelAddViewState extends State<HotelAddView> {
                                 Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    const Row(
-                                      children: [
-                                        Text(
-                                          'Room number',
-                                          style: TextStyle(
-                                              fontSize: 13,
-                                              color: AppColors.grayText,
-                                              fontWeight: FontWeight.w500),
-                                        ),
-                                      ],
+                                    Text(
+                                      'Price',
+                                      style: TextStyle(
+                                          fontSize: 13,
+                                          color: AppColors.grayText,
+                                          fontWeight: FontWeight.w500),
                                     ),
                                     SizedBox(
-                                      height: 45,
+                                      height: 40,
+                                      width: size.width / 2 - 35,
+                                      child: TextField(
+                                        controller: _price,
+                                        keyboardType: TextInputType.number,
+                                        decoration: textFielDecoratiom.copyWith(
+                                            focusedBorder:
+                                                const OutlineInputBorder(
+                                              borderSide: BorderSide(
+                                                color: AppColors.lightPurple,
+                                              ),
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(18)),
+                                            ),
+                                            fillColor: Colors.white,
+                                            prefixIcon: const Icon(
+                                              Icons.price_change,
+                                              color: AppColors.purple,
+                                            )),
+                                        onChanged: (value) {},
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      'Room number',
+                                      style: TextStyle(
+                                          fontSize: 13,
+                                          color: AppColors.grayText,
+                                          fontWeight: FontWeight.w500),
+                                    ),
+                                    SizedBox(
+                                      height: 40,
                                       width: size.width / 2 - 35,
                                       child: TextField(
                                         controller: _RoomNumber,
@@ -578,9 +569,6 @@ class _HotelAddViewState extends State<HotelAddView> {
                               Center(
                                 child: CircularProgressIndicator(),
                               ),
-                            const SizedBox(
-                              height: 15,
-                            ),
                           ],
                         ),
                       ),
@@ -596,7 +584,8 @@ class _HotelAddViewState extends State<HotelAddView> {
                         height: 15,
                       ),
                       Container(
-                        padding: EdgeInsets.symmetric(horizontal: 15),
+                        padding:
+                            EdgeInsets.only(left: 15, right: 15, bottom: 15),
                         decoration: BoxDecoration(
                             boxShadow: List.filled(
                               10,
@@ -792,7 +781,7 @@ class _HotelAddViewState extends State<HotelAddView> {
                                                   ],
                                                 ),
                                                 SizedBox(
-                                                  height: 45,
+                                                  height: 40,
                                                   width: size.width / 2 - 35,
                                                   child: TextField(
                                                     controller: _Adults,
@@ -844,7 +833,7 @@ class _HotelAddViewState extends State<HotelAddView> {
                                                   ],
                                                 ),
                                                 SizedBox(
-                                                  height: 45,
+                                                  height: 40,
                                                   width: size.width / 2 - 35,
                                                   child: TextField(
                                                     controller: _Children,
@@ -977,7 +966,7 @@ class _HotelAddViewState extends State<HotelAddView> {
                                 //                     },
                                 //                     buttonStyleData:
                                 //                         ButtonStyleData(
-                                //                       height: 45,
+                                //                       height: 40,
                                 //                       width: size.width - 50,
                                 //                       padding:
                                 //                           const EdgeInsets.only(
@@ -1054,10 +1043,10 @@ class _HotelAddViewState extends State<HotelAddView> {
                                 SizedBox(
                                   height: 30,
                                 ),
-                                SizedBox(
-                                  height: 40,
-                                ),
+
                                 Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
                                     Column(
                                       crossAxisAlignment:
@@ -1075,8 +1064,8 @@ class _HotelAddViewState extends State<HotelAddView> {
                                           ],
                                         ),
                                         SizedBox(
-                                          height: 45,
-                                          width: size.width / 3 - 22,
+                                          height: 40,
+                                          width: size.width / 3 - 25,
                                           child: TextField(
                                             controller: _NumberOfRoomAvilable,
                                             keyboardType: TextInputType.number,
@@ -1110,25 +1099,16 @@ class _HotelAddViewState extends State<HotelAddView> {
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
-                                        const Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                          children: [
-                                            SizedBox(
-                                              width: 10,
-                                            ),
-                                            Text(
-                                              'Bedrooms',
-                                              style: TextStyle(
-                                                  fontSize: 13,
-                                                  color: AppColors.grayText,
-                                                  fontWeight: FontWeight.w500),
-                                            ),
-                                          ],
+                                        Text(
+                                          'Bedrooms',
+                                          style: TextStyle(
+                                              fontSize: 13,
+                                              color: AppColors.grayText,
+                                              fontWeight: FontWeight.w500),
                                         ),
                                         SizedBox(
-                                          height: 45,
-                                          width: size.width / 3 - 22,
+                                          height: 40,
+                                          width: size.width / 3 - 25,
                                           child: TextField(
                                             controller: _BedRooms,
                                             keyboardType: TextInputType.number,
@@ -1153,32 +1133,21 @@ class _HotelAddViewState extends State<HotelAddView> {
                                         ),
                                       ],
                                     ),
-                                    SizedBox(
-                                      width: 3,
-                                    ),
                                     Column(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
-                                        const Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                          children: [
-                                            SizedBox(
-                                              width: 10,
-                                            ),
-                                            Text(
-                                              'Bathrooms',
-                                              style: TextStyle(
-                                                  fontSize: 13,
-                                                  color: AppColors.grayText,
-                                                  fontWeight: FontWeight.w500),
-                                            ),
-                                          ],
+                                        
+                                        Text(
+                                          'Bathrooms',
+                                          style: TextStyle(
+                                              fontSize: 13,
+                                              color: AppColors.grayText,
+                                              fontWeight: FontWeight.w500),
                                         ),
                                         SizedBox(
-                                          height: 45,
-                                          width: size.width / 3 - 22,
+                                          height: 40,
+                                          width: size.width / 3 - 25,
                                           child: TextField(
                                             keyboardType: TextInputType.number,
                                             controller: _Bathrooms,
@@ -1206,9 +1175,6 @@ class _HotelAddViewState extends State<HotelAddView> {
                                   ],
                                 )
                               ],
-                            ),
-                            const SizedBox(
-                              height: 40,
                             ),
                           ],
                         ),

@@ -581,7 +581,7 @@ class _HotelSearchViewState extends State<HotelSearchView> {
                             height: 50,
                             width: size.width - 30,
                             decoration: BoxDecoration(
-                                color: AppColors.Blue,
+                                color: AppColors.purple,
                                 borderRadius: BorderRadius.circular(20)),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
@@ -688,6 +688,12 @@ class _HotelSearchViewState extends State<HotelSearchView> {
                           controller: _SearchController,
                           textAlignVertical: TextAlignVertical.bottom,
                           decoration: searchTextFielDecoratiom.copyWith(
+                            focusedBorder: const OutlineInputBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(18)),
+                              borderSide: BorderSide(
+                                  color: AppColors.purple, width: 1.5),
+                            ),
                             hintText: "Search",
                             suffixIcon: InkWell(
                               onTap: _showBottomShest,

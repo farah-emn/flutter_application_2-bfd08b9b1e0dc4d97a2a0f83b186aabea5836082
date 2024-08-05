@@ -6,7 +6,9 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:traveling/cards/hotel_side_finished_card%20copy.dart';
 import 'package:traveling/cards/travellar_booking_card.dart';
+import 'package:traveling/classes/hotel_side_finished_class%20copy.dart';
 import 'package:traveling/classes/travellar_booking_class.dart';
 import 'package:traveling/ui/shared/custom_widgets/white_container.dart';
 import 'package:traveling/ui/shared/text_size.dart';
@@ -319,10 +321,11 @@ class _FlightBookingDetailsViewState extends State<FlightBookingDetailsView> {
                         child: ListView.builder(
                           scrollDirection: Axis.vertical,
                           shrinkWrap: true,
-                          itemCount: travellarsBookings.length,
-                          itemBuilder: (context, index) => TravellarBookingCard(
+                          itemCount: HotelFinishedDetails2.length,
+                          itemBuilder: (context, index) => HotelSideFinishedCard(
                             itemIndex: index,
-                            travellarsBookingModel: travellarsBookings[index],
+                            size : size,
+                            hotelBookingsDetails2: HotelFinishedDetails2[index],
                           ),
                         ),
                       ),

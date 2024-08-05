@@ -14,11 +14,11 @@ class CurrencyDisplay extends StatelessWidget {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
         resizeToAvoidBottomInset: false,
-        backgroundColor: AppColors.StatusBarColor,
+        backgroundColor: AppColors.lightPurple,
         body: SafeArea(
             child: Stack(children: [
           Padding(
-            padding: const EdgeInsets.only(left: 15, right: 15, top: 22),
+            padding: const EdgeInsets.only(left: 15, right: 15, top: 10),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
@@ -53,7 +53,7 @@ class CurrencyDisplay extends StatelessWidget {
           ),
           Padding(
             padding: const EdgeInsets.only(
-              top: 60,
+              top: 50,
             ),
             child: Container(
               decoration: const BoxDecoration(
@@ -96,72 +96,95 @@ class CurrencyPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final CurrencyController controller = Get.find();
 
-    return SafeArea(
-      child: Scaffold(
-        body: Column(
+    return Scaffold(
+      backgroundColor: AppColors.lightPurple,
+      body: SafeArea(
+        child: Stack(
           children: [
-            SizedBox(
-              height: 20,
-            ),
-            Row(
-              children: [
-                InkWell(
-                  onTap: () {
-                    Get.back();
-                  },
-                  child: const Icon(
+            Padding(
+              padding: EdgeInsets.only(left: 15, right: 15, top: 10),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  InkWell(
+                    onTap: () => Get.back(),
+                    child: Icon(
+                      Icons.arrow_back,
+                      color: AppColors.purple,
+                    ),
+                  ),
+                  Text(
+                    'Currency',
+                    style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w700,
+                        color: AppColors.purple),
+                  ),
+                  Icon(
                     Icons.arrow_back,
+                    color: AppColors.lightPurple,
+                  ),
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(
+                top: 50,
+              ),
+              child: Container(
+                // width: size.width,
+                decoration: const BoxDecoration(
+                  image: DecorationImage(
+                      image: AssetImage('assets/image/png/background1.png'),
+                      fit: BoxFit.fill),
+                ),
+              ),
+            ),
+            Column(
+              children: [
+                SizedBox(
+                  height: 90,
+                ),
+                Expanded(
+                  child: ListView.builder(
+                    itemCount: controller.currencyCodes.length,
+                    itemBuilder: (context, index) {
+                      String key = controller.currencyCodes[index];
+                      return Obx(() {
+                        return ListTile(
+                          title: Row(
+                            children: [
+                              Text(
+                                key,
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w500, fontSize: 14),
+                              ),
+                              SizedBox(
+                                width: 15,
+                              ),
+                              Text(
+                                controller.currencyText[index],
+                                style: TextStyle(fontSize: 14),
+                              )
+                            ],
+                          ),
+                          trailing: controller.selectedCurrency.value == key
+                              ? Icon(
+                                  Icons.check,
+                                  color: Colors.purple,
+                                )
+                              : null,
+                          onTap: () {
+                            controller.updateCurrency(key);
+                            Get.back();
+                          },
+                        );
+                      });
+                    },
                   ),
                 ),
-                SizedBox(
-                  width: 160,
-                ),
-                const Text('Profile',
-                    style: TextStyle(
-                      fontSize: 20,
-                    )),
               ],
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            Expanded(
-              child: ListView.builder(
-                itemCount: controller.currencyCodes.length,
-                itemBuilder: (context, index) {
-                  String key = controller.currencyCodes[index];
-                  return Obx(() {
-                    return ListTile(
-                      title: Row(
-                        children: [
-                          Text(
-                            key,
-                            style: TextStyle(
-                                fontWeight: FontWeight.w500, fontSize: 14),
-                          ),
-                          SizedBox(
-                            width: 15,
-                          ),
-                          Text(
-                            controller.currencyText[index],
-                            style: TextStyle(fontSize: 14),
-                          )
-                        ],
-                      ),
-                      trailing: controller.selectedCurrency.value == key
-                          ? Icon(
-                              Icons.check,
-                              color: Colors.blue,
-                            )
-                          : null,
-                      onTap: () {
-                        controller.updateCurrency(key);
-                        Get.back();
-                      },
-                    );
-                  });
-                },
-              ),
             ),
           ],
         ),

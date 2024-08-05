@@ -1,9 +1,13 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:traveling/cards/hotel_finished_booking_card.dart';
 import 'package:traveling/classes/hotel_bookings_class.dart';
+import 'package:traveling/classes/hotel_room_details_class.dart';
+import 'package:traveling/controllers/currency_controller.dart';
 
 import 'package:traveling/ui/shared/colors.dart';
 
@@ -11,12 +15,14 @@ import 'package:traveling/controllers/search_oneway_controller.dart';
 import 'package:traveling/controllers/search_roundtrip_controller.dart';
 import 'package:traveling/ui/shared/custom_widgets/custom_button.dart';
 import 'package:traveling/ui/shared/text_size.dart';
+import 'package:traveling/ui/views/hotel_side_views/hotel_search_view.dart';
 import 'package:traveling/ui/views/traveller_side_views/search_flight/DepartureDateDetails.dart';
 import 'package:traveling/ui/views/traveller_side_views/search_flight/DepartureDateReturnDateDetails.dart';
 import 'package:traveling/ui/views/traveller_side_views/search_flight/list_arrival_city_oneway.dart';
 import 'package:traveling/ui/views/traveller_side_views/search_flight/list_arrival_city_round.dart';
 import 'package:traveling/ui/views/traveller_side_views/search_flight/list_departure_city_oneway.dart';
 import 'package:traveling/ui/views/traveller_side_views/search_flight/list_departure_city_round.dart';
+import 'package:traveling/ui/views/traveller_side_views/search_hotel/search_hotel_view.dart';
 
 class SearchView extends StatefulWidget {
   String? DepartureCity;
@@ -31,7 +37,7 @@ class SearchView extends StatefulWidget {
 class _SearchViewState extends State<SearchView>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
-
+  String color = 'purple';
   String? _flightSorteBy = 'One Way';
   final TextEditingController dateController = TextEditingController();
   void _handleDateSelection(String dateText) {
@@ -84,7 +90,7 @@ class _SearchViewState extends State<SearchView>
             children: [
               Padding(
                 padding: const EdgeInsets.only(
-                  top: 60,
+                  top: 50,
                 ),
                 child: Container(
                   decoration: const BoxDecoration(
@@ -97,7 +103,7 @@ class _SearchViewState extends State<SearchView>
               const Column(
                 children: [
                   SizedBox(
-                    height: 20,
+                    height: 10,
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -109,140 +115,23 @@ class _SearchViewState extends State<SearchView>
                             fontWeight: FontWeight.w700,
                             color: AppColors.backgroundgrayColor),
                       )
+                      // color == 'purple'
+                      //     ? const Text(
+                      //         'Search',
+                      //         style: TextStyle(
+                      //             fontSize: 20,
+                      //             fontWeight: FontWeight.w700,
+                      //             color: AppColors.purple),
+                      //       )
+                      //     : const Text(
+                      //         'Search',
+                      //         style: TextStyle(
+                      //             fontSize: 20,
+                      //             fontWeight: FontWeight.w700,
+                      //             color: AppColors.backgroundgrayColor),
+                      //       )
                     ],
                   ),
-
-                  // Expanded(
-                  //   child: Padding(
-                  //     padding: const EdgeInsets.all(15),
-                  //     child: Column(
-                  //       mainAxisAlignment: MainAxisAlignment.center,
-                  //       children: [
-                  //         InkWell(
-                  //           onTap: () {
-                  //             Get.to(SearchFlightView());
-                  //           },
-                  //           child: Container(
-                  //             width: size.width,
-                  //             height: size.height / 5,
-                  //             decoration:
-                  //                 decoration.copyWith(color: AppColors.lightBlue),
-                  //             child: const Stack(
-                  //               children: [
-                  //                 Positioned(
-                  //                   top: 30,
-                  //                   right: 20,
-                  //                   child: Icon(
-                  //                     Icons.flight,
-                  //                     color: Color.fromARGB(76, 249, 249, 249),
-                  //                     size: 100,
-                  //                   ),
-                  //                 ),
-                  //                 Padding(
-                  //                   padding: EdgeInsets.only(left: 30),
-                  //                   child: Column(
-                  //                     mainAxisAlignment: MainAxisAlignment.center,
-                  //                     children: [
-                  //                       Text(
-                  //                         'Flight',
-                  //                         style: TextStyle(
-                  //                           fontSize: 30,
-                  //                           fontWeight: FontWeight.w700,
-                  //                           color: AppColors.BlueText,
-                  //                         ),
-                  //                       ),
-                  //                     ],
-                  //                   ),
-                  //                 ),
-                  //               ],
-                  //             ),
-                  //           ),
-                  //         ),
-                  //         const SizedBox(
-                  //           height: 20,
-                  //         ),
-                  //         InkWell(
-                  //           onTap: () {
-                  //             Get.to(SearchHotelView());
-                  //           },
-                  //           child: Container(
-                  //             width: size.width,
-                  //             height: size.height / 5,
-                  //             decoration: decoration.copyWith(
-                  //                 color: AppColors.lightPurple),
-                  //             child: const Stack(
-                  //               children: [
-                  //                 Positioned(
-                  //                   top: 30,
-                  //                   right: 20,
-                  //                   child: Icon(
-                  //                     Icons.home_rounded,
-                  //                     color: Color.fromARGB(76, 249, 249, 249),
-                  //                     size: 100,
-                  //                   ),
-                  //                 ),
-                  //                 Padding(
-                  //                   padding: EdgeInsets.only(left: 30),
-                  //                   child: Column(
-                  //                     mainAxisAlignment: MainAxisAlignment.center,
-                  //                     children: [
-                  //                       Text(
-                  //                         'Hotel',
-                  //                         style: TextStyle(
-                  //                           fontSize: 30,
-                  //                           fontWeight: FontWeight.w700,
-                  //                           color: Colors.purple,
-                  //                         ),
-                  //                       ),
-                  //                     ],
-                  //                   ),
-                  //                 ),
-                  //               ],
-                  //             ),
-                  //           ),
-                  //         ),
-                  //         const SizedBox(
-                  //           height: 20,
-                  //         ),
-                  //         Container(
-                  //           width: size.width,
-                  //           height: size.height / 5,
-                  //           decoration: decoration.copyWith(
-                  //               color: Color.fromARGB(255, 210, 225, 211)),
-                  //           child: const Stack(
-                  //             children: [
-                  //               Positioned(
-                  //                 top: 30,
-                  //                 right: 20,
-                  //                 child: Icon(
-                  //                   Icons.local_taxi,
-                  //                   color: Color.fromARGB(76, 249, 249, 249),
-                  //                   size: 100,
-                  //                 ),
-                  //               ),
-                  //               Padding(
-                  //                 padding: EdgeInsets.only(left: 30),
-                  //                 child: Column(
-                  //                   mainAxisAlignment: MainAxisAlignment.center,
-                  //                   children: [
-                  //                     Text(
-                  //                       'Car',
-                  //                       style: TextStyle(
-                  //                         fontSize: 30,
-                  //                         fontWeight: FontWeight.w700,
-                  //                         color: Colors.white,
-                  //                       ),
-                  //                     ),
-                  //                   ],
-                  //                 ),
-                  //               ),
-                  //             ],
-                  //           ),
-                  //         ),
-                  //       ],
-                  //     ),
-                  //   ),
-                  // ),
                 ],
               ),
               Padding(
@@ -280,8 +169,8 @@ class _SearchViewState extends State<SearchView>
                   child: TabBarView(
                     controller: _tabController,
                     children: [
-                      HotelBookings(context),
-                      FlightBookings(context),
+                      SearchHotelView(),
+                      flightSearch(context),
                       CarBookings(context),
                     ],
                   ),
@@ -357,7 +246,7 @@ class _SearchViewState extends State<SearchView>
                                   showDialog(
                                     context: context,
                                     builder: (BuildContext context) {
-                                      return AlertDialog(
+                                      return const AlertDialog(
                                         title: Text('Invalid City Selection'),
                                         content: Text(
                                             'Arrival city cannot be the same as the departure city.'),
@@ -379,20 +268,20 @@ class _SearchViewState extends State<SearchView>
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Icon(Icons.flight_takeoff, color: AppColors.gold),
-                        SizedBox(
+                        const Icon(Icons.flight_takeoff, color: AppColors.gold),
+                        const SizedBox(
                           width: 10,
                         ),
                         Text(
                           widget.DepartureCity ?? '',
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontSize: 15, fontWeight: FontWeight.w500),
                         ),
                       ],
                     ),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
                 const Row(
@@ -435,7 +324,7 @@ class _SearchViewState extends State<SearchView>
                               showDialog(
                                 context: context,
                                 builder: (BuildContext context) {
-                                  return AlertDialog(
+                                  return const AlertDialog(
                                     title: Text('Invalid City Selection'),
                                     content: Text(
                                         'Arrival city cannot be the same as the departure city.'),
@@ -1128,7 +1017,7 @@ class _SearchViewState extends State<SearchView>
     );
   }
 
-  Widget FlightBookings(BuildContext context) {
+  Widget flightSearch(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Column(
       children: [
@@ -1184,7 +1073,7 @@ class _SearchViewState extends State<SearchView>
     );
   }
 
-  Widget HotelBookings(BuildContext context) {
+  Widget hotelSearch(BuildContext context) {
     return Container();
   }
 

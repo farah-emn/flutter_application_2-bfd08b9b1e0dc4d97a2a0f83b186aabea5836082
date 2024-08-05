@@ -2,7 +2,9 @@
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:traveling/ui/shared/text_size.dart';
 import 'package:traveling/ui/shared/utils.dart';
@@ -147,9 +149,7 @@ class _HotelAboutUsViewState extends State<HotelAboutUsView> {
                       children: [
                         const Row(
                           children: [
-                            SizedBox(
-                              width: 10,
-                            ),
+                           
                             Text(
                               'Company name',
                               style: TextStyle(
@@ -159,14 +159,23 @@ class _HotelAboutUsViewState extends State<HotelAboutUsView> {
                             ),
                           ],
                         ),
-                        SizedBox(
-                          height: 45,
+                        Container(
+                          height: 40,
                           width: size.width,
                           child: TextField(
+                            cursorColor: AppColors.purple,
                             readOnly: true,
+                            textAlignVertical: TextAlignVertical.center,
                             controller: _HotelNameController,
                             keyboardType: TextInputType.phone,
                             decoration: textFielDecoratiom.copyWith(
+                                
+                                focusedBorder: const OutlineInputBorder(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(18)),
+                                  borderSide: BorderSide(
+                                      color: AppColors.purple, width: 1.5),
+                                ),
                                 fillColor: Colors.white,
                                 prefixIcon: const Icon(
                                   Icons.business_outlined,
@@ -176,13 +185,11 @@ class _HotelAboutUsViewState extends State<HotelAboutUsView> {
                           ),
                         ),
                         const SizedBox(
-                          height: 30,
+                          height: 20,
                         ),
                         const Row(
                           children: [
-                            SizedBox(
-                              width: 10,
-                            ),
+                           
                             Text(
                               'Email',
                               style: TextStyle(
@@ -193,13 +200,19 @@ class _HotelAboutUsViewState extends State<HotelAboutUsView> {
                           ],
                         ),
                         SizedBox(
-                          height: 45,
+                          height: 40,
                           width: size.width,
                           child: TextField(
                             readOnly: true,
                             controller: _emailController,
                             keyboardType: TextInputType.phone,
                             decoration: textFielDecoratiom.copyWith(
+                                focusedBorder: const OutlineInputBorder(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(18)),
+                                  borderSide: BorderSide(
+                                      color: AppColors.purple, width: 1.5),
+                                ),
                                 fillColor: Colors.white,
                                 prefixIcon: const Icon(
                                   Icons.email,
@@ -209,13 +222,11 @@ class _HotelAboutUsViewState extends State<HotelAboutUsView> {
                           ),
                         ),
                         const SizedBox(
-                          height: 30,
+                          height: 20,
                         ),
                         const Row(
                           children: [
-                            SizedBox(
-                              width: 10,
-                            ),
+                            
                             Text(
                               'Mobile number',
                               style: TextStyle(
@@ -226,11 +237,17 @@ class _HotelAboutUsViewState extends State<HotelAboutUsView> {
                           ],
                         ),
                         SizedBox(
-                          height: 45,
+                          height: 40,
                           width: size.width,
                           child: TextField(
                             keyboardType: TextInputType.phone,
                             decoration: textFielDecoratiom.copyWith(
+                              focusedBorder: const OutlineInputBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(18)),
+                                borderSide: BorderSide(
+                                    color: AppColors.purple, width: 1.5),
+                              ),
                               fillColor: Colors.white,
                               prefixIcon: const Icon(
                                 Icons.call,
@@ -241,13 +258,11 @@ class _HotelAboutUsViewState extends State<HotelAboutUsView> {
                           ),
                         ),
                         const SizedBox(
-                          height: 30,
+                          height: 20,
                         ),
                         const Row(
                           children: [
-                            SizedBox(
-                              width: 10,
-                            ),
+                           
                             Text(
                               'Location',
                               style: TextStyle(
@@ -257,11 +272,15 @@ class _HotelAboutUsViewState extends State<HotelAboutUsView> {
                             ),
                           ],
                         ),
-                        SizedBox(
-                          height: 45,
+                        Container(
+                          height: 40,
                           width: size.width,
                           child: TextField(
                             decoration: textFielDecoratiom.copyWith(
+                              focusedBorder: const OutlineInputBorder(
+    borderRadius: BorderRadius.all(Radius.circular(18)),
+    borderSide: BorderSide(color: AppColors.mainColorBlue, width: 1.5),
+  ),
                               fillColor: Colors.white,
                               prefixIcon: const Icon(
                                 Icons.location_on_rounded,
@@ -271,34 +290,6 @@ class _HotelAboutUsViewState extends State<HotelAboutUsView> {
                             onChanged: (value) {},
                           ),
                         ),
-                      ],
-                    ),
-                  ),
-                  InkWell(
-                    onTap: () {
-                      Get.to(() => const CurrencyDisplay());
-                    },
-                    child: Row(
-                      children: [
-                        SizedBox(
-                          height: screenHeight(30),
-                        ),
-                        const Icon(
-                          Icons.person,
-                          color: AppColors.mainColorBlue,
-                        ),
-                        const SizedBox(width: 20),
-                        Text(
-                          'Settings',
-                          style: TextStyle(
-                            fontSize: screenWidth(24),
-                            color: AppColors.TextgrayColor,
-                          ),
-                        ),
-                        const Spacer(),
-                        const Image(
-                          image: AssetImage('assets/image/png/arrow icon.png'),
-                        )
                       ],
                     ),
                   ),

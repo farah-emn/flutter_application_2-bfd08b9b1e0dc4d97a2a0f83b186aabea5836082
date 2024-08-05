@@ -59,10 +59,9 @@ class _HomeViewState extends State<HomeView> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    
+
     return Scaffold(
       key: _scaffoldKey,
-
       drawer: Drawer(
         backgroundColor: AppColors.backgroundgrayColor,
         child: Column(
@@ -167,7 +166,8 @@ class _HomeViewState extends State<HomeView> {
                 ),
               ),
               onTap: () {
-                Navigator.pop(context);
+                _auth.signOut();
+                Get.offAll(() => const FirstView());
               },
             ),
           ],
