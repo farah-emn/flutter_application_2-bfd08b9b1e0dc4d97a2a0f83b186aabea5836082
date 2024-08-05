@@ -147,7 +147,6 @@ class _HotelSignUpImageViewState extends State<HotelSignUpImageView> {
                           Text(
                             'Pick from gallery',
                             style: TextStyle(
-                                color: AppColors.purple,
                                 fontSize: TextSize.header2,
                                 fontWeight: FontWeight.w500),
                           ),
@@ -155,7 +154,7 @@ class _HotelSignUpImageViewState extends State<HotelSignUpImageView> {
                       ),
                     ),
                     SizedBox(
-                      height: 15,
+                      height: 20,
                     ),
                     InkWell(
                       onTap: () async {
@@ -187,7 +186,6 @@ class _HotelSignUpImageViewState extends State<HotelSignUpImageView> {
                           Text(
                             'Capture from camera',
                             style: TextStyle(
-                                color: AppColors.purple,
                                 fontSize: TextSize.header2,
                                 fontWeight: FontWeight.w500),
                           ),
@@ -318,9 +316,9 @@ class _HotelSignUpImageViewState extends State<HotelSignUpImageView> {
                                 width: 120,
                                 margin: const EdgeInsets.only(right: 10),
                                 decoration: BoxDecoration(
-                                  color: AppColors.grayText,
+                                  color: AppColors.gray,
                                   borderRadius: const BorderRadius.all(
-                                    Radius.circular(20),
+                                    Radius.circular(120),
                                   ),
                                 ),
                                 child: Icon(
@@ -369,61 +367,68 @@ class _HotelSignUpImageViewState extends State<HotelSignUpImageView> {
                     SizedBox(
                       height: 20,
                     ),
-
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    Column(
                       children: [
-                        Text(
-                          'Location',
-                          style: TextStyle(
-                              fontSize: TextSize.header1,
-                              fontWeight: FontWeight.w700),
-                        ),
-                        SizedBox(
-                          width: 30,
-                        ),
-                        InkWell(
-                          onTap: () {
-                            Get.to(
-                              MapView(
-                                onLocationSelected:
-                                    (newLocality, newStreet, newCountry) {
-                                  setState(() {
-                                    _City.text = newLocality;
-                                    _Address.text = newStreet;
-                                    _Country.text = newCountry;
-                                  });
-                                },
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              'Location',
+                              style: TextStyle(
+                                  fontSize: TextSize.header1,
+                                  fontWeight: FontWeight.w700),
+                            ),
+                            SizedBox(
+                              width: 30,
+                            ),
+                            InkWell(
+                              onTap: () {
+                                Get.to(
+                                  MapView(
+                                    onLocationSelected:
+                                        (newLocality, newStreet, newCountry) {
+                                      setState(() {
+                                        _City.text = newLocality;
+                                        _Address.text = newStreet;
+                                        _Country.text = newCountry;
+                                      });
+                                    },
+                                  ),
+                                );
+                              },
+                              child: const Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  Text(
+                                    'Show on map',
+                                    style: TextStyle(
+                                        fontSize: TextSize.header2,
+                                        color: AppColors.grayText,
+                                        fontWeight: FontWeight.w500),
+                                  ),
+                                ],
                               ),
-                            );
-                          },
-                          child: const Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              Text(
-                                'Show on map',
-                                style: TextStyle(
-                                    fontSize: TextSize.header2,
-                                    color: AppColors.grayText,
-                                    fontWeight: FontWeight.w500),
-                              ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
                       ],
                     ),
                     SizedBox(
                       height: 20,
                     ),
-                    const Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
+                    Column(
                       children: [
-                        Text(
-                          'Country',
-                          style: TextStyle(
-                              fontSize: 13,
-                              color: AppColors.grayText,
-                              fontWeight: FontWeight.w500),
+                        const Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Country',
+                              style: TextStyle(
+                                  fontSize: 13,
+                                  color: AppColors.grayText,
+                                  fontWeight: FontWeight.w500),
+                            ),
+                          ],
                         ),
                       ],
                     ),
@@ -435,8 +440,12 @@ class _HotelSignUpImageViewState extends State<HotelSignUpImageView> {
                         decoration: textFielDecoratiom.copyWith(
                           focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.all(Radius.circular(18)),
-                            borderSide: BorderSide(
-                                color: AppColors.mainColorBlue, width: 1.5),
+                            borderSide:
+                                BorderSide(color: AppColors.purple, width: 1.5),
+                          ),
+                          prefixIcon: const Icon(
+                            Icons.location_on_rounded,
+                            color: AppColors.purple,
                           ),
                         ),
                         onChanged: (value) {},
@@ -468,6 +477,10 @@ class _HotelSignUpImageViewState extends State<HotelSignUpImageView> {
                             borderSide:
                                 BorderSide(color: AppColors.purple, width: 1.5),
                           ),
+                          prefixIcon: const Icon(
+                            Icons.location_on_rounded,
+                            color: AppColors.purple,
+                          ),
                         ),
                         onChanged: (value) {},
                       ),
@@ -498,6 +511,10 @@ class _HotelSignUpImageViewState extends State<HotelSignUpImageView> {
                             borderSide:
                                 BorderSide(color: AppColors.purple, width: 1.5),
                           ),
+                          prefixIcon: const Icon(
+                            Icons.location_on_rounded,
+                            color: AppColors.purple,
+                          ),
                         ),
                         onChanged: (value) {},
                       ),
@@ -505,28 +522,6 @@ class _HotelSignUpImageViewState extends State<HotelSignUpImageView> {
                     SizedBox(
                       height: 20,
                     ),
-                    // Container(
-                    //   width: size.width,
-                    //   child: ElevatedButton(
-                    //       onPressed: () {
-                    //         if (photo != null) {
-                    //           _uploadImageToFirebase(photo!);
-                    //           Get.offAll(HoteltHome());
-                    //         } else {
-                    //           Fluttertoast.showToast(
-                    //               msg: "Please choose image",
-                    //               toastLength: Toast.LENGTH_SHORT,
-                    //               gravity: ToastGravity.BOTTOM,
-                    //               timeInSecForIosWeb: 1,
-                    //               // backgroundColor:
-                    //               // const Color.fromARGB(255, 158, 165, 174),
-                    //               textColor: Colors.white,
-                    //               fontSize: 16.0);
-                    //         }
-                    //       },
-                    //       child: Text('Save')),
-                    // ),
-
                     Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
@@ -554,24 +549,6 @@ class _HotelSignUpImageViewState extends State<HotelSignUpImageView> {
                               widthPercent: size.width,
                               heightPercent: 15),
                         ),
-                        // ElevatedButton(
-                        //     onPressed: () {
-                        //       if (photo != null) {
-                        //         _uploadImageToFirebase(photo!);
-                        //         Get.offAll(HoteltHome());
-                        //       } else {
-                        //         Fluttertoast.showToast(
-                        //             msg: "Please choose image",
-                        //             toastLength: Toast.LENGTH_SHORT,
-                        //             gravity: ToastGravity.BOTTOM,
-                        //             timeInSecForIosWeb: 1,
-                        //             backgroundColor: const Color.fromARGB(
-                        //                 255, 158, 165, 174),
-                        //             textColor: Colors.white,
-                        //             fontSize: 16.0);
-                        //       }
-                        //     },
-                        //     child: Text('Save'))
                       ],
                     )
                   ],

@@ -51,8 +51,6 @@ class _HoteltSignUpViewState extends State<HoteltSignUpView> {
     super.dispose();
   }
 
-  
-
   @override
   Widget build(BuildContext context) {
     final auth = FirebaseAuth.instance;
@@ -172,8 +170,8 @@ class _HoteltSignUpViewState extends State<HoteltSignUpView> {
                     Text(
                       'Sign up ',
                       style: TextStyle(
-                         fontSize: TextSize.header1,
-                              fontWeight: FontWeight.w700),
+                          fontSize: TextSize.header1,
+                          fontWeight: FontWeight.w700),
                     ),
                     const SizedBox(
                       height: 20,
@@ -199,6 +197,10 @@ class _HoteltSignUpViewState extends State<HoteltSignUpView> {
                             borderRadius: BorderRadius.all(Radius.circular(18)),
                             borderSide:
                                 BorderSide(color: AppColors.purple, width: 1.5),
+                          ),
+                          prefixIcon: const Icon(
+                            Icons.email_rounded,
+                            color: AppColors.purple,
                           ),
                         ),
                         onChanged: (value) {
@@ -241,6 +243,10 @@ class _HoteltSignUpViewState extends State<HoteltSignUpView> {
                             borderSide:
                                 BorderSide(color: AppColors.purple, width: 1.5),
                           ),
+                          prefixIcon: const Icon(
+                            Icons.location_city_rounded,
+                            color: AppColors.purple,
+                          ),
                         ),
                         onChanged: (value) {
                           CompanyName = value;
@@ -280,6 +286,10 @@ class _HoteltSignUpViewState extends State<HoteltSignUpView> {
                             borderRadius: BorderRadius.all(Radius.circular(18)),
                             borderSide:
                                 BorderSide(color: AppColors.purple, width: 1.5),
+                          ),
+                          prefixIcon: const Icon(
+                            Icons.lock,
+                            color: AppColors.purple,
                           ),
                         ),
                         controller: _passwordController,
@@ -322,6 +332,10 @@ class _HoteltSignUpViewState extends State<HoteltSignUpView> {
                             borderRadius: BorderRadius.all(Radius.circular(18)),
                             borderSide:
                                 BorderSide(color: AppColors.purple, width: 1.5),
+                          ),
+                          prefixIcon: const Icon(
+                            Icons.lock,
+                            color: AppColors.purple,
                           ),
                         ),
                         onChanged: (value) {

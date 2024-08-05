@@ -149,7 +149,6 @@ class _HotelAboutUsViewState extends State<HotelAboutUsView> {
                       children: [
                         const Row(
                           children: [
-                           
                             Text(
                               'Company name',
                               style: TextStyle(
@@ -169,7 +168,6 @@ class _HotelAboutUsViewState extends State<HotelAboutUsView> {
                             controller: _HotelNameController,
                             keyboardType: TextInputType.phone,
                             decoration: textFielDecoratiom.copyWith(
-                                
                                 focusedBorder: const OutlineInputBorder(
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(18)),
@@ -189,7 +187,6 @@ class _HotelAboutUsViewState extends State<HotelAboutUsView> {
                         ),
                         const Row(
                           children: [
-                           
                             Text(
                               'Email',
                               style: TextStyle(
@@ -226,7 +223,6 @@ class _HotelAboutUsViewState extends State<HotelAboutUsView> {
                         ),
                         const Row(
                           children: [
-                            
                             Text(
                               'Mobile number',
                               style: TextStyle(
@@ -262,7 +258,6 @@ class _HotelAboutUsViewState extends State<HotelAboutUsView> {
                         ),
                         const Row(
                           children: [
-                           
                             Text(
                               'Location',
                               style: TextStyle(
@@ -278,9 +273,11 @@ class _HotelAboutUsViewState extends State<HotelAboutUsView> {
                           child: TextField(
                             decoration: textFielDecoratiom.copyWith(
                               focusedBorder: const OutlineInputBorder(
-    borderRadius: BorderRadius.all(Radius.circular(18)),
-    borderSide: BorderSide(color: AppColors.mainColorBlue, width: 1.5),
-  ),
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(18)),
+                                borderSide: BorderSide(
+                                    color: AppColors.mainColorBlue, width: 1.5),
+                              ),
                               fillColor: Colors.white,
                               prefixIcon: const Icon(
                                 Icons.location_on_rounded,
