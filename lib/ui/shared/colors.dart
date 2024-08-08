@@ -10,7 +10,8 @@ class AppColors {
 
   static const babyblueColor = Color.fromRGBO(234, 243, 255, 1);
   static const Color blackColor = Color.fromRGBO(70, 77, 83, 1);
-  static const Color pinkColor = Color(0xFFEF8EE6);
+  static const Color lightOrange = Color.fromARGB(255, 243, 207, 181);
+  static const Color orange = Color.fromARGB(255, 234, 172, 142);
   static const Color pinkColor2 = Color.fromARGB(255, 255, 181, 216);
   static const LightBlueColor = Color.fromARGB(255, 199, 223, 255);
   static const LightGrayColor = Color.fromARGB(255, 224, 224, 224);

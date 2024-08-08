@@ -84,13 +84,19 @@ class _SearchViewState extends State<SearchView>
     return DefaultTabController(
       length: 3,
       child: Scaffold(
-        backgroundColor: AppColors.StatusBarColor,
-        body: SafeArea(
+        body: Container(
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topRight,
+              end: Alignment.topLeft,
+              colors: [AppColors.lightBlue, AppColors.lightPurple],
+            ),
+          ),
           child: Stack(
             children: [
               Padding(
                 padding: const EdgeInsets.only(
-                  top: 50,
+                  top: 70,
                 ),
                 child: Container(
                   decoration: const BoxDecoration(
@@ -103,7 +109,7 @@ class _SearchViewState extends State<SearchView>
               const Column(
                 children: [
                   SizedBox(
-                    height: 10,
+                    height: 35,
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -113,7 +119,7 @@ class _SearchViewState extends State<SearchView>
                         style: TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.w700,
-                            color: AppColors.backgroundgrayColor),
+                            color: Colors.white),
                       )
                       // color == 'purple'
                       //     ? const Text(
@@ -150,8 +156,8 @@ class _SearchViewState extends State<SearchView>
                     controller: _tabController,
                     indicatorSize: TabBarIndicatorSize.tab,
                     dividerColor: AppColors.LightGrayColor,
-                    indicatorColor: AppColors.darkBlue,
-                    labelColor: AppColors.darkBlue,
+                    indicatorColor: AppColors.purple,
+                    labelColor: AppColors.purple,
                     unselectedLabelColor: AppColors.lightBlue,
                     tabs: const [
                       Tab(
@@ -268,7 +274,7 @@ class _SearchViewState extends State<SearchView>
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        const Icon(Icons.flight_takeoff, color: AppColors.gold),
+                        const Icon(Icons.flight_takeoff, color: AppColors.Blue),
                         const SizedBox(
                           width: 10,
                         ),
@@ -343,7 +349,7 @@ class _SearchViewState extends State<SearchView>
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Icon(Icons.flight_land, color: AppColors.gold),
+                        Icon(Icons.flight_land, color: AppColors.Blue),
                         SizedBox(
                           width: 10,
                         ),
@@ -433,15 +439,15 @@ class _SearchViewState extends State<SearchView>
                         children: const [
                           Icon(
                             Icons.calendar_month_rounded,
-                            color: AppColors.gold,
+                            color: AppColors.Blue,
                           ),
                           SizedBox(
                             width: 10,
                           ),
                           Text(
                             'Add rutern',
-                            style: TextStyle(
-                                color: AppColors.darkBlue, fontSize: 16),
+                            style:
+                                TextStyle(color: AppColors.Blue, fontSize: 16),
                           ),
                         ],
                       ),
@@ -487,7 +493,7 @@ class _SearchViewState extends State<SearchView>
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Icon(Icons.group, color: AppColors.gold),
+                      Icon(Icons.group, color: AppColors.Blue),
                       SizedBox(
                         width: 10,
                       ),
@@ -511,14 +517,14 @@ class _SearchViewState extends State<SearchView>
                               controller.incrementAdult();
                             },
                             child: Icon(Icons.arrow_drop_up_sharp,
-                                color: AppColors.darkBlue, size: 20),
+                                color: AppColors.Blue, size: 20),
                           ),
                           InkWell(
                             onTap: () {
                               controller.decrementAdult();
                             },
                             child: Icon(Icons.arrow_drop_down_sharp,
-                                color: AppColors.darkBlue, size: 20),
+                                color: AppColors.Blue, size: 20),
                           ),
                         ],
                       )
@@ -555,7 +561,7 @@ class _SearchViewState extends State<SearchView>
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Icon(Icons.group, color: AppColors.gold),
+                      Icon(Icons.group, color: AppColors.Blue),
                       SizedBox(
                         width: 10,
                       ),
@@ -579,14 +585,14 @@ class _SearchViewState extends State<SearchView>
                               controller.incrementChild();
                             },
                             child: Icon(Icons.arrow_drop_up_sharp,
-                                color: AppColors.darkBlue, size: 20),
+                                color: AppColors.Blue, size: 20),
                           ),
                           InkWell(
                             onTap: () {
                               controller.decrementChild();
                             },
                             child: Icon(Icons.arrow_drop_down_sharp,
-                                color: AppColors.darkBlue, size: 20),
+                                color: AppColors.Blue, size: 20),
                           ),
                         ],
                       )
@@ -605,7 +611,7 @@ class _SearchViewState extends State<SearchView>
           child: CustomButton(
               text: 'Search',
               textColor: AppColors.backgroundgrayColor,
-              backgroundColor: AppColors.darkBlue,
+              backgroundColor: AppColors.Blue,
               widthPercent: size.width,
               heightPercent: 15),
         ),
@@ -734,7 +740,7 @@ class _SearchViewState extends State<SearchView>
                         },
                         child: Row(
                           children: [
-                            Icon(Icons.flight_takeoff, color: AppColors.gold),
+                            Icon(Icons.flight_takeoff, color: AppColors.Blue),
                             Column(
                               children: [
                                 SizedBox(
@@ -819,7 +825,7 @@ class _SearchViewState extends State<SearchView>
                         child: Row(
                           children: [
                             Icon(Icons.flight_land_rounded,
-                                color: AppColors.gold),
+                                color: AppColors.Blue),
                             SizedBox(
                               width: 10,
                             ),
@@ -888,7 +894,7 @@ class _SearchViewState extends State<SearchView>
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Icon(Icons.group, color: AppColors.gold),
+                          Icon(Icons.group, color: AppColors.Blue),
                           SizedBox(
                             width: 10,
                           ),
@@ -912,14 +918,14 @@ class _SearchViewState extends State<SearchView>
                                   controller.incrementAdult();
                                 },
                                 child: Icon(Icons.arrow_drop_up_sharp,
-                                    color: AppColors.darkBlue, size: 20),
+                                    color: AppColors.Blue, size: 20),
                               ),
                               InkWell(
                                 onTap: () {
                                   controller.decrementAdult();
                                 },
                                 child: Icon(Icons.arrow_drop_down_sharp,
-                                    color: AppColors.darkBlue, size: 20),
+                                    color: AppColors.Blue, size: 20),
                               ),
                             ],
                           )
@@ -957,7 +963,7 @@ class _SearchViewState extends State<SearchView>
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Icon(Icons.group, color: AppColors.gold),
+                          Icon(Icons.group, color: AppColors.Blue),
                           SizedBox(
                             width: 10,
                           ),
@@ -981,14 +987,14 @@ class _SearchViewState extends State<SearchView>
                                   controller.incrementChild();
                                 },
                                 child: Icon(Icons.arrow_drop_up_sharp,
-                                    color: AppColors.darkBlue, size: 20),
+                                    color: AppColors.Blue, size: 20),
                               ),
                               InkWell(
                                 onTap: () {
                                   controller.decrementChild();
                                 },
                                 child: Icon(Icons.arrow_drop_down_sharp,
-                                    color: AppColors.darkBlue, size: 20),
+                                    color: AppColors.Blue, size: 20),
                               ),
                             ],
                           )
@@ -1007,7 +1013,7 @@ class _SearchViewState extends State<SearchView>
               child: CustomButton(
                   text: 'Search',
                   textColor: AppColors.backgroundgrayColor,
-                  backgroundColor: AppColors.mainColorBlue,
+                  backgroundColor: AppColors.Blue,
                   widthPercent: size.width,
                   heightPercent: 15),
             ),
@@ -1027,7 +1033,7 @@ class _SearchViewState extends State<SearchView>
             Row(
               children: [
                 Radio(
-                  activeColor: AppColors.darkBlue,
+                  activeColor: AppColors.Blue,
                   autofocus: true,
                   value: 'One Way',
                   groupValue: _flightSorteBy,
@@ -1047,7 +1053,7 @@ class _SearchViewState extends State<SearchView>
             Row(
               children: [
                 Radio(
-                  activeColor: AppColors.darkBlue,
+                  activeColor: AppColors.Blue,
                   value: 'Round Trip',
                   groupValue: _flightSorteBy,
                   onChanged: (value) {

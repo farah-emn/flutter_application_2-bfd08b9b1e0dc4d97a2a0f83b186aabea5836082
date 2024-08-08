@@ -126,7 +126,7 @@ class TravellerDetailsView1 extends StatelessWidget {
                     ),
                     CustomTextField(
                       prefIcon: Icons.person_2,
-                      colorIcon: AppColors.pinkColor,
+                      colorIcon: AppColors.Blue,
                       hintText: 'First name',
                     ),
                     SizedBox(
@@ -134,7 +134,7 @@ class TravellerDetailsView1 extends StatelessWidget {
                     ),
                     CustomTextField(
                       prefIcon: Icons.person_2,
-                      colorIcon: AppColors.pinkColor,
+                      colorIcon: AppColors.Blue,
                       hintText: 'Last name',
                     ),
                     SizedBox(

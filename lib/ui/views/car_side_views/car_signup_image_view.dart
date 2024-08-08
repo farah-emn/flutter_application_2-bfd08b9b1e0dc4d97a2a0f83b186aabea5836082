@@ -17,17 +17,18 @@ import 'package:traveling/ui/shared/colors.dart';
 import 'package:traveling/ui/shared/custom_widgets/custom_button.dart';
 import 'package:traveling/ui/shared/custom_widgets/custom_textfield2.dart';
 import 'package:traveling/ui/shared/text_size.dart';
+import 'package:traveling/ui/views/car_side_views/car_home_screen.dart';
 import 'package:traveling/ui/views/hotel_side_views/hotel_home_screen.dart';
 import 'package:traveling/ui/views/hotel_side_views/map_view.dart';
 
-class HotelSignUpImageView extends StatefulWidget {
-  const HotelSignUpImageView({super.key});
+class CarSignUpImageView extends StatefulWidget {
+  const CarSignUpImageView({super.key});
 
   @override
-  _HotelSignUpImageViewState createState() => _HotelSignUpImageViewState();
+  _CarSignUpImageViewState createState() => _CarSignUpImageViewState();
 }
 
-class _HotelSignUpImageViewState extends State<HotelSignUpImageView> {
+class _CarSignUpImageViewState extends State<CarSignUpImageView> {
   final picker = ImagePicker();
   User? AirelineCompany;
   var AirelineCompanyId = '';
@@ -64,7 +65,7 @@ class _HotelSignUpImageViewState extends State<HotelSignUpImageView> {
         "location": '${_City.text}, ${_Country.text}',
         "address": '${_Address.text}'
       });
-      Get.offAll(HoteltHome());
+      Get.offAll(CarHome());
     } else {
       Fluttertoast.showToast(
           msg: "Please enter all fields",
@@ -139,7 +140,7 @@ class _HotelSignUpImageViewState extends State<HotelSignUpImageView> {
                         children: [
                           Icon(
                             Icons.photo_size_select_actual_rounded,
-                            color: AppColors.purple,
+                            color: AppColors.lightOrange,
                           ),
                           SizedBox(
                             width: 5,
@@ -178,7 +179,7 @@ class _HotelSignUpImageViewState extends State<HotelSignUpImageView> {
                         children: [
                           Icon(
                             Icons.camera_alt_rounded,
-                            color: AppColors.purple,
+                            color: AppColors.orange,
                           ),
                           SizedBox(
                             width: 5,
@@ -203,7 +204,7 @@ class _HotelSignUpImageViewState extends State<HotelSignUpImageView> {
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      backgroundColor: AppColors.lightPurple,
+      backgroundColor: AppColors.lightOrange,
       body: Stack(
         children: [
           SingleChildScrollView(
@@ -327,7 +328,7 @@ class _HotelSignUpImageViewState extends State<HotelSignUpImageView> {
                                 ),
                                 child: Icon(
                                   Icons.add_a_photo,
-                                  color: AppColors.purple,
+                                  color: AppColors.orange,
                                 ),
                               ),
                             )
@@ -361,7 +362,7 @@ class _HotelSignUpImageViewState extends State<HotelSignUpImageView> {
                                           ),
                                           child: Icon(
                                             Icons.add_a_photo,
-                                            color: AppColors.purple,
+                                            color: AppColors.orange,
                                           ),
                                         ),
                                       ),
@@ -445,11 +446,11 @@ class _HotelSignUpImageViewState extends State<HotelSignUpImageView> {
                           focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.all(Radius.circular(18)),
                             borderSide:
-                                BorderSide(color: AppColors.purple, width: 1.5),
+                                BorderSide(color: AppColors.orange, width: 1.5),
                           ),
                           prefixIcon: const Icon(
                             Icons.location_on_rounded,
-                            color: AppColors.purple,
+                            color: AppColors.orange,
                           ),
                         ),
                         onChanged: (value) {},
@@ -479,11 +480,11 @@ class _HotelSignUpImageViewState extends State<HotelSignUpImageView> {
                           focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.all(Radius.circular(18)),
                             borderSide:
-                                BorderSide(color: AppColors.purple, width: 1.5),
+                                BorderSide(color: AppColors.orange, width: 1.5),
                           ),
                           prefixIcon: const Icon(
                             Icons.location_on_rounded,
-                            color: AppColors.purple,
+                            color: AppColors.orange,
                           ),
                         ),
                         onChanged: (value) {},
@@ -513,11 +514,11 @@ class _HotelSignUpImageViewState extends State<HotelSignUpImageView> {
                           focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.all(Radius.circular(18)),
                             borderSide:
-                                BorderSide(color: AppColors.purple, width: 1.5),
+                                BorderSide(color: AppColors.orange, width: 1.5),
                           ),
                           prefixIcon: const Icon(
                             Icons.location_on_rounded,
-                            color: AppColors.purple,
+                            color: AppColors.orange,
                           ),
                         ),
                         onChanged: (value) {},
@@ -532,24 +533,27 @@ class _HotelSignUpImageViewState extends State<HotelSignUpImageView> {
                         SizedBox(height: 20),
                         InkWell(
                           onTap: () {
-                            if (photo != null) {
-                              _uploadImageToFirebase(photo!);
-                            } else {
-                              Fluttertoast.showToast(
-                                  msg: "Please choose image",
-                                  toastLength: Toast.LENGTH_SHORT,
-                                  gravity: ToastGravity.BOTTOM,
-                                  timeInSecForIosWeb: 1,
-                                  backgroundColor:
-                                      const Color.fromARGB(255, 158, 165, 174),
-                                  textColor: Colors.white,
-                                  fontSize: 16.0);
-                            }
+                            Get.offAll(CarHome());
                           },
+                          // onTap: () {
+                          //   if (photo != null) {
+                          //     _uploadImageToFirebase(photo!);
+                          //   } else {
+                          //     Fluttertoast.showToast(
+                          //         msg: "Please choose image",
+                          //         toastLength: Toast.LENGTH_SHORT,
+                          //         gravity: ToastGravity.BOTTOM,
+                          //         timeInSecForIosWeb: 1,
+                          //         backgroundColor:
+                          //             const Color.fromARGB(255, 158, 165, 174),
+                          //         textColor: Colors.white,
+                          //         fontSize: 16.0);
+                          //   }
+                          // },
                           child: CustomButton(
                               text: 'Confirm location',
                               textColor: AppColors.backgroundgrayColor,
-                              backgroundColor: AppColors.purple,
+                              backgroundColor: AppColors.orange,
                               widthPercent: size.width,
                               heightPercent: 15),
                         ),

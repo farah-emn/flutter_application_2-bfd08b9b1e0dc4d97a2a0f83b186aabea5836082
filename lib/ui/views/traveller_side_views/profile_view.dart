@@ -1,9 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:traveling/ui/shared/text_size.dart';
 import '../../shared/colors.dart';
 import '../../shared/custom_widgets/custom_button.dart';
 import '../../shared/custom_widgets/custom_textfield2.dart';
@@ -37,104 +39,10 @@ class _ProfileViewState extends State<ProfileView> {
   bool displayYearsList = false;
 
   final _formKey = GlobalKey<FormState>();
-  List<String> monthsList = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December"
-  ];
-
-  List<String> daysList = [
-    "1",
-    "2",
-    "3",
-    "4",
-    "5",
-    "6",
-    "7",
-    "8",
-    "9",
-    "10",
-    "11",
-    "12",
-    "13",
-    "14",
-    "15",
-    "16",
-    "17",
-    "18",
-    "19",
-    "20",
-    "21",
-    "22",
-    "23",
-    "24",
-    "25",
-    "26",
-    "27",
-    "28",
-    "29",
-    "30",
-    "31"
-  ];
-
-  List<String> yearsList = [
-    "1960",
-    "1961",
-    "1962",
-    "1963",
-    "1964",
-    "1965",
-    "1966",
-    "1967",
-    "1968",
-    "1969",
-    "1970",
-    "1971",
-    "1972",
-    "1973",
-    "1974",
-    "1975",
-    "1976",
-    "1977",
-    "1978",
-    "1979",
-    "1980",
-    "1981",
-    "1982",
-    "1983",
-    "1984",
-    "1985",
-    "1986",
-    "1987",
-    "1988",
-    "1989",
-    "1990",
-    "1991",
-    "1992",
-    "1993",
-    "1994",
-    "1995",
-    "1996",
-    "1997",
-    "1998",
-    "1999",
-    "2000",
-    "2001",
-    "2002",
-    "2003",
-    "2004",
-    "2005",
-    "2006"
-  ];
+  DateTime minDate = DateTime.now();
+  late final Function(String) onDateSelected;
+  late final Rx<DateTime> Departure_date;
+  late final TextEditingController datecontroller;
 
   late DatabaseReference ref;
   @override
@@ -245,431 +153,448 @@ class _ProfileViewState extends State<ProfileView> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-        resizeToAvoidBottomInset: false,
-        backgroundColor: AppColors.StatusBarColor,
-        body: SafeArea(
-          child: Stack(children: [
-            Padding(
-              padding: const EdgeInsets.only(left: 15, right: 15, top: 22),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  InkWell(
-                    onTap: () {
-                      Get.back();
-                    },
-                    child: const Icon(
-                      Icons.arrow_back,
-                      color: AppColors.backgroundgrayColor,
-                    ),
-                  ),
-                  const Text(
-                    'Profile',
-                    style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w700,
-                        color: AppColors.backgroundgrayColor),
-                  ),
-                  InkWell(
-                    onTap: () {
-                      if (_formKey.currentState!.validate()) {
-                        Map<String, String> userData = {
-                          'mobile_number': _mobileNumberController.text,
-                          'first_name': _firstNameController.text,
-                          'last_name': _lastNameController.text,
-                          'nationality': _nationalityController.text,
-                          'day': _dayController.text ?? '',
-                          'month': _monthController.text ?? '',
-                          'year': _yearController.text ?? '',
-                          'gender': selectedGender ?? '',
-                        };
-                        ref
-                            .child(user!.uid.toString())
-                            .update(userData)
-                            .then((value) => Get.back());
-                      }
-                    },
-                    child: const Icon(
-                      Icons.save_as,
-                      color: AppColors.backgroundgrayColor,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(
-                top: 60,
-              ),
-              child: Container(
-                decoration: const BoxDecoration(
-                  image: DecorationImage(
-                      image: AssetImage('assets/image/png/background1.png'),
-                      fit: BoxFit.fill),
+        body: Container(
+      decoration: const BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topRight,
+          end: Alignment.topLeft,
+          colors: [AppColors.lightBlue, AppColors.lightPurple],
+        ),
+      ),
+      child: Stack(children: [
+        Padding(
+          padding: const EdgeInsets.only(left: 15, right: 15, top: 35),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              InkWell(
+                onTap: () {
+                  Get.back();
+                },
+                child: const Icon(
+                  Icons.arrow_back,
+                  color: Colors.white,
                 ),
               ),
+              const Text(
+                'Profile',
+                style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.w700,
+                    color: Colors.white),
+              ),
+              InkWell(
+                onTap: () {
+                  if (_formKey.currentState!.validate()) {
+                    Map<String, String> userData = {
+                      'mobile_number': _mobileNumberController.text,
+                      'first_name': _firstNameController.text,
+                      'last_name': _lastNameController.text,
+                      'nationality': _nationalityController.text,
+                      'day': _dayController.text ?? '',
+                      'month': _monthController.text ?? '',
+                      'year': _yearController.text ?? '',
+                      'gender': selectedGender ?? '',
+                    };
+                    ref
+                        .child(user!.uid.toString())
+                        .update(userData)
+                        .then((value) => Get.back());
+                  }
+                },
+                child: const Icon(
+                  Icons.save_as,
+                  color: Colors.white,
+                ),
+              ),
+            ],
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(
+            top: 70,
+          ),
+          child: Container(
+            decoration: const BoxDecoration(
+              image: DecorationImage(
+                  image: AssetImage('assets/image/png/background1.png'),
+                  fit: BoxFit.fill),
+            ),
+          ),
+        ),
+        Column(
+          children: [
+            const SizedBox(
+              height: 100,
             ),
             Column(
               children: [
                 const SizedBox(
-                  height: 100,
+                  width: 120,
+                  height: 120,
+                  child: CircleAvatar(
+                    radius: 48,
+                    backgroundImage:
+                        AssetImage('assets/image/png/girlUser1.png'),
+                  ),
                 ),
-                Column(
-                  children: [
-                    const SizedBox(
-                      width: 120,
-                      height: 120,
-                      child: CircleAvatar(
-                        radius: 48,
-                        backgroundImage:
-                            AssetImage('assets/image/png/girlUser1.png'),
+                // TextField(
+                //   enabled: false,
+                //   textAlign: TextAlign.center,
+                //   style: const TextStyle(
+                //       color: Colors.black,
+                //       fontWeight: FontWeight.w500,
+                //       fontSize: 20),
+                //   controller: _emailController,
+                //   decoration: textFielDecoratiom.copyWith(
+                //     enabledBorder: const OutlineInputBorder(
+                //       borderSide: BorderSide(
+                //         color: AppColors.backgroundgrayColor,
+                //       ),
+                //     ),
+                //     disabledBorder: const UnderlineInputBorder(
+                //       borderRadius: BorderRadius.all(Radius.circular(20)),
+                //       borderSide:
+                //           BorderSide(color: AppColors.backgroundgrayColor),
+                //     ),
+                //   ),
+                // ),
+                const SizedBox(
+                  height: 10,
+                ),
+                Container(
+                  width: size.width - 30,
+                  padding: const EdgeInsets.all(15),
+                  decoration: const BoxDecoration(
+                    color: AppColors.gray,
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(20),
+                    ),
+                  ),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Icon(
+                        Icons.warning_rounded,
+                        color: AppColors.grayText,
                       ),
-                    ),
-                    // TextField(
-                    //   enabled: false,
-                    //   textAlign: TextAlign.center,
-                    //   style: const TextStyle(
-                    //       color: Colors.black,
-                    //       fontWeight: FontWeight.w500,
-                    //       fontSize: 20),
-                    //   controller: _emailController,
-                    //   decoration: textFielDecoratiom.copyWith(
-                    //     enabledBorder: const OutlineInputBorder(
-                    //       borderSide: BorderSide(
-                    //         color: AppColors.backgroundgrayColor,
-                    //       ),
-                    //     ),
-                    //     disabledBorder: const UnderlineInputBorder(
-                    //       borderRadius: BorderRadius.all(Radius.circular(20)),
-                    //       borderSide:
-                    //           BorderSide(color: AppColors.backgroundgrayColor),
-                    //     ),
-                    //   ),
-                    // ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    Container(
-                      width: size.width - 30,
-                      padding: const EdgeInsets.all(15),
-                      decoration: const BoxDecoration(
-                        color: AppColors.lightBlue,
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(20),
+                      const SizedBox(
+                        width: 5,
+                      ),
+                      SizedBox(
+                        width: size.width - 93,
+                        child: const Text(
+                          'You are responsible for the data entered. Please ensure that it is correct',
+                          style: TextStyle(
+                              color: AppColors.grayText, fontSize: 15),
                         ),
                       ),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                    ],
+                  ),
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+              ],
+            ),
+            Expanded(
+              child: ListView(
+                padding: const EdgeInsets.symmetric(horizontal: 15),
+                scrollDirection: Axis.vertical,
+                children: [
+                  Form(
+                    key: _formKey,
+                    child: Column(children: [
+                      const Row(
                         children: [
-                          const Icon(
-                            Icons.warning_rounded,
-                            color: AppColors.BlueText,
-                          ),
-                          const SizedBox(
-                            width: 5,
-                          ),
-                          SizedBox(
-                            width: size.width - 93,
-                            child: const Text(
-                              'You are responsible for the data entered. Please ensure that it is correct',
-                              style: TextStyle(
-                                  color: AppColors.BlueText, fontSize: 15),
+                          Text(
+                            'Account Details',
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.w500,
                             ),
                           ),
                         ],
                       ),
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                  ],
-                ),
-                Expanded(
-                  child: ListView(
-                    padding: const EdgeInsets.symmetric(horizontal: 15),
-                    scrollDirection: Axis.vertical,
-                    children: [
-                      Form(
-                        key: _formKey,
-                        child: Column(children: [
-                          const Row(
-                            children: [
-                              Text(
-                                'Account Details',
-                                style: TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                            ],
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      const Row(
+                        children: [
+                          Text(
+                            'Email',
+                            style: TextStyle(
+                                fontSize: 13,
+                                color: AppColors.grayText,
+                                fontWeight: FontWeight.w500),
                           ),
-                          const SizedBox(
-                            height: 15,
-                          ),
-                          const Row(
-                            children: [
-                              SizedBox(
-                                width: 10,
-                              ),
-                              Text(
-                                'Email',
-                                style: TextStyle(
-                                    fontSize: 13,
-                                    color: AppColors.grayText,
-                                    fontWeight: FontWeight.w500),
-                              ),
-                            ],
-                          ),
-                          SizedBox(
-                            height: 45,
-                            child: TextField(
-                              keyboardType: TextInputType.emailAddress,
-                              enabled: false,
-                              controller: _emailController,
-                              decoration: textFielDecoratiom.copyWith(),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 45,
+                        child: TextField(
+                          keyboardType: TextInputType.emailAddress,
+                          enabled: false,
+                          controller: _emailController,
+                          decoration: textFielDecoratiom.copyWith(
+                            prefixIcon: const Icon(
+                              Icons.email_rounded,
+                              color: AppColors.Blue,
                             ),
                           ),
-                          const SizedBox(
-                            height: 30,
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 30,
+                      ),
+                      const Row(
+                        children: [
+                          Text(
+                            'Mobile Number',
+                            style: TextStyle(
+                                fontSize: 13,
+                                color: AppColors.grayText,
+                                fontWeight: FontWeight.w500),
                           ),
-                          const Row(
+                        ],
+                      ),
+                      SizedBox(
+                        height: 45,
+                        child: TextFormField(
+                          keyboardType: TextInputType.phone,
+                          controller: _mobileNumberController,
+                          decoration: textFielDecoratiom.copyWith(
+                            prefixIcon: const Icon(
+                              Icons.call,
+                              color: AppColors.Blue,
+                            ),
+                          ),
+                          onChanged: (value) {},
+                          validator: (value) {
+                            if (value!.length < 10) {
+                              return 'Please enter valid mobile number';
+                            }
+                            return null;
+                          },
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 35,
+                      ),
+                      const Row(
+                        children: [
+                          Text(
+                            'Personal Informations',
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      const Row(
+                        children: [
+                          Text(
+                            'First Name',
+                            style: TextStyle(
+                                fontSize: 13,
+                                color: AppColors.grayText,
+                                fontWeight: FontWeight.w500),
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 45,
+                        child: TextField(
+                          controller: _firstNameController,
+                          onChanged: (value) {},
+                          decoration: textFielDecoratiom.copyWith(
+                            prefixIcon: const Icon(
+                              Icons.person_2_rounded,
+                              color: AppColors.lightPurple,
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 30,
+                      ),
+                      const Row(
+                        children: [
+                          Text(
+                            'Last Name',
+                            style: TextStyle(
+                                fontSize: 13,
+                                color: AppColors.grayText,
+                                fontWeight: FontWeight.w500),
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 45,
+                        child: TextField(
+                          controller: _lastNameController,
+                          onChanged: (value) {},
+                          decoration: textFielDecoratiom.copyWith(
+                            prefixIcon: const Icon(
+                              Icons.person_2_rounded,
+                              color: AppColors.lightPurple,
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      const Row(
+                        children: [
+                          Text(
+                            'Gender',
+                            style: TextStyle(
+                                fontSize: 13,
+                                color: AppColors.grayText,
+                                fontWeight: FontWeight.w500),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                        child: InkWell(
+                          onTap: _showModalSheet,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              SizedBox(
-                                width: 10,
-                              ),
                               Text(
-                                'Mobile Number',
-                                style: TextStyle(
-                                    fontSize: 13,
-                                    color: AppColors.grayText,
-                                    fontWeight: FontWeight.w500),
+                                selectedGender ?? 'Select Your Gender',
+                                style: const TextStyle(
+                                    fontSize: 15, fontWeight: FontWeight.w400),
+                              ),
+                              const Icon(
+                                Icons.arrow_drop_down,
+                                color: AppColors.grayText,
                               ),
                             ],
                           ),
-                          SizedBox(
-                            height: 45,
-                            child: TextFormField(
-                              keyboardType: TextInputType.phone,
-                              controller: _mobileNumberController,
-                              decoration: textFielDecoratiom.copyWith(),
-                              onChanged: (value) {},
-                              validator: (value) {
-                                if (value!.length < 10) {
-                                  return 'Please enter valid mobile number';
-                                }
-                                return null;
+                        ),
+                      ),
+                      Container(
+                        height: 1,
+                        color: Color.fromARGB(81, 130, 143, 163),
+                        margin:
+                            const EdgeInsets.only(left: 12, right: 12, top: 5),
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      const Row(
+                        children: [
+                          Text(
+                            'Date of Birth',
+                            style: TextStyle(
+                                fontSize: 13,
+                                color: AppColors.grayText,
+                                fontWeight: FontWeight.w500),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      InkWell(
+                        onTap: () async {
+                          DateTime? newDepartureDate = await showDatePicker(
+                              context: context,
+                              initialDate: Departure_date.value,
+                              firstDate: minDate,
+                              lastDate: DateTime(2026));
+
+                          if (newDepartureDate != null) {
+                            setState(
+                              () {
+                                setState(() =>
+                                    Departure_date.value = newDepartureDate);
                               },
-                            ),
+                            );
+                          }
+                        },
+                        child: Container(
+                          width: size.width,
+                          height: 40,
+                          padding: EdgeInsets.symmetric(horizontal: 10),
+                          decoration: BoxDecoration(
+                            color: AppColors.backgroundgrayColor,
+                            borderRadius: BorderRadius.circular(20),
                           ),
-                          const SizedBox(
-                            height: 35,
-                          ),
-                          const Row(
+                          child: const Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              Text(
-                                'Personal Informations',
-                                style: TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                            ],
-                          ),
-                          const SizedBox(
-                            height: 15,
-                          ),
-                          const Row(
-                            children: [
+                              Icon(Icons.calendar_month_rounded,
+                                  color: AppColors.gold),
                               SizedBox(
                                 width: 10,
                               ),
-                              Text(
-                                'First Name',
-                                style: TextStyle(
-                                    fontSize: 13,
-                                    color: AppColors.grayText,
-                                    fontWeight: FontWeight.w500),
-                              ),
-                            ],
-                          ),
-                          SizedBox(
-                            height: 45,
-                            child: TextField(
-                              controller: _firstNameController,
-                              onChanged: (value) {},
-                              decoration: textFielDecoratiom.copyWith(),
-                            ),
-                          ),
-                          const SizedBox(
-                            height: 30,
-                          ),
-                          const Row(
-                            children: [
-                              SizedBox(
-                                width: 10,
-                              ),
-                              Text(
-                                'Last Name',
-                                style: TextStyle(
-                                    fontSize: 13,
-                                    color: AppColors.grayText,
-                                    fontWeight: FontWeight.w500),
-                              ),
-                            ],
-                          ),
-                          SizedBox(
-                            height: 45,
-                            child: TextField(
-                              controller: _lastNameController,
-                              onChanged: (value) {},
-                              decoration: textFielDecoratiom.copyWith(),
-                            ),
-                          ),
-                          const SizedBox(
-                            height: 20,
-                          ),
-                          const Row(
-                            children: [
-                              SizedBox(
-                                width: 10,
-                              ),
-                              Text(
-                                'Gender',
-                                style: TextStyle(
-                                    fontSize: 13,
-                                    color: AppColors.grayText,
-                                    fontWeight: FontWeight.w500),
-                              ),
-                            ],
-                          ),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 10.0),
-                            child: InkWell(
-                              onTap: _showModalSheet,
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                              Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Text(
-                                    selectedGender ?? 'Select Your Gender',
-                                    style: const TextStyle(
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.w400),
-                                  ),
-                                  const Icon(
-                                    Icons.arrow_drop_down,
-                                    color: AppColors.grayText,
-                                  ),
+                                    // '${Departure_date.value.day}. ${Departure_date.value?.month}, ${Departure_date.value?.year}',
+                                    '2001',
+                                    style: TextStyle(
+                                      fontSize: TextSize.header2,
+                                      fontWeight: FontWeight.w500,
+                                      color: Colors.black,
+                                    ),
+                                  )
                                 ],
-                              ),
-                            ),
-                          ),
-                          Container(
-                            height: 1,
-                            color: Color.fromARGB(81, 130, 143, 163),
-                            margin: const EdgeInsets.only(
-                                left: 12, right: 12, top: 5),
-                          ),
-                          const SizedBox(
-                            height: 20,
-                          ),
-                          const Row(
-                            children: [
-                              SizedBox(
-                                width: 10,
-                              ),
-                              Text(
-                                'Date of Birth',
-                                style: TextStyle(
-                                    fontSize: 13,
-                                    color: AppColors.grayText,
-                                    fontWeight: FontWeight.w500),
-                              ),
+                              )
                             ],
                           ),
-                          const SizedBox(
-                            height: 10,
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 30,
+                      ),
+                      const Row(
+                        children: [
+                          Text(
+                            'Nationality',
+                            style: TextStyle(
+                                fontSize: 13,
+                                color: AppColors.grayText,
+                                fontWeight: FontWeight.w500),
                           ),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 10),
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Column(
-                                  children: [
-                                    inputField(context, 'day', _dayController),
-                                    displayDaysList
-                                        ? selectionField(
-                                            context, 'day', _dayController)
-                                        : SizedBox(),
-                                  ],
-                                ),
-                                Column(
-                                  children: [
-                                    inputField(
-                                        context, 'month', _monthController),
-                                    displayMonthsList
-                                        ? selectionField(
-                                            context, 'month', _monthController)
-                                        : SizedBox(),
-                                  ],
-                                ),
-                                Column(
-                                  children: [
-                                    inputField(
-                                        context, 'year', _yearController),
-                                    displayYearsList
-                                        ? selectionField(
-                                            context, 'year', _yearController)
-                                        : SizedBox(),
-                                  ],
-                                ),
-                              ],
+                        ],
+                      ),
+                      SizedBox(
+                        height: 45,
+                        child: TextField(
+                          controller: _nationalityController,
+                          decoration: textFielDecoratiom.copyWith(
+                            prefixIcon: const Icon(
+                              Icons.flag_rounded,
+                              color: AppColors.lightPurple,
                             ),
                           ),
-                          const SizedBox(
-                            height: 30,
-                          ),
-                          const Row(
-                            children: [
-                              SizedBox(
-                                width: 10,
-                              ),
-                              Text(
-                                'Nationality',
-                                style: TextStyle(
-                                    fontSize: 13,
-                                    color: AppColors.grayText,
-                                    fontWeight: FontWeight.w500),
-                              ),
-                            ],
-                          ),
-                          SizedBox(
-                            height: 45,
-                            child: TextField(
-                              controller: _nationalityController,
-                              decoration: textFielDecoratiom.copyWith(
-                                hintText: 'Nationality',
-                              ),
-                            ),
-                          ),
-                          const SizedBox(
-                            height: 40,
-                          ),
-                        ]),
-                      )
-                    ],
-                  ),
-                ),
-              ],
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 40,
+                      ),
+                    ]),
+                  )
+                ],
+              ),
             ),
-          ]),
-        ));
+          ],
+        ),
+      ]),
+    ));
   }
 
   @override
@@ -680,105 +605,5 @@ class _ProfileViewState extends State<ProfileView> {
     _lastNameController.dispose();
     _nationalityController.dispose();
     super.dispose();
-  }
-
-  Widget inputField(
-      BuildContext context, String type, TextEditingController controller) {
-    return Container(
-      height: 45,
-      width: type == 'month' ? context.width / 3 - 5 : context.width / 3 - 30,
-      decoration: BoxDecoration(
-        color: AppColors.backgroundgrayColor,
-        borderRadius: const BorderRadius.only(
-          topLeft: Radius.circular(5),
-          topRight: Radius.circular(5),
-        ),
-        border: Border.all(color: AppColors.grayText),
-      ),
-      child: TextField(
-        controller: controller,
-        decoration: InputDecoration(
-          hintText: type == 'day'
-              ? 'Day'
-              : type == 'month'
-                  ? 'Month'
-                  : 'Year',
-          border: InputBorder.none,
-          suffixIcon: GestureDetector(
-            onTap: () {
-              switch (type) {
-                case 'day':
-                  displayDaysList = !displayDaysList;
-                  break;
-                case 'month':
-                  displayMonthsList = !displayMonthsList;
-                  break;
-                case 'year':
-                  displayYearsList = !displayYearsList;
-                  break;
-              }
-              setState(() {});
-            },
-            child: const Icon(Icons.arrow_drop_down),
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget selectionField(
-      BuildContext context, String type, TextEditingController controller) {
-    return Container(
-      height: 200,
-      width: type == 'month' ? context.width / 3 - 10 : context.width / 3 - 25,
-      decoration: BoxDecoration(
-        color: AppColors.backgroundgrayColor,
-        borderRadius: const BorderRadius.only(
-          bottomLeft: Radius.circular(5),
-          bottomRight: Radius.circular(5),
-        ),
-        border: Border.all(color: AppColors.LightGrayColor),
-      ),
-      child: ListView.builder(
-        itemCount: type == 'day'
-            ? daysList.length
-            : type == 'month'
-                ? monthsList.length
-                : yearsList.length,
-        itemBuilder: (context, index) {
-          return GestureDetector(
-            onTap: () {
-              setState(() {
-                switch (type) {
-                  case 'day':
-                    controller.text = (index + 1).toString();
-                    displayDaysList = false;
-                    break;
-                  case 'month':
-                    controller.text = monthsList[index];
-                    displayMonthsList = false;
-
-                    break;
-                  case 'year':
-                    controller.text = yearsList[index];
-                    displayYearsList = false;
-
-                    break;
-                }
-              });
-            },
-            child: ListTile(
-              title: Text(
-                type == 'day'
-                    ? daysList[index]
-                    : type == 'month'
-                        ? monthsList[index]
-                        : yearsList[index],
-              ),
-            ),
-          );
-        },
-      ),
-    );
   }
 }

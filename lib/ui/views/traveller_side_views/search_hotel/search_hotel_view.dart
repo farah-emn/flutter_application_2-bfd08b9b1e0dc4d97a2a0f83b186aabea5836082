@@ -147,7 +147,7 @@ class SearchHotelViewState extends State<SearchHotelView> {
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Icon(Icons.location_on_rounded, color: AppColors.gold),
+                      Icon(Icons.location_on_rounded, color: AppColors.purple),
                       SizedBox(
                         width: 5,
                       ),
@@ -203,7 +203,7 @@ class SearchHotelViewState extends State<SearchHotelView> {
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: const [
                               Icon(Icons.calendar_month_rounded,
-                                  color: AppColors.gold),
+                                  color: AppColors.purple),
                               SizedBox(
                                 width: 10,
                               ),
@@ -257,7 +257,7 @@ class SearchHotelViewState extends State<SearchHotelView> {
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: const [
                               Icon(Icons.calendar_month_rounded,
-                                  color: AppColors.gold),
+                                  color: AppColors.purple),
                               SizedBox(
                                 width: 10,
                               ),
@@ -311,7 +311,7 @@ class SearchHotelViewState extends State<SearchHotelView> {
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            Icon(Icons.group, color: AppColors.gold),
+                            Icon(Icons.group, color: AppColors.purple),
                             SizedBox(
                               width: 10,
                             ),
@@ -379,7 +379,7 @@ class SearchHotelViewState extends State<SearchHotelView> {
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            Icon(Icons.group, color: AppColors.gold),
+                            Icon(Icons.group, color: AppColors.purple),
                             SizedBox(
                               width: 10,
                             ),
@@ -431,7 +431,7 @@ class SearchHotelViewState extends State<SearchHotelView> {
                 child: CustomButton(
                     text: 'Search',
                     textColor: AppColors.backgroundgrayColor,
-                    backgroundColor: AppColors.purple,
+                    backgroundColor: AppColors.lightPurple,
                     widthPercent: size.width,
                     heightPercent: 15),
               ),

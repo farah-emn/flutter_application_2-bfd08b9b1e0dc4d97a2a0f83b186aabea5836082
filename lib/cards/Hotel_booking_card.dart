@@ -290,20 +290,12 @@ class _HotelBookingCardState extends State<HotelBookingCard> {
                     height: 10,
                   ),
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      CustomButton(
-                          text: 'Edit Booking',
-                          textColor: Colors.white,
-                          widthPercent: size.width / 2 - 30,
-                          heightPercent: 50,
-                          backgroundColor: AppColors.darkBlue),
-                      const SizedBox(
-                        width: 5,
-                      ),
                       CustomButton(
                           text: 'Delete Booking',
                           textColor: Colors.black,
-                          widthPercent: size.width / 2 - 30,
+                          widthPercent: size.width - 60,
                           heightPercent: 50,
                           backgroundColor: AppColors.LightGrayColor),
                     ],

@@ -176,13 +176,13 @@ class _HomeViewState extends State<HomeView> {
       body: CustomScrollView(
         slivers: [
           SliverAppBar(
-            backgroundColor: AppColors.IconBlueColor,
+            backgroundColor: AppColors.lightPurple,
             elevation: 0,
             pinned: true,
             expandedHeight: 335,
             flexibleSpace: FlexibleSpaceBar(
               background: Container(
-                  color: AppColors.StatusBarColor,
+                  color: AppColors.LightBlueColor,
                   child: const Padding(
                     padding: EdgeInsets.symmetric(horizontal: 15),
                     child: Column(
@@ -278,10 +278,10 @@ class _HomeViewState extends State<HomeView> {
                             padding: EdgeInsets.all(10),
                             decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(15),
-                                color: AppColors.LightBlueColor),
+                                color: AppColors.lightBlue),
                             child: const Icon(
                               Icons.flight,
-                              color: AppColors.BlueText,
+                              color: AppColors.darkBlue,
                               size: 30,
                             ),
                           ),
@@ -290,7 +290,7 @@ class _HomeViewState extends State<HomeView> {
                           ),
                           const Text(
                             'Flight',
-                            style: TextStyle(color: AppColors.BlueText),
+                            style: TextStyle(color: AppColors.darkBlue),
                           ),
                         ],
                       ),
@@ -301,10 +301,10 @@ class _HomeViewState extends State<HomeView> {
                           padding: EdgeInsets.all(10),
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(15),
-                              color: AppColors.LightBlueColor),
+                              color: AppColors.lightPurple),
                           child: const Icon(
                             Icons.hotel,
-                            color: AppColors.BlueText,
+                            color: AppColors.purple,
                             size: 30,
                           ),
                         ),
@@ -313,7 +313,7 @@ class _HomeViewState extends State<HomeView> {
                         ),
                         const Text(
                           'Hotel',
-                          style: TextStyle(color: AppColors.BlueText),
+                          style: TextStyle(color: AppColors.purple),
                         ),
                       ],
                     ),
@@ -382,8 +382,8 @@ class _HomeViewState extends State<HomeView> {
                               ),
                               Text(
                                 'Username@gmail.com',
-                                style:
-                                    TextStyle(color: AppColors.LightGrayColor),
+                                style: TextStyle(
+                                    color: AppColors.backgroundgrayColor),
                               ),
                             ],
                           ),

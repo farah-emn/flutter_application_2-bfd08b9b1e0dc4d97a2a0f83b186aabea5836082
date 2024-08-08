@@ -179,7 +179,10 @@ class _SignUpViewState extends State<SignUpView> {
                       child: TextFormField(
                         keyboardType: TextInputType.emailAddress,
                         controller: _emailController,
-                        decoration: textFielDecoratiom.copyWith(),
+                        decoration: textFielDecoratiom.copyWith(
+                          prefixIcon: Icon(Icons.email_rounded),
+
+                        ),
                         onChanged: (value) {
                           email = value;
                         },
@@ -203,7 +206,10 @@ class _SignUpViewState extends State<SignUpView> {
                       height: 45,
                       child: TextFormField(
                         keyboardType: TextInputType.visiblePassword,
-                        decoration: textFielDecoratiom.copyWith(),
+                        decoration: textFielDecoratiom.copyWith(
+                          prefixIcon: Icon(Icons.lock_rounded),
+
+                        ),
                         controller: _passwordController,
                         onChanged: (value) {
                           password = value;
@@ -228,7 +234,10 @@ class _SignUpViewState extends State<SignUpView> {
                       height: 45,
                       child: TextFormField(
                         controller: _confirmPasswordController,
-                        decoration: textFielDecoratiom.copyWith(),
+                        decoration: textFielDecoratiom.copyWith(
+                          prefixIcon: Icon(Icons.lock_rounded),
+
+                        ),
                         onChanged: (value) {
                           confermPassword = value;
                         },

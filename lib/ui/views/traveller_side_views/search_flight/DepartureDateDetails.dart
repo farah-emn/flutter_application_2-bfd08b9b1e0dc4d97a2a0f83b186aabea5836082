@@ -54,7 +54,7 @@ class _CheckInCheckOutDetailsState extends State<DepartureDateDetails> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Icon(Icons.calendar_month_rounded, color: AppColors.gold),
+            Icon(Icons.calendar_month_rounded, color: AppColors.Blue),
             SizedBox(
               width: 10,
             ),

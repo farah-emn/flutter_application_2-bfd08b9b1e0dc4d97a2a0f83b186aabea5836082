@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:traveling/ui/shared/colors.dart';
+import 'package:traveling/ui/views/car_side_views/car_signup_view.dart';
 import 'package:traveling/ui/views/hotel_side_views/hotel_signup_view.dart';
 
 import 'flight_side_views/flight_welcome_view.dart';
@@ -70,22 +71,27 @@ class CompaniesTypeView extends StatelessWidget {
             const SizedBox(
               height: 15,
             ),
-            Container(
-              height: 200,
-              decoration: const BoxDecoration(
-                color: AppColors.Blue,
-              ),
-              child: const Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'Car',
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 20,
-                        fontWeight: FontWeight.w500),
-                  ),
-                ],
+            InkWell(
+              onTap: () {
+                Get.to(() => const CarSignUpView());
+              },
+              child: Container(
+                height: 200,
+                decoration: const BoxDecoration(
+                  color: AppColors.Blue,
+                ),
+                child: const Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      'Car',
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 20,
+                          fontWeight: FontWeight.w500),
+                    ),
+                  ],
+                ),
               ),
             ),
             const SizedBox(

@@ -16,7 +16,7 @@ class _HomeState extends State<Home> {
   int index = 0;
   final Screens = [
     const HomeView(),
-     SearchView(),
+    SearchView(),
     const BookingsView(),
     const ProfileView(),
   ];
@@ -26,15 +26,12 @@ class _HomeState extends State<Home> {
       body: Screens[index],
       bottomNavigationBar: NavigationBarTheme(
         data: const NavigationBarThemeData(
-          indicatorColor: AppColors.darkBlue,
-          backgroundColor: Colors.white,
-          indicatorShape: CircleBorder()
-
-        ),
+            indicatorColor: AppColors.Blue,
+            backgroundColor: Colors.white,
+            indicatorShape: CircleBorder()),
         child: NavigationBar(
           backgroundColor: Colors.white,
           height: 60,
-
           selectedIndex: index,
           labelBehavior: NavigationDestinationLabelBehavior.alwaysShow,
           animationDuration: const Duration(seconds: 2),
@@ -45,16 +42,15 @@ class _HomeState extends State<Home> {
           ),
           destinations: const [
             NavigationDestination(
-              icon: Icon(Icons.home_outlined),
+              icon: Icon(Icons.home_rounded),
               selectedIcon: Icon(
                 Icons.home_filled,
                 color: AppColors.backgroundgrayColor,
               ),
               label: 'Home',
-
             ),
             NavigationDestination(
-              icon: Icon(Icons.search_outlined),
+              icon: Icon(Icons.search),
               selectedIcon: Icon(
                 Icons.search_outlined,
                 color: AppColors.backgroundgrayColor,

@@ -43,86 +43,90 @@ class _BookingsViewState extends State<BookingsView>
     return DefaultTabController(
       length: 3,
       child: Scaffold(
-          resizeToAvoidBottomInset: false,
-          backgroundColor: AppColors.Blue,
-          body: SafeArea(
-            child: Stack(children: [
-              const Padding(
-                padding: EdgeInsets.only(left: 15, right: 15, top: 10),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      'Bookings',
-                      style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.w700,
-                          color: AppColors.backgroundgrayColor),
+          body: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topRight,
+            end: Alignment.topLeft,
+            colors: [AppColors.lightBlue, AppColors.lightPurple],
+          ),
+        ),
+        child: Stack(children: [
+          const Padding(
+            padding: EdgeInsets.only(left: 15, right: 15, top: 35),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  'Bookings',
+                  style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w700,
+                      color: Colors.white),
+                ),
+              ],
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(
+              top: 70,
+            ),
+            child: Container(
+              decoration: const BoxDecoration(
+                image: DecorationImage(
+                    image: AssetImage('assets/image/png/background1.png'),
+                    fit: BoxFit.fill),
+              ),
+            ),
+          ),
+          Stack(
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 15),
+                child: Container(
+                  margin: const EdgeInsets.only(top: 100),
+                  width: size.width - 30,
+                  height: 50,
+                  decoration: const BoxDecoration(
+                    color: AppColors.backgroundgrayColor,
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(15),
                     ),
-                  ],
+                  ),
+                  child: TabBar(
+                    controller: _tabController,
+                    indicatorSize: TabBarIndicatorSize.tab,
+                    dividerColor: AppColors.LightGrayColor,
+                    indicatorColor: AppColors.darkBlue,
+                    labelColor: AppColors.darkBlue,
+                    unselectedLabelColor: AppColors.lightBlue,
+                    tabs: const [
+                      Tab(
+                        text: 'Hotel',
+                      ),
+                      Tab(text: 'Flight'),
+                      Tab(text: 'Car'),
+                    ],
+                  ),
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.only(
-                  top: 50,
-                ),
-                child: Container(
-                  decoration: const BoxDecoration(
-                    image: DecorationImage(
-                        image: AssetImage('assets/image/png/background1.png'),
-                        fit: BoxFit.fill),
+                padding: const EdgeInsets.only(top: 170, left: 15, right: 15),
+                child: Expanded(
+                  child: TabBarView(
+                    controller: _tabController,
+                    children: [
+                      HotelBookings(context),
+                      FlightBookings(context),
+                      CarBookings(context),
+                    ],
                   ),
                 ),
               ),
-              Stack(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 15),
-                    child: Container(
-                      margin: const EdgeInsets.only(top: 100),
-                      width: size.width - 30,
-                      height: 50,
-                      decoration: const BoxDecoration(
-                        color: AppColors.backgroundgrayColor,
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(15),
-                        ),
-                      ),
-                      child: TabBar(
-                        controller: _tabController,
-                        indicatorSize: TabBarIndicatorSize.tab,
-                        dividerColor: AppColors.LightGrayColor,
-                        indicatorColor: AppColors.darkBlue,
-                        labelColor: AppColors.darkBlue,
-                        unselectedLabelColor: AppColors.lightBlue,
-                        tabs: const [
-                          Tab(
-                            text: 'Hotel',
-                          ),
-                          Tab(text: 'Flight'),
-                          Tab(text: 'Car'),
-                        ],
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding:
-                        const EdgeInsets.only(top: 170, left: 15, right: 15),
-                    child: Expanded(
-                      child: TabBarView(
-                        controller: _tabController,
-                        children: [
-                          HotelBookings(context),
-                          FlightBookings(context),
-                          CarBookings(context),
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ]),
-          )),
+            ],
+          ),
+        ]),
+      )),
     );
   }
 
@@ -136,7 +140,7 @@ class _BookingsViewState extends State<BookingsView>
             Row(
               children: [
                 Radio(
-                  activeColor: AppColors.purple,
+                  activeColor: AppColors.lightPurple,
                   autofocus: true,
                   value: 'Upcoming',
                   groupValue: _hotelSorteBy,
@@ -156,7 +160,7 @@ class _BookingsViewState extends State<BookingsView>
             Row(
               children: [
                 Radio(
-                  activeColor: AppColors.purple,
+                  activeColor: AppColors.lightPurple,
                   value: 'Finished',
                   groupValue: _hotelSorteBy,
                   onChanged: (value) {
