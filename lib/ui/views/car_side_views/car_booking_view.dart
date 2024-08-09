@@ -3,10 +3,13 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:traveling/cards/car_side_upcoming_card.dart';
 
-import 'package:traveling/cards/hotel_side_finished_card%20copy.dart';
+import 'package:traveling/cards/car_side_finished_card.dart';
 import 'package:traveling/cards/hotel_side_upcoming_card.dart';
-import 'package:traveling/classes/hotel_side_finished_class%20copy.dart';
+import 'package:traveling/classes/car_side_finished_class.dart';
+import 'package:traveling/classes/car_side_upcoming_class.dart';
+import 'package:traveling/classes/hotel_side_finished_class.dart';
 import 'package:traveling/classes/hotel_side_upcoming_class.dart';
 import 'package:traveling/ui/shared/custom_widgets/white_container.dart';
 import 'package:traveling/ui/shared/text_size.dart';
@@ -40,7 +43,7 @@ class _CarBookingViewState extends State<CarBookingView>
       length: 2,
       child: Scaffold(
           resizeToAvoidBottomInset: false,
-          backgroundColor: AppColors.lightPurple,
+          backgroundColor: AppColors.lightOrange,
           body: SafeArea(
             child: Stack(children: [
               const Padding(
@@ -53,7 +56,7 @@ class _CarBookingViewState extends State<CarBookingView>
                       style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.w700,
-                          color: AppColors.purple),
+                          color: Colors.white),
                     ),
                   ],
                 ),
@@ -88,9 +91,9 @@ class _CarBookingViewState extends State<CarBookingView>
                         controller: _tabController,
                         indicatorSize: TabBarIndicatorSize.tab,
                         dividerColor: AppColors.LightGrayColor,
-                        indicatorColor: AppColors.purple,
-                        labelColor: AppColors.purple,
-                        unselectedLabelColor: AppColors.lightPurple,
+                        indicatorColor: AppColors.orange,
+                        labelColor: AppColors.orange,
+                        unselectedLabelColor: AppColors.lightOrange,
                         tabs: const [
                           Tab(
                             text: 'Upcoming',
@@ -130,11 +133,11 @@ class _CarBookingViewState extends State<CarBookingView>
         Expanded(
           child: ListView.builder(
             shrinkWrap: true,
-            itemCount: HotelbookingsDetails2.length,
-            itemBuilder: (context, index) => HotelSideUpcomingCard(
+            itemCount: CarBookingsDetails.length,
+            itemBuilder: (context, index) => CarSideUpcomingCard(
               size: size,
               itemIndex: index,
-              hotelBookingsDetails2: HotelbookingsDetails2[index],
+              carBookingsDetails: CarBookingsDetails[index],
             ),
           ),
         )
@@ -149,11 +152,11 @@ class _CarBookingViewState extends State<CarBookingView>
         Expanded(
           child: ListView.builder(
             shrinkWrap: true,
-            itemCount: HotelFinishedDetails2.length,
-            itemBuilder: (context, index) => HotelSideFinishedCard(
+            itemCount: carFinishedDetails.length,
+            itemBuilder: (context, index) => CarSideFinishedCard(
               size: size,
               itemIndex: index,
-              hotelBookingsDetails2: HotelFinishedDetails2[index],
+              carBookingsDetails: carFinishedDetails[index],
             ),
           ),
         )

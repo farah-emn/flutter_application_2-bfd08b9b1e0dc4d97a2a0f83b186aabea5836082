@@ -82,6 +82,8 @@ class _CarAddViewState extends State<CarAddView> {
   List<bool> isSelectedColor = [true, false, false];
   bool _isWidgetActive = true;
 
+  String sorteBy = 'Normal';
+
   // @override
   // void dispose() {
   //   _isWidgetActive = false;
@@ -195,6 +197,7 @@ class _CarAddViewState extends State<CarAddView> {
   // }
 
   String? selectedValue;
+  String dropdownValue2 = 'Toyota';
 
   @override
   Widget build(BuildContext context) {
@@ -265,9 +268,10 @@ class _CarAddViewState extends State<CarAddView> {
                   Text(
                     'Add Car',
                     style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w700,
-                        color: Colors.white,),
+                      fontSize: 20,
+                      fontWeight: FontWeight.w700,
+                      color: Colors.white,
+                    ),
                   ),
                   SizedBox(),
                 ],
@@ -479,7 +483,6 @@ class _CarAddViewState extends State<CarAddView> {
                                   width: size.width - 35,
                                   child: TextField(
                                     controller: _price,
-                                    keyboardType: TextInputType.number,
                                     decoration: textFielDecoratiom.copyWith(
                                         focusedBorder: const OutlineInputBorder(
                                           borderSide: BorderSide(
@@ -532,65 +535,23 @@ class _CarAddViewState extends State<CarAddView> {
                                 });
                               },
                               constraints: BoxConstraints(
-                                minWidth: size.width / 3 - 25,
+                                minWidth: size.width / 3 - 21.5,
                                 minHeight: 40.0,
                               ),
                               children: const <Widget>[
                                 Padding(
-                                  padding: EdgeInsets.all(8.0),
+                                  padding: EdgeInsets.all(0.0),
                                   child: Text('2 Seats'),
                                 ),
                                 Padding(
-                                  padding: EdgeInsets.all(8.0),
+                                  padding: EdgeInsets.all(0.0),
                                   child: Text('4 Seats'),
                                 ),
                                 Padding(
-                                  padding: EdgeInsets.all(8.0),
+                                  padding: EdgeInsets.all(0.0),
                                   child: Text('6 Seats'),
                                 ),
                               ],
-                            ),
-                            const SizedBox(
-                              height: 20,
-                            ),
-                            Row(
-                              children: const [
-                                Text(
-                                  'Color',
-                                  style: TextStyle(
-                                      fontSize: 13,
-                                      color: AppColors.grayText,
-                                      fontWeight: FontWeight.w500),
-                                ),
-                              ],
-                            ),
-                            SingleChildScrollView(
-                              scrollDirection: Axis.horizontal,
-                              child: Row(
-                                children: colors.map((color) {
-                                  return GestureDetector(
-                                    onTap: () {
-                                      setState(() {
-                                        selectedColor = color;
-                                      });
-                                    },
-                                    child: Container(
-                                      margin:
-                                          EdgeInsets.symmetric(horizontal: 5),
-                                      width: 35,
-                                      height: 35,
-                                      decoration: BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        color: color,
-                                        border: selectedColor == color
-                                            ? Border.all(
-                                                color: Colors.black, width: 3)
-                                            : null,
-                                      ),
-                                    ),
-                                  );
-                                }).toList(),
-                              ),
                             ),
                             const SizedBox(
                               height: 20,
@@ -637,162 +598,6 @@ class _CarAddViewState extends State<CarAddView> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      'Color',
-                                      style: TextStyle(
-                                          fontSize: 13,
-                                          color: AppColors.grayText,
-                                          fontWeight: FontWeight.w500),
-                                    ),
-                                    SizedBox(
-                                      height: 40,
-                                      width: size.width / 2 - 35,
-                                      child: TextField(
-                                        controller: _RoomNumber,
-                                        keyboardType: TextInputType.number,
-                                        decoration: textFielDecoratiom.copyWith(
-                                            focusedBorder:
-                                                const OutlineInputBorder(
-                                              borderSide: BorderSide(
-                                                color: AppColors.lightOrange,
-                                              ),
-                                              borderRadius: BorderRadius.all(
-                                                  Radius.circular(18)),
-                                            ),
-                                            fillColor: Colors.white,
-                                            prefixIcon: const Icon(
-                                              Icons.color_lens_rounded,
-                                              color: AppColors.orange,
-                                            )),
-                                        onChanged: (value) {},
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                            const SizedBox(
-                              height: 20,
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      'Doors',
-                                      style: TextStyle(
-                                          fontSize: 13,
-                                          color: AppColors.grayText,
-                                          fontWeight: FontWeight.w500),
-                                    ),
-                                    SizedBox(
-                                      height: 40,
-                                      width: size.width / 2 - 35,
-                                      child: TextField(
-                                        controller: _price,
-                                        keyboardType: TextInputType.number,
-                                        decoration: textFielDecoratiom.copyWith(
-                                            focusedBorder:
-                                                const OutlineInputBorder(
-                                              borderSide: BorderSide(
-                                                color: AppColors.lightOrange,
-                                              ),
-                                              borderRadius: BorderRadius.all(
-                                                  Radius.circular(18)),
-                                            ),
-                                            fillColor: Colors.white,
-                                            prefixIcon: const Icon(
-                                              Icons.door_back_door_sharp,
-                                              color: AppColors.orange,
-                                            )),
-                                        onChanged: (value) {},
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      'Seats',
-                                      style: TextStyle(
-                                          fontSize: 13,
-                                          color: AppColors.grayText,
-                                          fontWeight: FontWeight.w500),
-                                    ),
-                                    SizedBox(
-                                      height: 40,
-                                      width: size.width / 2 - 35,
-                                      child: TextField(
-                                        controller: _RoomNumber,
-                                        keyboardType: TextInputType.number,
-                                        decoration: textFielDecoratiom.copyWith(
-                                            focusedBorder:
-                                                const OutlineInputBorder(
-                                              borderSide: BorderSide(
-                                                color: AppColors.lightOrange,
-                                              ),
-                                              borderRadius: BorderRadius.all(
-                                                  Radius.circular(18)),
-                                            ),
-                                            fillColor: Colors.white,
-                                            prefixIcon: const Icon(
-                                              Icons.flight_class_rounded,
-                                              color: AppColors.orange,
-                                            )),
-                                        onChanged: (value) {},
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                            const SizedBox(
-                              height: 20,
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      'Doors',
-                                      style: TextStyle(
-                                          fontSize: 13,
-                                          color: AppColors.grayText,
-                                          fontWeight: FontWeight.w500),
-                                    ),
-                                    SizedBox(
-                                      height: 40,
-                                      width: size.width / 2 - 35,
-                                      child: TextField(
-                                        controller: _price,
-                                        keyboardType: TextInputType.number,
-                                        decoration: textFielDecoratiom.copyWith(
-                                            focusedBorder:
-                                                const OutlineInputBorder(
-                                              borderSide: BorderSide(
-                                                color: AppColors.lightOrange,
-                                              ),
-                                              borderRadius: BorderRadius.all(
-                                                  Radius.circular(18)),
-                                            ),
-                                            fillColor: Colors.white,
-                                            prefixIcon: const Icon(
-                                              Icons.price_change,
-                                              color: AppColors.orange,
-                                            )),
-                                        onChanged: (value) {},
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
                                       'Top Speed',
                                       style: TextStyle(
                                           fontSize: 13,
@@ -816,7 +621,7 @@ class _CarAddViewState extends State<CarAddView> {
                                             ),
                                             fillColor: Colors.white,
                                             prefixIcon: const Icon(
-                                              Icons.door_back_door_rounded,
+                                              Icons.speed,
                                               color: AppColors.orange,
                                             )),
                                         onChanged: (value) {},
@@ -825,6 +630,139 @@ class _CarAddViewState extends State<CarAddView> {
                                   ],
                                 ),
                               ],
+                            ),
+                            const SizedBox(
+                              height: 20,
+                            ),
+                            Row(
+                              children: const [
+                                Text(
+                                  'Company',
+                                  style: TextStyle(
+                                      fontSize: 13,
+                                      color: AppColors.grayText,
+                                      fontWeight: FontWeight.w500),
+                                ),
+                              ],
+                            ),
+                            Container(
+                              width: size.width - 35,
+                              height: 40,
+                              decoration: BoxDecoration(
+                                border:
+                                    Border.all(color: AppColors.LightGrayColor),
+                                borderRadius: BorderRadius.circular(15),
+                              ),
+                              child: DropdownButton<String>(
+                                dropdownColor: Colors.white,
+                                padding: EdgeInsets.only(left: 15),
+                                underline: DecoratedBox(
+                                  decoration: BoxDecoration(),
+                                ),
+                                value: dropdownValue2,
+                                items: <String>[
+                                  'Marceds', 'KIA', 'Rang Rover', 'Roz Raiz', 'Honday', 'Honda', 'Toyota', 'GMC', 'Odi', 'BMW', 'Other'
+                                ].map<DropdownMenuItem<String>>((String value) {
+                                  return DropdownMenuItem<String>(
+                                    value: value,
+                                    child: Text(value),
+                                  );
+                                }).toList(),
+                                onChanged: (String? newValue) {
+                                  setState(() {
+                                    dropdownValue2 = newValue!;
+                                  });
+                                },
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 20,
+                            ),
+                            Row(
+                              children: const [
+                                Text(
+                                  'Ger',
+                                  style: TextStyle(
+                                      fontSize: 13,
+                                      color: AppColors.grayText,
+                                      fontWeight: FontWeight.w500),
+                                ),
+                              ],
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Row(
+                                  children: [
+                                    Radio(
+                                      activeColor: AppColors.orange,
+                                      value: 'Normal',
+                                      autofocus: true,
+                                      groupValue: sorteBy,
+                                      onChanged: (value) {
+                                        sorteBy = value.toString();
+                                      },
+                                    ),
+                                    const Text('Normal'),
+                                  ],
+                                ),
+                                Row(
+                                  children: [
+                                    Radio(
+                                      activeColor: AppColors.orange,
+                                      value: 'Automatic',
+                                      groupValue: sorteBy,
+                                      onChanged: (value) {
+                                        sorteBy = value.toString();
+                                      },
+                                    ),
+                                    const Text('Automatic'),
+                                  ],
+                                ),
+                                SizedBox(),
+                              ],
+                            ),
+                            SizedBox(
+                              height: 20,
+                            ),
+                            Row(
+                              children: const [
+                                Text(
+                                  'Color',
+                                  style: TextStyle(
+                                      fontSize: 13,
+                                      color: AppColors.grayText,
+                                      fontWeight: FontWeight.w500),
+                                ),
+                              ],
+                            ),
+                            SingleChildScrollView(
+                              scrollDirection: Axis.horizontal,
+                              child: Row(
+                                children: colors.map((color) {
+                                  return GestureDetector(
+                                    onTap: () {
+                                      setState(() {
+                                        selectedColor = color;
+                                      });
+                                    },
+                                    child: Container(
+                                      margin:
+                                          EdgeInsets.symmetric(horizontal: 5),
+                                      width: 35,
+                                      height: 35,
+                                      decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        color: color,
+                                        border: selectedColor == color
+                                            ? Border.all(
+                                                color: Colors.black, width: 3)
+                                            : null,
+                                      ),
+                                    ),
+                                  );
+                                }).toList(),
+                              ),
                             ),
                             if (_isLoading)
                               Center(
@@ -836,609 +774,108 @@ class _CarAddViewState extends State<CarAddView> {
                       const SizedBox(
                         height: 40,
                       ),
-                      // const Text(
-                      //   'Amenities',
-                      //   style: TextStyle(
-                      //       fontSize: 16, fontWeight: FontWeight.w500),
-                      // ),
-                      // const SizedBox(
-                      //   height: 15,
-                      // ),
-                      // Container(
-                      //   padding:
-                      //       EdgeInsets.only(left: 15, right: 15, bottom: 15),
-                      //   decoration: BoxDecoration(
-                      //       boxShadow: List.filled(
-                      //         10,
-                      //         const BoxShadow(
-                      //             color: AppColors.gray,
-                      //             blurRadius: BorderSide.strokeAlignOutside,
-                      //             blurStyle: BlurStyle.outer),
-                      //       ),
-                      //       color: Colors.white,
-                      //       borderRadius: BorderRadius.circular(20)),
-                      //   child: Column(
-                      //     crossAxisAlignment: CrossAxisAlignment.center,
-                      //     children: [
-                      //       Row(
-                      //         children: [
-                      //           const Icon(
-                      //             Icons.wifi_rounded,
-                      //             color: AppColors.orange,
-                      //           ),
-                      //           const SizedBox(
-                      //             width: 10,
-                      //           ),
-                      //           const Text(
-                      //             'Free wi-fi',
-                      //             style: TextStyle(fontSize: TextSize.header2),
-                      //           ),
-                      //           const Spacer(),
-                      //           Checkbox(
-                      //             value: isCheckedFreeWifi,
-                      //             onChanged: (bool? newValue) {
-                      //               setState(
-                      //                 () {
-                      //                   isCheckedFreeWifi = newValue;
-                      //                 },
-                      //               );
-                      //             },
-                      //           ),
-                      //         ],
-                      //       ),
-                      //       Row(
-                      //         children: [
-                      //           const Icon(
-                      //             Icons.pool_rounded,
-                      //             color: AppColors.orange,
-                      //           ),
-                      //           const SizedBox(
-                      //             width: 10,
-                      //           ),
-                      //           const Text(
-                      //             'Private pool',
-                      //             style: TextStyle(fontSize: TextSize.header2),
-                      //           ),
-                      //           const Spacer(),
-                      //           Checkbox(
-                      //             value: isCheckedPrivatePool,
-                      //             onChanged: (bool? newValue) {
-                      //               setState(
-                      //                 () {
-                      //                   isCheckedPrivatePool = newValue;
-                      //                 },
-                      //               );
-                      //             },
-                      //           ),
-                      //         ],
-                      //       ),
-                      //       Row(
-                      //         children: [
-                      //           const Icon(
-                      //             Icons.coffee,
-                      //             color: AppColors.orange,
-                      //           ),
-                      //           const SizedBox(
-                      //             width: 10,
-                      //           ),
-                      //           const Text(
-                      //             'Food & drink',
-                      //             style: TextStyle(fontSize: TextSize.header2),
-                      //           ),
-                      //           const Spacer(),
-                      //           Checkbox(
-                      //             value: isCheckedFoodAnddrink,
-                      //             onChanged: (bool? newValue) {
-                      //               setState(
-                      //                 () {
-                      //                   isCheckedFoodAnddrink = newValue;
-                      //                 },
-                      //               );
-                      //             },
-                      //           ),
-                      //         ],
-                      //       ),
-                      //       Row(
-                      //         children: [
-                      //           const Icon(
-                      //             Icons.bed,
-                      //             color: AppColors.orange,
-                      //           ),
-                      //           const SizedBox(
-                      //             width: 10,
-                      //           ),
-                      //           const Text(
-                      //             'Cleaning services',
-                      //             style: TextStyle(fontSize: TextSize.header2),
-                      //           ),
-                      //           Spacer(),
-                      //           Checkbox(
-                      //             value: isCheckedCleaningServices,
-                      //             onChanged: (bool? newValue) {
-                      //               setState(
-                      //                 () {
-                      //                   isCheckedCleaningServices = newValue;
-                      //                 },
-                      //               );
-                      //             },
-                      //           ),
-                      //         ],
-                      //       ),
-                      //       Row(
-                      //         children: [
-                      //           Icon(
-                      //             Icons.local_parking,
-                      //             color: AppColors.orange,
-                      //           ),
-                      //           SizedBox(
-                      //             width: 10,
-                      //           ),
-                      //           const Text(
-                      //             'Private Parking',
-                      //             style: TextStyle(fontSize: TextSize.header2),
-                      //           ),
-                      //           Spacer(),
-                      //           Checkbox(
-                      //             value: isCheckedPrivateParking,
-                      //             onChanged: (bool? newValue) {
-                      //               setState(
-                      //                 () {
-                      //                   isCheckedPrivateParking = newValue;
-                      //                 },
-                      //               );
-                      //             },
-                      //           ),
-                      //         ],
-                      //       ),
-                      //       const SizedBox(
-                      //         height: 20,
-                      //       ),
-                      //       Column(
-                      //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      //         children: [
-                      //           Column(
-                      //             crossAxisAlignment: CrossAxisAlignment.start,
-                      //             children: [
-                      //               // const Row(
-                      //               //   mainAxisAlignment:
-                      //               //       MainAxisAlignment.start,
-                      //               //   children: [
-                      //               //     SizedBox(
-                      //               //       width: 10,
-                      //               //     ),
-                      //               //     Text(
-                      //               //       'Guests',
-                      //               //       style: TextStyle(
-                      //               //           fontSize: 13,
-                      //               //           color: AppColors.grayText,
-                      //               //           fontWeight: FontWeight.w500),
-                      //               //     ),
-                      //               //   ],
-                      //               // ),
-                      //               // SizedBox(
-                      //               //   height: 15,
-                      //               // ),
-                      //               Column(
-                      //                 children: [
-                      //                   Row(
-                      //                     mainAxisAlignment:
-                      //                         MainAxisAlignment.spaceBetween,
-                      //                     children: [
-                      //                       Column(
-                      //                         crossAxisAlignment:
-                      //                             CrossAxisAlignment.start,
-                      //                         children: [
-                      //                           const Row(
-                      //                             children: [
-                      //                               Text(
-                      //                                 'Adults',
-                      //                                 style: TextStyle(
-                      //                                     fontSize: 13,
-                      //                                     color: AppColors
-                      //                                         .grayText,
-                      //                                     fontWeight:
-                      //                                         FontWeight.w500),
-                      //                               ),
-                      //                             ],
-                      //                           ),
-                      //                           SizedBox(
-                      //                             height: 40,
-                      //                             width: size.width / 2 - 35,
-                      //                             child: TextField(
-                      //                               controller: _Adults,
-                      //                               keyboardType:
-                      //                                   TextInputType.number,
-                      //                               decoration: textFielDecoratiom
-                      //                                   .copyWith(
-                      //                                       focusedBorder:
-                      //                                           const OutlineInputBorder(
-                      //                                         borderSide:
-                      //                                             BorderSide(
-                      //                                           color: AppColors
-                      //                                               .lightOrange,
-                      //                                         ),
-                      //                                         borderRadius: BorderRadius
-                      //                                             .all(Radius
-                      //                                                 .circular(
-                      //                                                     18)),
-                      //                                       ),
-                      //                                       fillColor:
-                      //                                           Colors.white,
-                      //                                       prefixIcon:
-                      //                                           const Icon(
-                      //                                         Icons
-                      //                                             .people_alt_rounded,
-                      //                                         color: AppColors
-                      //                                             .orange,
-                      //                                       )),
-                      //                               onChanged: (value) {},
-                      //                             ),
-                      //                           ),
-                      //                         ],
-                      //                       ),
-                      //                       Column(
-                      //                         crossAxisAlignment:
-                      //                             CrossAxisAlignment.start,
-                      //                         children: [
-                      //                           const Row(
-                      //                             children: [
-                      //                               Text(
-                      //                                 'Children',
-                      //                                 style: TextStyle(
-                      //                                     fontSize: 13,
-                      //                                     color: AppColors
-                      //                                         .grayText,
-                      //                                     fontWeight:
-                      //                                         FontWeight.w500),
-                      //                               ),
-                      //                             ],
-                      //                           ),
-                      //                           SizedBox(
-                      //                             height: 40,
-                      //                             width: size.width / 2 - 35,
-                      //                             child: TextField(
-                      //                               controller: _Children,
-                      //                               keyboardType:
-                      //                                   TextInputType.number,
-                      //                               decoration: textFielDecoratiom
-                      //                                   .copyWith(
-                      //                                       focusedBorder:
-                      //                                           const OutlineInputBorder(
-                      //                                         borderSide:
-                      //                                             BorderSide(
-                      //                                           color: AppColors
-                      //                                               .lightOrange,
-                      //                                         ),
-                      //                                         borderRadius: BorderRadius
-                      //                                             .all(Radius
-                      //                                                 .circular(
-                      //                                                     18)),
-                      //                                       ),
-                      //                                       fillColor:
-                      //                                           Colors.white,
-                      //                                       prefixIcon:
-                      //                                           const Icon(
-                      //                                         Icons
-                      //                                             .people_alt_rounded,
-                      //                                         color: AppColors
-                      //                                             .orange,
-                      //                                       )),
-                      //                               // onChanged: (value) {
-                      //                               //   setState(() {
-                      //                               //     _Children.text = value;
-                      //                               //     selectedValues =
-                      //                               //         List.filled(
-                      //                               //             int.parse(
-                      //                               //                 value),
-                      //                               //             null);
-                      //                               //   });
-                      //                               // },
-                      //                               onSubmitted: (value) {
-                      //                                 setState(() {
-                      //                                   _Children.text = value;
-                      //                                   selectedValues =
-                      //                                       List.filled(
-                      //                                           int.parse(
-                      //                                               _Children
-                      //                                                   .text),
-                      //                                           null);
-                      //                                 });
-                      //                               },
-                      //                             ),
-                      //                           ),
-                      //                         ],
-                      //                       ),
-                      //                     ],
-                      //                   ),
-                      //                 ],
-                      //               ),
-                      //             ],
-                      //           ),
-                      //           // (_Children.text.isNotEmpty)
-                      //           //     ? ListView.builder(
-                      //           //         physics: NeverScrollableScrollPhysics(),
-                      //           //         shrinkWrap: true,
-                      //           //         itemCount: selectedValues.length,
-                      //           //         itemBuilder: (context, index) {
-                      //           //           return Container(
-                      //           //             padding: EdgeInsetsDirectional.only(
-                      //           //                 bottom: 0, top: 30),
-                      //           //             child: Center(
-                      //           //                 child: Column(
-                      //           //               children: [
-                      //           //                 Row(
-                      //           //                   children: [
-                      //           //                     Text(
-                      //           //                       'Child age ${index + 1}',
-                      //           //                       style: TextStyle(
-                      //           //                           fontSize: 13,
-                      //           //                           color: AppColors
-                      //           //                               .grayText,
-                      //           //                           fontWeight:
-                      //           //                               FontWeight.w500),
-                      //           //                     ),
-                      //           //                   ],
-                      //           //                 ),
-                      //           //                 DropdownButtonHideUnderline(
-                      //           //                   child:
-                      //           //                       DropdownButton2<String>(
-                      //           //                     isExpanded: true,
-                      //           //                     hint: const Row(
-                      //           //                       children: [
-                      //           //                         Icon(
-                      //           //                           Icons
-                      //           //                               .child_care_rounded,
-                      //           //                           size: 16,
-                      //           //                           color:
-                      //           //                               AppColors.purple,
-                      //           //                         ),
-                      //           //                         SizedBox(
-                      //           //                           width: 4,
-                      //           //                         ),
-                      //           //                       ],
-                      //           //                     ),
-                      //           //                     items: ChildrenAge.map(
-                      //           //                         (String item) =>
-                      //           //                             DropdownMenuItem<
-                      //           //                                 String>(
-                      //           //                               value: item,
-                      //           //                               child: Text(
-                      //           //                                 item,
-                      //           //                                 style: const TextStyle(
-                      //           //                                     fontSize:
-                      //           //                                         13,
-                      //           //                                     color: AppColors
-                      //           //                                         .blackColor,
-                      //           //                                     fontWeight:
-                      //           //                                         FontWeight
-                      //           //                                             .w500),
-                      //           //                                 overflow:
-                      //           //                                     TextOverflow
-                      //           //                                         .ellipsis,
-                      //           //                               ),
-                      //           //                             )).toList(),
-                      //           //                     value:
-                      //           //                         selectedValues[index],
-                      //           //                     onChanged: (value) {
-                      //           //                       setState(() {
-                      //           //                         selectedValues[index] =
-                      //           //                             value;
-                      //           //                       });
-                      //           //                     },
-                      //           //                     buttonStyleData:
-                      //           //                         ButtonStyleData(
-                      //           //                       height: 40,
-                      //           //                       width: size.width - 50,
-                      //           //                       padding:
-                      //           //                           const EdgeInsets.only(
-                      //           //                               left: 14,
-                      //           //                               right: 14),
-                      //           //                       decoration: BoxDecoration(
-                      //           //                         borderRadius:
-                      //           //                             BorderRadius
-                      //           //                                 .circular(18),
-                      //           //                         border: Border.all(
-                      //           //                           color: AppColors
-                      //           //                               .LightGrayColor,
-                      //           //                         ),
-                      //           //                         color: AppColors
-                      //           //                             .TextFieldcolor,
-                      //           //                       ),
-                      //           //                       // elevation: 2,
-                      //           //                     ),
-                      //           //                     iconStyleData:
-                      //           //                         const IconStyleData(
-                      //           //                       // icon: Icon(
-                      //           //                       //   Icons.arrow_forward_ios_outlined,
-                      //           //                       // ),
-                      //           //                       iconSize: 14,
-                      //           //                       iconEnabledColor:
-                      //           //                           Colors.black,
-                      //           //                       iconDisabledColor:
-                      //           //                           AppColors
-                      //           //                               .babyblueColor,
-                      //           //                     ),
-                      //           //                     dropdownStyleData:
-                      //           //                         DropdownStyleData(
-                      //           //                       maxHeight: 180,
-                      //           //                       width: size.width - 50,
-                      //           //                       decoration: BoxDecoration(
-                      //           //                         borderRadius:
-                      //           //                             BorderRadius
-                      //           //                                 .circular(18),
-                      //           //                         border: Border.all(
-                      //           //                           color: AppColors
-                      //           //                               .LightGrayColor,
-                      //           //                         ),
-                      //           //                         color: AppColors
-                      //           //                             .TextFieldcolor,
-                      //           //                       ),
-                      //           //                       offset:
-                      //           //                           const Offset(-20, 0),
-                      //           //                       scrollbarTheme:
-                      //           //                           ScrollbarThemeData(
-                      //           //                         radius: const Radius
-                      //           //                             .circular(40),
-                      //           //                         thickness:
-                      //           //                             MaterialStateProperty
-                      //           //                                 .all(6),
-                      //           //                         thumbVisibility:
-                      //           //                             MaterialStateProperty
-                      //           //                                 .all(true),
-                      //           //                       ),
-                      //           //                     ),
-                      //           //                     menuItemStyleData:
-                      //           //                         const MenuItemStyleData(
-                      //           //                       height: 40,
-                      //           //                       padding: EdgeInsets.only(
-                      //           //                           left: 14, right: 14),
-                      //           //                     ),
-                      //           //                   ),
-                      //           //                 ),
-                      //           //               ],
-                      //           //             )),
-                      //           //           );
-                      //           //         },
-                      //           //       )
-                      //           //:
-                      //           SizedBox(
-                      //             height: 30,
-                      //           ),
-
-                      //           Row(
-                      //             mainAxisAlignment:
-                      //                 MainAxisAlignment.spaceBetween,
-                      //             children: [
-                      //               Column(
-                      //                 crossAxisAlignment:
-                      //                     CrossAxisAlignment.start,
-                      //                 children: [
-                      //                   const Row(
-                      //                     children: [
-                      //                       Text(
-                      //                         'Rooms',
-                      //                         style: TextStyle(
-                      //                             fontSize: 13,
-                      //                             color: AppColors.grayText,
-                      //                             fontWeight: FontWeight.w500),
-                      //                       ),
-                      //                     ],
-                      //                   ),
-                      //                   SizedBox(
-                      //                     height: 40,
-                      //                     width: size.width / 3 - 25,
-                      //                     child: TextField(
-                      //                       controller: _NumberOfRoomAvilable,
-                      //                       keyboardType: TextInputType.number,
-                      //                       decoration:
-                      //                           textFielDecoratiom.copyWith(
-                      //                               focusedBorder:
-                      //                                   const OutlineInputBorder(
-                      //                                 borderSide: BorderSide(
-                      //                                   color: AppColors
-                      //                                       .lightOrange,
-                      //                                 ),
-                      //                                 borderRadius:
-                      //                                     BorderRadius.all(
-                      //                                         Radius.circular(
-                      //                                             18)),
-                      //                               ),
-                      //                               fillColor: Colors.white,
-                      //                               prefixIcon: const Icon(
-                      //                                 Icons.meeting_room,
-                      //                                 color: AppColors.orange,
-                      //                               )),
-                      //                       onChanged: (value) {},
-                      //                     ),
-                      //                   ),
-                      //                 ],
-                      //               ),
-                      //               SizedBox(
-                      //                 width: 3,
-                      //               ),
-                      //               Column(
-                      //                 crossAxisAlignment:
-                      //                     CrossAxisAlignment.start,
-                      //                 children: [
-                      //                   Text(
-                      //                     'Bedrooms',
-                      //                     style: TextStyle(
-                      //                         fontSize: 13,
-                      //                         color: AppColors.grayText,
-                      //                         fontWeight: FontWeight.w500),
-                      //                   ),
-                      //                   SizedBox(
-                      //                     height: 40,
-                      //                     width: size.width / 3 - 25,
-                      //                     child: TextField(
-                      //                       controller: _BedRooms,
-                      //                       keyboardType: TextInputType.number,
-                      //                       decoration:
-                      //                           textFielDecoratiom.copyWith(
-                      //                         focusedBorder:
-                      //                             const OutlineInputBorder(
-                      //                           borderSide: BorderSide(
-                      //                             color: AppColors.lightOrange,
-                      //                           ),
-                      //                           borderRadius: BorderRadius.all(
-                      //                               Radius.circular(18)),
-                      //                         ),
-                      //                         fillColor: Colors.white,
-                      //                         prefixIcon: const Icon(
-                      //                           Icons.bed,
-                      //                           color: AppColors.orange,
-                      //                         ),
-                      //                       ),
-                      //                       onChanged: (value) {},
-                      //                     ),
-                      //                   ),
-                      //                 ],
-                      //               ),
-                      //               Column(
-                      //                 crossAxisAlignment:
-                      //                     CrossAxisAlignment.start,
-                      //                 children: [
-                      //                   Text(
-                      //                     'Bathrooms',
-                      //                     style: TextStyle(
-                      //                         fontSize: 13,
-                      //                         color: AppColors.grayText,
-                      //                         fontWeight: FontWeight.w500),
-                      //                   ),
-                      //                   SizedBox(
-                      //                     height: 40,
-                      //                     width: size.width / 3 - 25,
-                      //                     child: TextField(
-                      //                       keyboardType: TextInputType.number,
-                      //                       controller: _Bathrooms,
-                      //                       decoration:
-                      //                           textFielDecoratiom.copyWith(
-                      //                         focusedBorder:
-                      //                             const OutlineInputBorder(
-                      //                           borderSide: BorderSide(
-                      //                             color: AppColors.lightOrange,
-                      //                           ),
-                      //                           borderRadius: BorderRadius.all(
-                      //                               Radius.circular(18)),
-                      //                         ),
-                      //                         fillColor: Colors.white,
-                      //                         prefixIcon: const Icon(
-                      //                           Icons.bathtub,
-                      //                           color: AppColors.orange,
-                      //                         ),
-                      //                       ),
-                      //                       onChanged: (value) {},
-                      //                     ),
-                      //                   ),
-                      //                 ],
-                      //               ),
-                      //             ],
-                      //           )
-                      //         ],
-                      //       ),
-                      //     ],
-                      //   ),
-                      // ),
+                      const Row(
+                        children: [
+                          Row(
+                            children: [
+                              Text(
+                                'User details',
+                                style: TextStyle(
+                                    fontSize: 16, fontWeight: FontWeight.w500),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      Container(
+                        padding: const EdgeInsets.all(15),
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(20)),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      'Rental in day',
+                                      style: TextStyle(
+                                          fontSize: 13,
+                                          color: AppColors.grayText,
+                                          fontWeight: FontWeight.w500),
+                                    ),
+                                    SizedBox(
+                                      height: 40,
+                                      width: size.width / 2 - 35,
+                                      child: TextField(
+                                        controller: _price,
+                                        keyboardType: TextInputType.number,
+                                        decoration: textFielDecoratiom.copyWith(
+                                            focusedBorder:
+                                                const OutlineInputBorder(
+                                              borderSide: BorderSide(
+                                                color: AppColors.lightOrange,
+                                              ),
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(18)),
+                                            ),
+                                            fillColor: Colors.white,
+                                            prefixIcon: const Icon(
+                                              Icons.attach_money_sharp,
+                                              color: AppColors.orange,
+                                            )),
+                                        onChanged: (value) {},
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      'Rental in weak',
+                                      style: TextStyle(
+                                          fontSize: 13,
+                                          color: AppColors.grayText,
+                                          fontWeight: FontWeight.w500),
+                                    ),
+                                    SizedBox(
+                                      height: 40,
+                                      width: size.width / 2 - 35,
+                                      child: TextField(
+                                        controller: _RoomNumber,
+                                        keyboardType: TextInputType.number,
+                                        decoration: textFielDecoratiom.copyWith(
+                                            focusedBorder:
+                                                const OutlineInputBorder(
+                                              borderSide: BorderSide(
+                                                color: AppColors.lightOrange,
+                                              ),
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(18)),
+                                            ),
+                                            fillColor: Colors.white,
+                                            prefixIcon: const Icon(
+                                              Icons.attach_money_sharp,
+                                              color: AppColors.orange,
+                                            )),
+                                        onChanged: (value) {},
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
                       const SizedBox(
                         height: 20,
                       ),

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:traveling/classes/hotel_bookings_class.dart';
-import 'package:traveling/classes/hotel_side_finished_class%20copy.dart';
+import 'package:traveling/classes/hotel_side_finished_class.dart';
 import 'package:traveling/classes/hotel_side_upcoming_class.dart';
 import 'package:traveling/ui/shared/colors.dart';
 import 'package:traveling/ui/shared/custom_widgets/custom_button.dart';

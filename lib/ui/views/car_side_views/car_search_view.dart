@@ -3,8 +3,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
+import 'package:traveling/cards/car_card.dart';
 import 'package:traveling/cards/hotel_room_card.dart';
+import 'package:traveling/classes/car_class.dart';
 import 'package:traveling/classes/hotel_room_details_class.dart';
 import 'package:traveling/controllers/currency_controller.dart';
 import '../../shared/colors.dart';
@@ -40,6 +43,18 @@ class _CarSearchViewState extends State<CarSearchView> {
   int NumberOfResultFilteredHotelRooms = 0;
   double MinPrice = 0.0;
   double MaxPrice = 0.0;
+  Color selectedColor = Colors.black;
+  List<Color> colors = [
+    Colors.black,
+    Color.fromARGB(255, 255, 249, 249),
+    Colors.grey,
+    AppColors.darkBlue,
+    Colors.red,
+    Colors.brown,
+  ];
+  List<bool> isSelected = [true, false, false];
+  String dropdownValue2 = 'Toyota';
+
   @override
   void initState() {
     super.initState();
@@ -184,6 +199,7 @@ class _CarSearchViewState extends State<CarSearchView> {
       }
 
       showModalBottomSheet(
+        backgroundColor: Colors.white,
         context: context,
         builder: (BuildContext context) {
           return StatefulBuilder(
@@ -314,6 +330,58 @@ class _CarSearchViewState extends State<CarSearchView> {
                                   // ),
                                 ],
                               ),
+                              const Row(
+                                children: [
+                                  Text(
+                                    'Company',
+                                    style: TextStyle(
+                                        fontSize: 13,
+                                        color: AppColors.grayText,
+                                        fontWeight: FontWeight.w500),
+                                  ),
+                                ],
+                              ),
+                              Container(
+                                width: size.width - 35,
+                                height: 40,
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                      color: AppColors.LightGrayColor),
+                                  borderRadius: BorderRadius.circular(15),
+                                ),
+                                child: DropdownButton<String>(
+                                  dropdownColor: Colors.white,
+                                  padding: EdgeInsets.only(left: 15),
+                                  underline: DecoratedBox(
+                                    decoration: BoxDecoration(),
+                                  ),
+                                  value: dropdownValue2,
+                                  items: <String>[
+                                    'Marceds',
+                                    'KIA',
+                                    'Rang Rover',
+                                    'Roz Raiz',
+                                    'Honday',
+                                    'Honda',
+                                    'Toyota',
+                                    'GMC',
+                                    'Odi',
+                                    'BMW',
+                                    'Other'
+                                  ].map<DropdownMenuItem<String>>(
+                                      (String value) {
+                                    return DropdownMenuItem<String>(
+                                      value: value,
+                                      child: Text(value),
+                                    );
+                                  }).toList(),
+                                  onChanged: (String? newValue) {
+                                    setState(() {
+                                      dropdownValue2 = newValue!;
+                                    });
+                                  },
+                                ),
+                              ),
                               Container(
                                 margin:
                                     const EdgeInsets.symmetric(vertical: 15),
@@ -322,10 +390,103 @@ class _CarSearchViewState extends State<CarSearchView> {
                                 color: AppColors.gray,
                               ),
                               const Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
                                   Text(
-                                    'Room amenities',
+                                    'Color',
+                                    style: TextStyle(
+                                        fontSize: 13,
+                                        color: AppColors.grayText,
+                                        fontWeight: FontWeight.w500),
+                                  ),
+                                ],
+                              ),
+                              SingleChildScrollView(
+                                scrollDirection: Axis.horizontal,
+                                child: Row(
+                                  children: colors.map((color) {
+                                    return GestureDetector(
+                                      onTap: () {
+                                        setState(() {
+                                          selectedColor = color;
+                                        });
+                                      },
+                                      child: Container(
+                                        margin:
+                                            EdgeInsets.symmetric(horizontal: 5),
+                                        width: 35,
+                                        height: 35,
+                                        decoration: BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          color: color,
+                                          border: selectedColor == color
+                                              ? Border.all(
+                                                  color: Colors.black, width: 3)
+                                              : null,
+                                        ),
+                                      ),
+                                    );
+                                  }).toList(),
+                                ),
+                              ),
+
+                              Container(
+                                margin:
+                                    const EdgeInsets.symmetric(vertical: 15),
+                                height: 1,
+                                width: size.width - 30,
+                                color: AppColors.gray,
+                              ),
+                              ToggleButtons(
+                                disabledColor: AppColors.grayText,
+
+                                borderColor: AppColors.LightGrayColor,
+                                borderRadius: BorderRadius.circular(15),
+                                // focusColor: AppColors.grayText,
+                                fillColor: AppColors.lightOrange,
+                                selectedColor: AppColors.blackColor,
+                                selectedBorderColor: AppColors.lightOrange,
+                                color: AppColors.grayText,
+
+                                isSelected: isSelected,
+                                onPressed: (int index) {
+                                  setState(() {
+                                    for (int i = 0;
+                                        i < isSelected.length;
+                                        i++) {
+                                      isSelected[i] = i == index;
+                                    }
+                                  });
+                                },
+                                constraints: BoxConstraints(
+                                  minWidth: size.width / 3 - 21.5,
+                                  minHeight: 40.0,
+                                ),
+                                children: const <Widget>[
+                                  Padding(
+                                    padding: EdgeInsets.all(0.0),
+                                    child: Text('2 Seats'),
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.all(0.0),
+                                    child: Text('4 Seats'),
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.all(0.0),
+                                    child: Text('6 Seats'),
+                                  ),
+                                ],
+                              ),
+                              Container(
+                                margin:
+                                    const EdgeInsets.symmetric(vertical: 15),
+                                height: 1,
+                                width: size.width - 30,
+                                color: AppColors.gray,
+                              ),
+                              const Row(
+                                children: [
+                                  Text(
+                                    'Ger',
                                     style: TextStyle(
                                         fontSize: 13,
                                         color: AppColors.grayText,
@@ -337,181 +498,34 @@ class _CarSearchViewState extends State<CarSearchView> {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                  Row(
                                     children: [
-                                      // Row(
-                                      //   children: [
-                                      //     Radio(
-                                      //       activeColor:
-                                      //           AppColors.mainColorBlue,
-                                      //       value: 'Free wi-fi',
-                                      //       groupValue: sorteBy,
-                                      //       onChanged: (value) {
-                                      //         sorteBy = value.toString();
-
-                                      //         setModalState(() {
-                                      //           // filterFlights(
-                                      //           //     _FromSearchController.text,
-                                      //           //     _ToSearchController.text,
-                                      //           //     isCheckedDirect!,
-                                      //           //     isCheckedIndirect!,
-                                      //           //     sorteBy,
-                                      //           //     _currentRangeValues.start
-                                      //           //         .round(),
-                                      //           //     _currentRangeValues.end
-                                      //           //         .round());
-                                      //         });
-                                      //       },
-                                      //     ),
-                                      //     const Text('Free wi-fi'),
-                                      //   ],
-                                      // ),
-                                      Row(
-                                        children: [
-                                          Checkbox(
-                                            value: isCheckedFreeWifi,
-                                            onChanged: (bool? newValue) {
-                                              setModalState(
-                                                () {
-                                                  isCheckedFreeWifi = newValue!;
-                                                  NumberOfHotelRooms();
-                                                  // isCheckedIndirect = false;
-                                                  // filterFlights(
-                                                  //     _FromSearchController.text,
-                                                  //     _ToSearchController.text,
-                                                  //     isCheckedDirect!,
-                                                  //     isCheckedIndirect!,
-                                                  //     sorteBy,
-                                                  //     _currentRangeValues.start
-                                                  //         .round(),
-                                                  //     _currentRangeValues.end
-                                                  //         .round());
-                                                },
-                                              );
-                                            },
-                                          ),
-                                          const Text('Free wi-fi'),
-                                        ],
-                                      ),
-                                      Row(
-                                        children: [
-                                          Checkbox(
-                                            value: isCheckedFoodDrink,
-                                            onChanged: (bool? newValue) {
-                                              setModalState(
-                                                () {
-                                                  isCheckedFoodDrink =
-                                                      newValue!;
-                                                  NumberOfHotelRooms();
-                                                  // filterFlights(
-                                                  //     _FromSearchController.text,
-                                                  //     _ToSearchController.text,
-                                                  //     isCheckedDirect!,
-                                                  //     isCheckedIndirect!,
-                                                  //     sorteBy,
-                                                  //     _currentRangeValues.start
-                                                  //         .round(),
-                                                  //     _currentRangeValues.end
-                                                  //         .round());
-                                                },
-                                              );
-                                            },
-                                          ),
-                                          const Text('Food & drink'),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Row(
-                                        children: [
-                                          Checkbox(
-                                            value: isCheckedPrivatePool,
-                                            onChanged: (bool? newValue) {
-                                              setModalState(
-                                                () {
-                                                  isCheckedPrivatePool =
-                                                      newValue!;
-                                                  NumberOfHotelRooms();
-                                                  // filterFlights(
-                                                  //     _FromSearchController.text,
-                                                  //     _ToSearchController.text,
-                                                  //     isCheckedDirect!,
-                                                  //     isCheckedIndirect!,
-                                                  //     sorteBy,
-                                                  //     _currentRangeValues.start
-                                                  //         .round(),
-                                                  //     _currentRangeValues.end
-                                                  //         .round());
-                                                },
-                                              );
-                                            },
-                                          ),
-                                          const Text('Private pool'),
-                                        ],
-                                      ),
-                                      Row(
-                                        children: [
-                                          Checkbox(
-                                            value: isCheckedCleaningServices,
-                                            onChanged: (bool? newValue) {
-                                              setModalState(
-                                                () {
-                                                  isCheckedCleaningServices =
-                                                      newValue!;
-                                                  NumberOfHotelRooms();
-                                                  // isCheckedIndirect = false;
-                                                  // filterFlights(
-                                                  //     _FromSearchController.text,
-                                                  //     _ToSearchController.text,
-                                                  //     isCheckedDirect!,
-                                                  //     isCheckedIndirect!,
-                                                  //     sorteBy,
-                                                  //     _currentRangeValues.start
-                                                  //         .round(),
-                                                  //     _currentRangeValues.end
-                                                  //         .round());
-                                                },
-                                              );
-                                            },
-                                          ),
-                                          const Text('Cleaning services'),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                              Row(
-                                children: [
-                                  Checkbox(
-                                    value: isCheckedPrivateParking,
-                                    onChanged: (bool? newValue) {
-                                      setModalState(
-                                        () {
-                                          isCheckedPrivateParking = newValue!;
-                                          NumberOfHotelRooms();
-                                          // isCheckedIndirect = false;
-                                          // filterFlights(
-                                          //     _FromSearchController.text,
-                                          //     _ToSearchController.text,
-                                          //     isCheckedDirect!,
-                                          //     isCheckedIndirect!,
-                                          //     sorteBy,
-                                          //     _currentRangeValues.start
-                                          //         .round(),
-                                          //     _currentRangeValues.end
-                                          //         .round());
+                                      Radio(
+                                        activeColor: AppColors.orange,
+                                        value: 'Normal',
+                                        autofocus: true,
+                                        groupValue: sorteBy,
+                                        onChanged: (value) {
+                                          sorteBy = value.toString();
                                         },
-                                      );
-                                    },
+                                      ),
+                                      const Text('Normal'),
+                                    ],
                                   ),
-                                  const Text('Private praking'),
+                                  Row(
+                                    children: [
+                                      Radio(
+                                        activeColor: AppColors.orange,
+                                        value: 'Automatic',
+                                        groupValue: sorteBy,
+                                        onChanged: (value) {
+                                          sorteBy = value.toString();
+                                        },
+                                      ),
+                                      const Text('Automatic'),
+                                    ],
+                                  ),
+                                  SizedBox(),
                                 ],
                               ),
                               Container(
@@ -539,6 +553,7 @@ class _CarSearchViewState extends State<CarSearchView> {
                                   RangeSlider(
                                       values: _currentRangeValues,
                                       activeColor: AppColors.orange,
+                                      inactiveColor: AppColors.gray,
                                       min: MinPrice,
                                       max: MaxPrice,
                                       divisions: 100,
@@ -712,23 +727,25 @@ class _CarSearchViewState extends State<CarSearchView> {
                       const SizedBox(
                         height: 15,
                       ),
-                      (HotelRooms.value.isEmpty)
-                          ? const CircularProgressIndicator()
-                          : (HotelRooms.value.isNotEmpty)
-                              ? Expanded(
-                                  child: ListView.builder(
-                                    scrollDirection: Axis.vertical,
-                                    shrinkWrap: true,
-                                    itemCount: HotelRooms.value.length,
-                                    itemBuilder: (context, index) =>
-                                        RoomCardHotel(
-                                      size: size,
-                                      itemIndex: index,
-                                      room: HotelRooms.value[index],
-                                    ),
-                                  ),
-                                )
-                              : SizedBox(),
+                      // (HotelRooms.value.isEmpty)
+                      //     ? const CircularProgressIndicator()
+                      //     : (HotelRooms.value.isNotEmpty)
+                      //         ? Expanded(
+                      // child:
+                      Expanded(
+                        child: ListView.builder(
+                          scrollDirection: Axis.vertical,
+                          shrinkWrap: true,
+                          itemCount: cars.length,
+                          itemBuilder: (context, index) => CarCard(
+                            size: size,
+                            itemIndex: index,
+                            carDetails: cars[index],
+                          ),
+                        ),
+                      ),
+                      // )
+                      // : SizedBox(),
                     ],
                   ),
                 ),

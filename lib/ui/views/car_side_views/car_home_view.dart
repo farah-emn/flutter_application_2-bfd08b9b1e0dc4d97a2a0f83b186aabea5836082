@@ -8,6 +8,7 @@ import 'package:traveling/classes/hotel_room_details_class.dart';
 import 'package:traveling/controllers/currency_controller.dart';
 import 'package:traveling/ui/shared/colors.dart';
 import 'package:traveling/ui/shared/text_size.dart';
+import 'package:traveling/ui/views/car_side_views/car_booking_view.dart';
 import 'package:traveling/ui/views/hotel_side_views/hotel_booking_view.dart';
 import 'package:traveling/ui/views/hotel_side_views/hotel_currency.dart';
 import 'package:traveling/ui/views/hotel_side_views/hotel_welcome_view.dart';
@@ -165,7 +166,7 @@ class _CarHomeViewState extends State<CarHomeView> {
                 ),
               ),
               onTap: () {
-                Get.to(HotelBookingView());
+                Get.to(CarBookingView());
               },
             ),
             ListTile(

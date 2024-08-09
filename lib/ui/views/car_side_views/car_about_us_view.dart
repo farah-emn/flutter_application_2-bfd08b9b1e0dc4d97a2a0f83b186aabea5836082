@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:traveling/ui/shared/text_size.dart';
@@ -58,7 +59,7 @@ class _CarAboutUsViewState extends State<CarAboutUsView> {
         child: Stack(
           children: [
             const Padding(
-              padding: EdgeInsets.only(left: 15, right: 15, top: 15),
+              padding: EdgeInsets.only(left: 15, right: 15, top: 10),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -72,7 +73,7 @@ class _CarAboutUsViewState extends State<CarAboutUsView> {
                     style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.w700,
-                        color: AppColors.orange),
+                        color: Colors.white),
                   ),
                   InkWell(
                     child: Icon(
