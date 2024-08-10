@@ -19,14 +19,14 @@ import 'home_view.dart';
 
 bool is3 = false;
 
-class HotelSummartView extends StatefulWidget {
-  HotelSummartView({super.key});
+class BookingCarSummaryView extends StatefulWidget {
+  BookingCarSummaryView({super.key});
 
   @override
-  State<HotelSummartView> createState() => _HotelSummartViewState();
+  State<BookingCarSummaryView> createState() => _BookingCarSummaryViewState();
 }
 
-class _HotelSummartViewState extends State<HotelSummartView> {
+class _BookingCarSummaryViewState extends State<BookingCarSummaryView> {
   int activeStepIndex = 0;
   int _nextStep = 1;
 
@@ -66,179 +66,267 @@ class _HotelSummartViewState extends State<HotelSummartView> {
     }
 
     return Scaffold(
-      backgroundColor: AppColors.lightPurple,
+      backgroundColor: AppColors.lightOrange,
       body: SafeArea(
-        child: Stack(
-          children: [
-            Container(
-              color: AppColors.lightPurple,
-              child: Stack(
-                children: [
-                  const Padding(
-                    padding: EdgeInsets.only(left: 15, right: 15, top: 10),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Icon(
-                          Icons.arrow_back,
-                          color: AppColors.purple,
-                        ),
-                        Text(
-                          'Booking',
-                          style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.w700,
-                              color: AppColors.purple),
-                        ),
-                        Icon(
-                          Icons.arrow_back,
-                          color: AppColors.lightPurple,
-                        ),
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(
-                      top: 50,
-                    ),
-                    child: Container(
-                      decoration: const BoxDecoration(
-                        image: DecorationImage(
-                            image:
-                                AssetImage('assets/image/png/background1.png'),
-                            fit: BoxFit.fill),
+        child: Stack(children: [
+          Container(
+            color: AppColors.lightOrange,
+            child: Stack(
+              children: [
+                const Padding(
+                  padding: EdgeInsets.only(left: 15, right: 15, top: 10),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Icon(
+                        Icons.arrow_back,
+                        color: AppColors.orange,
                       ),
+                      Text(
+                        'Add Room',
+                        style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.w700,
+                            color: AppColors.orange),
+                      ),
+                      Icon(
+                        Icons.arrow_back,
+                        color: AppColors.lightOrange,
+                      ),
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(
+                    top: 50,
+                  ),
+                  child: Container(
+                    decoration: const BoxDecoration(
+                      image: DecorationImage(
+                          image: AssetImage('assets/image/png/background1.png'),
+                          fit: BoxFit.fill),
                     ),
                   ),
-                  Container(
-                    color: AppColors.backgroundgrayColor,
-                    margin: const EdgeInsets.only(
-                      top: 100,
-                    ),
-                    child: Theme(
-                      data: ThemeData(
-                          colorScheme: const ColorScheme.light(
-                        primary: AppColors.purple,
-                        background: AppColors.backgroundgrayColor,
-                      )),
-                      child: Stepper(
-                        elevation: 0,
-                        steps: StepsList(),
-                        type: StepperType.horizontal,
-                        currentStep: activeStepIndex,
-                        onStepContinue: () {
-                          final isLastStep =
-                              activeStepIndex == StepsList().length - 1;
-                          if (isLastStep) {
-                            print(isLastStep);
-                            showDialog(
-                                context: context,
-                                builder: (BuildContext context) {
-                                  return Dialog(
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(20.0),
-                                    ),
-                                    backgroundColor: Colors.white,
-                                    child: Container(
-                                      padding: const EdgeInsets.all(10),
-                                      width: size.width,
-                                      height: 450,
-                                      child: Column(
-                                        children: [
-                                          const Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.end,
-                                            children: [
-                                              Icon(
-                                                Icons.cancel,
-                                                color: AppColors.purple,
-                                                size: 30,
-                                              ),
-                                            ],
-                                          ),
-                                          const SizedBox(
-                                            height: 20,
-                                          ),
-                                          const Icon(
-                                            Icons.check_circle_outlined,
-                                            color: AppColors.purple,
-                                            size: 100,
-                                          ),
-                                          const SizedBox(
-                                            height: 20,
-                                          ),
-                                          const Text(
-                                            'SUCCESS!',
-                                            style: TextStyle(
-                                                color: AppColors.purple,
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 25),
-                                          ),
-                                          const SizedBox(
-                                            height: 20,
-                                          ),
-                                          const Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: [
-                                              Text(
-                                                'Your flight has been\n\ booked successfully.',
-                                                style: TextStyle(
-                                                    fontSize: TextSize.header2,
-                                                    color: Color.fromARGB(
-                                                        255, 112, 110, 110)),
-                                              ),
-                                            ],
-                                          ),
-                                          const SizedBox(
-                                            height: 50,
-                                          ),
-                                          InkWell(
-                                            onTap: () {
-                                              Get.to(const Home());
-                                            },
-                                            child: Padding(
-                                              padding: const EdgeInsets.only(
-                                                left: 15,
-                                                right: 15,
-                                                bottom: 15,
-                                              ),
-                                              child: CustomButton(
-                                                  backgroundColor:
-                                                      AppColors.purple,
-                                                  text: 'Confirm',
-                                                  textColor: AppColors
-                                                      .backgroundgrayColor,
-                                                  widthPercent: size.width,
-                                                 ),
+                ),
+                Container(
+                  color: AppColors.backgroundgrayColor,
+                  margin: const EdgeInsets.only(
+                    top: 100,
+                  ),
+                  child: Theme(
+                    data: ThemeData(
+                        colorScheme: const ColorScheme.light(
+                      primary: AppColors.orange,
+                      background: AppColors.backgroundgrayColor,
+                    )),
+                    child: Stepper(
+                      elevation: 0,
+                      steps: StepsList(),
+                      type: StepperType.horizontal,
+                      currentStep: activeStepIndex,
+                      onStepContinue: () {
+                        final isLastStep =
+                            activeStepIndex == StepsList().length - 1;
+                        if (isLastStep) {
+                          print(isLastStep);
+                          showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return Dialog(
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(20.0),
+                                  ),
+                                  backgroundColor: Colors.white,
+                                  child: Container(
+                                    padding: const EdgeInsets.all(10),
+                                    width: size.width,
+                                    height: 450,
+                                    child: Column(
+                                      children: [
+                                        const Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.end,
+                                          children: [
+                                            Icon(
+                                              Icons.cancel,
+                                              color: AppColors.orange,
+                                              size: 30,
                                             ),
+                                          ],
+                                        ),
+                                        const SizedBox(
+                                          height: 20,
+                                        ),
+                                        const Icon(
+                                          Icons.check_circle_outlined,
+                                          color: AppColors.orange,
+                                          size: 100,
+                                        ),
+                                        const SizedBox(
+                                          height: 20,
+                                        ),
+                                        const Text(
+                                          'SUCCESS!',
+                                          style: TextStyle(
+                                              color: AppColors.orange,
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 25),
+                                        ),
+                                        const SizedBox(
+                                          height: 20,
+                                        ),
+                                        const Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Text(
+                                              'Your car has been\n\ booked successfully.',
+                                              style: TextStyle(
+                                                  fontSize: TextSize.header2,
+                                                  color: Color.fromARGB(
+                                                      255, 112, 110, 110)),
+                                            ),
+                                          ],
+                                        ),
+                                        const SizedBox(
+                                          height: 50,
+                                        ),
+                                        InkWell(
+                                          onTap: () {
+                                            Get.to(const Home());
+                                          },
+                                          child: Padding(
+                                            padding: const EdgeInsets.only(
+                                              left: 15,
+                                              right: 15,
+                                              bottom: 15,
+                                            ),
+                                            child: CustomButton(
+                                                backgroundColor:
+                                                    AppColors.orange,
+                                                text: 'Confirm',
+                                                textColor: AppColors
+                                                    .backgroundgrayColor,
+                                                widthPercent: size.width,
+                                               ),
                                           ),
-                                        ],
-                                      ),
+                                        ),
+                                      ],
                                     ),
-                                  );
-                                });
-                          } else {
-                            setState(() {
-                              activeStepIndex += 1;
-                            });
-                          }
-                        },
-                        onStepCancel: () {
-                          activeStepIndex == 0
-                              ? null
-                              : setState(() {
-                                  activeStepIndex -= 1;
-                                });
-                        },
-                      ),
+                                  ),
+                                );
+                              });
+                        } else {
+                          setState(() {
+                            activeStepIndex += 1;
+                          });
+                        }
+
+                        // if (_nextStep <= 4) {
+                        //   _activeStepIndex += 1;
+                        //   _nextStep += 1;
+                        // }
+                        // if (_nextStep == 4) {
+                        // showDialog(
+                        //     context: context,
+                        //     builder: (BuildContext context) {
+                        //       return Dialog(
+                        //         shape: RoundedRectangleBorder(
+                        //           borderRadius: BorderRadius.circular(
+                        //               20.0), // Set your desired border radius
+                        //         ),
+                        //         backgroundColor: Colors.white,
+                        //         child: Container(
+                        //           width: screenWidth(1),
+                        //           height: screenHeight(2.4),
+                        //           child: Column(
+                        //             children: [
+                        //               Padding(
+                        //                 padding: EdgeInsetsDirectional.only(
+                        //                     start: screenWidth(1.5),
+                        //                     top: screenHeight(70)),
+                        //                 child: Image.asset(
+                        //                   'assets/image/png/cancel_icon.png',
+                        //                 ),
+                        //               ),
+                        //               SizedBox(
+                        //                 height: screenHeight(60),
+                        //               ),
+                        //               Image.asset(
+                        //                   'assets/image/png/success_icon.png',
+                        //                   alignment: Alignment.bottomLeft,
+                        //                   width: screenWidth(4)),
+                        //               SizedBox(
+                        //                 height: screenHeight(80),
+                        //               ),
+                        //               Text(
+                        //                 'SUCCESS!',
+                        //                 style: TextStyle(
+                        //                     color: AppColors.mainColorBlue,
+                        //                     fontWeight: FontWeight.bold,
+                        //                     fontSize: screenWidth(16)),
+                        //               ),
+                        //               const SizedBox(
+                        //                 height: 20,
+                        //               ),
+                        //               Row(
+                        //                 mainAxisAlignment:
+                        //                     MainAxisAlignment.center,
+                        //                 children: [
+                        //                   Text(
+                        //                     'Your flight has been\n\ booked successfully.',
+                        //                     style: TextStyle(
+                        //                         fontSize: screenWidth(24),
+                        //                         color: const Color.fromARGB(
+                        //                             255, 112, 110, 110)),
+                        //                   ),
+                        //                 ],
+                        //               ),
+                        //               const SizedBox(
+                        //                 height: 50,
+                        //               ),
+                        //               InkWell(
+                        //                 onTap: () {
+                        //                   Get.to(const Home());
+                        //                 },
+                        //                 child: Padding(
+                        //                   padding: const EdgeInsets.only(
+                        //                     left: 15,
+                        //                     right: 15,
+                        //                     bottom: 15,
+                        //                   ),
+                        //                   child: CustomButton(
+                        //                       backgroundColor:
+                        //                           AppColors.orange,
+                        //                       text: 'Confirm',
+                        //                       textColor: AppColors
+                        //                           .backgroundgrayColor,
+                        //                       widthPercent: 1.35,
+                        //                       heightPercent: 20),
+                        //                 ),
+                        //               ),
+                        //             ],
+                        //           ),
+                        //         ),
+                        //       );
+                        //     });
+                        // }
+                        // setState() {}
+                      },
+                      onStepCancel: () {
+                        activeStepIndex == 0
+                            ? null
+                            : setState(() {
+                                activeStepIndex -= 1;
+                              });
+                      },
                     ),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
-          ],
-        ),
+          ),
+        ]),
       ),
     );
   }
@@ -273,7 +361,7 @@ Widget step1(BuildContext context) {
                       bottomLeft: Radius.circular(20),
                     ),
                     image: DecorationImage(
-                      image: AssetImage('assets/image/png/hotel1.jpg'),
+                      image: AssetImage('assets/image/png/car.jpg'),
                       fit: BoxFit.fill,
                     ),
                   ),
@@ -287,7 +375,7 @@ Widget step1(BuildContext context) {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Deluxe Room- 2 Twin Beds',
+                        'Car - Model',
                         style: TextStyle(
                             fontWeight: FontWeight.w500, fontSize: 15),
                       ),
@@ -297,14 +385,14 @@ Widget step1(BuildContext context) {
                       Row(
                         children: [
                           Icon(
-                            Icons.location_on_rounded,
+                            Icons.speed,
                             color: AppColors.gold,
                           ),
                           SizedBox(
                             width: 5,
                           ),
                           Text(
-                            'King Fahd Rd',
+                            '280',
                             style: TextStyle(color: AppColors.grayText),
                           )
                         ],
@@ -315,14 +403,14 @@ Widget step1(BuildContext context) {
                       Row(
                         children: [
                           Icon(
-                            Icons.star_rounded,
+                            Icons.directions_car_filled,
                             color: AppColors.gold,
                           ),
                           SizedBox(
                             width: 5,
                           ),
                           Text(
-                            '4 Stars',
+                            'Automatic',
                             style: TextStyle(color: AppColors.grayText),
                           )
                         ],
@@ -333,14 +421,14 @@ Widget step1(BuildContext context) {
                       Row(
                         children: [
                           Icon(
-                            Icons.person_2_rounded,
+                            Icons.flight_class,
                             color: AppColors.gold,
                           ),
                           SizedBox(
                             width: 5,
                           ),
                           Text(
-                            '4 Stars',
+                            '4 Seats',
                             style: TextStyle(color: AppColors.grayText),
                           )
                         ],
@@ -373,16 +461,16 @@ Widget step1(BuildContext context) {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            'Number of nights',
+                            'Number of days',
                             style: TextStyle(
                               fontWeight: FontWeight.w500,
                               fontSize: 15,
                             ),
                           ),
                           Text(
-                            '1 night',
+                            '1 day',
                             style: TextStyle(
-                              color: AppColors.purple,
+                              color: AppColors.orange,
                             ),
                           ),
                         ],
@@ -403,7 +491,7 @@ Widget step1(BuildContext context) {
                           Text(
                             '07 Jan, 2024',
                             style: TextStyle(
-                              color: AppColors.purple,
+                              color: AppColors.orange,
                             ),
                           ),
                         ],
@@ -422,7 +510,7 @@ Widget step1(BuildContext context) {
                           Text(
                             '08 Jan, 2024',
                             style: TextStyle(
-                              color: AppColors.purple,
+                              color: AppColors.orange,
                             ),
                           ),
                         ],
@@ -503,7 +591,7 @@ Widget step2(BuildContext context) {
         padding: EdgeInsets.all(10),
         width: size.width,
         decoration: BoxDecoration(
-            color: AppColors.lightPurple,
+            color: AppColors.lightOrange,
             borderRadius: BorderRadiusDirectional.circular(25)),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -521,7 +609,7 @@ Widget step2(BuildContext context) {
               width: size.width - 20,
               height: 40,
               decoration: BoxDecoration(
-                  color: AppColors.purple,
+                  color: AppColors.orange,
                   borderRadius: BorderRadius.circular(20)),
               child: Padding(
                 padding: EdgeInsetsDirectional.all(10),
@@ -578,7 +666,7 @@ Widget step2(BuildContext context) {
                 decoration: textFielDecoratiom.copyWith(
                   focusedBorder: const OutlineInputBorder(
                     borderRadius: BorderRadius.all(Radius.circular(18)),
-                    borderSide: BorderSide(color: AppColors.purple, width: 1.5),
+                    borderSide: BorderSide(color: AppColors.orange, width: 1.5),
                   ),
                   fillColor: Colors.white,
                   prefixIcon: const Icon(
@@ -612,7 +700,7 @@ Widget step2(BuildContext context) {
                 decoration: textFielDecoratiom.copyWith(
                   focusedBorder: const OutlineInputBorder(
                     borderRadius: BorderRadius.all(Radius.circular(18)),
-                    borderSide: BorderSide(color: AppColors.purple, width: 1.5),
+                    borderSide: BorderSide(color: AppColors.orange, width: 1.5),
                   ),
                   fillColor: Colors.white,
                   prefixIcon: const Icon(
@@ -646,7 +734,7 @@ Widget step2(BuildContext context) {
                 decoration: textFielDecoratiom.copyWith(
                   focusedBorder: const OutlineInputBorder(
                     borderRadius: BorderRadius.all(Radius.circular(18)),
-                    borderSide: BorderSide(color: AppColors.purple, width: 1.5),
+                    borderSide: BorderSide(color: AppColors.orange, width: 1.5),
                   ),
                   fillColor: Colors.white,
                   prefixIcon: const Icon(
@@ -680,7 +768,7 @@ Widget step2(BuildContext context) {
                 decoration: textFielDecoratiom.copyWith(
                   focusedBorder: const OutlineInputBorder(
                     borderRadius: BorderRadius.all(Radius.circular(18)),
-                    borderSide: BorderSide(color: AppColors.purple, width: 1.5),
+                    borderSide: BorderSide(color: AppColors.orange, width: 1.5),
                   ),
                   fillColor: Colors.white,
                   prefixIcon: const Icon(
@@ -723,7 +811,7 @@ Widget step2(BuildContext context) {
                     style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.w500,
-                        color: AppColors.purple),
+                        color: AppColors.orange),
                   ),
                   Text(
                     'SAR',
@@ -771,7 +859,7 @@ Widget step3(BuildContext contex) {
                 decoration: textFielDecoratiom.copyWith(
                   focusedBorder: const OutlineInputBorder(
                     borderRadius: BorderRadius.all(Radius.circular(18)),
-                    borderSide: BorderSide(color: AppColors.purple, width: 1.5),
+                    borderSide: BorderSide(color: AppColors.orange, width: 1.5),
                   ),
                   fillColor: Colors.white,
                   prefixIcon: const Icon(
@@ -805,7 +893,7 @@ Widget step3(BuildContext contex) {
                 decoration: textFielDecoratiom.copyWith(
                   focusedBorder: const OutlineInputBorder(
                     borderRadius: BorderRadius.all(Radius.circular(18)),
-                    borderSide: BorderSide(color: AppColors.purple, width: 1.5),
+                    borderSide: BorderSide(color: AppColors.orange, width: 1.5),
                   ),
                   fillColor: Colors.white,
                   prefixIcon: const Icon(
@@ -839,7 +927,7 @@ Widget step3(BuildContext contex) {
                 decoration: textFielDecoratiom.copyWith(
                   focusedBorder: const OutlineInputBorder(
                     borderRadius: BorderRadius.all(Radius.circular(18)),
-                    borderSide: BorderSide(color: AppColors.purple, width: 1.5),
+                    borderSide: BorderSide(color: AppColors.orange, width: 1.5),
                   ),
                   fillColor: Colors.white,
                   prefixIcon: const Icon(
@@ -881,7 +969,7 @@ Widget step3(BuildContext contex) {
                     style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.w500,
-                        color: AppColors.purple),
+                        color: AppColors.orange),
                   ),
                   Text(
                     'SAR',

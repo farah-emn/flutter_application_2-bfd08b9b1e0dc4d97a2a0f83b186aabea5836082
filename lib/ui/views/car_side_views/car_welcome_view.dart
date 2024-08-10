@@ -43,7 +43,6 @@ class CarWelcomeView extends StatelessWidget {
                         backgroundColor: AppColors.darkBlue,
                         text: 'Sign up',
                         textColor: AppColors.backgroundgrayColor,
-                        heightPercent: 15,
                         widthPercent: 1.1,
                       ),
                     ),

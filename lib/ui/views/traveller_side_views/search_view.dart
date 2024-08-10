@@ -14,8 +14,10 @@ import 'package:traveling/ui/shared/colors.dart';
 import 'package:traveling/controllers/search_oneway_controller.dart';
 import 'package:traveling/controllers/search_roundtrip_controller.dart';
 import 'package:traveling/ui/shared/custom_widgets/custom_button.dart';
+import 'package:traveling/ui/shared/custom_widgets/custom_textfield2.dart';
 import 'package:traveling/ui/shared/text_size.dart';
 import 'package:traveling/ui/views/hotel_side_views/hotel_search_view.dart';
+import 'package:traveling/ui/views/traveller_side_views/car_view.dart';
 import 'package:traveling/ui/views/traveller_side_views/search_flight/DepartureDateDetails.dart';
 import 'package:traveling/ui/views/traveller_side_views/search_flight/DepartureDateReturnDateDetails.dart';
 import 'package:traveling/ui/views/traveller_side_views/search_flight/list_arrival_city_oneway.dart';
@@ -39,6 +41,23 @@ class _SearchViewState extends State<SearchView>
   late TabController _tabController;
   String color = 'purple';
   String? _flightSorteBy = 'One Way';
+
+  Color selectedColor = Colors.black;
+  bool _isLoading = false;
+  List<Color> colors = [
+    Colors.black,
+    Color.fromARGB(255, 255, 249, 249),
+    Colors.grey,
+    AppColors.darkBlue,
+    Colors.red,
+    Colors.brown,
+  ];
+  List<bool> isSelected = [true, false, false];
+  List<bool> isSelectedColor = [true, false, false];
+  String dropdownValue2 = 'Toyota';
+  bool _isWidgetActive = true;
+
+  String sorteBy = 'Normal';
   final TextEditingController dateController = TextEditingController();
   void _handleDateSelection(String dateText) {
     controller.updateSelectedDate();
@@ -145,7 +164,7 @@ class _SearchViewState extends State<SearchView>
                 child: Container(
                   margin: const EdgeInsets.only(top: 100),
                   width: size.width - 30,
-                  height: 50,
+                  height: 40,
                   decoration: const BoxDecoration(
                     color: AppColors.backgroundgrayColor,
                     borderRadius: BorderRadius.all(
@@ -177,7 +196,7 @@ class _SearchViewState extends State<SearchView>
                     children: [
                       SearchHotelView(),
                       flightSearch(context),
-                      CarBookings(context),
+                      carSearch(context, size),
                     ],
                   ),
                 ),
@@ -225,7 +244,7 @@ class _SearchViewState extends State<SearchView>
                 ),
                 Container(
                   width: size.width - 50,
-                  height: 50,
+                  height: 40,
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       foregroundColor: Colors.black, elevation: 0,
@@ -306,7 +325,7 @@ class _SearchViewState extends State<SearchView>
                 ),
                 Container(
                   width: size.width - 50,
-                  height: 50,
+                  height: 40,
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       foregroundColor: Colors.black, elevation: 0,
@@ -431,7 +450,7 @@ class _SearchViewState extends State<SearchView>
                     child: Container(
                       padding: EdgeInsets.only(right: 10, left: 10),
                       width: size.width / 2 - 20,
-                      height: 50,
+                      height: 40,
                       decoration: BoxDecoration(
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(20)),
@@ -485,7 +504,7 @@ class _SearchViewState extends State<SearchView>
                 Container(
                   padding: EdgeInsets.only(right: 10, left: 10),
                   width: size.width / 2 - 20,
-                  height: 50,
+                  height: 40,
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(20),
@@ -554,7 +573,7 @@ class _SearchViewState extends State<SearchView>
                 Container(
                   padding: EdgeInsets.only(right: 10, left: 10),
                   width: size.width / 2 - 20,
-                  height: 50,
+                  height: 40,
                   decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(20)),
@@ -609,11 +628,11 @@ class _SearchViewState extends State<SearchView>
         InkWell(
           onTap: _searchForFlights,
           child: CustomButton(
-              text: 'Search',
-              textColor: AppColors.backgroundgrayColor,
-              backgroundColor: AppColors.Blue,
-              widthPercent: size.width,
-              heightPercent: 15),
+            text: 'Search',
+            textColor: AppColors.backgroundgrayColor,
+            backgroundColor: AppColors.Blue,
+            widthPercent: size.width,
+          ),
         ),
       ],
     );
@@ -695,7 +714,7 @@ class _SearchViewState extends State<SearchView>
                     ),
                     Container(
                       width: size.width - 50,
-                      height: 50,
+                      height: 40,
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
                           foregroundColor: Colors.black, elevation: 0,
@@ -781,7 +800,7 @@ class _SearchViewState extends State<SearchView>
                     ),
                     Container(
                       width: size.width - 50,
-                      height: 50,
+                      height: 40,
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
                           foregroundColor: Colors.black, elevation: 0,
@@ -887,7 +906,7 @@ class _SearchViewState extends State<SearchView>
                     Container(
                       padding: EdgeInsets.only(right: 10, left: 10),
                       width: size.width / 2 - 20,
-                      height: 50,
+                      height: 40,
                       decoration: BoxDecoration(
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(20)),
@@ -955,7 +974,7 @@ class _SearchViewState extends State<SearchView>
                     Container(
                       padding: EdgeInsets.only(right: 10, left: 10),
                       width: size.width / 2 - 20,
-                      height: 50,
+                      height: 40,
                       decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(20),
@@ -1011,11 +1030,11 @@ class _SearchViewState extends State<SearchView>
             InkWell(
               onTap: _searchForFlights,
               child: CustomButton(
-                  text: 'Search',
-                  textColor: AppColors.backgroundgrayColor,
-                  backgroundColor: AppColors.Blue,
-                  widthPercent: size.width,
-                  heightPercent: 15),
+                text: 'Search',
+                textColor: AppColors.backgroundgrayColor,
+                backgroundColor: AppColors.Blue,
+                widthPercent: size.width,
+              ),
             ),
           ],
         ),
@@ -1083,7 +1102,293 @@ class _SearchViewState extends State<SearchView>
     return Container();
   }
 
-  Widget CarBookings(BuildContext context) {
-    return Container();
+  Widget carSearch(BuildContext context, Size size) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        const SizedBox(
+          height: 20,
+        ),
+        const Row(
+          children: [
+            Text(
+              'Seats',
+              style: TextStyle(
+                  fontSize: 13,
+                  color: AppColors.grayText,
+                  fontWeight: FontWeight.w500),
+            ),
+          ],
+        ),
+        ToggleButtons(
+          disabledColor: AppColors.grayText,
+
+          borderColor: AppColors.LightGrayColor,
+          borderRadius: BorderRadius.circular(15),
+          // focusColor: AppColors.grayText,
+          fillColor: AppColors.lightOrange,
+          selectedColor: AppColors.blackColor,
+          selectedBorderColor: AppColors.lightOrange,
+          color: AppColors.grayText,
+
+          isSelected: isSelected,
+          onPressed: (int index) {
+            setState(() {
+              for (int i = 0; i < isSelected.length; i++) {
+                isSelected[i] = i == index;
+              }
+            });
+          },
+          constraints: BoxConstraints(
+            minWidth: size.width / 3 - 14,
+            minHeight: 40.0,
+          ),
+          children: const <Widget>[
+            Padding(
+              padding: EdgeInsets.all(0.0),
+              child: Text('2 Seats'),
+            ),
+            Padding(
+              padding: EdgeInsets.all(0.0),
+              child: Text('4 Seats'),
+            ),
+            Padding(
+              padding: EdgeInsets.all(0.0),
+              child: Text('+6 Seats'),
+            ),
+          ],
+        ),
+        const SizedBox(
+          height: 20,
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Plate Number',
+                  style: TextStyle(
+                      fontSize: 13,
+                      color: AppColors.grayText,
+                      fontWeight: FontWeight.w500),
+                ),
+                SizedBox(
+                  height: 40,
+                  width: size.width / 2 - 35,
+                  child: TextField(
+                    keyboardType: TextInputType.number,
+                    decoration: textFielDecoratiom.copyWith(
+                        focusedBorder: const OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: AppColors.lightOrange,
+                          ),
+                          borderRadius: BorderRadius.all(Radius.circular(18)),
+                        ),
+                        fillColor: Colors.white,
+                        prefixIcon: const Icon(
+                          Icons.numbers_rounded,
+                          color: AppColors.orange,
+                        )),
+                    onChanged: (value) {},
+                  ),
+                ),
+              ],
+            ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Top Speed',
+                  style: TextStyle(
+                      fontSize: 13,
+                      color: AppColors.grayText,
+                      fontWeight: FontWeight.w500),
+                ),
+                SizedBox(
+                  height: 40,
+                  width: size.width / 2 - 35,
+                  child: TextField(
+                    keyboardType: TextInputType.number,
+                    decoration: textFielDecoratiom.copyWith(
+                        focusedBorder: const OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: AppColors.lightOrange,
+                          ),
+                          borderRadius: BorderRadius.all(Radius.circular(18)),
+                        ),
+                        fillColor: Colors.white,
+                        prefixIcon: const Icon(
+                          Icons.speed,
+                          color: AppColors.orange,
+                        )),
+                    onChanged: (value) {},
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+        const SizedBox(
+          height: 20,
+        ),
+        Row(
+          children: const [
+            Text(
+              'Company',
+              style: TextStyle(
+                  fontSize: 13,
+                  color: AppColors.grayText,
+                  fontWeight: FontWeight.w500),
+            ),
+          ],
+        ),
+        Container(
+          width: size.width - 35,
+          height: 40,
+          decoration: BoxDecoration(
+            border: Border.all(color: AppColors.LightGrayColor),
+            borderRadius: BorderRadius.circular(15),
+          ),
+          child: DropdownButton<String>(
+            dropdownColor: Colors.white,
+            padding: EdgeInsets.only(left: 15),
+            underline: DecoratedBox(
+              decoration: BoxDecoration(),
+            ),
+            value: dropdownValue2,
+            items: <String>[
+              'Marceds',
+              'KIA',
+              'Rang Rover',
+              'Roz Raiz',
+              'Honday',
+              'Honda',
+              'Toyota',
+              'GMC',
+              'Odi',
+              'BMW',
+              'Other'
+            ].map<DropdownMenuItem<String>>((String value) {
+              return DropdownMenuItem<String>(
+                value: value,
+                child: Text(value),
+              );
+            }).toList(),
+            onChanged: (String? newValue) {
+              setState(() {
+                dropdownValue2 = newValue!;
+              });
+            },
+          ),
+        ),
+        const SizedBox(
+          height: 20,
+        ),
+        Row(
+          children: const [
+            Text(
+              'Ger',
+              style: TextStyle(
+                  fontSize: 13,
+                  color: AppColors.grayText,
+                  fontWeight: FontWeight.w500),
+            ),
+          ],
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Row(
+              children: [
+                Radio(
+                  activeColor: AppColors.orange,
+                  value: 'Normal',
+                  autofocus: true,
+                  groupValue: sorteBy,
+                  onChanged: (value) {
+                    sorteBy = value.toString();
+                  },
+                ),
+                const Text('Normal'),
+              ],
+            ),
+            Row(
+              children: [
+                Radio(
+                  activeColor: AppColors.orange,
+                  value: 'Automatic',
+                  groupValue: sorteBy,
+                  onChanged: (value) {
+                    sorteBy = value.toString();
+                  },
+                ),
+                const Text('Automatic'),
+              ],
+            ),
+            SizedBox(),
+          ],
+        ),
+        SizedBox(
+          height: 20,
+        ),
+        Row(
+          children: const [
+            Text(
+              'Color',
+              style: TextStyle(
+                  fontSize: 13,
+                  color: AppColors.grayText,
+                  fontWeight: FontWeight.w500),
+            ),
+          ],
+        ),
+        SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: Row(
+            children: colors.map((color) {
+              return GestureDetector(
+                onTap: () {
+                  setState(() {
+                    selectedColor = color;
+                  });
+                },
+                child: Container(
+                  margin: EdgeInsets.symmetric(horizontal: 5),
+                  width: 35,
+                  height: 35,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: color,
+                    border: selectedColor == color
+                        ? Border.all(color: Colors.black, width: 3)
+                        : null,
+                  ),
+                ),
+              );
+            }).toList(),
+          ),
+        ),
+        const SizedBox(
+          height: 40,
+        ),
+        InkWell(
+          onTap: () {
+            Get.to(CarView());
+          },
+          child: CustomButton(
+            text: 'Search',
+            textColor: AppColors.backgroundgrayColor,
+            backgroundColor: AppColors.Blue,
+            widthPercent: size.width,
+          ),
+        ),
+        if (_isLoading)
+          const Center(
+            child: CircularProgressIndicator(),
+          ),
+      ],
+    );
   }
 }

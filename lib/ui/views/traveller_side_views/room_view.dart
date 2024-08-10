@@ -539,7 +539,6 @@ class _RoomViewState extends State<RoomView> {
                             text: 'Booking Now',
                             textColor: Colors.white,
                             widthPercent: size.width,
-                            heightPercent: 50,
                             backgroundColor: AppColors.purple),
                       ),
                     ),

@@ -324,7 +324,7 @@ class _SignUpViewState extends State<SignUpView> {
                           backgroundColor: AppColors.darkBlue,
                           text: 'Sign up',
                           textColor: AppColors.backgroundgrayColor,
-                          heightPercent: 20,
+                         
                           widthPercent: size.width,
                         )),
                     const SizedBox(

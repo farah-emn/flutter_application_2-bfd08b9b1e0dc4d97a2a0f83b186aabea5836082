@@ -282,7 +282,6 @@ class _FlightSignUpViewState extends State<FlightSignUpView> {
 
                           text: 'Sign up',
                           textColor: AppColors.backgroundgrayColor,
-                          heightPercent: 20,
                           widthPercent: 1,
                         )),
                     const SizedBox(

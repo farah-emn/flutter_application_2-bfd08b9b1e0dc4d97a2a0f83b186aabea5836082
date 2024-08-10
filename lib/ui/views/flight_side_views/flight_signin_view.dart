@@ -228,7 +228,7 @@ class _FlightSignInViewState extends State<FlightSignInView> {
                         
                         text: 'Sign in',
                         textColor: AppColors.backgroundgrayColor,
-                        heightPercent: 15,
+                        
                         widthPercent: 1,
                       ),
                     ),

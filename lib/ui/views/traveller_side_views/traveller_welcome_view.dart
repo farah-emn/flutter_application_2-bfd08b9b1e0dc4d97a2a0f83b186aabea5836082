@@ -29,7 +29,6 @@ class TravellerWelcomeView extends StatelessWidget {
 
               text: 'Sign up',
               textColor: AppColors.backgroundgrayColor,
-              heightPercent: 15,
               widthPercent: size.width,
             ),
           ),

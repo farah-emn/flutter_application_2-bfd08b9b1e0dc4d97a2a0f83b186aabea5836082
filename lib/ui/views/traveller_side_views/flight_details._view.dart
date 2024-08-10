@@ -213,7 +213,7 @@ class _FlightDetailsViewState extends State<FlightDetailsView> {
                                           textColor:
                                               AppColors.backgroundgrayColor,
                                           widthPercent: size.width,
-                                          heightPercent: 20),
+                                          ),
                                     ),
                                   ),
                                 ],

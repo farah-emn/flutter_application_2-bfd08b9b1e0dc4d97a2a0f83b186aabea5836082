@@ -269,7 +269,6 @@ class _TravellerDetailsView2State extends State<TravellerDetailsView2> {
                         text: 'Save',
                         textColor: Colors.white,
                         widthPercent: size.width,
-                        heightPercent: 50,
                         backgroundColor: AppColors.darkBlue),
                   ),
                   const SizedBox(

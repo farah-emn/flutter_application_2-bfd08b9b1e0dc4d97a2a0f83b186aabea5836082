@@ -226,7 +226,7 @@ class GuestDetailsView extends StatelessWidget {
                                   text: 'Confirm',
                                   textColor: AppColors.backgroundgrayColor,
                                   widthPercent: size.width,
-                                  heightPercent: 19))),
+                                  ),),),
                     )
                   ],
                 ),

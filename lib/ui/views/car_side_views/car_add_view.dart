@@ -886,7 +886,7 @@ class _CarAddViewState extends State<CarAddView> {
                             text: 'Add',
                             textColor: Colors.white,
                             widthPercent: size.width,
-                            heightPercent: 50),
+                          ),
                       ),
                       const SizedBox(
                         height: 40,

@@ -68,7 +68,6 @@ class _FirstViewState extends State<FirstView> {
                     child: CustomButton(
                       text: 'Start',
                       textColor: AppColors.backgroundgrayColor,
-                      heightPercent: 15,
                       widthPercent: size.width,
                       backgroundColor: AppColors.mainColorBlue,
                     ),

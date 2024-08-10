@@ -324,7 +324,7 @@ class _HotelSignInViewState extends State<HotelSignInView> {
                         backgroundColor: AppColors.purple,
                         text: 'Sign in',
                         textColor: AppColors.backgroundgrayColor,
-                        heightPercent: 15,
+                 
                         widthPercent: size.width,
                       ),
                     ),

@@ -286,7 +286,6 @@ class _SignInViewState extends State<SignInView> {
                         backgroundColor: AppColors.darkBlue,
                         text: 'Sign in',
                         textColor: AppColors.backgroundgrayColor,
-                        heightPercent: 15,
                         widthPercent: size.width,
                       ),
                     ),

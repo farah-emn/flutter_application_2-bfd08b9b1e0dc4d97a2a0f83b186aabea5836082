@@ -25,7 +25,7 @@ class _TravellarDetailsCardState extends State<TravellarDetailsCard> {
     return Column(
       children: [
         Container(
-          margin: const EdgeInsets.only(),
+          margin: const EdgeInsets.only(bottom: 20),
           width: size.width,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(20),
@@ -53,7 +53,7 @@ class _TravellarDetailsCardState extends State<TravellarDetailsCard> {
                       children: [
                         Icon(
                           Icons.book,
-                          color: AppColors.gold,
+                          color: AppColors.Blue,
                         ),
                         SizedBox(
                           width: 5,
@@ -77,11 +77,14 @@ class _TravellarDetailsCardState extends State<TravellarDetailsCard> {
                         ),
                       ],
                     ),
+                    SizedBox(
+                      height: 15,
+                    ),
                     Row(
                       children: [
                         Icon(
                           Icons.padding,
-                          color: AppColors.gold,
+                          color: AppColors.Blue,
                         ),
                         SizedBox(
                           width: 5,
@@ -112,7 +115,7 @@ class _TravellarDetailsCardState extends State<TravellarDetailsCard> {
                       children: [
                         Icon(
                           Icons.calendar_month,
-                          color: AppColors.gold,
+                          color: AppColors.Blue,
                         ),
                         SizedBox(
                           width: 5,
@@ -143,7 +146,7 @@ class _TravellarDetailsCardState extends State<TravellarDetailsCard> {
                       children: [
                         Icon(
                           Icons.call,
-                          color: AppColors.gold,
+                          color: AppColors.Blue,
                         ),
                         SizedBox(
                           width: 5,
@@ -174,7 +177,7 @@ class _TravellarDetailsCardState extends State<TravellarDetailsCard> {
                       children: [
                         Icon(
                           Icons.calendar_month,
-                          color: AppColors.gold,
+                          color: AppColors.Blue,
                         ),
                         SizedBox(
                           width: 5,

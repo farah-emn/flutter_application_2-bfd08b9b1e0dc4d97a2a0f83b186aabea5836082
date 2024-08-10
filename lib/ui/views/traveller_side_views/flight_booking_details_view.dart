@@ -322,11 +322,11 @@ class _FlightBookingDetailsViewState extends State<FlightBookingDetailsView> {
                         child: ListView.builder(
                           scrollDirection: Axis.vertical,
                           shrinkWrap: true,
-                          itemCount: HotelFinishedDetails2.length,
-                          itemBuilder: (context, index) => HotelSideFinishedCard(
+                          itemCount: travellarsDetails.length,
+                          itemBuilder: (context, index) => TravellarDetailsCard(
                             itemIndex: index,
-                            size : size,
-                            hotelBookingsDetails2: HotelFinishedDetails2[index],
+                            // size : size,
+                            travellarsModel: travellarsDetails[index],
                           ),
                         ),
                       ),

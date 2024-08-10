@@ -97,7 +97,6 @@ class _TravellerDetailsView3State extends State<TravellerDetailsView3> {
                         text: 'Add Traveller',
                         textColor: Colors.white,
                         widthPercent: size.width,
-                        heightPercent: 50,
                         backgroundColor: AppColors.darkBlue),
                   ),
                 ],

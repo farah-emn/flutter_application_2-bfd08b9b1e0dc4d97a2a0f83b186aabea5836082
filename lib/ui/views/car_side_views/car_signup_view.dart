@@ -466,7 +466,7 @@ class _CarSignUpViewState extends State<CarSignUpView> {
                           backgroundColor: AppColors.orange,
                           text: 'Sign up',
                           textColor: AppColors.backgroundgrayColor,
-                          heightPercent: 20,
+                        
                           widthPercent: size.width,
                         )),
                     const SizedBox(

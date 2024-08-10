@@ -13,7 +13,6 @@ import 'package:traveling/ui/shared/custom_widgets/tab_item.dart';
 import 'package:traveling/ui/shared/text_size.dart';
 import 'package:traveling/ui/shared/utils.dart';
 import 'package:traveling/ui/views/traveller_side_views/hotel_explore_view.dart';
-import 'package:traveling/ui/views/traveller_side_views/flights_view/flights_view_oneway.dart';
 import 'package:traveling/ui/views/traveller_side_views/hotel_info_view.dart';
 import 'package:traveling/ui/views/traveller_side_views/search_flight/DepartureDateDetails.dart';
 import 'package:traveling/ui/views/traveller_side_views/search_flight/DepartureDateReturnDateDetails.dart';
@@ -433,7 +432,7 @@ class SearchHotelViewState extends State<SearchHotelView> {
                     textColor: AppColors.backgroundgrayColor,
                     backgroundColor: AppColors.lightPurple,
                     widthPercent: size.width,
-                    heightPercent: 15),
+                   ),
               ),
             ],
           ),

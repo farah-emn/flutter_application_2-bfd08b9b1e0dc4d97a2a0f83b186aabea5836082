@@ -340,7 +340,6 @@ class _CarSignInViewState extends State<CarSignInView> {
                         backgroundColor: AppColors.orange,
                         text: 'Sign in',
                         textColor: AppColors.backgroundgrayColor,
-                        heightPercent: 15,
                         widthPercent: size.width,
                       ),
                     ),

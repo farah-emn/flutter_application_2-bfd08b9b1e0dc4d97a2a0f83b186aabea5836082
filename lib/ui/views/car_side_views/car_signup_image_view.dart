@@ -555,7 +555,7 @@ class _CarSignUpImageViewState extends State<CarSignUpImageView> {
                               textColor: AppColors.backgroundgrayColor,
                               backgroundColor: AppColors.orange,
                               widthPercent: size.width,
-                              heightPercent: 15),
+                            ),
                         ),
                       ],
                     )

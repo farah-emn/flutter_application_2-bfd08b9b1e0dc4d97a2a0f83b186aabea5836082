@@ -551,7 +551,7 @@ class _HotelSignUpImageViewState extends State<HotelSignUpImageView> {
                               textColor: AppColors.backgroundgrayColor,
                               backgroundColor: AppColors.purple,
                               widthPercent: size.width,
-                              heightPercent: 15),
+                              ),
                         ),
                       ],
                     )

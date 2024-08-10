@@ -1,54 +1,47 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
+import 'package:traveling/classes/car_bookings_class.dart';
 import 'package:traveling/classes/hotel_bookings_class.dart';
 import 'package:traveling/ui/shared/colors.dart';
-import 'package:traveling/ui/shared/custom_widgets/custom_button.dart';
+import 'package:traveling/ui/shared/custom_widgets/white_container.dart';
 import 'package:traveling/ui/shared/text_size.dart';
-import 'package:traveling/ui/views/traveller_side_views/room_view.dart';
+import 'package:traveling/ui/views/car_side_views/car_details_view.dart';
+import 'package:traveling/ui/views/traveller_side_views/hotel_booking_details_view.dart';
 
-class HotelBookingCard extends StatefulWidget {
-  const HotelBookingCard({
+class CarFinishedBookingCard extends StatefulWidget {
+  const CarFinishedBookingCard({
     super.key,
     required this.size,
-    required this.hotelBookingsDetails,
+    required this.carBookingsDetails,
     required this.itemIndex,
   });
 
   final Size size;
-  final HotelBookingsClass hotelBookingsDetails;
+  final CarBookingsClass carBookingsDetails;
   final int itemIndex;
 
   @override
-  State<HotelBookingCard> createState() => _HotelBookingCardState();
+  State<CarFinishedBookingCard> createState() => _CarFinishedBookingCardState();
 }
 
-class _HotelBookingCardState extends State<HotelBookingCard> {
+class _CarFinishedBookingCardState extends State<CarFinishedBookingCard> {
+  double? _ratingValue;
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return InkWell(
       onTap: () {
         Get.to(
-          RoomView(),
+          CarDetailsView(),
         );
       },
       child: Container(
         margin: const EdgeInsets.only(
           bottom: 20,
         ),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          boxShadow: List.filled(
-            10,
-            const BoxShadow(
-                color: AppColors.gray,
-                blurRadius: BorderSide.strokeAlignOutside,
-                blurStyle: BlurStyle.outer),
-          ),
-          borderRadius: const BorderRadius.all(
-            Radius.circular(20),
-          ),
-        ),
+        decoration: decoration.copyWith(),
         width: widget.size.width - 30,
         child: Column(
           children: [
@@ -63,7 +56,7 @@ class _HotelBookingCardState extends State<HotelBookingCard> {
                       topRight: Radius.circular(20),
                     ),
                     image: DecorationImage(
-                      image: AssetImage(widget.hotelBookingsDetails.image),
+                      image: AssetImage(widget.carBookingsDetails.image),
                       fit: BoxFit.fill,
                     ),
                   ),
@@ -83,7 +76,7 @@ class _HotelBookingCardState extends State<HotelBookingCard> {
                             children: [
                               SizedBox(
                                 child: Text(
-                                  widget.hotelBookingsDetails.hotelName,
+                                  widget.carBookingsDetails.company,
                                   style: const TextStyle(
                                     fontWeight: FontWeight.w600,
                                     fontSize: TextSize.header1,
@@ -103,7 +96,7 @@ class _HotelBookingCardState extends State<HotelBookingCard> {
                                 size: 20,
                               ),
                               Text(
-                                widget.hotelBookingsDetails.location,
+                                widget.carBookingsDetails.model,
                                 style: const TextStyle(
                                     color: AppColors.grayText,
                                     fontSize: TextSize.header2),
@@ -148,7 +141,7 @@ class _HotelBookingCardState extends State<HotelBookingCard> {
                       const Column(
                         children: [
                           Text(
-                            'Per night',
+                            'Per day',
                             style: TextStyle(
                               color: AppColors.grayText,
                             ),
@@ -192,7 +185,7 @@ class _HotelBookingCardState extends State<HotelBookingCard> {
                                   color: AppColors.grayText),
                             ),
                             Text(
-                              widget.hotelBookingsDetails.checkinDate,
+                              widget.carBookingsDetails.checkinDate,
                               style: const TextStyle(
                                   fontSize: TextSize.header2,
                                   fontWeight: FontWeight.w500),
@@ -222,7 +215,7 @@ class _HotelBookingCardState extends State<HotelBookingCard> {
                                       color: AppColors.grayText),
                                 ),
                                 Text(
-                                  widget.hotelBookingsDetails.checkoutDate,
+                                  widget.carBookingsDetails.checkoutDate,
                                   style: const TextStyle(
                                       fontSize: TextSize.header2,
                                       fontWeight: FontWeight.w500),
@@ -250,7 +243,7 @@ class _HotelBookingCardState extends State<HotelBookingCard> {
                   Row(
                     children: [
                       const Text(
-                        "Room Number:",
+                        "Plate Number:",
                         style: TextStyle(
                             color: AppColors.grayText,
                             fontSize: TextSize.header2),
@@ -259,7 +252,7 @@ class _HotelBookingCardState extends State<HotelBookingCard> {
                         width: 5,
                       ),
                       Text(
-                        widget.hotelBookingsDetails.roomNumber,
+                        widget.carBookingsDetails.plateNumber,
                         style: const TextStyle(
                             fontSize: TextSize.header2,
                             fontWeight: FontWeight.w500),
@@ -278,7 +271,7 @@ class _HotelBookingCardState extends State<HotelBookingCard> {
                         width: 5,
                       ),
                       Text(
-                        widget.hotelBookingsDetails.totalPrice,
+                        widget.carBookingsDetails.totalPrice,
                         style: const TextStyle(
                             color: AppColors.darkBlue,
                             fontSize: TextSize.header1,
@@ -287,23 +280,51 @@ class _HotelBookingCardState extends State<HotelBookingCard> {
                     ],
                   ),
                   const SizedBox(
-                    height: 10,
+                    height: 20,
                   ),
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      CustomButton(
-                          text: 'Delete Booking',
-                          textColor: Colors.black,
-                          widthPercent: size.width - 60,
-                          backgroundColor: AppColors.LightGrayColor),
+                      const Text(
+                        'How was your stay?',
+                        style: TextStyle(
+                          fontSize: TextSize.header1,
+                        ),
+                      ),
+                      Spacer(),
+                      RatingBar(
+                          initialRating: 1,
+                          direction: Axis.horizontal,
+                          allowHalfRating: true,
+                          itemCount: 5,
+                          itemSize: 30,
+                          ratingWidget: RatingWidget(
+                              full: const Icon(
+                                Icons.star_rate_rounded,
+                                color: AppColors.gold,
+                              ),
+                              half: const Icon(
+                                Icons.star_half_rounded,
+                                color: AppColors.gold,
+                              ),
+                              empty: const Icon(
+                                Icons.star_outline_rounded,
+                                color: AppColors.gold,
+                              )),
+                          onRatingUpdate: (value) {
+                            setState(() {
+                              _ratingValue = value;
+                            });
+                          }),
+                      const SizedBox(
+                        width: 10,
+                      ),
                     ],
+                  ),
+                  const SizedBox(
+                    height: 10,
                   ),
                 ],
               ),
-            ),
-            SizedBox(
-              height: 15,
             ),
           ],
         ),

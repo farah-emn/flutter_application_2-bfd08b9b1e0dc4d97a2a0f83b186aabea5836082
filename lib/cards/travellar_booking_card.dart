@@ -116,7 +116,7 @@ class _TravellarBookingCardState extends State<TravellarBookingCard> {
               width: size.width,
               padding: EdgeInsets.only(right: 15),
               decoration: const BoxDecoration(
-                color: AppColors.darkBlue,
+                color: AppColors.Blue,
                 borderRadius: BorderRadius.only(
                   bottomLeft: Radius.circular(15),
                   bottomRight: Radius.circular(15),

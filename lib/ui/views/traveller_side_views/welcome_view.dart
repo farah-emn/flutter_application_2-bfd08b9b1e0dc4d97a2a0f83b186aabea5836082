@@ -29,7 +29,6 @@ class WelcomeView extends StatelessWidget {
               backgroundColor: AppColors.darkBlue,
               text: 'Sign up',
               textColor: AppColors.backgroundgrayColor,
-              heightPercent: 15,
               widthPercent: size.width,
             ),
           ),

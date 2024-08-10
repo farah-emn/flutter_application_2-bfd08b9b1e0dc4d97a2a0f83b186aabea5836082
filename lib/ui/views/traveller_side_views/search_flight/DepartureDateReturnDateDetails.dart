@@ -87,7 +87,7 @@ class _CheckInCheckOutDetailsState
               child: Container(
                 padding: EdgeInsets.only(right: 10, left: 10),
                 width: size.width / 2 - 20,
-                height: 50,
+                height: 40,
                 decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(20)),
@@ -148,7 +148,7 @@ class _CheckInCheckOutDetailsState
               child: Container(
                 padding: EdgeInsets.only(right: 10, left: 10),
                 width: size.width / 2 - 20,
-                height: 50,
+                height: 40,
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(20),

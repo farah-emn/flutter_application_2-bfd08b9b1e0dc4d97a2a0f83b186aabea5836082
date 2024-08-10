@@ -463,7 +463,6 @@ class _HoteltSignUpViewState extends State<HoteltSignUpView> {
                           backgroundColor: AppColors.purple,
                           text: 'Sign up',
                           textColor: AppColors.backgroundgrayColor,
-                          heightPercent: 20,
                           widthPercent: size.width,
                         )),
                     const SizedBox(

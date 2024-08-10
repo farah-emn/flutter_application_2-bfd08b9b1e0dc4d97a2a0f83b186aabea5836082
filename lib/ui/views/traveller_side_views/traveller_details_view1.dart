@@ -165,8 +165,7 @@ class TravellerDetailsView1 extends StatelessWidget {
 
                             text: 'Continue',
                             textColor: AppColors.backgroundgrayColor,
-                            widthPercent: 1.1,
-                            heightPercent: 15))
+                            widthPercent: 1.1,),),
                   ],
                 ),
               ),

@@ -7,9 +7,12 @@ import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:traveling/cards/Hotel_booking_card.dart';
+import 'package:traveling/cards/car_booking_card.dart';
+import 'package:traveling/cards/car_finished_booking_card.dart';
 import 'package:traveling/cards/flight_booking_card.dart';
 import 'package:traveling/cards/flight_finished_booking_card.dart';
 import 'package:traveling/cards/hotel_finished_booking_card.dart';
+import 'package:traveling/classes/car_bookings_class.dart';
 import 'package:traveling/classes/flight_booking_class.dart';
 import 'package:traveling/classes/hotel_bookings_class.dart';
 import 'package:traveling/ui/shared/custom_widgets/white_container.dart';
@@ -285,6 +288,80 @@ class _BookingsViewState extends State<BookingsView>
   }
 
   Widget CarBookings(BuildContext context) {
-    return Container();
+    Size size = MediaQuery.of(context).size;
+    return Column(
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            Row(
+              children: [
+                Radio(
+                  activeColor: AppColors.lightOrange,
+                  autofocus: true,
+                  value: 'Upcoming',
+                  groupValue: _hotelSorteBy,
+                  onChanged: (value) {
+                    setState(
+                      () {
+                        _hotelSorteBy = value.toString();
+                      },
+                    );
+                  },
+                ),
+                const Text(
+                  'Upcoming',
+                ),
+              ],
+            ),
+            Row(
+              children: [
+                Radio(
+                  activeColor: AppColors.lightOrange,
+                  value: 'Finished',
+                  groupValue: _hotelSorteBy,
+                  onChanged: (value) {
+                    setState(
+                      () {
+                        _hotelSorteBy = value.toString();
+                      },
+                    );
+                  },
+                ),
+                const Text(
+                  'Finished',
+                ),
+              ],
+            ),
+          ],
+        ),
+        const SizedBox(
+          height: 20,
+        ),
+        _hotelSorteBy == 'Upcoming'
+            ? Expanded(
+                child: ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: carBookingsDetails.length,
+                  itemBuilder: (context, index) => CarBookingCard(
+                    size: size,
+                    // itemIndex: index,
+                    carBookingsDetails: carBookingsDetails[index],
+                  ),
+                ),
+              )
+            : Expanded(
+                child: ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: carBookingsDetails.length,
+                  itemBuilder: (context, index) => CarFinishedBookingCard(
+                    size: size,
+                    itemIndex: index,
+                    carBookingsDetails: carBookingsDetails[index],
+                  ),
+                ),
+              )
+      ],
+    );
   }
 }

@@ -1188,8 +1188,7 @@ class _HotelAddViewState extends State<HotelAddView> {
                             backgroundColor: AppColors.purple,
                             text: 'Add',
                             textColor: Colors.white,
-                            widthPercent: size.width,
-                            heightPercent: 50),
+                            widthPercent: size.width,),
                       ),
                       const SizedBox(
                         height: 40,

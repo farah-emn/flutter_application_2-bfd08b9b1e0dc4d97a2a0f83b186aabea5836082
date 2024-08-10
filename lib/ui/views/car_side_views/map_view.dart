@@ -192,7 +192,6 @@ class _MapViewState extends State<MapView> {
                   textColor: AppColors.backgroundgrayColor,
                   backgroundColor: AppColors.purple,
                   widthPercent: size.width / 2,
-                  heightPercent: 15,
                 ),
                 ),
           ),

@@ -45,7 +45,7 @@ class _CheckInCheckOutDetailsState extends State<DepartureDateDetails> {
       },
       child: Container(
         width: size.width / 2 - 20,
-        height: 50,
+        height: 40,
         padding: EdgeInsets.symmetric(horizontal: 10),
         decoration: BoxDecoration(
           color: Colors.white,
