@@ -18,7 +18,6 @@ import 'package:traveling/ui/views/first_view.dart';
 import 'package:traveling/ui/views/traveller_side_views/menu_view.dart';
 import 'package:traveling/ui/views/traveller_side_views/welcome_view.dart';
 
-import 'flights_view.dart';
 import '../../../classes/hotel_info_class.dart';
 
 late User loggedinUser;

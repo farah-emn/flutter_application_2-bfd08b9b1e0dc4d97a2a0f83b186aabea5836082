@@ -52,25 +52,6 @@ class SearchHotelViewState extends State<SearchHotelView> {
     super.dispose();
   }
 
-  void onDepartureCitySelected(String selectedCity) {
-    controller.setDepartureCity(widget.ArrivalCity ?? '');
-  }
-
-  void onArrivalCitySelected(String selectedCity) {
-    controller.setArrivalCity(widget.DepartureCity ?? '');
-  }
-
-  void _searchForFlights() async {
-    if (widget.DepartureCity != null) {
-      controller.setDepartureCity(widget.DepartureCity!);
-    }
-    if (widget.ArrivalCity != null) {
-      controller.setArrivalCity(widget.ArrivalCity!);
-    }
-    controller.searchForFlights();
-    print(';;;;;;;;;;;');
-  }
-
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;

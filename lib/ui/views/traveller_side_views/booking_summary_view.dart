@@ -14,7 +14,6 @@ import 'package:easy_stepper/easy_stepper.dart';
 import 'package:traveling/ui/shared/custom_widgets/custom_textgray.dart';
 
 import '../../shared/custom_widgets/custom_textfiled.dart';
-import 'flights_view.dart';
 import 'home_view.dart';
 
 bool is3 = false;

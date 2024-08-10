@@ -11,8 +11,21 @@ class CurrencyController extends GetxController {
     'EUR',
     'GBP',
     'INR',
-    'OMR'
+    'CAD',
+    'AUD'
   ];
+  List<String> currencySymbols = [
+    'DH',
+    'DIN',
+    'BD',
+    '\$',
+    '€',
+    '£',
+    '₹',
+    '\$',
+    '\$'
+  ];
+
   List<String> currencyText = [
     'United Arab Emirates Dirham',
     'Kuwaiti Dinar',
@@ -21,7 +34,8 @@ class CurrencyController extends GetxController {
     'Euro',
     'British Pound Sterling',
     'Indian Rupee',
-    'Omani Rial'
+    'Canadian Dollar',
+    'Australian Dollar'
   ];
 
   RxString selectedCurrency = 'USD'.obs;
@@ -30,7 +44,7 @@ class CurrencyController extends GetxController {
     selectedCurrency.value = newCurrency;
   }
 
-  double convert(String from, String to, double amount) {
+  double convert(String to, double amount) {
     Map<String, double> rates = {
       'AED': 3.67,
       'KWD': 0.30,
@@ -39,12 +53,21 @@ class CurrencyController extends GetxController {
       'GBP': 0.75,
       'USD': 1.00,
       'INR': 74.25,
-      'OMR': 0.39,
+      'CAD': 0.77,
+      'AUD': 0.65
     };
-    double amountInUsd = amount / rates[from]!;
+    double amountInUsd = amount / rates['USD']!;
     double convertedAmount = amountInUsd * rates[to]!;
     String resultAsString = convertedAmount.toStringAsFixed(2);
     double finalResult = double.parse(resultAsString);
     return finalResult;
+  }
+
+  String getCurrencySymbol(String currencyCode) {
+    int index = currencyCodes.indexOf(currencyCode);
+    if (index == -1) {
+      return 'Unknown';
+    }
+    return currencySymbols[index];
   }
 }

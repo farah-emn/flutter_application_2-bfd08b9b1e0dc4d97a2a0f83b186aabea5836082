@@ -1,16 +1,9 @@
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_database/firebase_database.dart';
-import 'package:flutter/cupertino.dart';
+// ignore_for_file: body_might_complete_normally_nullable, prefer_typing_uninitialized_variables, non_constant_identifier_names, prefer_const_constructors, prefer_const_literals_to_create_immutables, sized_box_for_whitespace, no_leading_underscores_for_local_identifiers, unused_element
+
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
-import 'package:traveling/cards/hotel_finished_booking_card.dart';
-import 'package:traveling/classes/hotel_bookings_class.dart';
-import 'package:traveling/classes/hotel_room_details_class.dart';
-import 'package:traveling/controllers/currency_controller.dart';
-
 import 'package:traveling/ui/shared/colors.dart';
-
 import 'package:traveling/controllers/search_oneway_controller.dart';
 import 'package:traveling/controllers/search_roundtrip_controller.dart';
 import 'package:traveling/ui/shared/custom_widgets/custom_button.dart';
@@ -27,9 +20,16 @@ import 'package:traveling/ui/views/traveller_side_views/search_flight/list_depar
 import 'package:traveling/ui/views/traveller_side_views/search_hotel/search_hotel_view.dart';
 
 class SearchView extends StatefulWidget {
-  String? DepartureCity;
-  String? ArrivalCity;
-  SearchView({this.DepartureCity, this.ArrivalCity, Key? key})
+  String? DepartureCityOneWay;
+  String? ArrivalCityOnyWay;
+  String? DepartureCityRoundTrip;
+  String? ArrivalCityOnyRoundTrip;
+  SearchView(
+      {this.DepartureCityOneWay,
+      this.ArrivalCityOnyWay,
+      this.DepartureCityRoundTrip,
+      this.ArrivalCityOnyRoundTrip,
+      Key? key})
       : super(key: key);
 
   @override
@@ -59,6 +59,13 @@ class _SearchViewState extends State<SearchView>
 
   String sorteBy = 'Normal';
   final TextEditingController dateController = TextEditingController();
+  FlightType? selectedOption;
+  bool isFlightTypeSelected = false;
+  var selectedFlightType;
+
+  FlightTypeRoundTrip? selectedOptionRounTrip;
+  bool isRoundTripFlightTypeSelected = false;
+  var selectedRoundTripFlightType;
   void _handleDateSelection(String dateText) {
     controller.updateSelectedDate();
     dateController.text = dateText;
@@ -66,34 +73,26 @@ class _SearchViewState extends State<SearchView>
 
   final SearchViewOneWayController controller =
       Get.put(SearchViewOneWayController());
+  final SearchViewOneWayController searchViewOneWayController =
+      Get.put(SearchViewOneWayController());
   @override
   void initState() {
     super.initState();
+    searchViewRoundTripController.setFlightType('Flight type');
+    searchViewOneWayController.setFlightType('Flight type');
     _tabController = TabController(length: 3, vsync: this);
   }
+
+  SearchViewRoundTripController searchViewRoundTripController =
+      Get.put(SearchViewRoundTripController());
 
   @override
   void dispose() {
     super.dispose();
   }
 
-  void onDepartureCitySelected(String selectedCity) {
-    controller.setDepartureCity(widget.ArrivalCity ?? '');
-  }
-
-  void onArrivalCitySelected(String selectedCity) {
-    controller.setArrivalCity(widget.DepartureCity ?? '');
-  }
-
   void _searchForFlights() async {
-    if (widget.DepartureCity != null) {
-      controller.setDepartureCity(widget.DepartureCity!);
-    }
-    if (widget.ArrivalCity != null) {
-      controller.setArrivalCity(widget.ArrivalCity!);
-    }
-    controller.searchForFlights();
-    print(';;;;;;;;;;;');
+    controller.fetchFlights();
   }
 
   @override
@@ -208,6 +207,213 @@ class _SearchViewState extends State<SearchView>
     );
   }
 
+  Future<FlightType?> showFlightTypeOneWayOptions() async {
+    selectedOption = selectedFlightType;
+
+    selectedFlightType = await showModalBottomSheet<FlightType>(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (BuildContext context) {
+        return StatefulBuilder(
+          builder: (BuildContext context, StateSetter setState) {
+            return SizedBox(
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height * 0.3 + 80,
+              child: DraggableScrollableSheet(
+                initialChildSize: 0.5,
+                minChildSize: 0.2,
+                maxChildSize: 0.8,
+                builder: (_, searchViewOneWayController) {
+                  return Container(
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(25),
+                        topRight: Radius.circular(25),
+                      ),
+                    ),
+                    child: Column(
+                      children: [
+                        SizedBox(height: 8),
+                        Center(
+                          child: Container(
+                            width: 40,
+                            height: 5,
+                            decoration: BoxDecoration(
+                              color: Colors.grey[300],
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(2.5),
+                              ),
+                            ),
+                          ),
+                        ),
+                        Row(
+                          children: [
+                            SizedBox(width: 15),
+                            const Text(
+                              'Flight type',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w500, fontSize: 18),
+                            ),
+                            SizedBox(height: 15),
+                          ],
+                        ),
+                        ListTile(
+                          key: UniqueKey(),
+                          title: Text('Economy'),
+                          leading: Radio<FlightType>(
+                            value: FlightType.Economy,
+                            groupValue: selectedOption,
+                            onChanged: (FlightType? value) {
+                              setState(() {
+                                selectedOption = value;
+                                controller.setFlightType('E');
+                                isFlightTypeSelected = true;
+                              });
+                              Navigator.pop(context, selectedOption);
+                            },
+                          ),
+                        ),
+                        ListTile(
+                          title: Text('First class'),
+                          leading: Radio<FlightType>(
+                            value: FlightType.FirstClass,
+                            groupValue: selectedOption,
+                            onChanged: (FlightType? value) {
+                              setState(() {
+                                selectedOption = value;
+                                controller.setFlightType('F');
+                                isFlightTypeSelected = true;
+                              });
+                              Navigator.pop(context, selectedOption);
+                            },
+                          ),
+                        ),
+                        SizedBox(height: 20),
+                      ],
+                    ),
+                  );
+                },
+              ),
+            );
+          },
+        );
+      },
+    );
+
+    if (selectedFlightType != null) {
+      setState(() {
+        selectedOption = selectedFlightType;
+      });
+    }
+  }
+
+  Future<FlightTypeRoundTrip?> showFlightTypeRoundTripOptions() async {
+    selectedOptionRounTrip = selectedOptionRounTrip;
+
+    selectedRoundTripFlightType =
+        await showModalBottomSheet<FlightTypeRoundTrip>(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (BuildContext context) {
+        return StatefulBuilder(
+          builder: (BuildContext context, StateSetter setState) {
+            return SizedBox(
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height * 0.3 + 80,
+              child: DraggableScrollableSheet(
+                initialChildSize: 0.5,
+                minChildSize: 0.2,
+                maxChildSize: 0.8,
+                builder: (_, contrller) {
+                  return Container(
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(25),
+                        topRight: Radius.circular(25),
+                      ),
+                    ),
+                    child: Column(
+                      children: [
+                        SizedBox(height: 8),
+                        Center(
+                          child: Container(
+                            width: 40,
+                            height: 5,
+                            decoration: BoxDecoration(
+                              color: Colors.grey[300],
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(2.5),
+                              ),
+                            ),
+                          ),
+                        ),
+                        Row(
+                          children: [
+                            SizedBox(width: 15),
+                            const Text(
+                              'Flight type',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w500, fontSize: 18),
+                            ),
+                            SizedBox(height: 15),
+                          ],
+                        ),
+                        ListTile(
+                          key: UniqueKey(),
+                          title: Text('Economy'),
+                          leading: Radio<FlightTypeRoundTrip>(
+                            value: FlightTypeRoundTrip.Economy,
+                            groupValue: selectedOptionRounTrip,
+                            onChanged: (FlightTypeRoundTrip? value) {
+                              setState(() {
+                                selectedOptionRounTrip = value;
+                                searchViewRoundTripController
+                                    .setFlightType('E');
+                                isRoundTripFlightTypeSelected = true;
+                              });
+                              Navigator.pop(context, selectedOptionRounTrip);
+                            },
+                          ),
+                        ),
+                        ListTile(
+                          title: Text('First Class'),
+                          leading: Radio<FlightTypeRoundTrip>(
+                            value: FlightTypeRoundTrip.FirstClass,
+                            groupValue: selectedOptionRounTrip,
+                            onChanged: (FlightTypeRoundTrip? value) {
+                              setState(() {
+                                selectedOptionRounTrip = value;
+                                searchViewRoundTripController
+                                    .setFlightType('F');
+                                isFlightTypeSelected = true;
+                              });
+                              Navigator.pop(context, selectedOptionRounTrip);
+                            },
+                          ),
+                        ),
+                        SizedBox(height: 20),
+                      ],
+                    ),
+                  );
+                },
+              ),
+            );
+          },
+        );
+      },
+    );
+
+    if (selectedRoundTripFlightType != null) {
+      setState(() {
+        selectedOptionRounTrip = selectedRoundTripFlightType;
+      });
+    }
+  }
+
   Widget oneWay(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Column(
@@ -265,25 +471,27 @@ class _SearchViewState extends State<SearchView>
                         setState(() {
                           if (result != null) {
                             setState(() {
-                              if (widget.ArrivalCity != '') {
-                                if (result['DepartureCity'] ==
-                                    widget.ArrivalCity) {
+                              if (controller.Arrivalcityone.value != '') {
+                                if (controller.deoarturecityone.value ==
+                                    controller.Arrivalcityone.value) {
                                   showDialog(
                                     context: context,
                                     builder: (BuildContext context) {
-                                      return const AlertDialog(
+                                      return AlertDialog(
                                         title: Text('Invalid City Selection'),
                                         content: Text(
                                             'Arrival city cannot be the same as the departure city.'),
                                       );
                                     },
                                   );
-                                } else {
-                                  widget.DepartureCity =
-                                      result['DepartureCity'];
                                 }
-                              } else {
-                                widget.DepartureCity = result['DepartureCity'];
+                                //   else {
+                                //     widget.DepartureCityOneWay =
+                                //         result['DepartureCity'];
+                                //   }
+                                // } else {
+                                //   widget.DepartureCityOneWay =
+                                //       result['DepartureCity'];
                               }
                             });
                           }
@@ -298,7 +506,7 @@ class _SearchViewState extends State<SearchView>
                           width: 10,
                         ),
                         Text(
-                          widget.DepartureCity ?? '',
+                          controller.deoarturecityone.value ?? '',
                           style: const TextStyle(
                               fontSize: 15, fontWeight: FontWeight.w500),
                         ),
@@ -344,23 +552,25 @@ class _SearchViewState extends State<SearchView>
                       );
                       if (result != null) {
                         setState(() {
-                          if (widget.DepartureCity != '') {
-                            if (result['ArrivalCity'] == widget.DepartureCity) {
+                          if (controller.deoarturecityone.value != '') {
+                            if (controller.Arrivalcityone.value ==
+                                controller.deoarturecityone.value) {
                               showDialog(
                                 context: context,
                                 builder: (BuildContext context) {
-                                  return const AlertDialog(
+                                  return AlertDialog(
                                     title: Text('Invalid City Selection'),
                                     content: Text(
                                         'Arrival city cannot be the same as the departure city.'),
                                   );
                                 },
                               );
-                            } else {
-                              widget.ArrivalCity = result['ArrivalCity'];
                             }
-                          } else {
-                            widget.ArrivalCity = result['ArrivalCity'];
+                            //   else {
+                            //     widget.ArrivalCityOnyWay = result['ArrivalCity'];
+                            //   }
+                            // } else {
+                            //   widget.ArrivalCityOnyWay = result['ArrivalCity'];
                           }
                         });
                       }
@@ -373,7 +583,7 @@ class _SearchViewState extends State<SearchView>
                           width: 10,
                         ),
                         Text(
-                          widget.ArrivalCity ?? '',
+                          controller.Arrivalcityone.value ?? '',
                           style: TextStyle(
                               fontSize: TextSize.header2,
                               fontWeight: FontWeight.w500),
@@ -622,6 +832,43 @@ class _SearchViewState extends State<SearchView>
             ),
           ],
         ),
+        SizedBox(
+          height: 20,
+        ),
+        InkWell(
+          onTap: () {
+            showFlightTypeOneWayOptions();
+          },
+          child: Container(
+            padding: EdgeInsetsDirectional.only(start: 15, end: 15),
+            height: (size.height / 16) - 5,
+            width: size.width,
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(20),
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Icon(Icons.person, color: AppColors.Blue),
+                SizedBox(width: 10),
+                Obx(
+                  () => Text(
+                    controller.TypeFlight.value ?? '',
+                    style: TextStyle(
+                      color: (controller.TypeFlight.value == 'Flight type')
+                          ? Colors.grey
+                          : Colors.black,
+                    ),
+                  ),
+                ),
+                Spacer(),
+                Icon(Icons.circle_outlined,
+                    size: 12, color: AppColors.grayText),
+              ],
+            ),
+          ),
+        ),
         const SizedBox(
           height: 30,
         ),
@@ -639,29 +886,15 @@ class _SearchViewState extends State<SearchView>
   }
 
   Widget RoundTrip(BuildContext context) {
-    String? DepartureCity;
-    String? ArrivalCity;
     final SearchViewRoundTripController controller =
         Get.put(SearchViewRoundTripController());
 
     final TextEditingController dateController = TextEditingController();
     final TextEditingController returnDateController = TextEditingController();
-    void onDepartureCitySelected(String selectedCity) {
-      controller.setDepartureCity(widget.ArrivalCity ?? '');
-    }
-
-    void onArrivalCitySelected(String selectedCity) {
-      controller.setArrivalCity(widget.DepartureCity ?? '');
-    }
 
     void _searchForFlights() async {
-      if (widget.DepartureCity != null) {
-        controller.setDepartureCity(widget.DepartureCity!);
-      }
-      if (widget.ArrivalCity != null) {
-        controller.setArrivalCity(widget.ArrivalCity!);
-      }
-      controller.searchForFlights();
+      controller.fetchFlights();
+      searchViewRoundTripController.isloading.value = true;
     }
 
     @override
@@ -674,15 +907,16 @@ class _SearchViewState extends State<SearchView>
       dateController.text = dateText;
     }
 
-    // RoundTrip({
-    //   this.DepartureCity,
-    //   this.ArrivalCity,
-    // });
     Size size = MediaQuery.of(context).size;
     return Column(
       children: [
         Column(
           children: [
+            // Obx(
+            //   () => (searchViewRoundTripController.isloading.value == true)
+            //       ? CircularProgressIndicator()
+            //       : SizedBox(),
+            // ),
             SizedBox(
               height: 15,
             ),
@@ -734,9 +968,13 @@ class _SearchViewState extends State<SearchView>
 
                           if (result != null) {
                             setState(() {
-                              if (widget.ArrivalCity != '') {
-                                if (result['DepartureCity'] ==
-                                    widget.ArrivalCity) {
+                              if (searchViewRoundTripController
+                                      .ArrivalCityRoundTrip.value !=
+                                  '') {
+                                if (searchViewRoundTripController
+                                        .DepartureCityRoundTrip.value ==
+                                    searchViewRoundTripController
+                                        .ArrivalCityRoundTrip.value) {
                                   showDialog(
                                     context: context,
                                     builder: (BuildContext context) {
@@ -747,12 +985,7 @@ class _SearchViewState extends State<SearchView>
                                       );
                                     },
                                   );
-                                } else {
-                                  widget.DepartureCity =
-                                      result['DepartureCity'];
                                 }
-                              } else {
-                                widget.DepartureCity = result['DepartureCity'];
                               }
                             });
                           }
@@ -768,7 +1001,8 @@ class _SearchViewState extends State<SearchView>
                                 Padding(
                                   padding: EdgeInsets.only(left: 18, top: 8),
                                   child: Text(
-                                    widget.DepartureCity ?? '',
+                                    searchViewRoundTripController
+                                        .DepartureCityRoundTrip.value,
                                     style: TextStyle(
                                         fontSize: 15,
                                         fontWeight: FontWeight.w500),
@@ -819,9 +1053,13 @@ class _SearchViewState extends State<SearchView>
                           );
                           if (result != null) {
                             setState(() {
-                              if (widget.DepartureCity != '') {
-                                if (result['ArrivalCity'] ==
-                                    widget.DepartureCity) {
+                              if (searchViewRoundTripController
+                                      .DepartureCityRoundTrip.value !=
+                                  '') {
+                                if (searchViewRoundTripController
+                                        .ArrivalCityRoundTrip.value ==
+                                    searchViewRoundTripController
+                                        .DepartureCityRoundTrip.value) {
                                   showDialog(
                                     context: context,
                                     builder: (BuildContext context) {
@@ -832,11 +1070,7 @@ class _SearchViewState extends State<SearchView>
                                       );
                                     },
                                   );
-                                } else {
-                                  widget.ArrivalCity = result['ArrivalCity'];
                                 }
-                              } else {
-                                widget.ArrivalCity = result['ArrivalCity'];
                               }
                             });
                           }
@@ -855,7 +1089,8 @@ class _SearchViewState extends State<SearchView>
                               Padding(
                                 padding: EdgeInsets.only(left: 18, top: 8),
                                 child: Text(
-                                  widget.ArrivalCity ?? '',
+                                  searchViewRoundTripController
+                                      .ArrivalCityRoundTrip.value,
                                   style: TextStyle(
                                       fontSize: 15,
                                       fontWeight: FontWeight.w500),
@@ -1023,6 +1258,45 @@ class _SearchViewState extends State<SearchView>
                   ],
                 ),
               ],
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            InkWell(
+              onTap: () {
+                showFlightTypeRoundTripOptions();
+              },
+              child: Container(
+                padding: EdgeInsetsDirectional.only(start: 15, end: 15),
+                height: (size.height / 16) - 5,
+                width: size.width,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Icon(Icons.person, color: AppColors.Blue),
+                    SizedBox(width: 10),
+                    Obx(
+                      () => Text(
+                        searchViewRoundTripController.TypeFlight.value ?? '',
+                        style: TextStyle(
+                          color:
+                              (searchViewRoundTripController.TypeFlight.value ==
+                                      'Flight type')
+                                  ? Colors.grey
+                                  : Colors.black,
+                        ),
+                      ),
+                    ),
+                    Spacer(),
+                    Icon(Icons.circle_outlined,
+                        size: 12, color: AppColors.grayText),
+                  ],
+                ),
+              ),
             ),
             const SizedBox(
               height: 30,

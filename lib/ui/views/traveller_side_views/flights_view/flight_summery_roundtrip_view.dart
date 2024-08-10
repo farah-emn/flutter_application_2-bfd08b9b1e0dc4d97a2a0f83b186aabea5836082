@@ -2,20 +2,24 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:traveling/classes/flight_info_class.dart';
+import 'package:intl/intl.dart';
 import 'package:traveling/controllers/flight_info_controller.dart';
 import 'package:traveling/ui/shared/colors.dart';
+import '../../../../classes/flight_details_class.dart';
+import '../../../../controllers/search_roundtrip_controller.dart';
 
 class FlightSummeryRoundTrip extends StatelessWidget {
-  FlightInfoClass flightdata;
-  FlightInfoClass? ReturnFlightData;
+  FlightDetailsClass flightdata;
+  FlightDetailsClass? ReturnFlightData;
   final FlightInfoController controller = Get.put(FlightInfoController());
+  final searchViewRoundTripController =
+      Get.put(SearchViewRoundTripController());
   FlightSummeryRoundTrip(
       {required this.flightdata, required this.ReturnFlightData});
 
   @override
   Widget build(BuildContext context) {
-    controller.updateFlightInfo(flightdata);
+    // controller.updateFlightInfo(flightdata);
 
     Size size = MediaQuery.of(context).size;
     return Column(
@@ -34,15 +38,19 @@ class FlightSummeryRoundTrip extends StatelessWidget {
                 children: [
                   Row(
                     children: [
-                      Image.asset('assets/image/png/flynas.png'),
-                      const SizedBox(
-                        width: 5,
+                      Container(
+                        child: CircleAvatar(
+                            backgroundImage:
+                                NetworkImage(flightdata.FlightCompanyLogo)),
+                        width: 26,
+                        height: 26,
                       ),
+                      SizedBox(width: 6),
                       Text(
-                        flightdata.name,
+                        flightdata.FlightCompanyName,
                         style: TextStyle(
                             fontWeight: FontWeight.w500, fontSize: 18),
-                      ),
+                      )
                     ],
                   ),
                   Row(
@@ -65,12 +73,12 @@ class FlightSummeryRoundTrip extends StatelessWidget {
                       Row(
                         children: [
                           Text(
-                            flightdata.DeparureTime,
+                            getTime(flightdata.DeparureTime),
                             style: TextStyle(
                                 fontWeight: FontWeight.w500, fontSize: 16),
                           ),
                           Text(
-                            'AM',
+                            getTimePmAm(flightdata.DeparureTime),
                             style: TextStyle(
                               color: AppColors.TextgrayColor,
                               fontSize: 12,
@@ -82,7 +90,7 @@ class FlightSummeryRoundTrip extends StatelessWidget {
                         height: 30,
                       ),
                       Text(
-                        'Direct',
+                        flightdata.FlightType ?? '',
                         style: TextStyle(
                           color: AppColors.TextgrayColor,
                           fontSize: 12,
@@ -101,12 +109,12 @@ class FlightSummeryRoundTrip extends StatelessWidget {
                       Row(
                         children: [
                           Text(
-                            flightdata.ArrivalTime,
+                            getTime(flightdata.ArrivalTime),
                             style: TextStyle(
                                 fontWeight: FontWeight.w500, fontSize: 16),
                           ),
                           Text(
-                            'PM',
+                            getTimePmAm(flightdata.ArrivalTime),
                             style: TextStyle(
                               color: AppColors.TextgrayColor,
                               fontSize: 12,
@@ -128,13 +136,13 @@ class FlightSummeryRoundTrip extends StatelessWidget {
                       Container(
                         width: size.width / 2 + 30,
                         child: Text(
-                          flightdata.airport_from,
+                          flightdata.DepartureAirport,
                           style: TextStyle(
                               fontWeight: FontWeight.w400, fontSize: 15),
                         ),
                       ),
                       Text(
-                        flightdata.DeparureCity,
+                        flightdata.DepartureCity,
                         style: TextStyle(
                             fontWeight: FontWeight.w400,
                             fontSize: 13,
@@ -146,7 +154,7 @@ class FlightSummeryRoundTrip extends StatelessWidget {
                       Container(
                         width: size.width / 2 + 30,
                         child: Text(
-                          flightdata.airport_to,
+                          flightdata.ArrivalAirport,
                           style: TextStyle(
                               fontWeight: FontWeight.w400, fontSize: 15),
                         ),
@@ -179,15 +187,19 @@ class FlightSummeryRoundTrip extends StatelessWidget {
                 children: [
                   Row(
                     children: [
-                      Image.asset('assets/image/png/flynas.png'),
-                      const SizedBox(
-                        width: 5,
+                      Container(
+                        child: CircleAvatar(
+                            backgroundImage: NetworkImage(
+                                ReturnFlightData!.FlightCompanyLogo)),
+                        width: 26,
+                        height: 26,
                       ),
+                      SizedBox(width: 6),
                       Text(
-                        ReturnFlightData?.name ?? '',
+                        ReturnFlightData!.FlightCompanyName,
                         style: TextStyle(
                             fontWeight: FontWeight.w500, fontSize: 18),
-                      ),
+                      )
                     ],
                   ),
                   Row(
@@ -210,12 +222,12 @@ class FlightSummeryRoundTrip extends StatelessWidget {
                       Row(
                         children: [
                           Text(
-                            ReturnFlightData?.DeparureTime ?? '',
+                            getTime(ReturnFlightData!.DeparureTime) ?? '',
                             style: TextStyle(
                                 fontWeight: FontWeight.w500, fontSize: 16),
                           ),
                           Text(
-                            'AM',
+                            getTimePmAm(ReturnFlightData!.DeparureTime),
                             style: TextStyle(
                               color: AppColors.TextgrayColor,
                               fontSize: 12,
@@ -227,7 +239,7 @@ class FlightSummeryRoundTrip extends StatelessWidget {
                         height: 30,
                       ),
                       Text(
-                        'Direct',
+                        ReturnFlightData?.FlightType ?? '',
                         style: TextStyle(
                           color: AppColors.TextgrayColor,
                           fontSize: 12,
@@ -246,12 +258,12 @@ class FlightSummeryRoundTrip extends StatelessWidget {
                       Row(
                         children: [
                           Text(
-                            ReturnFlightData?.ArrivalTime ?? '',
+                            getTime(ReturnFlightData!.ArrivalTime) ?? '',
                             style: TextStyle(
                                 fontWeight: FontWeight.w500, fontSize: 16),
                           ),
                           Text(
-                            'PM',
+                            getTimePmAm(ReturnFlightData!.ArrivalTime),
                             style: TextStyle(
                               color: AppColors.TextgrayColor,
                               fontSize: 12,
@@ -273,13 +285,13 @@ class FlightSummeryRoundTrip extends StatelessWidget {
                       Container(
                         width: size.width / 2 + 30,
                         child: Text(
-                          ReturnFlightData?.airport_from ?? '',
+                          ReturnFlightData?.DepartureAirport ?? '',
                           style: TextStyle(
                               fontWeight: FontWeight.w400, fontSize: 15),
                         ),
                       ),
                       Text(
-                        ReturnFlightData?.DeparureCity ?? '',
+                        ReturnFlightData?.DepartureCity ?? '',
                         style: TextStyle(
                             fontWeight: FontWeight.w400,
                             fontSize: 13,
@@ -291,7 +303,7 @@ class FlightSummeryRoundTrip extends StatelessWidget {
                       Container(
                         width: size.width / 2 + 30,
                         child: Text(
-                          ReturnFlightData?.airport_to ?? '',
+                          ReturnFlightData?.ArrivalAirport ?? '',
                           style: TextStyle(
                               fontWeight: FontWeight.w400, fontSize: 15),
                         ),
@@ -428,5 +440,48 @@ class FlightSummeryRoundTrip extends StatelessWidget {
         ),
       ],
     );
+  }
+
+  String _getFormattedCity(String City) {
+    final List<String> parts = City.split(',');
+    if (parts.length >= 2) {
+      final String City = parts[0];
+
+      return '$City';
+    } else {
+      return '';
+    }
+  }
+
+  String _getFormattedDate(String date) {
+    String day = '';
+    final DateFormat inputFormat = DateFormat('d. M, yyyy');
+    final DateFormat outputFormat = DateFormat('MMMM');
+    final List<String> parts = date.split('.');
+    if (parts.length >= 2) {
+      day = parts[0];
+    }
+
+    DateTime dateTime;
+    try {
+      dateTime = inputFormat.parse(date);
+    } catch (e) {
+      return '';
+    }
+
+    String monthName = outputFormat.format(dateTime);
+    return '${day}. ${monthName}';
+  }
+
+  String getTime(String input) {
+    return input.split(' ')[0];
+  }
+
+  String getTimePmAm(String input) {
+    var parts = input.split(' ');
+    if (parts.length > 1)
+      return parts[1];
+    else
+      return '';
   }
 }

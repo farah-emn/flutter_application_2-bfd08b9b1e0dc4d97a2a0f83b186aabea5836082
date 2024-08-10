@@ -3,7 +3,6 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:traveling/ui/shared/text_size.dart';
-import 'package:traveling/ui/views/traveller_side_views/traveller_details_view2.dart';
 
 import '../../shared/colors.dart';
 import '../../shared/custom_widgets/custom_button.dart';

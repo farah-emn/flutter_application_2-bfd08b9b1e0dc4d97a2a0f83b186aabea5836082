@@ -3,9 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:traveling/ui/shared/colors.dart';
-import 'package:traveling/ui/shared/custom_widgets/custom_textgray.dart';
 import 'package:traveling/ui/shared/text_size.dart';
-import 'package:traveling/ui/shared/utils.dart';
 
 class DepartureDateReturnDateDetails extends StatefulWidget {
   final Function(String) onDateSelected;
@@ -94,7 +92,7 @@ class _CheckInCheckOutDetailsState
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    Icon(Icons.calendar_month_rounded, color: AppColors.Blue),
+                    Icon(Icons.calendar_month_rounded, color: AppColors.gold),
                     SizedBox(
                       width: 10,
                     ),
@@ -113,23 +111,22 @@ class _CheckInCheckOutDetailsState
         ),
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          
           children: [
             const Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    SizedBox(
-                      width: 10,
-                    ),
-                    Text(
-                      'Return Date',
-                      style: TextStyle(
-                          fontSize: 13,
-                          color: AppColors.grayText,
-                          fontWeight: FontWeight.w500),
-                    ),
-                  ],
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                SizedBox(
+                  width: 10,
                 ),
+                Text(
+                  'Return Date',
+                  style: TextStyle(
+                      fontSize: 13,
+                      color: AppColors.grayText,
+                      fontWeight: FontWeight.w500),
+                ),
+              ],
+            ),
             InkWell(
               onTap: () async {
                 DateTime? newReturnDate = await showDatePicker(
@@ -156,7 +153,7 @@ class _CheckInCheckOutDetailsState
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Icon(Icons.calendar_month_rounded, color: AppColors.Blue),
+                    Icon(Icons.calendar_month_rounded, color: AppColors.gold),
                     SizedBox(
                       width: 10,
                     ),

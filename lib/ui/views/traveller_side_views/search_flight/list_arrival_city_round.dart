@@ -4,6 +4,8 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
+import 'package:get/get.dart';
+import '../../../../controllers/search_roundtrip_controller.dart';
 
 class ListCityArrivalRound extends StatefulWidget {
   @override
@@ -12,6 +14,8 @@ class ListCityArrivalRound extends StatefulWidget {
 
 class _ListCityArrivalRoundState extends State<ListCityArrivalRound> {
   final TextEditingController _searchController = TextEditingController();
+  final searchViewRoundTripController =
+      Get.put(SearchViewRoundTripController());
   List<Map<String, dynamic>> arrivalCity = [];
   List<Map<String, dynamic>> filtered_list = [];
 
@@ -107,9 +111,11 @@ class _ListCityArrivalRoundState extends State<ListCityArrivalRound> {
                             subtitle: Text(arrivalCity['airport']!),
                             trailing: Text(arrivalCity['city']!),
                             onTap: () async {
+                              searchViewRoundTripController.ArrivalCityRoundTrip
+                                  .value = arrivalCity['ArrivalCity'];
                               final ArivalCiry = arrivalCity['ArrivalCity'];
                               Navigator.pop(context, {
-                                'ArrivalCity': ArivalCiry,
+                                'ArrivalCityOnyRoundTrip': ArivalCiry,
                               });
                             });
                       },

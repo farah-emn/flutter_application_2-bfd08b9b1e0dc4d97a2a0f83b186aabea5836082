@@ -415,7 +415,7 @@ class _HotelHomeViewState extends State<HotelHomeView> {
                                 Row(
                                   children: [
                                     Text(
-                                      '\ ${HotelCurrency_Controller.convert('USD', HotelCurrency_Controller.selectedCurrency.value, incoming)} ${HotelCurrency_Controller.selectedCurrency.value}',
+                                      '\ ${HotelCurrency_Controller.convert(HotelCurrency_Controller.selectedCurrency.value, incoming)} ${HotelCurrency_Controller.selectedCurrency.value}',
                                       style: TextStyle(
                                           color: Colors.white, fontSize: 16),
                                     ),

@@ -1,29 +1,107 @@
+// ignore_for_file: unnecessary_import, unused_import, must_be_immutable, unused_element, non_constant_identifier_names, prefer_typing_uninitialized_variables
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:traveling/classes/flight_info_class.dart';
 import 'package:traveling/ui/views/traveller_side_views/flight_details._view.dart';
-
 import '../classes/flight_details_class.dart';
 import '../ui/shared/colors.dart';
 import '../ui/views/flight_side_views/flight_flight_details_view.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_database/firebase_database.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:http/http.dart';
+import 'package:intl/intl.dart';
+import 'package:traveling/cards/flight_details_card.dart';
+import 'package:traveling/classes/flight_info_class.dart';
+import '../../../classes/flight_details_class.dart';
 
 class FlightDetailsCard extends StatefulWidget {
-  FlightDetailsCard(
-      {super.key, required this.flightModel, required this.itemIndex});
-  FlightDetailsClass flightModel;
-  int itemIndex;
+  final FlightDetailsClass flightsList;
+  var itemIndex;
+
+  FlightDetailsCard({
+    super.key,
+    required this.flightsList,
+    required this.itemIndex,
+  });
 
   @override
   State<FlightDetailsCard> createState() => _FlightDetailsCardState();
 }
 
 class _FlightDetailsCardState extends State<FlightDetailsCard> {
+  var stopDurationsForFlight = [];
+  var stopLocationsForFlight = [];
+  @override
+  void initState() {
+    super.initState();
+    fetchStoplocationsFlights();
+  }
+
+  Future<void> fetchStoplocationsFlights() async {
+    stopDurationsForFlight.clear();
+    stopLocationsForFlight.clear();
+
+    FirebaseDatabase.instance
+        .reference()
+        .child('Stop_location')
+        .once()
+        .then((DatabaseEvent event) {
+      if (event.snapshot.exists) {
+        var stopLocationData =
+            Map<dynamic, dynamic>.from(event.snapshot.value as Map);
+        stopLocationData.forEach((Stopkey, value) {
+          print('[object]');
+          if (value['FlighID'] == widget.flightsList.FlightID) {
+            print('object');
+            int StopCount = 1;
+            if (mounted) {
+              setState(() {
+                StopCount += 1;
+                stopDurationsForFlight.add(value['StopDuration']);
+                stopLocationsForFlight.add(value['StopLocation']);
+                print(stopLocationsForFlight);
+                print(',,,,,,,,,,jjjjjjjjjjj');
+              });
+            }
+          } else {}
+        });
+      } else {}
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    print(widget.flightsList.FlightID);
+    String getCityShortcut(String input) {
+      if (input.length < 3) {
+        return 'Input string must have at least three characters';
+      } else {
+        return input.substring(0, 3).toUpperCase();
+      }
+    }
+
+    String getTime(String input) {
+      return input.split(' ')[0];
+    }
+
+    String getTimePmAm(String input) {
+      return input.split(' ')[1];
+    }
+
+    @override
     Size size = MediaQuery.of(context).size;
     return InkWell(
       onTap: () {
-        Get.to(const FlightFlightDetailsView());
+        // Get.to(FlightFlightDetailsView(
+        //     flightDetails: widget.flightsList,
+        //     ItemIndex: widget.flightsList.FlightID,
+        //     stopLocationsForFlight: stopLocationsForFlight,
+        //     stopDurationsForFlight: stopDurationsForFlight));
       },
       child: Container(
         margin: const EdgeInsets.only(top: 15),
@@ -45,13 +123,13 @@ class _FlightDetailsCardState extends State<FlightDetailsCard> {
                           Row(
                             children: [
                               Text(
-                                widget.flightModel.deparureTime,
+                                getTime(widget.flightsList.DeparureTime),
                                 style: const TextStyle(
                                     fontWeight: FontWeight.w500, fontSize: 16),
                               ),
-                              const Text(
-                                'AM',
-                                style: TextStyle(
+                              Text(
+                                getTimePmAm(widget.flightsList.DeparureTime),
+                                style: const TextStyle(
                                   color: AppColors.TextgrayColor,
                                   fontSize: 12,
                                 ),
@@ -61,16 +139,16 @@ class _FlightDetailsCardState extends State<FlightDetailsCard> {
                           const SizedBox(
                             height: 30,
                           ),
-                          const Text(
-                            'Direct',
-                            style: TextStyle(
+                          Text(
+                            widget.flightsList.FlightType ?? '',
+                            style: const TextStyle(
                               color: AppColors.TextgrayColor,
                               fontSize: 12,
                             ),
                           ),
-                          const Text(
-                            '02h 25m',
-                            style: TextStyle(
+                          Text(
+                            widget.flightsList.Flight_Duration,
+                            style: const TextStyle(
                               color: AppColors.TextgrayColor,
                               fontSize: 12,
                             ),
@@ -81,13 +159,13 @@ class _FlightDetailsCardState extends State<FlightDetailsCard> {
                           Row(
                             children: [
                               Text(
-                                widget.flightModel.arrivalTime,
+                                getTime(widget.flightsList.ArrivalTime),
                                 style: const TextStyle(
                                     fontWeight: FontWeight.w500, fontSize: 16),
                               ),
-                              const Text(
-                                'PM',
-                                style: TextStyle(
+                              Text(
+                                getTimePmAm(widget.flightsList.ArrivalTime),
+                                style: const TextStyle(
                                   color: AppColors.TextgrayColor,
                                   fontSize: 12,
                                 ),
@@ -98,7 +176,7 @@ class _FlightDetailsCardState extends State<FlightDetailsCard> {
                       ),
                       Container(
                         margin: const EdgeInsets.symmetric(horizontal: 15),
-                        color: AppColors.darkBlue,
+                        color: AppColors.Blue,
                         width: 1,
                         height: 130,
                       ),
@@ -108,13 +186,13 @@ class _FlightDetailsCardState extends State<FlightDetailsCard> {
                           SizedBox(
                             width: size.width / 2 + 30,
                             child: Text(
-                              widget.flightModel.fromAirport,
+                              widget.flightsList.DepartureAirport,
                               style: const TextStyle(
                                   fontWeight: FontWeight.w400, fontSize: 15),
                             ),
                           ),
                           Text(
-                            widget.flightModel.fromCity,
+                            widget.flightsList.deparure_from,
                             style: const TextStyle(
                                 fontWeight: FontWeight.w400,
                                 fontSize: 13,
@@ -126,13 +204,13 @@ class _FlightDetailsCardState extends State<FlightDetailsCard> {
                           SizedBox(
                             width: size.width / 2 + 30,
                             child: Text(
-                              widget.flightModel.toAirport,
+                              widget.flightsList.ArrivalAirport,
                               style: const TextStyle(
                                   fontWeight: FontWeight.w400, fontSize: 15),
                             ),
                           ),
                           Text(
-                            widget.flightModel.toCity,
+                            widget.flightsList.deparure_to,
                             style: const TextStyle(
                                 fontWeight: FontWeight.w400,
                                 fontSize: 13,
@@ -160,7 +238,7 @@ class _FlightDetailsCardState extends State<FlightDetailsCard> {
                             width: 5,
                           ),
                           Text(
-                            widget.flightModel.depatureDate,
+                            widget.flightsList.DeparureDate,
                             style:
                                 const TextStyle(color: AppColors.TextgrayColor),
                           ),
@@ -174,9 +252,9 @@ class _FlightDetailsCardState extends State<FlightDetailsCard> {
             Container(
               height: 40,
               width: size.width,
-              padding: EdgeInsets.only(right: 15),
+              padding: const EdgeInsets.only(right: 15),
               decoration: const BoxDecoration(
-                color: AppColors.darkBlue,
+                color: AppColors.Blue,
                 borderRadius: BorderRadius.only(
                   bottomLeft: Radius.circular(15),
                   bottomRight: Radius.circular(15),

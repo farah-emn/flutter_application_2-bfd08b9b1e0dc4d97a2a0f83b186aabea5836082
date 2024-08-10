@@ -2,35 +2,18 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:traveling/classes/flight_info_class.dart';
 import 'package:traveling/controllers/currency_controller.dart';
 import 'package:traveling/ui/shared/colors.dart';
 import 'package:traveling/ui/shared/utils.dart';
 import 'package:traveling/ui/views/traveller_side_views/flight_details._view.dart';
+import '../../../../classes/flight_details_class.dart';
+import '../../../../controllers/search_roundtrip_controller.dart';
 
 class FlightsViewRound extends StatelessWidget {
-  Map<dynamic, dynamic> DepartureflightData;
-
-  Map<dynamic, dynamic> ReturnflightData;
-  FlightsViewRound(
-      {required this.DepartureflightData, required this.ReturnflightData});
-
+  SearchViewRoundTripController searchViewRoundTripController =
+      Get.put(SearchViewRoundTripController());
   @override
   Widget build(BuildContext context) {
-    //
-    List<FlightInfoClass> DepartureList =
-        DepartureflightData.entries.map((entry) {
-      var stringKeyedMap = Map<dynamic, dynamic>.from(entry.value);
-      return FlightInfoClass.fromMap(stringKeyedMap);
-    }).toList();
-    var firstKey = DepartureflightData.keys.first;
-
-    List<FlightInfoClass> Returnflights = ReturnflightData.entries.map((entry) {
-      var stringKeyedMap = Map<dynamic, dynamic>.from(entry.value);
-      return FlightInfoClass.fromMap(stringKeyedMap);
-    }).toList();
-    var ReturnKey = ReturnflightData.keys.first;
-
     return Scaffold(
         backgroundColor: AppColors.LightBlueColor,
         body: Stack(
@@ -63,14 +46,16 @@ class FlightsViewRound extends StatelessWidget {
                 child: Column(
                   children: [
                     Text(
-                      DepartureflightData[firstKey]['deparure_from'] ?? '',
+                      searchViewRoundTripController
+                          .departureFlightsList.value[0].DepartureCity,
                       style: TextStyle(
                           color: Colors.white,
                           fontSize: 20,
                           fontWeight: FontWeight.bold),
                     ),
                     Text(
-                      DepartureflightData[firstKey]['DeparureDate'] ?? '',
+                      searchViewRoundTripController
+                          .departureFlightsList.value[0].DeparureTime,
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 16,
@@ -84,14 +69,16 @@ class FlightsViewRound extends StatelessWidget {
                 child: Column(
                   children: [
                     Text(
-                      DepartureflightData[firstKey]['arrival_to'] ?? '',
+                      searchViewRoundTripController
+                          .returnFlightsList.value[0].DepartureCity,
                       style: TextStyle(
                           color: Colors.white,
                           fontSize: 20,
                           fontWeight: FontWeight.bold),
                     ),
                     Text(
-                      ReturnflightData[ReturnKey]['DeparureDate'] ?? '',
+                      searchViewRoundTripController
+                          .returnFlightsList.value[0].DeparureTime,
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 16,
@@ -116,17 +103,24 @@ class FlightsViewRound extends StatelessWidget {
                 child: SizedBox(
                   child: ListView.builder(
                     itemBuilder: (context, index) => _buildListItem(
-                        context, DepartureList[index], Returnflights[index]),
+                        context,
+                        searchViewRoundTripController
+                            .departureFlightsList.value[index],
+                        searchViewRoundTripController
+                            .returnFlightsList.value[index]),
                     scrollDirection: Axis.vertical,
-                    itemCount: DepartureList.length,
+                    itemCount: searchViewRoundTripController
+                        .departureFlightsList.value.length,
                   ),
                 ))
           ],
         ));
   }
 
-  Widget _buildListItem(BuildContext context,
-      FlightInfoClass DepartureflightList, FlightInfoClass returnflightsList) {
+  Widget _buildListItem(
+      BuildContext context,
+      FlightDetailsClass DepartureflightList,
+      FlightDetailsClass returnflightsList) {
     final CurrencyController controller = Get.put(CurrencyController());
     String _getFormattedCity(String City) {
       final List<String> parts = City.split(',');
@@ -175,10 +169,11 @@ class FlightsViewRound extends StatelessWidget {
         child: InkWell(
           onTap: () {
             GlobalKey<FormState> globalFormKey = GlobalKey<FormState>();
-            // Get.to(FlightDetailsView(
-            //     type: 'RoundTrip',
-            //     flightdata: DepartureflightList,
-            //     ReturnFlightData: returnflightsList));
+            Get.to(FlightDetailsView(
+                type: 'RoundTrip',
+                flightdata: DepartureflightList,
+                ReturnFlightData: returnflightsList));
+
             // Get.to(FlightDetailsView(
             //   flightdata: DepartureflightList,
             //   ReturnFlightData: returnflightsList,
@@ -194,13 +189,16 @@ class FlightsViewRound extends StatelessWidget {
                   children: [
                     Row(
                       children: [
-                        Image.asset(
-                          'assets/image/png/flynas.png',
-                          width: 25,
+                        Container(
+                          child: CircleAvatar(
+                              backgroundImage: NetworkImage(
+                                  DepartureflightList.FlightCompanyLogo)),
+                          width: 26,
+                          height: 26,
                         ),
                         SizedBox(width: 6),
                         Text(
-                          DepartureflightList.name,
+                          DepartureflightList.FlightCompanyName,
                           style: TextStyle(
                               fontSize: screenWidth(24),
                               fontWeight: FontWeight.w500),
@@ -217,12 +215,14 @@ class FlightsViewRound extends StatelessWidget {
                             Row(
                               children: [
                                 Text(
-                                  DepartureflightList.DeparureTime,
+                                  getTime(DepartureflightList.DeparureTime),
                                   style: TextStyle(
                                       fontSize: screenWidth(22),
                                       fontWeight: FontWeight.w500),
                                 ),
-                                const Text('AM',
+                                Text(
+                                    getTimePmAm(
+                                        DepartureflightList.DeparureTime),
                                     style: TextStyle(
                                         color: AppColors.TextgrayColor)),
                               ],
@@ -267,12 +267,14 @@ class FlightsViewRound extends StatelessWidget {
                             Row(
                               children: [
                                 Text(
-                                  DepartureflightList.ArrivalTime,
+                                  getTime(DepartureflightList.ArrivalTime),
                                   style: TextStyle(
                                       fontSize: 16,
                                       fontWeight: FontWeight.w500),
                                 ),
-                                const Text('PM',
+                                Text(
+                                    getTimePmAm(
+                                        DepartureflightList.ArrivalTime),
                                     style: TextStyle(
                                         color: AppColors.TextgrayColor)),
                               ],
@@ -327,8 +329,8 @@ class FlightsViewRound extends StatelessWidget {
                                 'assets/image/png/Direct_icon.png',
                                 width: 12,
                               ),
-                              const Text(
-                                'Direct',
+                              Text(
+                                DepartureflightList.FlightType ?? '',
                                 style:
                                     TextStyle(color: AppColors.TextgrayColor),
                               ),
@@ -349,13 +351,16 @@ class FlightsViewRound extends StatelessWidget {
                 children: [
                   Row(
                     children: [
-                      Image.asset(
-                        'assets/image/png/flynas.png',
-                        width: 25,
+                      Container(
+                        child: CircleAvatar(
+                            backgroundImage: NetworkImage(
+                                DepartureflightList.FlightCompanyLogo)),
+                        width: 26,
+                        height: 26,
                       ),
                       SizedBox(width: 6),
                       Text(
-                        returnflightsList.name,
+                        returnflightsList.FlightCompanyName,
                         style: TextStyle(
                             fontSize: screenWidth(24),
                             fontWeight: FontWeight.w500),
@@ -372,12 +377,12 @@ class FlightsViewRound extends StatelessWidget {
                           Row(
                             children: [
                               Text(
-                                returnflightsList.DeparureTime,
+                                getTime(returnflightsList.DeparureTime),
                                 style: TextStyle(
                                     fontSize: screenWidth(22),
                                     fontWeight: FontWeight.w500),
                               ),
-                              const Text('AM',
+                              Text(getTimePmAm(returnflightsList.DeparureTime),
                                   style: TextStyle(
                                       color: AppColors.TextgrayColor)),
                             ],
@@ -419,11 +424,11 @@ class FlightsViewRound extends StatelessWidget {
                           Row(
                             children: [
                               Text(
-                                returnflightsList.ArrivalTime,
+                                getTime(returnflightsList.ArrivalTime),
                                 style: TextStyle(
                                     fontSize: 16, fontWeight: FontWeight.w500),
                               ),
-                              const Text('PM',
+                              Text(getTimePmAm(returnflightsList.ArrivalTime),
                                   style: TextStyle(
                                       color: AppColors.TextgrayColor)),
                             ],
@@ -478,8 +483,8 @@ class FlightsViewRound extends StatelessWidget {
                               'assets/image/png/Direct_icon.png',
                               width: 12,
                             ),
-                            const Text(
-                              'Direct',
+                            Text(
+                              returnflightsList.FlightType ?? '',
                               style: TextStyle(color: AppColors.TextgrayColor),
                             ),
                           ],
@@ -493,7 +498,7 @@ class FlightsViewRound extends StatelessWidget {
                   Row(
                     children: [
                       Text(
-                        '${returnflightsList.Flight_price + returnflightsList.Flight_price}',
+                        '${returnflightsList.TicketAdultEconomyPrice + returnflightsList.TicketAdultEconomyPrice}',
                         style: TextStyle(
                             color: const Color.fromARGB(255, 255, 181, 215),
                             fontSize: screenWidth(22),
@@ -517,5 +522,37 @@ class FlightsViewRound extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  String _getFormattedDate(String date) {
+    String day = '';
+    final DateFormat inputFormat = DateFormat('d. M, yyyy');
+    final DateFormat outputFormat = DateFormat('MMMM');
+    final List<String> parts = date.split('.');
+    if (parts.length >= 2) {
+      day = parts[0];
+    }
+
+    DateTime dateTime;
+    try {
+      dateTime = inputFormat.parse(date);
+    } catch (e) {
+      return '';
+    }
+
+    String monthName = outputFormat.format(dateTime);
+    return '${day}. ${monthName}';
+  }
+
+  String getTime(String input) {
+    return input.split(' ')[0];
+  }
+
+  String getTimePmAm(String input) {
+    var parts = input.split(' ');
+    if (parts.length > 1)
+      return parts[1];
+    else
+      return '';
   }
 }
