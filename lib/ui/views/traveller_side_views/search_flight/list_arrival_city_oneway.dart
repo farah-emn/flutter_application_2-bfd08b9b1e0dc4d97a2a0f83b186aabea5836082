@@ -3,6 +3,8 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
+import 'package:get/get.dart';
+import '../../../../controllers/search_oneway_controller.dart';
 
 class ListCityArrivalOneWay extends StatefulWidget {
   @override
@@ -11,6 +13,8 @@ class ListCityArrivalOneWay extends StatefulWidget {
 
 class _ListCityArrivalOneWayState extends State<ListCityArrivalOneWay> {
   final TextEditingController _searchController = TextEditingController();
+  final searchViewOneWayController = Get.put(SearchViewOneWayController());
+
   List<Map<String, dynamic>> arrivalCity = [];
   List<Map<String, dynamic>> filtered_list = [];
 
@@ -106,9 +110,11 @@ class _ListCityArrivalOneWayState extends State<ListCityArrivalOneWay> {
                             subtitle: Text(arrivalCity['airport']!),
                             trailing: Text(arrivalCity['city']!),
                             onTap: () async {
+                              searchViewOneWayController.Arrivalcityone.value =
+                                  arrivalCity['ArrivalCity'];
                               final ArivalCiry = arrivalCity['ArrivalCity'];
                               Navigator.pop(context, {
-                                'ArrivalCity': ArivalCiry,
+                                'ArrivalCityOnyWay': ArivalCiry,
                               });
                             });
                       },

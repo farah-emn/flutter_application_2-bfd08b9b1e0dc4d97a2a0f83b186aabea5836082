@@ -1,5 +1,10 @@
-[
-    {
+[ 
+  {
+  "DepartureCity": "Cairo, Egypt",
+  "airport": "King Khaled International Airport",
+  "city": "RUH" 
+  },
+   {
       "DepartureCity": "Riyadh, Saudi Arabia",
       "airport": "King Khaled International Airport",
       "city": "RUH"

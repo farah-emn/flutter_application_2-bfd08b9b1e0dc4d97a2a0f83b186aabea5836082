@@ -1,5 +1,9 @@
-[
-    {
+[   {
+  "ArrivalCity": "Dubai, United Arab Emirates",
+  "airport": "King Khaled International Airport",
+  "city": "RUH"
+  },
+  {
       "ArrivalCity": "Riyadh, Saudi Arabia",
       "airport": "King Khaled International Airport",
       "city": "RUH"

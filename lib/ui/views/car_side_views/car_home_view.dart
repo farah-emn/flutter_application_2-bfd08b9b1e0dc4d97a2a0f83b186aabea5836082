@@ -427,7 +427,7 @@ class _CarHomeViewState extends State<CarHomeView> {
                                 Row(
                                   children: [
                                     Text(
-                                      '\ ${CarCurrency_Controller.convert('USD', CarCurrency_Controller.selectedCurrency.value, incoming)} ${CarCurrency_Controller.selectedCurrency.value}',
+                                      '\ ${CarCurrency_Controller.convert(CarCurrency_Controller.selectedCurrency.value, incoming)} ${CarCurrency_Controller.selectedCurrency.value}',
                                       style: TextStyle(
                                           color: Colors.white, fontSize: 16),
                                     ),

@@ -229,7 +229,7 @@ class _RoomCardHotelState extends State<RoomCardHotel> {
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
                           Text(
-                            '${HotelCurrency_Controller.convert('USD', HotelCurrency_Controller.selectedCurrency.value, widget.room.Price.toDouble())} ${HotelCurrency_Controller.selectedCurrency.value}',
+                            '${HotelCurrency_Controller.convert(HotelCurrency_Controller.selectedCurrency.value, widget.room.Price.toDouble())} ${HotelCurrency_Controller.selectedCurrency.value}',
                             style: const TextStyle(
                                 color: AppColors.purple,
                                 fontSize: TextSize.header1,

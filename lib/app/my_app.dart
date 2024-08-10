@@ -15,14 +15,9 @@ import 'package:traveling/core/data/repository/shared_prefrence_repository.dart'
 import 'package:traveling/core/services/connectivity_service.dart';
 import 'package:traveling/core/translation/app_translation.dart';
 import 'package:traveling/ui/shared/utils.dart';
-import 'package:traveling/ui/views/traveller_side_views/traveller_details_view2.dart';
-import 'package:traveling/ui/views/traveller_side_views/traveller_details_view3.dart';
 import 'package:traveling/ui/views/traveller_side_views/welcome_view.dart';
-
 import '../controllers/my_app_controller.dart';
 import '../ui/views/splash_view.dart';
-import '../ui/views/traveller_side_views/booking_summary_view.dart';
-import '../ui/views/traveller_side_views/traveller_details_view1.dart';
 
 class MyApp extends StatelessWidget {
   MyApp({super.key});

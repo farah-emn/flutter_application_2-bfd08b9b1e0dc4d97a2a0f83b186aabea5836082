@@ -491,17 +491,17 @@ class _FlightSearchViewState extends State<FlightSearchView> {
                       const SizedBox(
                         height: 15,
                       ),
-                      Expanded(
-                        child: ListView.builder(
-                          scrollDirection: Axis.vertical,
-                          shrinkWrap: true,
-                          itemCount: flightsDetails.length,
-                          itemBuilder: (context, index) => FlightDetailsCard(
-                            itemIndex: index,
-                            flightModel: flightsDetails[index],
-                          ),
-                        ),
-                      ),
+                      // Expanded(
+                      //   child: ListView.builder(
+                      //     scrollDirection: Axis.vertical,
+                      //     shrinkWrap: true,
+                      //     itemCount: flightsDetails.length,
+                      //     itemBuilder: (context, index) => FlightDetailsCard(
+                      //       itemIndex: index,
+                      //       flightModel: flightsDetails[index],
+                      //     ),
+                      //   ),
+                      // ),
                     ],
                   ),
                 ),
