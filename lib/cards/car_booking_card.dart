@@ -161,7 +161,7 @@ class _CarBookingCardState extends State<CarBookingCard> {
                           Text(
                             '100\$',
                             style: TextStyle(
-                                color: AppColors.darkBlue,
+                                color: AppColors.darkGray,
                                 fontSize: TextSize.header1,
                                 fontWeight: FontWeight.w600),
                           ),
@@ -285,7 +285,7 @@ class _CarBookingCardState extends State<CarBookingCard> {
                       Text(
                         widget.carBookingsDetails.totalPrice,
                         style: const TextStyle(
-                            color: AppColors.darkBlue,
+                            color: AppColors.darkGray,
                             fontSize: TextSize.header1,
                             fontWeight: FontWeight.w500),
                       ),

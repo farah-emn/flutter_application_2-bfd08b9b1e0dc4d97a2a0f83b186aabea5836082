@@ -43,7 +43,7 @@ class _CarBookingViewState extends State<CarBookingView>
       length: 2,
       child: Scaffold(
           resizeToAvoidBottomInset: false,
-          backgroundColor: AppColors.lightOrange,
+          backgroundColor: AppColors.lightGray,
           body: SafeArea(
             child: Stack(children: [
               const Padding(
@@ -91,9 +91,9 @@ class _CarBookingViewState extends State<CarBookingView>
                         controller: _tabController,
                         indicatorSize: TabBarIndicatorSize.tab,
                         dividerColor: AppColors.LightGrayColor,
-                        indicatorColor: AppColors.orange,
-                        labelColor: AppColors.orange,
-                        unselectedLabelColor: AppColors.lightOrange,
+                        indicatorColor: AppColors.darkGray,
+                        labelColor: AppColors.darkGray,
+                        unselectedLabelColor: AppColors.lightGray,
                         tabs: const [
                           Tab(
                             text: 'Upcoming',

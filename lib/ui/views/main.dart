@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:firebase_core/firebase_core.dart';
+import 'package:provider/provider.dart';
 import 'package:traveling/controllers/currency_controller.dart';
 import 'package:traveling/core/data/repository/post_repository.dart';
 import 'package:traveling/core/data/repository/prodcut_repository.dart';
@@ -8,6 +9,7 @@ import 'package:traveling/core/data/repository/shared_prefrence_repository.dart'
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:traveling/theme/theme_provider.dart';
 import '../../app/my_app.dart';
 
 late SharedPreferences prefs;
@@ -35,5 +37,13 @@ void main() async {
 //   // Get.put(ConnectivityService());
 //   // Get.put(Connectivity());
 
-  runApp(MyApp());
+  runApp(MyApp(),
+  );
+
+  // runApp(
+  //   ChangeNotifierProvider(
+  //     create: (context) => ThemeProvider(),
+  //     child: MyApp(),
+  //   ),
+  // );
 }

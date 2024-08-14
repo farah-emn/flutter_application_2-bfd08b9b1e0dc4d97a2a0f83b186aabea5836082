@@ -6,6 +6,7 @@ import 'package:traveling/ui/shared/colors.dart';
 import 'package:traveling/ui/shared/custom_widgets/white_container.dart';
 import 'package:traveling/ui/shared/text_size.dart';
 import 'package:traveling/ui/views/traveller_side_views/hotel_booking_details_view.dart';
+import 'package:traveling/ui/views/traveller_side_views/room_view.dart';
 
 class HotelFinishedBookingCard extends StatefulWidget {
   const HotelFinishedBookingCard({
@@ -33,7 +34,7 @@ class _HotelFinishedBookingCardState extends State<HotelFinishedBookingCard> {
     return InkWell(
       onTap: () {
         Get.to(
-          HotelBookingDetailsView(),
+          RoomView(),
         );
       },
       child: Container(
@@ -148,7 +149,7 @@ class _HotelFinishedBookingCardState extends State<HotelFinishedBookingCard> {
                           Text(
                             '100\$',
                             style: TextStyle(
-                                color: AppColors.darkBlue,
+                                color: AppColors.purple,
                                 fontSize: TextSize.header1,
                                 fontWeight: FontWeight.w600),
                           ),
@@ -272,7 +273,7 @@ class _HotelFinishedBookingCardState extends State<HotelFinishedBookingCard> {
                       Text(
                         widget.hotelBookingsDetails.totalPrice,
                         style: const TextStyle(
-                            color: AppColors.darkBlue,
+                            color: AppColors.purple,
                             fontSize: TextSize.header1,
                             fontWeight: FontWeight.w500),
                       ),

@@ -50,6 +50,7 @@ class _CheckInCheckOutDetailsState extends State<DepartureDateDetails> {
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(20),
+          border: Border.all(color: AppColors.LightGrayColor, width: 1),
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,

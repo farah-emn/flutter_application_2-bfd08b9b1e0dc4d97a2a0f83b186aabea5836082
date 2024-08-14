@@ -1,8 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:traveling/ui/shared/text_size.dart';
 import 'package:traveling/ui/views/companies_type_view.dart';
 import 'package:traveling/ui/views/flight_side_views/flight_home_screen.dart';
 import 'package:traveling/ui/views/hotel_side_views/hotel_home_screen.dart';
@@ -41,53 +44,96 @@ class _FirstViewState extends State<FirstView> {
     Size size = MediaQuery.of(context).size;
 
     return Scaffold(
-      backgroundColor: AppColors.darkBlue,
+      backgroundColor: AppColors.Blue,
       body: Stack(children: [
+        Positioned(
+          child: Container(
+            height: size.height / 2,
+            width: size.width - 50,
+            decoration: const BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage('assets/image/png/splash5.png'),
+                fit: BoxFit.fitWidth,
+              ),
+            ),
+          ),
+        ),
+        Positioned(
+          top: 250,
+          child: Container(
+            height: size.height / 2,
+            width: size.width - 50,
+            decoration: const BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage('assets/image/png/splash6.png'),
+                fit: BoxFit.fitWidth,
+              ),
+            ),
+          ),
+        ),
+        Positioned(
+          top: 300,
+          left: size.width / 3,
+          child: Container(
+            height: size.height / 2,
+            width: size.width / 2 + 100,
+            decoration: const BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage('assets/image/png/splash1.png'),
+                fit: BoxFit.fitWidth,
+              ),
+            ),
+          ),
+        ),
         Column(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
             Container(
               width: size.width,
-              height: size.height / 3,
-              decoration: const BoxDecoration(
+              height: size.height / 4,
+              decoration: BoxDecoration(
                 color: AppColors.backgroundgrayColor,
-                borderRadius: BorderRadius.horizontal(
-                  left: Radius.circular(30),
-                  right: Radius.circular(30),
+                borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(70),
+                  topRight: Radius.circular(70),
                 ),
               ),
-              child: Column(children: [
-                const SizedBox(
-                  height: 100,
-                ),
-                InkWell(
-                  onTap: () {
-                    Get.to(() => const TravellerWelcomeView());
-                  },
-                  child: Center(
-                    child: CustomButton(
-                      text: 'Start',
-                      textColor: AppColors.backgroundgrayColor,
-                      widthPercent: size.width,
-                      backgroundColor: AppColors.mainColorBlue,
-                    ),
-                  ),
-                ),
-                const SizedBox(
-                  height: 30,
-                ),
-                InkWell(
-                  onTap: () {
-                    Get.to(() => const CompaniesTypeView());
-                  },
-                  child: const Center(
-                    child: Text(
-                      'Contenue as a company',
-                      style: TextStyle(color: AppColors.Blue, fontSize: 18),
-                    ),
-                  ),
-                )
-              ]),
+              child: Padding(
+                padding: const EdgeInsets.all(15.0),
+                child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      InkWell(
+                        onTap: () {
+                          Get.to(() => const SignUpView());
+                        },
+                        child: Center(
+                          child: CustomButton(
+                            text: 'Start',
+                            textColor: AppColors.backgroundgrayColor,
+                            widthPercent: size.width,
+                            backgroundColor: AppColors.Blue,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      InkWell(
+                        onTap: () {
+                          Get.to(() => const CompaniesTypeView());
+                        },
+                        child: const Center(
+                          child: Text(
+                            'Contenue as a company',
+                            style: TextStyle(
+                                color: AppColors.grayText,
+                                fontSize: TextSize.header2),
+                          ),
+                        ),
+                      )
+                    ]),
+              ),
             ),
           ],
         ),

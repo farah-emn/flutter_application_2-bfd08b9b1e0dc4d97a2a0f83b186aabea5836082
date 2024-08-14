@@ -129,7 +129,7 @@ class _CarHomeViewState extends State<CarHomeView> {
         child: Column(
           children: [
             UserAccountsDrawerHeader(
-                decoration: const BoxDecoration(color: AppColors.lightOrange),
+                decoration: const BoxDecoration(color: AppColors.lightGray),
                 currentAccountPicture: (Companyimage != null)
                     ? CircleAvatar(backgroundImage: NetworkImage(Companyimage))
                     : const CircleAvatar(
@@ -140,7 +140,7 @@ class _CarHomeViewState extends State<CarHomeView> {
             ListTile(
               leading: const Icon(
                 Icons.add,
-                color: AppColors.orange,
+                color: AppColors.darkGray,
               ),
               title: const Text(
                 'Add Room',
@@ -156,7 +156,7 @@ class _CarHomeViewState extends State<CarHomeView> {
             ListTile(
               leading: const Icon(
                 Icons.bookmark_outlined,
-                color: AppColors.orange,
+                color: AppColors.darkGray,
               ),
               title: const Text(
                 'Bookings',
@@ -172,7 +172,7 @@ class _CarHomeViewState extends State<CarHomeView> {
             ListTile(
               leading: const Icon(
                 Icons.currency_exchange_rounded,
-                color: AppColors.orange,
+                color: AppColors.darkGray,
               ),
               title: const Text(
                 'Currency',
@@ -194,7 +194,7 @@ class _CarHomeViewState extends State<CarHomeView> {
             ListTile(
               leading: const Icon(
                 Icons.logout,
-                color: AppColors.orange,
+                color: AppColors.darkGray,
               ),
               title: const Text(
                 'Logout',
@@ -214,13 +214,13 @@ class _CarHomeViewState extends State<CarHomeView> {
       body: CustomScrollView(
         slivers: [
           SliverAppBar(
-            backgroundColor: AppColors.lightOrange,
+            backgroundColor: AppColors.lightGray,
             elevation: 0,
             pinned: true,
             expandedHeight: 335,
             flexibleSpace: FlexibleSpaceBar(
               background: Container(
-                  color: AppColors.lightOrange,
+                  color: AppColors.lightGray,
                   child: const Padding(
                     padding: EdgeInsets.symmetric(horizontal: 15),
                     child: Column(
@@ -399,7 +399,7 @@ class _CarHomeViewState extends State<CarHomeView> {
                           width: size.width / 2 - 20,
                           height: 100,
                           decoration: const BoxDecoration(
-                            color: AppColors.orange,
+                            color: AppColors.darkGray,
                             borderRadius: BorderRadius.horizontal(
                               left: Radius.circular(30),
                               right: Radius.circular(30),
@@ -441,7 +441,7 @@ class _CarHomeViewState extends State<CarHomeView> {
                           width: size.width / 2 - 20,
                           height: 100,
                           decoration: const BoxDecoration(
-                            color: AppColors.orange,
+                            color: AppColors.darkGray,
                             borderRadius: BorderRadius.horizontal(
                               left: Radius.circular(30),
                               right: Radius.circular(30),

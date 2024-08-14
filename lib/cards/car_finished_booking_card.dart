@@ -92,7 +92,7 @@ class _CarFinishedBookingCardState extends State<CarFinishedBookingCard> {
                             children: [
                               const Icon(
                                 Icons.location_on,
-                                color: AppColors.gold,
+                                color: AppColors.darkGray,
                                 size: 20,
                               ),
                               Text(
@@ -149,7 +149,7 @@ class _CarFinishedBookingCardState extends State<CarFinishedBookingCard> {
                           Text(
                             '100\$',
                             style: TextStyle(
-                                color: AppColors.darkBlue,
+                                color: AppColors.darkGray,
                                 fontSize: TextSize.header1,
                                 fontWeight: FontWeight.w600),
                           ),
@@ -264,7 +264,7 @@ class _CarFinishedBookingCardState extends State<CarFinishedBookingCard> {
                       const Text(
                         "Total:",
                         style: TextStyle(
-                            color: AppColors.grayText,
+                            color: AppColors.darkGray,
                             fontSize: TextSize.header2),
                       ),
                       const SizedBox(
@@ -273,7 +273,7 @@ class _CarFinishedBookingCardState extends State<CarFinishedBookingCard> {
                       Text(
                         widget.carBookingsDetails.totalPrice,
                         style: const TextStyle(
-                            color: AppColors.darkBlue,
+                            color: AppColors.lightGray,
                             fontSize: TextSize.header1,
                             fontWeight: FontWeight.w500),
                       ),

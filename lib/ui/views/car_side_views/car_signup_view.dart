@@ -59,7 +59,7 @@ class _CarSignUpViewState extends State<CarSignUpView> {
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      backgroundColor: AppColors.lightOrange,
+      backgroundColor: AppColors.lightGray,
       body: Stack(
         children: [
           Column(
@@ -196,11 +196,11 @@ class _CarSignUpViewState extends State<CarSignUpView> {
                           focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.all(Radius.circular(18)),
                             borderSide:
-                                BorderSide(color: AppColors.orange, width: 1.5),
+                                BorderSide(color: AppColors.darkGray, width: 1.5),
                           ),
                           prefixIcon: const Icon(
                             Icons.email_rounded,
-                            color: AppColors.orange,
+                            color: AppColors.darkGray,
                           ),
                         ),
                         onChanged: (value) {
@@ -241,11 +241,11 @@ class _CarSignUpViewState extends State<CarSignUpView> {
                           focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.all(Radius.circular(18)),
                             borderSide:
-                                BorderSide(color: AppColors.orange, width: 1.5),
+                                BorderSide(color: AppColors.darkGray, width: 1.5),
                           ),
                           prefixIcon: const Icon(
                             Icons.location_city_rounded,
-                            color: AppColors.orange,
+                            color: AppColors.darkGray,
                           ),
                         ),
                         onChanged: (value) {
@@ -285,11 +285,11 @@ class _CarSignUpViewState extends State<CarSignUpView> {
                           focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.all(Radius.circular(18)),
                             borderSide:
-                                BorderSide(color: AppColors.orange, width: 1.5),
+                                BorderSide(color: AppColors.darkGray, width: 1.5),
                           ),
                           prefixIcon: const Icon(
                             Icons.lock,
-                            color: AppColors.orange,
+                            color: AppColors.darkGray,
                           ),
                         ),
                         controller: _passwordController,
@@ -331,11 +331,11 @@ class _CarSignUpViewState extends State<CarSignUpView> {
                           focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.all(Radius.circular(18)),
                             borderSide:
-                                BorderSide(color: AppColors.orange, width: 1.5),
+                                BorderSide(color: AppColors.darkGray, width: 1.5),
                           ),
                           prefixIcon: const Icon(
                             Icons.lock,
-                            color: AppColors.orange,
+                            color: AppColors.darkGray,
                           ),
                         ),
                         onChanged: (value) {
@@ -463,7 +463,7 @@ class _CarSignUpViewState extends State<CarSignUpView> {
                         //   } catch (e) {}
                         // },
                         child: CustomButton(
-                          backgroundColor: AppColors.orange,
+                          backgroundColor: AppColors.darkGray,
                           text: 'Sign up',
                           textColor: AppColors.backgroundgrayColor,
                         
@@ -507,7 +507,7 @@ class _CarSignUpViewState extends State<CarSignUpView> {
                           child: const Text(
                             'Sign in',
                             style: TextStyle(
-                              color: AppColors.orange,
+                              color: AppColors.darkGray,
                               fontWeight: FontWeight.bold,
                             ),
                           ),

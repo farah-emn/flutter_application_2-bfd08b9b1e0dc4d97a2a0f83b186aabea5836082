@@ -256,7 +256,7 @@ class _CarAddViewState extends State<CarAddView> {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      backgroundColor: AppColors.lightOrange,
+      backgroundColor: AppColors.lightGray,
       body: SafeArea(
         child: Stack(
           children: [
@@ -332,7 +332,7 @@ class _CarAddViewState extends State<CarAddView> {
                                   // onTap: _pickImages,
                                   child: Icon(
                                     Icons.add,
-                                    color: AppColors.orange,
+                                    color: AppColors.darkGray,
                                   ),
                                 )
                               ],
@@ -379,7 +379,7 @@ class _CarAddViewState extends State<CarAddView> {
                                             child: IconButton(
                                               icon: Icon(
                                                 Icons.keyboard_arrow_left_sharp,
-                                                color: AppColors.orange,
+                                                color: AppColors.darkGray,
                                                 size: 25,
                                               ),
                                               onPressed: () {
@@ -399,7 +399,7 @@ class _CarAddViewState extends State<CarAddView> {
                                               icon: Icon(
                                                 Icons
                                                     .keyboard_arrow_right_sharp,
-                                                color: AppColors.orange,
+                                                color: AppColors.darkGray,
                                                 size: 25,
                                               ),
                                               onPressed: () {
@@ -434,7 +434,7 @@ class _CarAddViewState extends State<CarAddView> {
                                                     border: Border.all(
                                                       color: selectedIndex ==
                                                               index
-                                                          ? AppColors.orange
+                                                          ? AppColors.darkGray
                                                           : Colors.transparent,
                                                       width: 2,
                                                     ),
@@ -486,7 +486,7 @@ class _CarAddViewState extends State<CarAddView> {
                                     decoration: textFielDecoratiom.copyWith(
                                         focusedBorder: const OutlineInputBorder(
                                           borderSide: BorderSide(
-                                            color: AppColors.lightOrange,
+                                            color: AppColors.lightGray,
                                           ),
                                           borderRadius: BorderRadius.all(
                                               Radius.circular(18)),
@@ -494,7 +494,7 @@ class _CarAddViewState extends State<CarAddView> {
                                         fillColor: Colors.white,
                                         prefixIcon: const Icon(
                                           Icons.description_rounded,
-                                          color: AppColors.orange,
+                                          color: AppColors.darkGray,
                                         )),
                                     onChanged: (value) {},
                                   ),
@@ -521,9 +521,9 @@ class _CarAddViewState extends State<CarAddView> {
                               borderColor: AppColors.LightGrayColor,
                               borderRadius: BorderRadius.circular(15),
                               // focusColor: AppColors.grayText,
-                              fillColor: AppColors.lightOrange,
+                              fillColor: AppColors.lightGray,
                               selectedColor: AppColors.blackColor,
-                              selectedBorderColor: AppColors.lightOrange,
+                              selectedBorderColor: AppColors.lightGray,
                               color: AppColors.grayText,
 
                               isSelected: isSelected,
@@ -579,7 +579,7 @@ class _CarAddViewState extends State<CarAddView> {
                                             focusedBorder:
                                                 const OutlineInputBorder(
                                               borderSide: BorderSide(
-                                                color: AppColors.lightOrange,
+                                                color: AppColors.lightGray,
                                               ),
                                               borderRadius: BorderRadius.all(
                                                   Radius.circular(18)),
@@ -587,7 +587,7 @@ class _CarAddViewState extends State<CarAddView> {
                                             fillColor: Colors.white,
                                             prefixIcon: const Icon(
                                               Icons.numbers_rounded,
-                                              color: AppColors.orange,
+                                              color: AppColors.darkGray,
                                             )),
                                         onChanged: (value) {},
                                       ),
@@ -614,7 +614,7 @@ class _CarAddViewState extends State<CarAddView> {
                                             focusedBorder:
                                                 const OutlineInputBorder(
                                               borderSide: BorderSide(
-                                                color: AppColors.lightOrange,
+                                                color: AppColors.lightGray,
                                               ),
                                               borderRadius: BorderRadius.all(
                                                   Radius.circular(18)),
@@ -622,7 +622,7 @@ class _CarAddViewState extends State<CarAddView> {
                                             fillColor: Colors.white,
                                             prefixIcon: const Icon(
                                               Icons.speed,
-                                              color: AppColors.orange,
+                                              color: AppColors.darkGray,
                                             )),
                                         onChanged: (value) {},
                                       ),
@@ -661,7 +661,17 @@ class _CarAddViewState extends State<CarAddView> {
                                 ),
                                 value: dropdownValue2,
                                 items: <String>[
-                                  'Marceds', 'KIA', 'Rang Rover', 'Roz Raiz', 'Honday', 'Honda', 'Toyota', 'GMC', 'Odi', 'BMW', 'Other'
+                                  'Marceds',
+                                  'KIA',
+                                  'Rang Rover',
+                                  'Roz Raiz',
+                                  'Honday',
+                                  'Honda',
+                                  'Toyota',
+                                  'GMC',
+                                  'Odi',
+                                  'BMW',
+                                  'Other'
                                 ].map<DropdownMenuItem<String>>((String value) {
                                   return DropdownMenuItem<String>(
                                     value: value,
@@ -695,7 +705,7 @@ class _CarAddViewState extends State<CarAddView> {
                                 Row(
                                   children: [
                                     Radio(
-                                      activeColor: AppColors.orange,
+                                      activeColor: AppColors.darkGray,
                                       value: 'Normal',
                                       autofocus: true,
                                       groupValue: sorteBy,
@@ -709,7 +719,7 @@ class _CarAddViewState extends State<CarAddView> {
                                 Row(
                                   children: [
                                     Radio(
-                                      activeColor: AppColors.orange,
+                                      activeColor: AppColors.darkGray,
                                       value: 'Automatic',
                                       groupValue: sorteBy,
                                       onChanged: (value) {
@@ -821,7 +831,7 @@ class _CarAddViewState extends State<CarAddView> {
                                             focusedBorder:
                                                 const OutlineInputBorder(
                                               borderSide: BorderSide(
-                                                color: AppColors.lightOrange,
+                                                color: AppColors.lightGray,
                                               ),
                                               borderRadius: BorderRadius.all(
                                                   Radius.circular(18)),
@@ -829,7 +839,7 @@ class _CarAddViewState extends State<CarAddView> {
                                             fillColor: Colors.white,
                                             prefixIcon: const Icon(
                                               Icons.attach_money_sharp,
-                                              color: AppColors.orange,
+                                              color: AppColors.darkGray,
                                             )),
                                         onChanged: (value) {},
                                       ),
@@ -856,7 +866,7 @@ class _CarAddViewState extends State<CarAddView> {
                                             focusedBorder:
                                                 const OutlineInputBorder(
                                               borderSide: BorderSide(
-                                                color: AppColors.lightOrange,
+                                                color: AppColors.lightGray,
                                               ),
                                               borderRadius: BorderRadius.all(
                                                   Radius.circular(18)),
@@ -864,7 +874,7 @@ class _CarAddViewState extends State<CarAddView> {
                                             fillColor: Colors.white,
                                             prefixIcon: const Icon(
                                               Icons.attach_money_sharp,
-                                              color: AppColors.orange,
+                                              color: AppColors.darkGray,
                                             )),
                                         onChanged: (value) {},
                                       ),
@@ -882,11 +892,11 @@ class _CarAddViewState extends State<CarAddView> {
                       InkWell(
                         // onTap: _confirm,
                         child: CustomButton(
-                            backgroundColor: AppColors.orange,
-                            text: 'Add',
-                            textColor: Colors.white,
-                            widthPercent: size.width,
-                          ),
+                          backgroundColor: AppColors.darkGray,
+                          text: 'Add',
+                          textColor: Colors.white,
+                          widthPercent: size.width,
+                        ),
                       ),
                       const SizedBox(
                         height: 40,

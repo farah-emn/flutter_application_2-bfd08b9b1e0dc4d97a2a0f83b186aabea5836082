@@ -7,6 +7,7 @@ import 'package:traveling/ui/shared/colors.dart';
 import 'package:traveling/ui/views/first_view.dart';
 import 'package:traveling/ui/views/flight_side_views/flight_home_screen.dart';
 import 'package:traveling/ui/views/hotel_side_views/hotel_home_screen.dart';
+import 'package:traveling/ui/views/hotel_splash_view.dart';
 import 'package:traveling/ui/views/traveller_side_views/home_screen.dart';
 
 class SplashView extends StatefulWidget {
@@ -37,7 +38,7 @@ class _SplashViewState extends State<SplashView> {
         loggedinUser = user;
       }
       if (_auth.currentUser == null) {
-        return FirstView();
+        return HotelSplashView();
       }
     } catch (e) {
       print(e);

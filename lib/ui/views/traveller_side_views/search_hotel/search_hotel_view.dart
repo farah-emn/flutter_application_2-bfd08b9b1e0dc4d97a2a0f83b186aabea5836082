@@ -82,12 +82,13 @@ class SearchHotelViewState extends State<SearchHotelView> {
                 height: 40,
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
+                    shadowColor: AppColors.gray,
                     foregroundColor: Colors.black, elevation: 0,
                     backgroundColor: Colors.white, // Text color
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(15),
                     ),
-                    side: BorderSide(color: Colors.transparent, width: 0),
+                    side: BorderSide(color: AppColors.LightGrayColor, width: 1),
                   ),
                   onPressed: () async {
                     final result = await Navigator.push(
@@ -177,8 +178,11 @@ class SearchHotelViewState extends State<SearchHotelView> {
                           width: size.width / 2 - 20,
                           height: 40,
                           decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(20)),
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(20),
+                            border: Border.all(
+                                color: AppColors.LightGrayColor, width: 1),
+                          ),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: const [
@@ -231,8 +235,11 @@ class SearchHotelViewState extends State<SearchHotelView> {
                           width: size.width / 2 - 20,
                           height: 40,
                           decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(20)),
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(20),
+                            border: Border.all(
+                                color: AppColors.LightGrayColor, width: 1),
+                          ),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: const [
@@ -287,6 +294,8 @@ class SearchHotelViewState extends State<SearchHotelView> {
                         decoration: BoxDecoration(
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(20),
+                          border: Border.all(
+                              color: AppColors.LightGrayColor, width: 1),
                         ),
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.center,
@@ -315,14 +324,14 @@ class SearchHotelViewState extends State<SearchHotelView> {
                                     controller.incrementAdult();
                                   },
                                   child: Icon(Icons.arrow_drop_up_sharp,
-                                      color: AppColors.purple, size: 20),
+                                      color: AppColors.purple, size: 17),
                                 ),
                                 InkWell(
                                   onTap: () {
                                     controller.decrementAdult();
                                   },
                                   child: Icon(Icons.arrow_drop_down_sharp,
-                                      color: AppColors.purple, size: 20),
+                                      color: AppColors.purple, size: 17),
                                 ),
                               ],
                             )
@@ -354,8 +363,11 @@ class SearchHotelViewState extends State<SearchHotelView> {
                         width: size.width / 2 - 20,
                         height: 40,
                         decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(20)),
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(20),
+                          border: Border.all(
+                              color: AppColors.LightGrayColor, width: 1),
+                        ),
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
@@ -383,14 +395,14 @@ class SearchHotelViewState extends State<SearchHotelView> {
                                     controller.incrementChild();
                                   },
                                   child: Icon(Icons.arrow_drop_up_sharp,
-                                      color: AppColors.purple, size: 20),
+                                      color: AppColors.purple, size: 17),
                                 ),
                                 InkWell(
                                   onTap: () {
                                     controller.decrementChild();
                                   },
                                   child: Icon(Icons.arrow_drop_down_sharp,
-                                      color: AppColors.purple, size: 20),
+                                      color: AppColors.purple, size: 17),
                                 ),
                               ],
                             )
@@ -409,11 +421,11 @@ class SearchHotelViewState extends State<SearchHotelView> {
                   Get.to(AllHotelView());
                 },
                 child: CustomButton(
-                    text: 'Search',
-                    textColor: AppColors.backgroundgrayColor,
-                    backgroundColor: AppColors.lightPurple,
-                    widthPercent: size.width,
-                   ),
+                  text: 'Search',
+                  textColor: AppColors.backgroundgrayColor,
+                  backgroundColor: AppColors.lightPurple,
+                  widthPercent: size.width,
+                ),
               ),
             ],
           ),

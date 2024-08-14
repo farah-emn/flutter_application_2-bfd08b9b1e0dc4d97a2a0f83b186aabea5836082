@@ -200,7 +200,7 @@ class _CarViewState extends State<CarView> {
 
     return Scaffold(
         resizeToAvoidBottomInset: false,
-        backgroundColor: AppColors.lightOrange,
+        backgroundColor: AppColors.lightGray,
         // appBar: AppBar(
         //   title: Row(
         //     mainAxisAlignment: MainAxisAlignment.center,

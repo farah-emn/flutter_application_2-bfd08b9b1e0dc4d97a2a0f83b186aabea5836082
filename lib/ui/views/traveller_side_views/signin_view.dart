@@ -40,21 +40,21 @@ class _SignInViewState extends State<SignInView> {
     final size = MediaQuery.of(context).size;
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      backgroundColor: AppColors.lightBlue,
+      backgroundColor: AppColors.Blue,
       body: Stack(
         children: [
           Column(
             children: [
-              const Padding(
-                padding: EdgeInsets.all(15.0),
+               Padding(
+                padding: const EdgeInsets.all(15.0),
                 child: Column(
                   children: [
-                    SizedBox(
+                    const SizedBox(
                       height: 110,
                     ),
                     Stack(
                       children: [
-                        Row(
+                        const Row(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
                             Icon(
@@ -69,7 +69,7 @@ class _SignInViewState extends State<SignInView> {
                         ),
                         Column(
                           children: [
-                            SizedBox(
+                            const SizedBox(
                               height: 40,
                             ),
                             Row(
@@ -82,18 +82,18 @@ class _SignInViewState extends State<SignInView> {
                                       fontSize: 40,
                                       fontWeight: FontWeight.w500),
                                 ),
-                                Spacer(),
-                                Icon(
+                                const Spacer(),
+                                const Icon(
                                   Icons.cloud,
                                   color: Color.fromARGB(76, 249, 249, 249),
                                   size: 50,
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   width: 70,
                                 ),
                               ],
                             ),
-                            Row(
+                            const Row(
                               children: [],
                             ),
                             Row(
@@ -118,10 +118,13 @@ class _SignInViewState extends State<SignInView> {
                 height: 100,
               ),
               Container(
-                decoration: const BoxDecoration(
-                  image: DecorationImage(
-                      image: AssetImage('assets/image/png/background1.png'),
-                      fit: BoxFit.fill),
+                height: 50,
+                decoration:  BoxDecoration(
+                  color: Colors.black
+
+                  // image: DecorationImage(
+                  //     image: AssetImage('assets/image/png/background1.png'),
+                  //     fit: BoxFit.fill),
                 ),
               ),
             ],

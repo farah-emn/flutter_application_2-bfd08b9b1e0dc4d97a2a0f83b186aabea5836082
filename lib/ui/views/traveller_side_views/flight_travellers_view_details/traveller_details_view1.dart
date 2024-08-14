@@ -4,7 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-// import 'package:flutter_ocr_sdk/mrz_result.dart';
+import 'package:flutter_ocr_sdk/mrz_result.dart';
 import 'package:get/get.dart';
 import 'package:traveling/controllers/traveller_details_view1_controller.dart';
 import 'package:traveling/controllers/search_oneway_controller.dart';
@@ -12,11 +12,13 @@ import 'package:traveling/controllers/search_roundtrip_controller.dart';
 import 'package:traveling/controllers/traveller_details_view2_controller.dart';
 import 'package:traveling/ui/shared/colors.dart';
 import 'package:traveling/ui/shared/custom_widgets/custom_textfield2.dart';
+import 'package:traveling/ui/shared/text_size.dart';
 import 'package:traveling/ui/shared/utils.dart';
-// import 'package:mrz_parser/mrz_parser.dart';
+import 'package:mrz_parser/mrz_parser.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:traveling/ui/views/traveller_side_views/flight_travellers_view_details/scan_traveller_id/global.dart';
 import 'package:traveling/ui/views/traveller_side_views/flight_travellers_view_details/traveller_baggage.dart';
+import 'package:traveling/ui/views/traveller_side_views/flight_travellers_view_details/traveller_details_view4.dart';
 import '../../../../controllers/text_only_input_formatter.dart';
 import '../../../shared/custom_widgets/white_container.dart';
 import 'traveller_details_view2.dart';
@@ -88,11 +90,11 @@ class _TravellerDetailsView1State extends State<TravellerDetailsView1> {
     _lastNameController.text = userData['last_name'];
   }
 
-  // late MRZResult receivedData;
-  // MrzResult? result;
-  // Future<int> loadData() async {
-  //   return await initMRZSDK();
-  // }
+  late MRZResult receivedData;
+  MrzResult? result;
+  Future<int> loadData() async {
+    return await initMRZSDK();
+  }
 
   Set<int> selectedIndices = Set();
   Set<int> selectedIndices1 = Set();
@@ -126,13 +128,13 @@ class _TravellerDetailsView1State extends State<TravellerDetailsView1> {
                 child: Text(
                   'Add traveller details',
                   style: TextStyle(
-                    fontWeight: FontWeight.w700,
-                    fontSize: screenWidth(20),
+                    fontWeight: FontWeight.w500,
+                    fontSize: TextSize.header1,
                   ),
                 ),
               ),
               SizedBox(
-                height: screenWidth(20),
+                height: 15,
               ),
               if (controller_oneway.Adultcounter == 1 ||
                   controller_roundtrip.Adultcounter == 1)
@@ -142,14 +144,13 @@ class _TravellerDetailsView1State extends State<TravellerDetailsView1> {
                       BoxDecoration(borderRadius: BorderRadius.circular(20)),
                   child: ListView.builder(
                     shrinkWrap: true,
-                    // physics: NeverScrollableScrollPhysics(),
+                    physics: NeverScrollableScrollPhysics(),
                     padding: EdgeInsets.zero,
                     itemCount: (controller_roundtrip.Adultcounter != 1)
                         ? controller_roundtrip.Adultcounter
                         : (controller_oneway.Adultcounter != 1)
                             ? controller_oneway.Adultcounter
                             : controller_roundtrip.Adultcounter,
-
                     itemBuilder: (context, index) {
                       bool isSelected = selectedIndices.contains(index);
                       return Container(
@@ -226,31 +227,31 @@ class _TravellerDetailsView1State extends State<TravellerDetailsView1> {
                                                           TravellerDetails_Controller
                                                               .AdultList);
 
-                                                      // result =
-                                                      //     await Navigator.push(
-                                                      //   context,
-                                                      //   MaterialPageRoute(
-                                                      //     builder: (context) =>
-                                                      //         TravellerDetailsView2(
-                                                      //       change_data:
-                                                      //           TravellerDetails_Controller
-                                                      //                   .AdultList[
-                                                      //               index],
-                                                      //     ),
-                                                      //   ),
-                                                      // );
-                                                      // if (result != null) {
-                                                      //   setState(() {
-                                                      //     if (TravellerDetails_Controller
-                                                      //                 .AdultList[
-                                                      //             index] !=
-                                                      //         null) {
-                                                      //       TravellerDetails_Controller
-                                                      //               .AdultList[
-                                                      //           index] = result;
-                                                      //     }
-                                                      //   });
-                                                      // }
+                                                      result =
+                                                          await Navigator.push(
+                                                        context,
+                                                        MaterialPageRoute(
+                                                          builder: (context) =>
+                                                              TravellerDetailsView4(
+                                                            change_data:
+                                                                TravellerDetails_Controller
+                                                                        .AdultList[
+                                                                    index],
+                                                          ),
+                                                        ),
+                                                      );
+                                                      if (result != null) {
+                                                        setState(() {
+                                                          if (TravellerDetails_Controller
+                                                                      .AdultList[
+                                                                  index] !=
+                                                              null) {
+                                                            TravellerDetails_Controller
+                                                                    .AdultList[
+                                                                index] = result;
+                                                          }
+                                                        });
+                                                      }
                                                     },
                                                     child: Icon(
                                                       Icons
@@ -390,65 +391,64 @@ class _TravellerDetailsView1State extends State<TravellerDetailsView1> {
                                             color: AppColors.IconBlueColor,
                                           ),
                                           onPressed: () async {
-                                            // if (index == 0) {
-
-                                            //   result = await Navigator.push(
-                                            //     context,
-                                            //     MaterialPageRoute(
-                                            //       builder: (context) =>
-                                            //           TravellerDetailsView2(),
-                                            //     ),
-                                            //   );
-                                            //   if (result != null) {
-                                            //     setState(() {
-                                            //       TravellerDetails_Controller
-                                            //           .AdultList.add(result);
-                                            //       if (isSelected) {
-                                            //         selectedIndices
-                                            //             .remove(index);
-                                            //       } else {
-                                            //         selectedIndices.add(index);
-                                            //       }
-                                            //     });
-                                            //   }
-                                            // } else if (index != null &&
-                                            //     TravellerDetails_Controller
-                                            //             .AdultList.length !=
-                                            //         0) {
-                                            //   result = await Navigator.push(
-                                            //     context,
-                                            //     MaterialPageRoute(
-                                            //       builder: (context) =>
-                                            //           TravellerDetailsView2(),
-                                            //     ),
-                                            //   );
-                                            //   if (result != null) {
-                                            //     setState(() {
-                                            //       TravellerDetails_Controller
-                                            //           .AdultList.add(result);
-                                            //       // .addAdult(result!);
-                                            //       if (isSelected) {
-                                            //         selectedIndices
-                                            //             .remove(index);
-                                            //       } else {
-                                            //         selectedIndices.add(index);
-                                            //       }
-                                            //     });
-                                            //   }
-                                            // } else {
-                                            //   Fluttertoast.showToast(
-                                            //       msg:
-                                            //           "Please add details for Adult ${index} first",
-                                            //       toastLength:
-                                            //           Toast.LENGTH_SHORT,
-                                            //       gravity: ToastGravity.BOTTOM,
-                                            //       timeInSecForIosWeb: 1,
-                                            //       backgroundColor:
-                                            //           const Color.fromARGB(
-                                            //               255, 158, 165, 174),
-                                            //       textColor: Colors.white,
-                                            //       fontSize: 16.0);
-                                            // }
+                                            if (index == 0) {
+                                              result = await Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      TravellerDetailsView4(),
+                                                ),
+                                              );
+                                              if (result != null) {
+                                                setState(() {
+                                                  TravellerDetails_Controller
+                                                      .AdultList.add(result);
+                                                  if (isSelected) {
+                                                    selectedIndices
+                                                        .remove(index);
+                                                  } else {
+                                                    selectedIndices.add(index);
+                                                  }
+                                                });
+                                              }
+                                            } else if (index != null &&
+                                                TravellerDetails_Controller
+                                                        .AdultList.length !=
+                                                    0) {
+                                              result = await Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      TravellerDetailsView4(),
+                                                ),
+                                              );
+                                              if (result != null) {
+                                                setState(() {
+                                                  TravellerDetails_Controller
+                                                      .AdultList.add(result);
+                                                  // .addAdult(result!);
+                                                  if (isSelected) {
+                                                    selectedIndices
+                                                        .remove(index);
+                                                  } else {
+                                                    selectedIndices.add(index);
+                                                  }
+                                                });
+                                              }
+                                            } else {
+                                              Fluttertoast.showToast(
+                                                  msg:
+                                                      "Please add details for Adult ${index} first",
+                                                  toastLength:
+                                                      Toast.LENGTH_SHORT,
+                                                  gravity: ToastGravity.BOTTOM,
+                                                  timeInSecForIosWeb: 1,
+                                                  backgroundColor:
+                                                      const Color.fromARGB(
+                                                          255, 158, 165, 174),
+                                                  textColor: Colors.white,
+                                                  fontSize: 16.0);
+                                            }
                                           },
                                         ),
                                       ],
@@ -466,14 +466,13 @@ class _TravellerDetailsView1State extends State<TravellerDetailsView1> {
                       BoxDecoration(borderRadius: BorderRadius.circular(20)),
                   child: ListView.builder(
                     shrinkWrap: true,
-                    // physics: NeverScrollableScrollPhysics(),
+                    physics: NeverScrollableScrollPhysics(),
                     padding: EdgeInsets.zero,
                     itemCount: (controller_roundtrip.Childcounter != 0)
                         ? controller_roundtrip.Childcounter
                         : (controller_oneway.Childcounter != 0)
                             ? controller_oneway.Childcounter
                             : 0,
-
                     itemBuilder: (context, index) {
                       bool isSelected = selectedIndices1.contains(index);
                       return Container(
@@ -546,35 +545,35 @@ class _TravellerDetailsView1State extends State<TravellerDetailsView1> {
                                                 ),
                                                 GestureDetector(
                                                     onTap: () async {
-                                                      // print(
-                                                      //     TravellerDetails_Controller
-                                                      //         .ChildList);
+                                                      print(
+                                                          TravellerDetails_Controller
+                                                              .ChildList);
 
-                                                      // result =
-                                                      //     await Navigator.push(
-                                                      //   context,
-                                                      //   MaterialPageRoute(
-                                                      //     builder: (context) =>
-                                                      //         TravellerDetailsView2(
-                                                      //       change_data:
-                                                      //           TravellerDetails_Controller
-                                                      //                   .ChildList[
-                                                      //               index],
-                                                      //     ),
-                                                      //   ),
-                                                      // );
-                                                      // if (result != null) {
-                                                      //   setState(() {
-                                                      //     if (TravellerDetails_Controller
-                                                      //                 .ChildList[
-                                                      //             index] !=
-                                                      //         null) {
-                                                      //       TravellerDetails_Controller
-                                                      //               .ChildList[
-                                                      //           index] = result;
-                                                      //     }
-                                                      //   });
-                                                      //    }
+                                                      result =
+                                                          await Navigator.push(
+                                                        context,
+                                                        MaterialPageRoute(
+                                                          builder: (context) =>
+                                                              TravellerDetailsView4(
+                                                            change_data:
+                                                                TravellerDetails_Controller
+                                                                        .ChildList[
+                                                                    index],
+                                                          ),
+                                                        ),
+                                                      );
+                                                      if (result != null) {
+                                                        setState(() {
+                                                          if (TravellerDetails_Controller
+                                                                      .ChildList[
+                                                                  index] !=
+                                                              null) {
+                                                            TravellerDetails_Controller
+                                                                    .ChildList[
+                                                                index] = result;
+                                                          }
+                                                        });
+                                                      }
                                                     },
                                                     child: Icon(
                                                       Icons
@@ -714,67 +713,67 @@ class _TravellerDetailsView1State extends State<TravellerDetailsView1> {
                                             color: AppColors.IconBlueColor,
                                           ),
                                           onPressed: () async {
-                                            // if (index == 0) {
-                                            //   print(TravellerDetails_Controller
-                                            //       .ChildList.length);
+                                            if (index == 0) {
+                                              print(TravellerDetails_Controller
+                                                  .ChildList.length);
 
-                                            //   result = await Navigator.push(
-                                            //     context,
-                                            //     MaterialPageRoute(
-                                            //       builder: (context) =>
-                                            //           TravellerDetailsView2(),
-                                            //     ),
-                                            //   );
-                                            //   if (result != null) {
-                                            //     setState(() {
-                                            //       TravellerDetails_Controller
-                                            //           .ChildList.add(result);
-                                            //       if (isSelected) {
-                                            //         selectedIndices1
-                                            //             .remove(index);
-                                            //       } else {
-                                            //         selectedIndices1.add(index);
-                                            //       }
-                                            //     });
-                                            //   }
-                                            // } else if (index != null &&
-                                            //     TravellerDetails_Controller
-                                            //             .ChildList.length !=
-                                            //         0) {
-                                            //   result = await Navigator.push(
-                                            //     context,
-                                            //     MaterialPageRoute(
-                                            //       builder: (context) =>
-                                            //           TravellerDetailsView2(),
-                                            //     ),
-                                            //   );
-                                            //   if (result != null) {
-                                            //     setState(() {
-                                            //       TravellerDetails_Controller
-                                            //           .ChildList.add(result);
-                                            //       // .addAdult(result!);
-                                            //       if (isSelected) {
-                                            //         selectedIndices1
-                                            //             .remove(index);
-                                            //       } else {
-                                            //         selectedIndices1.add(index);
-                                            //       }
-                                            //     });
-                                            //   }
-                                            // } else {
-                                            //   Fluttertoast.showToast(
-                                            //       msg:
-                                            //           "Please add details for Child ${index} first",
-                                            //       toastLength:
-                                            //           Toast.LENGTH_SHORT,
-                                            //       gravity: ToastGravity.BOTTOM,
-                                            //       timeInSecForIosWeb: 1,
-                                            //       backgroundColor:
-                                            //           const Color.fromARGB(
-                                            //               255, 158, 165, 174),
-                                            //       textColor: Colors.white,
-                                            //       fontSize: 16.0);
-                                            // }
+                                              result = await Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      TravellerDetailsView4(),
+                                                ),
+                                              );
+                                              if (result != null) {
+                                                setState(() {
+                                                  TravellerDetails_Controller
+                                                      .ChildList.add(result);
+                                                  if (isSelected) {
+                                                    selectedIndices1
+                                                        .remove(index);
+                                                  } else {
+                                                    selectedIndices1.add(index);
+                                                  }
+                                                });
+                                              }
+                                            } else if (index != null &&
+                                                TravellerDetails_Controller
+                                                        .ChildList.length !=
+                                                    0) {
+                                              result = await Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      TravellerDetailsView4(),
+                                                ),
+                                              );
+                                              if (result != null) {
+                                                setState(() {
+                                                  TravellerDetails_Controller
+                                                      .ChildList.add(result);
+                                                  // .addAdult(result!);
+                                                  if (isSelected) {
+                                                    selectedIndices1
+                                                        .remove(index);
+                                                  } else {
+                                                    selectedIndices1.add(index);
+                                                  }
+                                                });
+                                              }
+                                            } else {
+                                              Fluttertoast.showToast(
+                                                  msg:
+                                                      "Please add details for Child ${index} first",
+                                                  toastLength:
+                                                      Toast.LENGTH_SHORT,
+                                                  gravity: ToastGravity.BOTTOM,
+                                                  timeInSecForIosWeb: 1,
+                                                  backgroundColor:
+                                                      const Color.fromARGB(
+                                                          255, 158, 165, 174),
+                                                  textColor: Colors.white,
+                                                  fontSize: 16.0);
+                                            }
                                           },
                                         ),
                                       ],
@@ -785,22 +784,18 @@ class _TravellerDetailsView1State extends State<TravellerDetailsView1> {
                   ),
                 ),
               SizedBox(
-                height: screenWidth(20),
+                height: 25,
               ),
-              Padding(
-                padding: EdgeInsetsDirectional.only(
-                    top: screenWidth(20),
-                    end: screenWidth(10),
-                    bottom: screenWidth(20)),
-                child: Align(
-                    alignment: Alignment.topLeft,
-                    child: Text(
-                      'Contact details',
-                      style: TextStyle(
-                        fontWeight: FontWeight.w700,
-                        fontSize: screenWidth(20),
-                      ),
-                    )),
+              Row(
+                children: [
+                  Text(
+                    'Contact details',
+                    style: TextStyle(
+                      fontWeight: FontWeight.w500,
+                      fontSize: TextSize.header1,
+                    ),
+                  ),
+                ],
               ),
               SizedBox(
                 height: 10,
@@ -812,20 +807,17 @@ class _TravellerDetailsView1State extends State<TravellerDetailsView1> {
                   children: [
                     const Row(
                       children: [
-                        SizedBox(
-                          width: 10,
-                        ),
                         Text(
                           'First Name',
                           style: TextStyle(
-                              fontSize: 13,
-                              color: AppColors.grayText,
-                              fontWeight: FontWeight.w500),
+                            fontSize: TextSize.header2,
+                            color: AppColors.grayText,
+                          ),
                         ),
                       ],
                     ),
                     SizedBox(
-                      height: 45,
+                      height: 40,
                       child: TextField(
                         keyboardType: TextInputType.emailAddress,
                         controller: _firstNameController,
@@ -856,20 +848,17 @@ class _TravellerDetailsView1State extends State<TravellerDetailsView1> {
                     ),
                     const Row(
                       children: [
-                        SizedBox(
-                          width: 10,
-                        ),
                         Text(
                           'Last Name',
                           style: TextStyle(
-                              fontSize: 13,
-                              color: AppColors.grayText,
-                              fontWeight: FontWeight.w500),
+                            fontSize: TextSize.header2,
+                            color: AppColors.grayText,
+                          ),
                         ),
                       ],
                     ),
                     SizedBox(
-                      height: 45,
+                      height: 40,
                       child: TextField(
                         keyboardType: TextInputType.text,
                         controller: _lastNameController,
@@ -899,28 +888,25 @@ class _TravellerDetailsView1State extends State<TravellerDetailsView1> {
                     ),
                     const Row(
                       children: [
-                        SizedBox(
-                          width: 10,
-                        ),
                         Text(
                           'Email',
                           style: TextStyle(
-                              fontSize: 13,
-                              color: AppColors.grayText,
-                              fontWeight: FontWeight.w500),
+                            fontSize: TextSize.header2,
+                            color: AppColors.grayText,
+                          ),
                         ),
                       ],
                     ),
                     SizedBox(
-                      height: 45,
+                      height: 40,
                       child: TextField(
                         controller: _emailController,
                         keyboardType: TextInputType.emailAddress,
-                        // inputFormatters: <TextInputFormatter>[
-                        //   EmailInputFormatter(),
-                        // ],
+                        inputFormatters: <TextInputFormatter>[
+                          // EmailInputFormatter(),
+                        ],
                         onChanged: (value) {
-                          // email = value;
+                          email = value;
                           TravellerDetails_Controller.SetEmailContactDetails(
                               value ?? _emailController.text);
                         },
@@ -948,24 +934,21 @@ class _TravellerDetailsView1State extends State<TravellerDetailsView1> {
                           )),
                     ]),
                     const SizedBox(
-                      height: 20,
+                      height: 5,
                     ),
                     const Row(
                       children: [
-                        SizedBox(
-                          width: 10,
-                        ),
                         Text(
                           'Mobile Number',
                           style: TextStyle(
-                              fontSize: 13,
-                              color: AppColors.grayText,
-                              fontWeight: FontWeight.w500),
+                            fontSize: TextSize.header2,
+                            color: AppColors.grayText,
+                          ),
                         ),
                       ],
                     ),
                     SizedBox(
-                      height: 45,
+                      height: 40,
                       child: TextField(
                         controller: _mobileNumberController,
                         keyboardType: TextInputType.number,

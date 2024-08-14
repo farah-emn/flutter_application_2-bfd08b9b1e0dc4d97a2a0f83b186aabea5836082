@@ -4,19 +4,17 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:traveling/cards/hotel_card.dart';
-import 'package:traveling/cards/hotel_card2.dart';
-import 'package:traveling/cards/hotel_info_home_view_card.dart';
 import 'package:traveling/classes/hotel.dart';
-import 'package:traveling/classes/hotel_room_details_class.dart';
 import 'package:traveling/ui/shared/colors.dart';
-import 'package:traveling/ui/shared/custom_widgets/custom_image.dart';
-import 'package:traveling/ui/shared/custom_widgets/custom_servicetext.dart';
 import 'package:traveling/ui/shared/text_size.dart';
+import 'package:traveling/cards/car_card.dart';
+import 'package:traveling/cards/car_card2.dart';
+import 'package:traveling/classes/car_class.dart';
 
 import 'package:traveling/ui/shared/utils.dart';
 import 'package:traveling/ui/views/first_view.dart';
-import 'package:traveling/ui/views/traveller_side_views/menu_view.dart';
-import 'package:traveling/ui/views/traveller_side_views/welcome_view.dart';
+import 'package:traveling/ui/views/car_splash_view.dart';
+import 'package:traveling/ui/views/hotel_splash_view.dart';
 
 import '../../../classes/hotel_info_class.dart';
 
@@ -47,7 +45,7 @@ class _HomeViewState extends State<HomeView> {
         loggedinUser = user;
       }
       if (_auth.currentUser == null) {
-        Get.offAll(const FirstView());
+        Get.offAll(const HotelSplashView());
       }
     } catch (e) {
       print(e);
@@ -181,7 +179,7 @@ class _HomeViewState extends State<HomeView> {
             expandedHeight: 335,
             flexibleSpace: FlexibleSpaceBar(
               background: Container(
-                  color: AppColors.LightBlueColor,
+                  color: AppColors.Blue,
                   child: const Padding(
                     padding: EdgeInsets.symmetric(horizontal: 15),
                     child: Column(
@@ -322,10 +320,10 @@ class _HomeViewState extends State<HomeView> {
                           padding: EdgeInsets.all(10),
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(15),
-                              color: AppColors.LightBlueColor),
+                              color: AppColors.lightGray),
                           child: const Icon(
                             Icons.local_taxi,
-                            color: AppColors.BlueText,
+                            color: AppColors.darkGray,
                             size: 30,
                           ),
                         ),
@@ -334,7 +332,7 @@ class _HomeViewState extends State<HomeView> {
                         ),
                         const Text(
                           'Car',
-                          style: TextStyle(color: AppColors.BlueText),
+                          style: TextStyle(color: AppColors.darkGray),
                         ),
                       ],
                     ),
@@ -441,7 +439,7 @@ class _HomeViewState extends State<HomeView> {
                   ),
                   Container(
                     margin: const EdgeInsets.only(left: 15),
-                    height: 320,
+                    height: 324,
                     child: ListView.builder(
                       scrollDirection: Axis.horizontal,
                       shrinkWrap: true,
@@ -456,7 +454,7 @@ class _HomeViewState extends State<HomeView> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      const Text('Offers',
+                      const Text('Cars',
                           style: TextStyle(
                               fontSize: TextSize.header1,
                               fontWeight: FontWeight.w500)),
@@ -471,12 +469,19 @@ class _HomeViewState extends State<HomeView> {
                     ],
                   ),
                   Container(
-                    width: size.width - 30,
-                    height: 200,
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(20)),
-                  )
+                    margin: const EdgeInsets.only(left: 15),
+                    height: 325,
+                    child: ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      shrinkWrap: true,
+                      itemCount: cars.length,
+                      itemBuilder: (context, index) => CarCard(
+                        size: size,
+                        itemIndex: index,
+                        carDetails: cars[index],
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),

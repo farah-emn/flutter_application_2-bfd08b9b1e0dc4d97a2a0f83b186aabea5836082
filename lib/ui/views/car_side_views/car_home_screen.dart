@@ -46,7 +46,7 @@ class _CarHomeState extends State<CarHome> {
                 selectedIcon: Icon(
                   size: 25,
                   Icons.home_rounded,
-                  color: AppColors.orange,
+                  color: AppColors.darkGray,
                 ),
                 label: 'Home',
               ),
@@ -59,7 +59,7 @@ class _CarHomeState extends State<CarHome> {
                 selectedIcon: Icon(
                   size: 25,
                   Icons.search_outlined,
-                  color: AppColors.orange,
+                  color: AppColors.darkGray,
                 ),
                 label: 'Search',
               ),
@@ -72,7 +72,7 @@ class _CarHomeState extends State<CarHome> {
                 selectedIcon: Icon(
                   size: 25,
                   Icons.add,
-                  color: AppColors.orange,
+                  color: AppColors.darkGray,
                 ),
                 label: 'add',
               ),
@@ -85,7 +85,7 @@ class _CarHomeState extends State<CarHome> {
                 selectedIcon: Icon(
                   size: 25,
                   Icons.people_rounded,
-                  color: AppColors.orange,
+                  color: AppColors.darkGray,
                 ),
                 label: 'About Us',
               ),

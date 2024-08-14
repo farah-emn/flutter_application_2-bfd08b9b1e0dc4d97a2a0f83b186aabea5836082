@@ -88,7 +88,7 @@ class _FlightBookingCardState extends State<FlightBookingCard> {
                       child: const Icon(
                         Icons.airplanemode_on_rounded,
                         size: 30,
-                        color: AppColors.gold,
+                        color: AppColors.Blue,
                       ),
                     ),
                     const SizedBox(
@@ -264,7 +264,7 @@ class _FlightBookingCardState extends State<FlightBookingCard> {
               width: size.width,
               padding: EdgeInsets.only(right: 15),
               decoration: const BoxDecoration(
-                color: AppColors.darkBlue,
+                color: AppColors.Blue,
                 borderRadius: BorderRadius.only(
                   bottomLeft: Radius.circular(15),
                   bottomRight: Radius.circular(15),

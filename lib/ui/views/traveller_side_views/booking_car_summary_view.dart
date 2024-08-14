@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
@@ -66,11 +68,11 @@ class _BookingCarSummaryViewState extends State<BookingCarSummaryView> {
     }
 
     return Scaffold(
-      backgroundColor: AppColors.lightOrange,
+      backgroundColor: AppColors.lightGray,
       body: SafeArea(
         child: Stack(children: [
           Container(
-            color: AppColors.lightOrange,
+            color: AppColors.lightGray,
             child: Stack(
               children: [
                 const Padding(
@@ -80,18 +82,18 @@ class _BookingCarSummaryViewState extends State<BookingCarSummaryView> {
                     children: [
                       Icon(
                         Icons.arrow_back,
-                        color: AppColors.orange,
+                        color: Colors.white,
                       ),
                       Text(
                         'Add Room',
                         style: TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.w700,
-                            color: AppColors.orange),
+                            color: Colors.white),
                       ),
                       Icon(
                         Icons.arrow_back,
-                        color: AppColors.lightOrange,
+                        color: AppColors.lightGray,
                       ),
                     ],
                   ),
@@ -116,7 +118,7 @@ class _BookingCarSummaryViewState extends State<BookingCarSummaryView> {
                   child: Theme(
                     data: ThemeData(
                         colorScheme: const ColorScheme.light(
-                      primary: AppColors.orange,
+                      primary: AppColors.darkGray,
                       background: AppColors.backgroundgrayColor,
                     )),
                     child: Stepper(
@@ -149,7 +151,7 @@ class _BookingCarSummaryViewState extends State<BookingCarSummaryView> {
                                           children: [
                                             Icon(
                                               Icons.cancel,
-                                              color: AppColors.orange,
+                                              color: AppColors.darkGray,
                                               size: 30,
                                             ),
                                           ],
@@ -159,7 +161,7 @@ class _BookingCarSummaryViewState extends State<BookingCarSummaryView> {
                                         ),
                                         const Icon(
                                           Icons.check_circle_outlined,
-                                          color: AppColors.orange,
+                                          color: AppColors.darkGray,
                                           size: 100,
                                         ),
                                         const SizedBox(
@@ -168,7 +170,7 @@ class _BookingCarSummaryViewState extends State<BookingCarSummaryView> {
                                         const Text(
                                           'SUCCESS!',
                                           style: TextStyle(
-                                              color: AppColors.orange,
+                                              color: AppColors.darkGray,
                                               fontWeight: FontWeight.bold,
                                               fontSize: 25),
                                         ),
@@ -203,7 +205,7 @@ class _BookingCarSummaryViewState extends State<BookingCarSummaryView> {
                                             ),
                                             child: CustomButton(
                                                 backgroundColor:
-                                                    AppColors.orange,
+                                                    AppColors.darkGray,
                                                 text: 'Confirm',
                                                 textColor: AppColors
                                                     .backgroundgrayColor,
@@ -297,7 +299,7 @@ class _BookingCarSummaryViewState extends State<BookingCarSummaryView> {
                         //                   ),
                         //                   child: CustomButton(
                         //                       backgroundColor:
-                        //                           AppColors.orange,
+                        //                           AppColors.darkGray,
                         //                       text: 'Confirm',
                         //                       textColor: AppColors
                         //                           .backgroundgrayColor,
@@ -386,7 +388,7 @@ Widget step1(BuildContext context) {
                         children: [
                           Icon(
                             Icons.speed,
-                            color: AppColors.gold,
+                            color: AppColors.darkGray,
                           ),
                           SizedBox(
                             width: 5,
@@ -404,7 +406,7 @@ Widget step1(BuildContext context) {
                         children: [
                           Icon(
                             Icons.directions_car_filled,
-                            color: AppColors.gold,
+                            color: AppColors.darkGray,
                           ),
                           SizedBox(
                             width: 5,
@@ -422,7 +424,7 @@ Widget step1(BuildContext context) {
                         children: [
                           Icon(
                             Icons.flight_class,
-                            color: AppColors.gold,
+                            color: AppColors.darkGray,
                           ),
                           SizedBox(
                             width: 5,
@@ -470,7 +472,7 @@ Widget step1(BuildContext context) {
                           Text(
                             '1 day',
                             style: TextStyle(
-                              color: AppColors.orange,
+                              color: AppColors.darkGray,
                             ),
                           ),
                         ],
@@ -491,7 +493,7 @@ Widget step1(BuildContext context) {
                           Text(
                             '07 Jan, 2024',
                             style: TextStyle(
-                              color: AppColors.orange,
+                              color: AppColors.darkGray,
                             ),
                           ),
                         ],
@@ -510,7 +512,7 @@ Widget step1(BuildContext context) {
                           Text(
                             '08 Jan, 2024',
                             style: TextStyle(
-                              color: AppColors.orange,
+                              color: AppColors.darkGray,
                             ),
                           ),
                         ],
@@ -591,7 +593,7 @@ Widget step2(BuildContext context) {
         padding: EdgeInsets.all(10),
         width: size.width,
         decoration: BoxDecoration(
-            color: AppColors.lightOrange,
+            color: AppColors.lightGray,
             borderRadius: BorderRadiusDirectional.circular(25)),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -609,7 +611,7 @@ Widget step2(BuildContext context) {
               width: size.width - 20,
               height: 40,
               decoration: BoxDecoration(
-                  color: AppColors.orange,
+                  color: AppColors.darkGray,
                   borderRadius: BorderRadius.circular(20)),
               child: Padding(
                 padding: EdgeInsetsDirectional.all(10),
@@ -666,12 +668,12 @@ Widget step2(BuildContext context) {
                 decoration: textFielDecoratiom.copyWith(
                   focusedBorder: const OutlineInputBorder(
                     borderRadius: BorderRadius.all(Radius.circular(18)),
-                    borderSide: BorderSide(color: AppColors.orange, width: 1.5),
+                    borderSide: BorderSide(color: AppColors.darkGray, width: 1.5),
                   ),
                   fillColor: Colors.white,
                   prefixIcon: const Icon(
                     Icons.person_2_rounded,
-                    color: AppColors.gold,
+                    color: AppColors.darkGray,
                   ),
                 ),
               ),
@@ -700,12 +702,12 @@ Widget step2(BuildContext context) {
                 decoration: textFielDecoratiom.copyWith(
                   focusedBorder: const OutlineInputBorder(
                     borderRadius: BorderRadius.all(Radius.circular(18)),
-                    borderSide: BorderSide(color: AppColors.orange, width: 1.5),
+                    borderSide: BorderSide(color: AppColors.darkGray, width: 1.5),
                   ),
                   fillColor: Colors.white,
                   prefixIcon: const Icon(
                     Icons.person_2_rounded,
-                    color: AppColors.gold,
+                    color: AppColors.darkGray,
                   ),
                 ),
               ),
@@ -734,12 +736,12 @@ Widget step2(BuildContext context) {
                 decoration: textFielDecoratiom.copyWith(
                   focusedBorder: const OutlineInputBorder(
                     borderRadius: BorderRadius.all(Radius.circular(18)),
-                    borderSide: BorderSide(color: AppColors.orange, width: 1.5),
+                    borderSide: BorderSide(color: AppColors.darkGray, width: 1.5),
                   ),
                   fillColor: Colors.white,
                   prefixIcon: const Icon(
                     Icons.email_rounded,
-                    color: AppColors.gold,
+                    color: AppColors.darkGray,
                   ),
                 ),
               ),
@@ -768,12 +770,12 @@ Widget step2(BuildContext context) {
                 decoration: textFielDecoratiom.copyWith(
                   focusedBorder: const OutlineInputBorder(
                     borderRadius: BorderRadius.all(Radius.circular(18)),
-                    borderSide: BorderSide(color: AppColors.orange, width: 1.5),
+                    borderSide: BorderSide(color: AppColors.darkGray, width: 1.5),
                   ),
                   fillColor: Colors.white,
                   prefixIcon: const Icon(
                     Icons.phone,
-                    color: AppColors.gold,
+                    color: AppColors.darkGray,
                   ),
                 ),
               ),
@@ -811,7 +813,7 @@ Widget step2(BuildContext context) {
                     style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.w500,
-                        color: AppColors.orange),
+                        color: AppColors.darkGray),
                   ),
                   Text(
                     'SAR',
@@ -859,12 +861,12 @@ Widget step3(BuildContext contex) {
                 decoration: textFielDecoratiom.copyWith(
                   focusedBorder: const OutlineInputBorder(
                     borderRadius: BorderRadius.all(Radius.circular(18)),
-                    borderSide: BorderSide(color: AppColors.orange, width: 1.5),
+                    borderSide: BorderSide(color: AppColors.darkGray, width: 1.5),
                   ),
                   fillColor: Colors.white,
                   prefixIcon: const Icon(
                     Icons.credit_card_rounded,
-                    color: AppColors.gold,
+                    color: AppColors.darkGray,
                   ),
                 ),
               ),
@@ -893,12 +895,12 @@ Widget step3(BuildContext contex) {
                 decoration: textFielDecoratiom.copyWith(
                   focusedBorder: const OutlineInputBorder(
                     borderRadius: BorderRadius.all(Radius.circular(18)),
-                    borderSide: BorderSide(color: AppColors.orange, width: 1.5),
+                    borderSide: BorderSide(color: AppColors.darkGray, width: 1.5),
                   ),
                   fillColor: Colors.white,
                   prefixIcon: const Icon(
                     Icons.date_range,
-                    color: AppColors.gold,
+                    color: AppColors.darkGray,
                   ),
                 ),
               ),
@@ -927,12 +929,12 @@ Widget step3(BuildContext contex) {
                 decoration: textFielDecoratiom.copyWith(
                   focusedBorder: const OutlineInputBorder(
                     borderRadius: BorderRadius.all(Radius.circular(18)),
-                    borderSide: BorderSide(color: AppColors.orange, width: 1.5),
+                    borderSide: BorderSide(color: AppColors.darkGray, width: 1.5),
                   ),
                   fillColor: Colors.white,
                   prefixIcon: const Icon(
                     Icons.person_2_rounded,
-                    color: AppColors.gold,
+                    color: AppColors.darkGray,
                   ),
                 ),
               ),
@@ -969,7 +971,7 @@ Widget step3(BuildContext contex) {
                     style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.w500,
-                        color: AppColors.orange),
+                        color: AppColors.darkGray),
                   ),
                   Text(
                     'SAR',

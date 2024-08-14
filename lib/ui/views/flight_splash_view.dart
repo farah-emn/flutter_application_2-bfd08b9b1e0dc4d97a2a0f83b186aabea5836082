@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:traveling/ui/shared/text_size.dart';
+import 'package:traveling/ui/views/car_splash_view.dart';
 import 'package:traveling/ui/views/companies_type_view.dart';
 import 'package:traveling/ui/views/first_view.dart';
-import 'package:traveling/ui/views/flight_splash_view.dart';
 import 'package:traveling/ui/views/traveller_side_views/signin_view.dart';
 import 'package:traveling/ui/views/traveller_side_views/signup_view.dart';
 import 'package:traveling/ui/views/traveller_side_views/traveller_welcome_view.dart';
@@ -12,15 +12,15 @@ import 'package:traveling/ui/views/traveller_side_views/traveller_welcome_view.d
 import '../shared/colors.dart';
 import '../shared/custom_widgets/custom_button.dart';
 
-class HotelSplashView extends StatelessWidget {
-  const HotelSplashView({super.key});
+class flightSplashView extends StatelessWidget {
+  const flightSplashView({super.key});
 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
 
     return Scaffold(
-      backgroundColor: AppColors.lightPurple,
+      backgroundColor: AppColors.Blue,
       body: Stack(
         children: [
           Column(
@@ -31,7 +31,7 @@ class HotelSplashView extends StatelessWidget {
                 width: size.width,
                 decoration: const BoxDecoration(
                   image: DecorationImage(
-                    image: AssetImage('assets/image/png/splash6.png'),
+                    image: AssetImage('assets/image/png/splash5.png'),
                     fit: BoxFit.fitWidth,
                   ),
                 ),
@@ -41,10 +41,23 @@ class HotelSplashView extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Container(
+                    height: 5,
+                    width: 30,
+                    decoration: BoxDecoration(
+                      color: AppColors.backgroundgrayColor,
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(20),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    width: 5,
+                  ),
+                  Container(
                     height: 8,
                     width: 35,
                     decoration: const BoxDecoration(
-                      color: AppColors.purple,
+                      color: AppColors.darkBlue,
                       borderRadius: BorderRadius.all(
                         Radius.circular(20),
                       ),
@@ -58,20 +71,7 @@ class HotelSplashView extends StatelessWidget {
                     width: 30,
                     decoration:  BoxDecoration(
                       color: AppColors.backgroundgrayColor,
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(20),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(
-                    width: 5,
-                  ),
-                  Container(
-                    height: 5,
-                    width: 30,
-                    decoration:  BoxDecoration(
-                      color: AppColors.backgroundgrayColor,
-                      borderRadius: BorderRadius.all(
+                      borderRadius: const BorderRadius.all(
                         Radius.circular(20),
                       ),
                     ),
@@ -83,7 +83,7 @@ class HotelSplashView extends StatelessWidget {
               ),
               Container(
                 height: size.height / 3,
-                decoration:  BoxDecoration(
+                decoration: const BoxDecoration(
                   color: AppColors.backgroundgrayColor,
                   borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(30),
@@ -117,7 +117,7 @@ class HotelSplashView extends StatelessWidget {
                         ),
                         InkWell(
                           onTap: () {
-                            Get.to(() => flightSplashView());
+                            Get.to(() => carSplashView());
                           },
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.end,
@@ -126,19 +126,19 @@ class HotelSplashView extends StatelessWidget {
                                 width: size.width / 2,
                                 height: 40,
                                 decoration: const BoxDecoration(
-                                  color: AppColors.purple,
+                                  color: AppColors.darkBlue,
                                   borderRadius: BorderRadius.all(
                                     Radius.circular(15),
                                   ),
                                 ),
-                                child: Row(
+                                child: const Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     Text(
                                       'See next ',
                                       style: TextStyle(
                                           fontSize: TextSize.header1,
-                                          color: AppColors.backgroundgrayColor,
+                                          color: Colors.white,
                                           fontWeight: FontWeight.w500),
                                     ),
                                     SizedBox(
@@ -146,7 +146,7 @@ class HotelSplashView extends StatelessWidget {
                                     ),
                                     Icon(
                                       Icons.arrow_forward_rounded,
-                                      color:AppColors.backgroundgrayColor,
+                                      color: Colors.white,
                                     ),
                                   ],
                                 ),

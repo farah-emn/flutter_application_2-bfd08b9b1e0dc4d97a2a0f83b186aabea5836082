@@ -27,7 +27,6 @@ class HotelSummartView extends StatefulWidget {
 
 class _HotelSummartViewState extends State<HotelSummartView> {
   int activeStepIndex = 0;
-  int _nextStep = 1;
 
   @override
   Widget build(BuildContext context) {
@@ -144,14 +143,19 @@ class _HotelSummartViewState extends State<HotelSummartView> {
                                       height: 450,
                                       child: Column(
                                         children: [
-                                          const Row(
+                                           Row(
                                             mainAxisAlignment:
                                                 MainAxisAlignment.end,
                                             children: [
-                                              Icon(
-                                                Icons.cancel,
-                                                color: AppColors.purple,
-                                                size: 30,
+                                              InkWell(
+                                                onTap: () {
+                                                  Get.back();
+                                                },
+                                                child: const Icon(
+                                                  Icons.cancel,
+                                                  color: AppColors.purple,
+                                                  size: 30,
+                                                ),
                                               ),
                                             ],
                                           ),
@@ -181,7 +185,7 @@ class _HotelSummartViewState extends State<HotelSummartView> {
                                                 MainAxisAlignment.center,
                                             children: [
                                               Text(
-                                                'Your flight has been\n\ booked successfully.',
+                                                'Your Room has been\n\ booked successfully.',
                                                 style: TextStyle(
                                                     fontSize: TextSize.header2,
                                                     color: Color.fromARGB(
@@ -203,13 +207,13 @@ class _HotelSummartViewState extends State<HotelSummartView> {
                                                 bottom: 15,
                                               ),
                                               child: CustomButton(
-                                                  backgroundColor:
-                                                      AppColors.purple,
-                                                  text: 'Confirm',
-                                                  textColor: AppColors
-                                                      .backgroundgrayColor,
-                                                  widthPercent: size.width,
-                                                 ),
+                                                backgroundColor:
+                                                    AppColors.purple,
+                                                text: 'Confirm',
+                                                textColor: AppColors
+                                                    .backgroundgrayColor,
+                                                widthPercent: size.width,
+                                              ),
                                             ),
                                           ),
                                         ],

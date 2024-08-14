@@ -54,7 +54,7 @@ class _CarAboutUsViewState extends State<CarAboutUsView> {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      backgroundColor: AppColors.lightOrange,
+      backgroundColor: AppColors.lightGray,
       body: SafeArea(
         child: Stack(
           children: [
@@ -66,7 +66,7 @@ class _CarAboutUsViewState extends State<CarAboutUsView> {
                 children: [
                   Icon(
                     Icons.save_as,
-                    color: AppColors.lightOrange,
+                    color: AppColors.lightGray,
                   ),
                   Text(
                     'About Us',
@@ -162,7 +162,7 @@ class _CarAboutUsViewState extends State<CarAboutUsView> {
                           height: 40,
                           width: size.width,
                           child: TextField(
-                            cursorColor: AppColors.orange,
+                            cursorColor: AppColors.darkGray,
                             readOnly: true,
                             textAlignVertical: TextAlignVertical.center,
                             controller: _CarNameController,
@@ -172,12 +172,12 @@ class _CarAboutUsViewState extends State<CarAboutUsView> {
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(18)),
                                   borderSide: BorderSide(
-                                      color: AppColors.orange, width: 1.5),
+                                      color: AppColors.darkGray, width: 1.5),
                                 ),
                                 fillColor: Colors.white,
                                 prefixIcon: const Icon(
                                   Icons.business_outlined,
-                                  color: AppColors.orange,
+                                  color: AppColors.darkGray,
                                 )),
                             onChanged: (value) {},
                           ),
@@ -208,12 +208,12 @@ class _CarAboutUsViewState extends State<CarAboutUsView> {
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(18)),
                                   borderSide: BorderSide(
-                                      color: AppColors.orange, width: 1.5),
+                                      color: AppColors.darkGray, width: 1.5),
                                 ),
                                 fillColor: Colors.white,
                                 prefixIcon: const Icon(
                                   Icons.email,
-                                  color: AppColors.orange,
+                                  color: AppColors.darkGray,
                                 )),
                             onChanged: (value) {},
                           ),
@@ -242,12 +242,12 @@ class _CarAboutUsViewState extends State<CarAboutUsView> {
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(18)),
                                 borderSide: BorderSide(
-                                    color: AppColors.orange, width: 1.5),
+                                    color: AppColors.darkGray, width: 1.5),
                               ),
                               fillColor: Colors.white,
                               prefixIcon: const Icon(
                                 Icons.call,
-                                color: AppColors.orange,
+                                color: AppColors.darkGray,
                               ),
                             ),
                             onChanged: (value) {},
@@ -281,7 +281,7 @@ class _CarAboutUsViewState extends State<CarAboutUsView> {
                               fillColor: Colors.white,
                               prefixIcon: const Icon(
                                 Icons.location_on_rounded,
-                                color: AppColors.orange,
+                                color: AppColors.darkGray,
                               ),
                             ),
                             onChanged: (value) {},

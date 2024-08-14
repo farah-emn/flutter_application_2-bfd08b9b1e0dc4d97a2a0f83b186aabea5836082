@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:traveling/classes/flight_info_class.dart';
-import 'package:traveling/ui/views/traveller_side_views/flight_details._view.dart';
+import 'package:traveling/ui/views/traveller_side_views/booking_flight_summary._view.dart';
 import '../classes/flight_details_class.dart';
 import '../ui/shared/colors.dart';
 import '../ui/views/flight_side_views/flight_flight_details_view.dart';

@@ -101,7 +101,7 @@ class _CarCard2State extends State<CarCard2> {
                             children: [
                               const Icon(
                                 Icons.directions_car_rounded,
-                                color: AppColors.orange,
+                                color: AppColors.darkGray,
                                 size: 20,
                               ),
                               Text(
@@ -119,7 +119,7 @@ class _CarCard2State extends State<CarCard2> {
                             children: [
                               const Icon(
                                 Icons.flight_class_rounded,
-                                color: AppColors.orange,
+                                color: AppColors.darkGray,
                                 size: 20,
                               ),
                               Text(
@@ -137,7 +137,7 @@ class _CarCard2State extends State<CarCard2> {
                             children: [
                               const Icon(
                                 Icons.speed,
-                                color: AppColors.orange,
+                                color: AppColors.darkGray,
                                 size: 20,
                               ),
                               Text(
@@ -199,7 +199,7 @@ class _CarCard2State extends State<CarCard2> {
                       Text(
                         '500\$',
                         style: TextStyle(
-                            color: AppColors.orange,
+                            color: AppColors.darkGray,
                             fontSize: TextSize.header1,
                             fontWeight: FontWeight.w600),
                       ),

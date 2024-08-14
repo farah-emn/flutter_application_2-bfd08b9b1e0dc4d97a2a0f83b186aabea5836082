@@ -20,9 +20,9 @@ class SearchViewOneWayController extends GetxController {
   int _Childcounter = 0;
   int get Adultcounter => _Adultcounter;
   int get Childcounter => _Childcounter;
-  // var _DepartureCity = ''.obs;
-  // var _ArrivalCity = ''.obs;
-  // get DepartureCity => _DepartureCity;
+  var _DepartureCity = ''.obs;
+  var _ArrivalCity = ''.obs;
+  get DepartureCity => _DepartureCity;
   double totalpriceflight = 0;
   RxMap<dynamic, dynamic> filteredFlightsData = <dynamic, dynamic>{}.obs;
   ValueNotifier<List<FlightDetailsClass>> flightsList =
@@ -35,9 +35,9 @@ class SearchViewOneWayController extends GetxController {
     super.onInit();
   }
 
-  // void setArrivalCity(String city) {
-  //   _ArrivalCity.value = city;
-  // }
+  void setArrivalCity(String city) {
+    _ArrivalCity.value = city;
+  }
 
   void incrementAdult() {
     _Adultcounter++;
@@ -128,14 +128,14 @@ class SearchViewOneWayController extends GetxController {
         if (filteredFlightsData.isNotEmpty) {
           Get.to(() => FlightsView());
         } else {
-          // Fluttertoast.showToast(
-          //     msg: "No flights found",
-          //     toastLength: Toast.LENGTH_SHORT,
-          //     gravity: ToastGravity.BOTTOM,
-          //     timeInSecForIosWeb: 1,
-          //     backgroundColor: Colors.grey,
-          //     textColor: Colors.white,
-          //     fontSize: 16.0);
+          Fluttertoast.showToast(
+              msg: "No flights found",
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.BOTTOM,
+              timeInSecForIosWeb: 1,
+              backgroundColor: Colors.grey,
+              textColor: Colors.white,
+              fontSize: 16.0);
         }
       }
     });
@@ -229,8 +229,8 @@ class SearchViewOneWayController extends GetxController {
 
           keysToModify.add(key);
           filteredFlightsData[key] = flightData;
-          // filteredFlightsData[key]['FlightType'] =
-          //     stopCount > 0 ? "$stopCount Stop" : "Direct";
+          filteredFlightsData[key]['FlightType'] =
+              stopCount > 0 ? "$stopCount Stop" : "Direct";
 
           planeData.forEach((planeDataKey, planeDataValue) {
             if (planeDataKey == flightsData[key]['PlaneId']) {
@@ -244,16 +244,16 @@ class SearchViewOneWayController extends GetxController {
             }
           });
         }
-        // if (filteredFlightsData.value.length == 0) {
-        //   Fluttertoast.showToast(
-        //       msg: "No flights found",
-        //       toastLength: Toast.LENGTH_SHORT,
-        //       gravity: ToastGravity.BOTTOM,
-        //       timeInSecForIosWeb: 1,
-        //       backgroundColor: Colors.grey,
-        //       textColor: Colors.white,
-        //       fontSize: 16.0);
-        // }
+        if (filteredFlightsData.value.length == 0) {
+          Fluttertoast.showToast(
+              msg: "No flights found",
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.BOTTOM,
+              timeInSecForIosWeb: 1,
+              backgroundColor: Colors.grey,
+              textColor: Colors.white,
+              fontSize: 16.0);
+        }
       }
     }
   }
@@ -339,14 +339,14 @@ class SearchViewOneWayController extends GetxController {
       if (filteredFlightsData.isNotEmpty) {
         Get.to(() => FlightsView());
       } else {
-        // Fluttertoast.showToast(
-        //     msg: "No flights found",
-        //     toastLength: Toast.LENGTH_SHORT,
-        //     gravity: ToastGravity.BOTTOM,
-        //     timeInSecForIosWeb: 1,
-        //     backgroundColor: Colors.grey,
-        //     textColor: Colors.white,
-        //     fontSize: 16.0);
+        Fluttertoast.showToast(
+            msg: "No flights found",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.BOTTOM,
+            timeInSecForIosWeb: 1,
+            backgroundColor: Colors.grey,
+            textColor: Colors.white,
+            fontSize: 16.0);
       }
     }
   }
@@ -392,8 +392,8 @@ class SearchViewOneWayController extends GetxController {
     selectedDate.value = '${DateTime.now().month}/${DateTime.now().day}';
     _Adultcounter = 1;
     _Childcounter = 0;
-    // _DepartureCity.value = '';
-    // _ArrivalCity.value = '';
+    _DepartureCity.value = '';
+    _ArrivalCity.value = '';
     totalpriceflight = 0;
     update();
   }

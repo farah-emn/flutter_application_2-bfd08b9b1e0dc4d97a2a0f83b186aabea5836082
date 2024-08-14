@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:traveling/classes/flight_details_class.dart';
-import 'package:traveling/ui/views/traveller_side_views/flights_view/flights_view_rountrip.dart';
+// import 'package:traveling/ui/views/traveller_side_views/flights_view/flights_view_rountrip.dart';
 
 enum FlightTypeRoundTrip { Economy, FirstClass }
 
@@ -497,7 +497,7 @@ class SearchViewRoundTripController extends GetxController {
       stopCountReturnFlight = 0;
 
       if (returnFlightsList.value.isNotEmpty) {
-        Get.to(() => FlightsViewRound());
+        // Get.to(() => FlightsViewRound());
       }
       isloading.value = false;
     }

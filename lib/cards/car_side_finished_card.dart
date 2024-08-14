@@ -214,7 +214,7 @@ class _CarSideFinishedCardState extends State<CarSideFinishedCard> {
                     Text(
                       widget.carBookingsDetails.totalPrice,
                       style: const TextStyle(
-                          color: AppColors.orange,
+                          color: AppColors.lightGray,
                           fontSize: TextSize.header1,
                           fontWeight: FontWeight.w500),
                     ),

@@ -87,8 +87,10 @@ class _CheckInCheckOutDetailsState
                 width: size.width / 2 - 20,
                 height: 40,
                 decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(20)),
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(20),
+                  border: Border.all(color: AppColors.LightGrayColor, width: 1),
+                ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
@@ -149,6 +151,7 @@ class _CheckInCheckOutDetailsState
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(20),
+                  border: Border.all(color: AppColors.LightGrayColor, width: 1),
                 ),
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,

@@ -4,7 +4,6 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:traveling/ui/shared/text_size.dart';
 import 'package:traveling/ui/views/companies_type_view.dart';
 import 'package:traveling/ui/views/first_view.dart';
-import 'package:traveling/ui/views/flight_splash_view.dart';
 import 'package:traveling/ui/views/traveller_side_views/signin_view.dart';
 import 'package:traveling/ui/views/traveller_side_views/signup_view.dart';
 import 'package:traveling/ui/views/traveller_side_views/traveller_welcome_view.dart';
@@ -12,15 +11,15 @@ import 'package:traveling/ui/views/traveller_side_views/traveller_welcome_view.d
 import '../shared/colors.dart';
 import '../shared/custom_widgets/custom_button.dart';
 
-class HotelSplashView extends StatelessWidget {
-  const HotelSplashView({super.key});
+class carSplashView extends StatelessWidget {
+  const carSplashView({super.key});
 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
 
     return Scaffold(
-      backgroundColor: AppColors.lightPurple,
+      backgroundColor: AppColors.lightGray,
       body: Stack(
         children: [
           Column(
@@ -31,7 +30,7 @@ class HotelSplashView extends StatelessWidget {
                 width: size.width,
                 decoration: const BoxDecoration(
                   image: DecorationImage(
-                    image: AssetImage('assets/image/png/splash6.png'),
+                    image: AssetImage('assets/image/png/splash1.png'),
                     fit: BoxFit.fitWidth,
                   ),
                 ),
@@ -41,36 +40,36 @@ class HotelSplashView extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Container(
+                    height: 5,
+                    width: 30,
+                    decoration: BoxDecoration(
+                      color: AppColors.backgroundgrayColor,
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(20),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    width: 5,
+                  ),
+                  Container(
+                    height: 5,
+                    width: 30,
+                    decoration: BoxDecoration(
+                      color: AppColors.backgroundgrayColor,
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(20),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    width: 5,
+                  ),
+                  Container(
                     height: 8,
                     width: 35,
                     decoration: const BoxDecoration(
-                      color: AppColors.purple,
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(20),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(
-                    width: 5,
-                  ),
-                  Container(
-                    height: 5,
-                    width: 30,
-                    decoration:  BoxDecoration(
-                      color: AppColors.backgroundgrayColor,
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(20),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(
-                    width: 5,
-                  ),
-                  Container(
-                    height: 5,
-                    width: 30,
-                    decoration:  BoxDecoration(
-                      color: AppColors.backgroundgrayColor,
+                      color: AppColors.darkGray,
                       borderRadius: BorderRadius.all(
                         Radius.circular(20),
                       ),
@@ -83,7 +82,7 @@ class HotelSplashView extends StatelessWidget {
               ),
               Container(
                 height: size.height / 3,
-                decoration:  BoxDecoration(
+                decoration: BoxDecoration(
                   color: AppColors.backgroundgrayColor,
                   borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(30),
@@ -99,7 +98,7 @@ class HotelSplashView extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         const Text(
-                          'Booking Best Hotel',
+                          'Find your Favorait car',
                           style: TextStyle(
                               fontSize: 20, fontWeight: FontWeight.w500),
                         ),
@@ -107,7 +106,7 @@ class HotelSplashView extends StatelessWidget {
                           height: 15,
                         ),
                         const Text(
-                          'Browse and book at more than 200 hotel around the world and save a lot though offers ',
+                          'Browse and rental modern cars and injoy yor tour with us.',
                           style: TextStyle(
                             fontSize: TextSize.header1,
                           ),
@@ -117,7 +116,7 @@ class HotelSplashView extends StatelessWidget {
                         ),
                         InkWell(
                           onTap: () {
-                            Get.to(() => flightSplashView());
+                            Get.to(() => FirstView());
                           },
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.end,
@@ -126,7 +125,7 @@ class HotelSplashView extends StatelessWidget {
                                 width: size.width / 2,
                                 height: 40,
                                 decoration: const BoxDecoration(
-                                  color: AppColors.purple,
+                                  color: AppColors.darkGray,
                                   borderRadius: BorderRadius.all(
                                     Radius.circular(15),
                                   ),
@@ -138,7 +137,9 @@ class HotelSplashView extends StatelessWidget {
                                       'See next ',
                                       style: TextStyle(
                                           fontSize: TextSize.header1,
-                                          color: AppColors.backgroundgrayColor,
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .background,
                                           fontWeight: FontWeight.w500),
                                     ),
                                     SizedBox(
@@ -146,7 +147,9 @@ class HotelSplashView extends StatelessWidget {
                                     ),
                                     Icon(
                                       Icons.arrow_forward_rounded,
-                                      color:AppColors.backgroundgrayColor,
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .background,
                                     ),
                                   ],
                                 ),

@@ -62,6 +62,16 @@ dependencies:
   permission_handler: ^9.2.0
   google_maps_flutter: ^2.6.1
   geocoding: ^3.0.0
+  flutter_ocr_sdk: ^1.1.4
+  mrz_parser: ^2.0.1
+  flutter_exif_rotation: ^0.5.1
+  url_launcher: ^6.3.0
+  camera_platform_interface:
+  camera: ^0.11.0+2
+  camera_windows:
+    git:
+      url:
+        https://github.com/yushulx/flutter_camera_windows.git
 
 
 

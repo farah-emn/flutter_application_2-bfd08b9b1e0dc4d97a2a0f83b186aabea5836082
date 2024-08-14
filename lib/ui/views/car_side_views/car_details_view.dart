@@ -32,12 +32,12 @@ class _CarDetailsViewState extends State<CarDetailsView> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-      backgroundColor: AppColors.lightOrange,
+      backgroundColor: AppColors.lightGray,
       body: SafeArea(
         child: CustomScrollView(
           slivers: [
             SliverAppBar(
-              backgroundColor: AppColors.lightOrange,
+              backgroundColor: AppColors.lightGray,
               elevation: 0,
               pinned: true,
               expandedHeight: 350,
@@ -345,7 +345,7 @@ class _CarDetailsViewState extends State<CarDetailsView> {
                               children: [
                                 Icon(
                                   Icons.speed,
-                                  color: AppColors.orange,
+                                  color: AppColors.darkGray,
                                   size: 35,
                                 ),
                                 Text(
@@ -360,7 +360,7 @@ class _CarDetailsViewState extends State<CarDetailsView> {
                               children: [
                                 Icon(
                                   Icons.color_lens_rounded,
-                                  color: AppColors.orange,
+                                  color: AppColors.darkGray,
                                   size: 35,
                                 ),
                                 Text(
@@ -375,7 +375,7 @@ class _CarDetailsViewState extends State<CarDetailsView> {
                               children: [
                                 Icon(
                                   Icons.directions_car_rounded,
-                                  color: AppColors.orange,
+                                  color: AppColors.darkGray,
                                   size: 35,
                                 ),
                                 Text(
@@ -390,7 +390,7 @@ class _CarDetailsViewState extends State<CarDetailsView> {
                               children: [
                                 Icon(
                                   Icons.flight_class,
-                                  color: AppColors.orange,
+                                  color: AppColors.darkGray,
                                   size: 35,
                                 ),
                                 Text(
@@ -478,9 +478,9 @@ class _CarDetailsViewState extends State<CarDetailsView> {
                                         child: LinearProgressIndicator(
                                           minHeight: 15,
                                           value: 0.8,
-                                          color: AppColors.orange,
+                                          color: AppColors.darkGray,
                                           backgroundColor:
-                                              AppColors.lightOrange,
+                                              AppColors.lightGray,
                                           borderRadius: BorderRadius.all(
                                               Radius.circular(10)),
                                         )),
@@ -497,9 +497,9 @@ class _CarDetailsViewState extends State<CarDetailsView> {
                                         child: LinearProgressIndicator(
                                           minHeight: 15,
                                           value: 0.7,
-                                          color: AppColors.orange,
+                                          color: AppColors.darkGray,
                                           backgroundColor:
-                                              AppColors.lightOrange,
+                                              AppColors.lightGray,
                                           borderRadius: BorderRadius.all(
                                               Radius.circular(10)),
                                         )),
@@ -516,9 +516,9 @@ class _CarDetailsViewState extends State<CarDetailsView> {
                                         child: LinearProgressIndicator(
                                           minHeight: 15,
                                           value: 0.8,
-                                          color: AppColors.orange,
+                                          color: AppColors.darkGray,
                                           backgroundColor:
-                                              AppColors.lightOrange,
+                                              AppColors.lightGray,
                                           borderRadius: BorderRadius.all(
                                               Radius.circular(10)),
                                         )),
@@ -535,9 +535,9 @@ class _CarDetailsViewState extends State<CarDetailsView> {
                                         child: LinearProgressIndicator(
                                           minHeight: 15,
                                           value: 0.5,
-                                          color: AppColors.orange,
+                                          color: AppColors.darkGray,
                                           backgroundColor:
-                                              AppColors.lightOrange,
+                                              AppColors.lightGray,
                                           borderRadius: BorderRadius.all(
                                               Radius.circular(10)),
                                         )),
@@ -554,8 +554,8 @@ class _CarDetailsViewState extends State<CarDetailsView> {
                                       child: LinearProgressIndicator(
                                         minHeight: 15,
                                         value: 0.2,
-                                        color: AppColors.orange,
-                                        backgroundColor: AppColors.lightOrange,
+                                        color: AppColors.darkGray,
+                                        backgroundColor: AppColors.lightGray,
                                         borderRadius: BorderRadius.all(
                                             Radius.circular(10)),
                                       ),

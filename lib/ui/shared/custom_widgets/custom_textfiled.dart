@@ -48,22 +48,18 @@ class _CustomTextFieldState extends State<CustomTextField> {
       validator: widget.validator, // Use the validator parameter
       decoration: InputDecoration(
         constraints: BoxConstraints(
-          maxHeight: 50,
+          maxHeight: 40,
           maxWidth: widget.maxWidth ?? screenWidth(1.1),
+          
         ),
-
-        fillColor: AppColors.TextFieldcolor,
+        fillColor: Colors.white,
         filled: true,
-        // border: OutlineInputBorder(
-        //   borderSide: BorderSide(),
-        //   borderRadius: BorderRadius.circular(20),
-        // ),
-        // enabledBorder: OutlineInputBorder(
-        //   borderRadius: BorderRadius.circular(20),
-        //   borderSide: BorderSide.none,
-        // ),
-        border: UnderlineInputBorder(
-          borderSide: BorderSide.none,
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(15),
+          borderSide: const BorderSide(
+            color: AppColors.babyblueColor,
+            width: 1,
+          ),
         ),
         suffixIcon: widget.suffIcon != null
             ? Icon(

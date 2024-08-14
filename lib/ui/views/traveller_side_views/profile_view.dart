@@ -173,7 +173,7 @@ class _ProfileViewState extends State<ProfileView> {
                 },
                 child: const Icon(
                   Icons.arrow_back,
-                  color: Colors.white,
+                  color: AppColors.lightPurple,
                 ),
               ),
               const Text(
@@ -310,72 +310,94 @@ class _ProfileViewState extends State<ProfileView> {
                           Text(
                             'Account Details',
                             style: TextStyle(
-                              fontSize: 18,
+                              fontSize: TextSize.header1,
                               fontWeight: FontWeight.w500,
                             ),
                           ),
                         ],
                       ),
-                      const SizedBox(
-                        height: 15,
-                      ),
-                      const Row(
-                        children: [
-                          Text(
-                            'Email',
-                            style: TextStyle(
-                                fontSize: 13,
-                                color: AppColors.grayText,
-                                fontWeight: FontWeight.w500),
+                      Container(
+                        width: size.width,
+                        padding: EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                          boxShadow: List.filled(
+                            10,
+                            const BoxShadow(
+                                color: AppColors.gray,
+                                blurRadius: BorderSide.strokeAlignOutside,
+                                blurStyle: BlurStyle.outer),
                           ),
-                        ],
-                      ),
-                      SizedBox(
-                        height: 45,
-                        child: TextField(
-                          keyboardType: TextInputType.emailAddress,
-                          enabled: false,
-                          controller: _emailController,
-                          decoration: textFielDecoratiom.copyWith(
-                            prefixIcon: const Icon(
-                              Icons.email_rounded,
-                              color: AppColors.Blue,
-                            ),
-                          ),
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(20),
                         ),
-                      ),
-                      const SizedBox(
-                        height: 30,
-                      ),
-                      const Row(
-                        children: [
-                          Text(
-                            'Mobile Number',
-                            style: TextStyle(
-                                fontSize: 13,
-                                color: AppColors.grayText,
-                                fontWeight: FontWeight.w500),
-                          ),
-                        ],
-                      ),
-                      SizedBox(
-                        height: 45,
-                        child: TextFormField(
-                          keyboardType: TextInputType.phone,
-                          controller: _mobileNumberController,
-                          decoration: textFielDecoratiom.copyWith(
-                            prefixIcon: const Icon(
-                              Icons.call,
-                              color: AppColors.Blue,
+                        child: Column(
+                          children: [
+                            const SizedBox(
+                              height: 15,
                             ),
-                          ),
-                          onChanged: (value) {},
-                          validator: (value) {
-                            if (value!.length < 10) {
-                              return 'Please enter valid mobile number';
-                            }
-                            return null;
-                          },
+                            const Row(
+                              children: [
+                                Text(
+                                  'Email',
+                                  style: TextStyle(
+                                      fontSize: 13,
+                                      color: AppColors.grayText,
+                                      fontWeight: FontWeight.w500),
+                                ),
+                              ],
+                            ),
+                            Container(
+                              height: 40,
+                              color: Colors.white,
+                              child: TextField(
+                                keyboardType: TextInputType.emailAddress,
+                                enabled: false,
+                                controller: _emailController,
+                                decoration: textFielDecoratiom.copyWith(
+                                  fillColor: Colors.white,
+                                  prefixIcon: const Icon(
+                                    Icons.email_rounded,
+                                    color: AppColors.Blue,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 30,
+                            ),
+                            const Row(
+                              children: [
+                                Text(
+                                  'Mobile Number',
+                                  style: TextStyle(
+                                      fontSize: 13,
+                                      color: AppColors.grayText,
+                                      fontWeight: FontWeight.w500),
+                                ),
+                              ],
+                            ),
+                            SizedBox(
+                              height: 40,
+                              child: TextFormField(
+                                keyboardType: TextInputType.phone,
+                                controller: _mobileNumberController,
+                                decoration: textFielDecoratiom.copyWith(
+                                  fillColor: Colors.white,
+                                  prefixIcon: const Icon(
+                                    Icons.call,
+                                    color: AppColors.Blue,
+                                  ),
+                                ),
+                                onChanged: (value) {},
+                                validator: (value) {
+                                  if (value!.length < 10) {
+                                    return 'Please enter valid mobile number';
+                                  }
+                                  return null;
+                                },
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                       const SizedBox(
@@ -386,201 +408,232 @@ class _ProfileViewState extends State<ProfileView> {
                           Text(
                             'Personal Informations',
                             style: TextStyle(
-                              fontSize: 18,
+                              fontSize: TextSize.header1,
                               fontWeight: FontWeight.w500,
                             ),
                           ),
                         ],
                       ),
                       const SizedBox(
-                        height: 15,
-                      ),
-                      const Row(
-                        children: [
-                          Text(
-                            'First Name',
-                            style: TextStyle(
-                                fontSize: 13,
-                                color: AppColors.grayText,
-                                fontWeight: FontWeight.w500),
-                          ),
-                        ],
-                      ),
-                      SizedBox(
-                        height: 45,
-                        child: TextField(
-                          controller: _firstNameController,
-                          onChanged: (value) {},
-                          decoration: textFielDecoratiom.copyWith(
-                            prefixIcon: const Icon(
-                              Icons.person_2_rounded,
-                              color: AppColors.lightPurple,
-                            ),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 30,
-                      ),
-                      const Row(
-                        children: [
-                          Text(
-                            'Last Name',
-                            style: TextStyle(
-                                fontSize: 13,
-                                color: AppColors.grayText,
-                                fontWeight: FontWeight.w500),
-                          ),
-                        ],
-                      ),
-                      SizedBox(
-                        height: 45,
-                        child: TextField(
-                          controller: _lastNameController,
-                          onChanged: (value) {},
-                          decoration: textFielDecoratiom.copyWith(
-                            prefixIcon: const Icon(
-                              Icons.person_2_rounded,
-                              color: AppColors.lightPurple,
-                            ),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      const Row(
-                        children: [
-                          Text(
-                            'Gender',
-                            style: TextStyle(
-                                fontSize: 13,
-                                color: AppColors.grayText,
-                                fontWeight: FontWeight.w500),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                        child: InkWell(
-                          onTap: _showModalSheet,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                selectedGender ?? 'Select Your Gender',
-                                style: const TextStyle(
-                                    fontSize: 15, fontWeight: FontWeight.w400),
-                              ),
-                              const Icon(
-                                Icons.arrow_drop_down,
-                                color: AppColors.grayText,
-                              ),
-                            ],
-                          ),
-                        ),
+                        height: 5,
                       ),
                       Container(
-                        height: 1,
-                        color: Color.fromARGB(81, 130, 143, 163),
-                        margin:
-                            const EdgeInsets.only(left: 12, right: 12, top: 5),
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      const Row(
-                        children: [
-                          Text(
-                            'Date of Birth',
-                            style: TextStyle(
-                                fontSize: 13,
-                                color: AppColors.grayText,
-                                fontWeight: FontWeight.w500),
+                        width: size.width,
+                        padding: const EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                          boxShadow: List.filled(
+                            10,
+                            const BoxShadow(
+                                color: AppColors.gray,
+                                blurRadius: BorderSide.strokeAlignOutside,
+                                blurStyle: BlurStyle.outer),
                           ),
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      InkWell(
-                        onTap: () async {
-                          DateTime? newDepartureDate = await showDatePicker(
-                              context: context,
-                              initialDate: Departure_date.value,
-                              firstDate: minDate,
-                              lastDate: DateTime(2026));
-
-                          if (newDepartureDate != null) {
-                            setState(
-                              () {
-                                setState(() =>
-                                    Departure_date.value = newDepartureDate);
-                              },
-                            );
-                          }
-                        },
-                        child: Container(
-                          width: size.width,
-                          height: 40,
-                          padding: EdgeInsets.symmetric(horizontal: 10),
-                          decoration: BoxDecoration(
-                            color: AppColors.backgroundgrayColor,
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                          child: const Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Icon(Icons.calendar_month_rounded,
-                                  color: AppColors.gold),
-                              SizedBox(
-                                width: 10,
-                              ),
-                              Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    // '${Departure_date.value.day}. ${Departure_date.value?.month}, ${Departure_date.value?.year}',
-                                    '2001',
-                                    style: TextStyle(
-                                      fontSize: TextSize.header2,
-                                      fontWeight: FontWeight.w500,
-                                      color: Colors.black,
-                                    ),
-                                  )
-                                ],
-                              )
-                            ],
-                          ),
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(20),
                         ),
-                      ),
-                      const SizedBox(
-                        height: 30,
-                      ),
-                      const Row(
-                        children: [
-                          Text(
-                            'Nationality',
-                            style: TextStyle(
-                                fontSize: 13,
-                                color: AppColors.grayText,
-                                fontWeight: FontWeight.w500),
-                          ),
-                        ],
-                      ),
-                      SizedBox(
-                        height: 45,
-                        child: TextField(
-                          controller: _nationalityController,
-                          decoration: textFielDecoratiom.copyWith(
-                            prefixIcon: const Icon(
-                              Icons.flag_rounded,
-                              color: AppColors.lightPurple,
+                        child: Column(
+                          children: [
+                            const Row(
+                              children: [
+                                Text(
+                                  'First Name',
+                                  style: TextStyle(
+                                    fontSize: TextSize.header2,
+                                    color: AppColors.grayText,
+                                  ),
+                                ),
+                              ],
                             ),
-                          ),
+                            SizedBox(
+                              height: 40,
+                              child: TextField(
+                                controller: _firstNameController,
+                                onChanged: (value) {},
+                                decoration: textFielDecoratiom.copyWith(
+                                  fillColor: Colors.white,
+                                  prefixIcon: const Icon(
+                                    Icons.person_2_rounded,
+                                    color: AppColors.lightPurple,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 20,
+                            ),
+                            const Row(
+                              children: [
+                                Text(
+                                  'Last Name',
+                                  style: TextStyle(
+                                    fontSize: TextSize.header2,
+                                    color: AppColors.grayText,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            SizedBox(
+                              height: 40,
+                              child: TextField(
+                                controller: _lastNameController,
+                                onChanged: (value) {},
+                                decoration: textFielDecoratiom.copyWith(
+                                  fillColor: Colors.white,
+                                  prefixIcon: const Icon(
+                                    Icons.person_2_rounded,
+                                    color: AppColors.lightPurple,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 20,
+                            ),
+                            const Row(
+                              children: [
+                                Text(
+                                  'Gender',
+                                  style: TextStyle(
+                                    fontSize: TextSize.header2,
+                                    color: AppColors.grayText,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            InkWell(
+                              onTap: _showModalSheet,
+                              child: Container(
+                                padding: EdgeInsets.symmetric(horizontal: 10),
+                                width: size.width,
+                                height: 40,
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(20),
+                                  border: Border.all(
+                                      color: AppColors.LightGrayColor,
+                                      width: 1),
+                                ),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    const Icon(
+                                      Icons.male,
+                                      color: AppColors.lightPurple,
+                                    ),
+                                    Text(
+                                      selectedGender ?? 'Select Your Gender',
+                                      style: const TextStyle(
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.w400),
+                                    ),
+                                    const Icon(
+                                      Icons.keyboard_arrow_down_rounded,
+                                      color: AppColors.grayText,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 20,
+                            ),
+                            const Row(
+                              children: [
+                                Text(
+                                  'Date of Birth',
+                                  style: TextStyle(
+                                    fontSize: TextSize.header2,
+                                    color: AppColors.grayText,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            InkWell(
+                              onTap: () async {
+                                DateTime? newDepartureDate =
+                                    await showDatePicker(
+                                        context: context,
+                                        initialDate: Departure_date.value,
+                                        firstDate: minDate,
+                                        lastDate: DateTime(2026));
+
+                                if (newDepartureDate != null) {
+                                  setState(
+                                    () {
+                                      setState(() => Departure_date.value =
+                                          newDepartureDate);
+                                    },
+                                  );
+                                }
+                              },
+                              child: Container(
+                                width: size.width,
+                                height: 40,
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 10),
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(20),
+                                  border: Border.all(
+                                      color: AppColors.LightGrayColor),
+                                ),
+                                child: const Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    Icon(Icons.calendar_month_rounded,
+                                        color: AppColors.lightPurple),
+                                    SizedBox(
+                                      width: 10,
+                                    ),
+                                    Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Text(
+                                          // '${Departure_date.value.day}. ${Departure_date.value?.month}, ${Departure_date.value?.year}',
+                                          '2001',
+                                          style: TextStyle(
+                                            fontSize: TextSize.header2,
+                                            fontWeight: FontWeight.w500,
+                                            color: Colors.black,
+                                          ),
+                                        )
+                                      ],
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 30,
+                            ),
+                            const Row(
+                              children: [
+                                Text(
+                                  'Nationality',
+                                  style: TextStyle(
+                                    fontSize: TextSize.header2,
+                                    color: AppColors.grayText,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            SizedBox(
+                              height: 40,
+                              width: size.width,
+                              child: TextField(
+                                controller: _nationalityController,
+                                decoration: textFielDecoratiom.copyWith(
+                                  fillColor: Colors.white,
+                                  prefixIcon: const Icon(
+                                    Icons.flag_rounded,
+                                    color: AppColors.lightPurple,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                       const SizedBox(

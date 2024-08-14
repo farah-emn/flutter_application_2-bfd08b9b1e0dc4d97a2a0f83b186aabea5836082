@@ -46,7 +46,7 @@ class _SignUpViewState extends State<SignUpView> {
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      backgroundColor: AppColors.lightBlue,
+      backgroundColor: AppColors.Blue,
       body: Stack(
         children: [
           Column(
@@ -157,8 +157,8 @@ class _SignUpViewState extends State<SignUpView> {
                     const Text(
                       'Sign up ',
                       style: TextStyle(
-                         fontSize: TextSize.header1,
-                              fontWeight: FontWeight.w700),
+                          fontSize: TextSize.header1,
+                          fontWeight: FontWeight.w700),
                     ),
                     const SizedBox(
                       height: 35,
@@ -181,7 +181,6 @@ class _SignUpViewState extends State<SignUpView> {
                         controller: _emailController,
                         decoration: textFielDecoratiom.copyWith(
                           prefixIcon: Icon(Icons.email_rounded),
-
                         ),
                         onChanged: (value) {
                           email = value;
@@ -208,7 +207,6 @@ class _SignUpViewState extends State<SignUpView> {
                         keyboardType: TextInputType.visiblePassword,
                         decoration: textFielDecoratiom.copyWith(
                           prefixIcon: Icon(Icons.lock_rounded),
-
                         ),
                         controller: _passwordController,
                         onChanged: (value) {
@@ -236,7 +234,6 @@ class _SignUpViewState extends State<SignUpView> {
                         controller: _confirmPasswordController,
                         decoration: textFielDecoratiom.copyWith(
                           prefixIcon: Icon(Icons.lock_rounded),
-
                         ),
                         onChanged: (value) {
                           confermPassword = value;
@@ -324,7 +321,6 @@ class _SignUpViewState extends State<SignUpView> {
                           backgroundColor: AppColors.darkBlue,
                           text: 'Sign up',
                           textColor: AppColors.backgroundgrayColor,
-                         
                           widthPercent: size.width,
                         )),
                     const SizedBox(
@@ -352,8 +348,12 @@ class _SignUpViewState extends State<SignUpView> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        const CustomTextGray(
-                            mainText: 'You already have account? '),
+                        const Text(
+                          'You already have account?  ',
+                          style: TextStyle(
+                            color: AppColors.grayText,
+                          ),
+                        ),
                         InkWell(
                           onTap: () {
                             Get.off(const SignInView());

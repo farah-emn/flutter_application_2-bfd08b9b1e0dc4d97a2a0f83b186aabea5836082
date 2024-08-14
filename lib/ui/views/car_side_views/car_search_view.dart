@@ -442,9 +442,9 @@ class _CarSearchViewState extends State<CarSearchView> {
                                 borderColor: AppColors.LightGrayColor,
                                 borderRadius: BorderRadius.circular(15),
                                 // focusColor: AppColors.grayText,
-                                fillColor: AppColors.lightOrange,
+                                fillColor: AppColors.lightGray,
                                 selectedColor: AppColors.blackColor,
-                                selectedBorderColor: AppColors.lightOrange,
+                                selectedBorderColor: AppColors.lightGray,
                                 color: AppColors.grayText,
 
                                 isSelected: isSelected,
@@ -501,7 +501,7 @@ class _CarSearchViewState extends State<CarSearchView> {
                                   Row(
                                     children: [
                                       Radio(
-                                        activeColor: AppColors.orange,
+                                        activeColor: AppColors.darkGray,
                                         value: 'Normal',
                                         autofocus: true,
                                         groupValue: sorteBy,
@@ -515,7 +515,7 @@ class _CarSearchViewState extends State<CarSearchView> {
                                   Row(
                                     children: [
                                       Radio(
-                                        activeColor: AppColors.orange,
+                                        activeColor: AppColors.darkGray,
                                         value: 'Automatic',
                                         groupValue: sorteBy,
                                         onChanged: (value) {
@@ -552,7 +552,7 @@ class _CarSearchViewState extends State<CarSearchView> {
                                 children: <Widget>[
                                   RangeSlider(
                                       values: _currentRangeValues,
-                                      activeColor: AppColors.orange,
+                                      activeColor: AppColors.darkGray,
                                       inactiveColor: AppColors.gray,
                                       min: MinPrice,
                                       max: MaxPrice,
@@ -596,7 +596,7 @@ class _CarSearchViewState extends State<CarSearchView> {
                             height: 50,
                             width: size.width - 30,
                             decoration: BoxDecoration(
-                                color: AppColors.orange,
+                                color: AppColors.darkGray,
                                 borderRadius: BorderRadius.circular(20)),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
@@ -643,7 +643,7 @@ class _CarSearchViewState extends State<CarSearchView> {
 
     return Scaffold(
         resizeToAvoidBottomInset: false,
-        backgroundColor: AppColors.lightOrange,
+        backgroundColor: AppColors.lightGray,
         // appBar: AppBar(
         //   title: Row(
         //     mainAxisAlignment: MainAxisAlignment.center,
@@ -707,7 +707,7 @@ class _CarSearchViewState extends State<CarSearchView> {
                               borderRadius:
                                   BorderRadius.all(Radius.circular(18)),
                               borderSide: BorderSide(
-                                  color: AppColors.orange, width: 1.5),
+                                  color: AppColors.darkGray, width: 1.5),
                             ),
                             hintText: "Search",
                             suffixIcon: InkWell(

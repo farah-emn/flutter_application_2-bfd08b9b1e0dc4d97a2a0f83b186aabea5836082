@@ -46,7 +46,7 @@ class _CarSignInViewState extends State<CarSignInView> {
     final DatabaseReference ref = FirebaseDatabase.instance.ref("Hotel");
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      backgroundColor: AppColors.lightOrange,
+      backgroundColor: AppColors.lightGray,
       body: Stack(
         children: [
           Column(
@@ -183,11 +183,11 @@ class _CarSignInViewState extends State<CarSignInView> {
                           focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.all(Radius.circular(18)),
                             borderSide:
-                                BorderSide(color: AppColors.orange, width: 1.5),
+                                BorderSide(color: AppColors.darkGray, width: 1.5),
                           ),
                           prefixIcon: const Icon(
                             Icons.email_rounded,
-                            color: AppColors.orange,
+                            color: AppColors.darkGray,
                           ),
                         ),
                         onChanged: (value) {
@@ -230,11 +230,11 @@ class _CarSignInViewState extends State<CarSignInView> {
                           focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.all(Radius.circular(18)),
                             borderSide:
-                                BorderSide(color: AppColors.orange, width: 1.5),
+                                BorderSide(color: AppColors.darkGray, width: 1.5),
                           ),
                           prefixIcon: const Icon(
                             Icons.lock,
-                            color: AppColors.orange,
+                            color: AppColors.darkGray,
                           ),
                         ),
                         onChanged: (value) {
@@ -337,7 +337,7 @@ class _CarSignInViewState extends State<CarSignInView> {
                         } catch (e) {}
                       },
                       child: CustomButton(
-                        backgroundColor: AppColors.orange,
+                        backgroundColor: AppColors.darkGray,
                         text: 'Sign in',
                         textColor: AppColors.backgroundgrayColor,
                         widthPercent: size.width,
@@ -362,7 +362,7 @@ class _CarSignInViewState extends State<CarSignInView> {
                           child: const Text(
                             'Sign up',
                             style: TextStyle(
-                              color: AppColors.orange,
+                              color: AppColors.darkGray,
                               fontWeight: FontWeight.bold,
                             ),
                           ),

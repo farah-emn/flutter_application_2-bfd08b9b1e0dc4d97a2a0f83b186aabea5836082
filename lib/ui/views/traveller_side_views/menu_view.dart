@@ -6,9 +6,9 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:traveling/ui/shared/colors.dart';
 import 'package:traveling/ui/shared/utils.dart';
+import 'package:traveling/ui/views/first_view.dart';
 import 'package:traveling/ui/views/traveller_side_views/currency_display.dart';
 import 'package:traveling/ui/views/traveller_side_views/profile_view.dart';
-import 'package:traveling/ui/views/traveller_side_views/welcome_view.dart';
 
 import '../../shared/custom_widgets/custom_textfield2.dart';
 
@@ -46,7 +46,6 @@ class _MenuViewState extends State<MenuView> {
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: AppColors.StatusBarColor,
-        
         body: SafeArea(
           child: Stack(children: [
             Padding(
@@ -379,7 +378,7 @@ class _MenuViewState extends State<MenuView> {
                     InkWell(
                       onTap: () {
                         _auth.signOut();
-                        Get.offAll(() => const WelcomeView());
+                        Get.offAll(() => const FirstView());
                       },
                       child: Container(
                         padding: const EdgeInsets.symmetric(

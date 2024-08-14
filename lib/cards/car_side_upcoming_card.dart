@@ -213,7 +213,7 @@ class _CarSideUpcomingCardState extends State<CarSideUpcomingCard> {
                     Text(
                       widget.carBookingsDetails.totalPrice,
                       style: const TextStyle(
-                          color: AppColors.orange,
+                          color: AppColors.lightGray,
                           fontSize: TextSize.header1,
                           fontWeight: FontWeight.w500),
                     ),
@@ -264,7 +264,7 @@ class _CarSideUpcomingCardState extends State<CarSideUpcomingCard> {
                     ),
                   ],
                 ),
-    
+
                 const SizedBox(
                   height: 10,
                 ),

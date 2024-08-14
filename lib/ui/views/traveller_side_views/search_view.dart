@@ -241,10 +241,10 @@ class _SearchViewState extends State<SearchView>
                             width: 40,
                             height: 5,
                             decoration: BoxDecoration(
-                              color: Colors.grey[300],
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(2.5),
-                              ),
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(20),
+                              border: Border.all(
+                                  color: AppColors.LightGrayColor, width: 1),
                             ),
                           ),
                         ),
@@ -436,9 +436,6 @@ class _SearchViewState extends State<SearchView>
                 const Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    SizedBox(
-                      width: 10,
-                    ),
                     Text(
                       'From',
                       style: TextStyle(
@@ -458,7 +455,8 @@ class _SearchViewState extends State<SearchView>
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(15),
                       ),
-                      side: BorderSide(color: Colors.transparent, width: 0),
+                      side:
+                          BorderSide(color: AppColors.LightGrayColor, width: 1),
                     ),
                     onPressed: () async {
                       final result = await Navigator.push(
@@ -519,9 +517,6 @@ class _SearchViewState extends State<SearchView>
                 ),
                 const Row(
                   children: [
-                    SizedBox(
-                      width: 10,
-                    ),
                     Text(
                       'To',
                       style: TextStyle(
@@ -541,7 +536,8 @@ class _SearchViewState extends State<SearchView>
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(15),
                       ),
-                      side: BorderSide(color: Colors.transparent, width: 0),
+                      side:
+                          BorderSide(color: AppColors.LightGrayColor, width: 1),
                     ),
                     onPressed: () async {
                       final result = await Navigator.push(
@@ -608,9 +604,6 @@ class _SearchViewState extends State<SearchView>
                 const Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    SizedBox(
-                      width: 10,
-                    ),
                     Text(
                       'Depature Date',
                       style: TextStyle(
@@ -639,9 +632,6 @@ class _SearchViewState extends State<SearchView>
                   const Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      SizedBox(
-                        width: 10,
-                      ),
                       Text(
                         'Return Date',
                         style: TextStyle(
@@ -662,16 +652,16 @@ class _SearchViewState extends State<SearchView>
                       width: size.width / 2 - 20,
                       height: 40,
                       decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(20)),
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(20),
+                        border: Border.all(
+                            color: AppColors.LightGrayColor, width: 1),
+                      ),
                       child: Row(
                         children: const [
                           Icon(
                             Icons.calendar_month_rounded,
                             color: AppColors.Blue,
-                          ),
-                          SizedBox(
-                            width: 10,
                           ),
                           Text(
                             'Add rutern',
@@ -699,9 +689,6 @@ class _SearchViewState extends State<SearchView>
                 const Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    SizedBox(
-                      width: 10,
-                    ),
                     Text(
                       'Adult Number',
                       style: TextStyle(
@@ -718,6 +705,8 @@ class _SearchViewState extends State<SearchView>
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(20),
+                    border:
+                        Border.all(color: AppColors.LightGrayColor, width: 1),
                   ),
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -746,14 +735,14 @@ class _SearchViewState extends State<SearchView>
                               controller.incrementAdult();
                             },
                             child: Icon(Icons.arrow_drop_up_sharp,
-                                color: AppColors.Blue, size: 20),
+                                color: AppColors.Blue, size: 17),
                           ),
                           InkWell(
                             onTap: () {
                               controller.decrementAdult();
                             },
                             child: Icon(Icons.arrow_drop_down_sharp,
-                                color: AppColors.Blue, size: 20),
+                                color: AppColors.Blue, size: 17),
                           ),
                         ],
                       )
@@ -768,9 +757,6 @@ class _SearchViewState extends State<SearchView>
                 const Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    SizedBox(
-                      width: 10,
-                    ),
                     Text(
                       'Children Number',
                       style: TextStyle(
@@ -785,8 +771,11 @@ class _SearchViewState extends State<SearchView>
                   width: size.width / 2 - 20,
                   height: 40,
                   decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(20)),
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(20),
+                    border:
+                        Border.all(color: AppColors.LightGrayColor, width: 1),
+                  ),
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
@@ -814,14 +803,14 @@ class _SearchViewState extends State<SearchView>
                               controller.incrementChild();
                             },
                             child: Icon(Icons.arrow_drop_up_sharp,
-                                color: AppColors.Blue, size: 20),
+                                color: AppColors.Blue, size: 17),
                           ),
                           InkWell(
                             onTap: () {
                               controller.decrementChild();
                             },
                             child: Icon(Icons.arrow_drop_down_sharp,
-                                color: AppColors.Blue, size: 20),
+                                color: AppColors.Blue, size: 17),
                           ),
                         ],
                       )
@@ -841,11 +830,12 @@ class _SearchViewState extends State<SearchView>
           },
           child: Container(
             padding: EdgeInsetsDirectional.only(start: 15, end: 15),
-            height: (size.height / 16) - 5,
+            height: 40,
             width: size.width,
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(20),
+              border: Border.all(color: AppColors.LightGrayColor, width: 1),
             ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
@@ -917,9 +907,7 @@ class _SearchViewState extends State<SearchView>
             //       ? CircularProgressIndicator()
             //       : SizedBox(),
             // ),
-            SizedBox(
-              height: 15,
-            ),
+
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
@@ -934,9 +922,6 @@ class _SearchViewState extends State<SearchView>
                     const Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        SizedBox(
-                          width: 10,
-                        ),
                         Text(
                           'From',
                           style: TextStyle(
@@ -956,7 +941,8 @@ class _SearchViewState extends State<SearchView>
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(15),
                           ),
-                          side: BorderSide(color: Colors.transparent, width: 0),
+                          side: BorderSide(
+                              color: AppColors.LightGrayColor, width: 1),
                         ),
                         onPressed: () async {
                           final result = await Navigator.push(
@@ -1020,9 +1006,6 @@ class _SearchViewState extends State<SearchView>
                     const Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        SizedBox(
-                          width: 10,
-                        ),
                         Text(
                           'To',
                           style: TextStyle(
@@ -1042,7 +1025,8 @@ class _SearchViewState extends State<SearchView>
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(15),
                           ),
-                          side: BorderSide(color: Colors.transparent, width: 0),
+                          side: BorderSide(
+                              color: AppColors.LightGrayColor, width: 1),
                         ),
                         onPressed: () async {
                           final result = await Navigator.push(
@@ -1126,9 +1110,6 @@ class _SearchViewState extends State<SearchView>
                     const Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        SizedBox(
-                          width: 10,
-                        ),
                         Text(
                           'Adults Number',
                           style: TextStyle(
@@ -1143,8 +1124,11 @@ class _SearchViewState extends State<SearchView>
                       width: size.width / 2 - 20,
                       height: 40,
                       decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(20)),
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(20),
+                        border: Border.all(
+                            color: AppColors.LightGrayColor, width: 1),
+                      ),
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
@@ -1172,14 +1156,14 @@ class _SearchViewState extends State<SearchView>
                                   controller.incrementAdult();
                                 },
                                 child: Icon(Icons.arrow_drop_up_sharp,
-                                    color: AppColors.Blue, size: 20),
+                                    color: AppColors.Blue, size: 17),
                               ),
                               InkWell(
                                 onTap: () {
                                   controller.decrementAdult();
                                 },
                                 child: Icon(Icons.arrow_drop_down_sharp,
-                                    color: AppColors.Blue, size: 20),
+                                    color: AppColors.Blue, size: 17),
                               ),
                             ],
                           )
@@ -1194,9 +1178,6 @@ class _SearchViewState extends State<SearchView>
                     const Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        SizedBox(
-                          width: 10,
-                        ),
                         Text(
                           'Children Number',
                           style: TextStyle(
@@ -1213,6 +1194,8 @@ class _SearchViewState extends State<SearchView>
                       decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(20),
+                        border: Border.all(
+                            color: AppColors.LightGrayColor, width: 1),
                       ),
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
@@ -1241,14 +1224,14 @@ class _SearchViewState extends State<SearchView>
                                   controller.incrementChild();
                                 },
                                 child: Icon(Icons.arrow_drop_up_sharp,
-                                    color: AppColors.Blue, size: 20),
+                                    color: AppColors.Blue, size: 17),
                               ),
                               InkWell(
                                 onTap: () {
                                   controller.decrementChild();
                                 },
                                 child: Icon(Icons.arrow_drop_down_sharp,
-                                    color: AppColors.Blue, size: 20),
+                                    color: AppColors.Blue, size: 17),
                               ),
                             ],
                           )
@@ -1268,11 +1251,12 @@ class _SearchViewState extends State<SearchView>
               },
               child: Container(
                 padding: EdgeInsetsDirectional.only(start: 15, end: 15),
-                height: (size.height / 16) - 5,
+                height: 40,
                 width: size.width,
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(20),
+                  border: Border.all(color: AppColors.LightGrayColor, width: 1),
                 ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -1400,9 +1384,9 @@ class _SearchViewState extends State<SearchView>
           borderColor: AppColors.LightGrayColor,
           borderRadius: BorderRadius.circular(15),
           // focusColor: AppColors.grayText,
-          fillColor: AppColors.lightOrange,
+          fillColor: AppColors.lightGray,
           selectedColor: AppColors.blackColor,
-          selectedBorderColor: AppColors.lightOrange,
+          selectedBorderColor: AppColors.lightGray,
           color: AppColors.grayText,
 
           isSelected: isSelected,
@@ -1456,14 +1440,14 @@ class _SearchViewState extends State<SearchView>
                     decoration: textFielDecoratiom.copyWith(
                         focusedBorder: const OutlineInputBorder(
                           borderSide: BorderSide(
-                            color: AppColors.lightOrange,
+                            color: AppColors.lightGray,
                           ),
                           borderRadius: BorderRadius.all(Radius.circular(18)),
                         ),
                         fillColor: Colors.white,
                         prefixIcon: const Icon(
                           Icons.numbers_rounded,
-                          color: AppColors.orange,
+                          color: AppColors.lightGray,
                         )),
                     onChanged: (value) {},
                   ),
@@ -1488,14 +1472,14 @@ class _SearchViewState extends State<SearchView>
                     decoration: textFielDecoratiom.copyWith(
                         focusedBorder: const OutlineInputBorder(
                           borderSide: BorderSide(
-                            color: AppColors.lightOrange,
+                            color: AppColors.lightGray,
                           ),
                           borderRadius: BorderRadius.all(Radius.circular(18)),
                         ),
                         fillColor: Colors.white,
                         prefixIcon: const Icon(
                           Icons.speed,
-                          color: AppColors.orange,
+                          color: AppColors.lightGray,
                         )),
                     onChanged: (value) {},
                   ),
@@ -1524,6 +1508,7 @@ class _SearchViewState extends State<SearchView>
           decoration: BoxDecoration(
             border: Border.all(color: AppColors.LightGrayColor),
             borderRadius: BorderRadius.circular(15),
+            color: Colors.white,
           ),
           child: DropdownButton<String>(
             dropdownColor: Colors.white,
@@ -1577,7 +1562,7 @@ class _SearchViewState extends State<SearchView>
             Row(
               children: [
                 Radio(
-                  activeColor: AppColors.orange,
+                  activeColor: AppColors.lightGray,
                   value: 'Normal',
                   autofocus: true,
                   groupValue: sorteBy,
@@ -1591,7 +1576,7 @@ class _SearchViewState extends State<SearchView>
             Row(
               children: [
                 Radio(
-                  activeColor: AppColors.orange,
+                  activeColor: AppColors.lightGray,
                   value: 'Automatic',
                   groupValue: sorteBy,
                   onChanged: (value) {
@@ -1654,7 +1639,7 @@ class _SearchViewState extends State<SearchView>
           child: CustomButton(
             text: 'Search',
             textColor: AppColors.backgroundgrayColor,
-            backgroundColor: AppColors.Blue,
+            backgroundColor: AppColors.lightGray,
             widthPercent: size.width,
           ),
         ),

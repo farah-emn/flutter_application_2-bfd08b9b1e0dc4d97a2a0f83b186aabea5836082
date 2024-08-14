@@ -138,6 +138,7 @@ class _BookingsViewState extends State<BookingsView>
     return Column(
       children: [
         Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             Row(
@@ -182,12 +183,12 @@ class _BookingsViewState extends State<BookingsView>
           ],
         ),
         const SizedBox(
-          height: 20,
+          height: 10,
         ),
         _hotelSorteBy == 'Upcoming'
             ? Expanded(
                 child: ListView.builder(
-                  shrinkWrap: true,
+                  // shrinkWrap: true,
                   itemCount: HotelbookingsDetails.length,
                   itemBuilder: (context, index) => HotelBookingCard(
                     size: size,
@@ -260,7 +261,7 @@ class _BookingsViewState extends State<BookingsView>
           ],
         ),
         const SizedBox(
-          height: 20,
+          height: 10,
         ),
         _flightSorteBy == 'Upcoming'
             ? Expanded(
@@ -297,7 +298,7 @@ class _BookingsViewState extends State<BookingsView>
             Row(
               children: [
                 Radio(
-                  activeColor: AppColors.lightOrange,
+                  activeColor: AppColors.lightGray,
                   autofocus: true,
                   value: 'Upcoming',
                   groupValue: _hotelSorteBy,
@@ -317,7 +318,7 @@ class _BookingsViewState extends State<BookingsView>
             Row(
               children: [
                 Radio(
-                  activeColor: AppColors.lightOrange,
+                  activeColor: AppColors.lightGray,
                   value: 'Finished',
                   groupValue: _hotelSorteBy,
                   onChanged: (value) {
@@ -336,7 +337,7 @@ class _BookingsViewState extends State<BookingsView>
           ],
         ),
         const SizedBox(
-          height: 20,
+          height: 10,
         ),
         _hotelSorteBy == 'Upcoming'
             ? Expanded(

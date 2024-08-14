@@ -140,7 +140,7 @@ class _CarSignUpImageViewState extends State<CarSignUpImageView> {
                         children: [
                           Icon(
                             Icons.photo_size_select_actual_rounded,
-                            color: AppColors.lightOrange,
+                            color: AppColors.lightGray,
                           ),
                           SizedBox(
                             width: 5,
@@ -179,7 +179,7 @@ class _CarSignUpImageViewState extends State<CarSignUpImageView> {
                         children: [
                           Icon(
                             Icons.camera_alt_rounded,
-                            color: AppColors.orange,
+                            color: AppColors.darkGray,
                           ),
                           SizedBox(
                             width: 5,
@@ -204,7 +204,7 @@ class _CarSignUpImageViewState extends State<CarSignUpImageView> {
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      backgroundColor: AppColors.lightOrange,
+      backgroundColor: AppColors.lightGray,
       body: Stack(
         children: [
           SingleChildScrollView(
@@ -328,7 +328,7 @@ class _CarSignUpImageViewState extends State<CarSignUpImageView> {
                                 ),
                                 child: Icon(
                                   Icons.add_a_photo,
-                                  color: AppColors.orange,
+                                  color: AppColors.darkGray,
                                 ),
                               ),
                             )
@@ -362,7 +362,7 @@ class _CarSignUpImageViewState extends State<CarSignUpImageView> {
                                           ),
                                           child: Icon(
                                             Icons.add_a_photo,
-                                            color: AppColors.orange,
+                                            color: AppColors.darkGray,
                                           ),
                                         ),
                                       ),
@@ -446,11 +446,11 @@ class _CarSignUpImageViewState extends State<CarSignUpImageView> {
                           focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.all(Radius.circular(18)),
                             borderSide:
-                                BorderSide(color: AppColors.orange, width: 1.5),
+                                BorderSide(color: AppColors.darkGray, width: 1.5),
                           ),
                           prefixIcon: const Icon(
                             Icons.location_on_rounded,
-                            color: AppColors.orange,
+                            color: AppColors.darkGray,
                           ),
                         ),
                         onChanged: (value) {},
@@ -480,11 +480,11 @@ class _CarSignUpImageViewState extends State<CarSignUpImageView> {
                           focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.all(Radius.circular(18)),
                             borderSide:
-                                BorderSide(color: AppColors.orange, width: 1.5),
+                                BorderSide(color: AppColors.darkGray, width: 1.5),
                           ),
                           prefixIcon: const Icon(
                             Icons.location_on_rounded,
-                            color: AppColors.orange,
+                            color: AppColors.darkGray,
                           ),
                         ),
                         onChanged: (value) {},
@@ -514,11 +514,11 @@ class _CarSignUpImageViewState extends State<CarSignUpImageView> {
                           focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.all(Radius.circular(18)),
                             borderSide:
-                                BorderSide(color: AppColors.orange, width: 1.5),
+                                BorderSide(color: AppColors.darkGray, width: 1.5),
                           ),
                           prefixIcon: const Icon(
                             Icons.location_on_rounded,
-                            color: AppColors.orange,
+                            color: AppColors.darkGray,
                           ),
                         ),
                         onChanged: (value) {},
@@ -553,7 +553,7 @@ class _CarSignUpImageViewState extends State<CarSignUpImageView> {
                           child: CustomButton(
                               text: 'Confirm location',
                               textColor: AppColors.backgroundgrayColor,
-                              backgroundColor: AppColors.orange,
+                              backgroundColor: AppColors.darkGray,
                               widthPercent: size.width,
                             ),
                         ),
