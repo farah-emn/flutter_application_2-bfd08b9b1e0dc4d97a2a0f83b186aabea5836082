@@ -1,10 +1,14 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:traveling/classes/car_class.dart';
 import 'package:traveling/classes/hotel.dart';
 import 'package:traveling/ui/shared/colors.dart';
 import 'package:traveling/ui/shared/text_size.dart';
-import 'package:traveling/ui/views/traveller_side_views/car_details_view.dart';
+import 'package:traveling/ui/views/traveller_side_views/car_details_view/car_details_view.dart';
+import '../classes/car_class1.dart';
+import '../controllers/currency_controller.dart';
 
 class CarCard2 extends StatefulWidget {
   const CarCard2({
@@ -15,7 +19,7 @@ class CarCard2 extends StatefulWidget {
   });
 
   final Size size;
-  final CarClass carDetails;
+  final CarClass1 carDetails;
   final int itemIndex;
 
   @override
@@ -23,12 +27,14 @@ class CarCard2 extends StatefulWidget {
 }
 
 class _CarCard2State extends State<CarCard2> {
+  CurrencyController currencyController = Get.put(CurrencyController());
+
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
         Get.to(
-          CarDetailsView(),
+          CarDetailsView(CarDeails: widget.carDetails),
         );
       },
       child: Container(
@@ -62,7 +68,10 @@ class _CarCard2State extends State<CarCard2> {
                       topRight: Radius.circular(20),
                     ),
                     image: DecorationImage(
-                      image: AssetImage(widget.carDetails.image),
+                      image: NetworkImage(widget.carDetails.image != null &&
+                              widget.carDetails.image!.isNotEmpty
+                          ? widget.carDetails.image!.first
+                          : ''),
                       fit: BoxFit.fill,
                     ),
                   ),
@@ -80,9 +89,7 @@ class _CarCard2State extends State<CarCard2> {
                         children: [
                           SizedBox(
                             child: Text(
-                              widget.carDetails.company +
-                                  ' - ' +
-                                  widget.carDetails.model,
+                              '${widget.carDetails.company} - ${widget.carDetails.model}',
                               style: const TextStyle(
                                 fontWeight: FontWeight.w600,
                                 fontSize: TextSize.header1,
@@ -105,7 +112,7 @@ class _CarCard2State extends State<CarCard2> {
                                 size: 20,
                               ),
                               Text(
-                                widget.carDetails.model,
+                                widget.carDetails.companyRentailName,
                                 style: const TextStyle(
                                     color: AppColors.grayText,
                                     fontSize: TextSize.header2),
@@ -188,7 +195,7 @@ class _CarCard2State extends State<CarCard2> {
                     ],
                   ),
                   const Spacer(),
-                  const Column(
+                  Column(
                     children: [
                       Text(
                         'Per day:',
@@ -197,7 +204,7 @@ class _CarCard2State extends State<CarCard2> {
                         ),
                       ),
                       Text(
-                        '500\$',
+                        '${currencyController.convert(currencyController.selectedCurrency.value, widget.carDetails.rentalInDay.toDouble())} ${currencyController.selectedCurrency.value}',
                         style: TextStyle(
                             color: AppColors.darkGray,
                             fontSize: TextSize.header1,
