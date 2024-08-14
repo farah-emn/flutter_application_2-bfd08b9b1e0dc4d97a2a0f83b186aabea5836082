@@ -7,14 +7,13 @@ import '../../../classes/amenities_class.dart';
 import '../../../classes/reviews_class.dart';
 import '../../../cards/reviews_card.dart';
 import '../../shared/colors.dart';
-import 'hotel_details_view.dart';
 
 class HotelInfoView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Material(
-     child :SafeArea(
+        child: SafeArea(
       child: Stack(
         children: [
           Container(
@@ -230,12 +229,13 @@ class HotelInfoView extends StatelessWidget {
                     ),
                   ),
                 ),
-
                 Expanded(
                   child: Align(
                     alignment: Alignment.bottomCenter,
                     child: ElevatedButton(
-                      onPressed: () {Get.to(HotelDetailsView());},
+                      onPressed: () {
+                        // Get.to(HotelDetailsView());
+                      },
                       style: ElevatedButton.styleFrom(
                         minimumSize: const Size(double.maxFinite, 50),
                         backgroundColor: AppColors.mainColorBlue,
@@ -254,7 +254,6 @@ class HotelInfoView extends StatelessWidget {
           ),
         ],
       ),
-    )
-  );
+    ));
   }
 }

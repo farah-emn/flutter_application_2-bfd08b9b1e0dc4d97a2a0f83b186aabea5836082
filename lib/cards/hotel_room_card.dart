@@ -171,23 +171,24 @@ class _RoomCardHotelState extends State<RoomCardHotel> {
                           Row(
                             children: [
                               Icon(
-                                Icons.location_on,
+                                Icons.room_rounded,
                                 color: AppColors.purple,
                                 size: 20,
                               ),
-                              (widget.room.is_reserved == true)
-                                  ? Text(
-                                      'Reserved',
-                                      style: TextStyle(
-                                          color: AppColors.grayText,
-                                          fontSize: TextSize.header2),
-                                    )
-                                  : Text(
-                                      'Not reserved',
-                                      style: TextStyle(
-                                          color: AppColors.grayText,
-                                          fontSize: TextSize.header2),
-                                    ),
+                              // (widget.room.is_reserved == true)
+                              //     ? Text(
+                              //         'Reserved',
+                              //         style: TextStyle(
+                              //             color: AppColors.grayText,
+                              //             fontSize: TextSize.header2),
+                              //       )
+                              //     :
+                              Text(
+                                widget.room.RoomNumber,
+                                style: TextStyle(
+                                    color: AppColors.grayText,
+                                    fontSize: TextSize.header2),
+                              ),
                             ],
                           ),
                           Row(

@@ -143,7 +143,7 @@ class _HotelSummartViewState extends State<HotelSummartView> {
                                       height: 450,
                                       child: Column(
                                         children: [
-                                           Row(
+                                          Row(
                                             mainAxisAlignment:
                                                 MainAxisAlignment.end,
                                             children: [
@@ -198,7 +198,7 @@ class _HotelSummartViewState extends State<HotelSummartView> {
                                           ),
                                           InkWell(
                                             onTap: () {
-                                              Get.to(const Home());
+                                              Get.to(Home());
                                             },
                                             child: Padding(
                                               padding: const EdgeInsets.only(

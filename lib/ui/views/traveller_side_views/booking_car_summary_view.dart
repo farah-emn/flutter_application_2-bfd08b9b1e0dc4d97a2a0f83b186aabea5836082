@@ -195,7 +195,7 @@ class _BookingCarSummaryViewState extends State<BookingCarSummaryView> {
                                         ),
                                         InkWell(
                                           onTap: () {
-                                            Get.to(const Home());
+                                            Get.to(Home());
                                           },
                                           child: Padding(
                                             padding: const EdgeInsets.only(
@@ -204,13 +204,13 @@ class _BookingCarSummaryViewState extends State<BookingCarSummaryView> {
                                               bottom: 15,
                                             ),
                                             child: CustomButton(
-                                                backgroundColor:
-                                                    AppColors.darkGray,
-                                                text: 'Confirm',
-                                                textColor: AppColors
-                                                    .backgroundgrayColor,
-                                                widthPercent: size.width,
-                                               ),
+                                              backgroundColor:
+                                                  AppColors.darkGray,
+                                              text: 'Confirm',
+                                              textColor:
+                                                  AppColors.backgroundgrayColor,
+                                              widthPercent: size.width,
+                                            ),
                                           ),
                                         ),
                                       ],
@@ -668,7 +668,8 @@ Widget step2(BuildContext context) {
                 decoration: textFielDecoratiom.copyWith(
                   focusedBorder: const OutlineInputBorder(
                     borderRadius: BorderRadius.all(Radius.circular(18)),
-                    borderSide: BorderSide(color: AppColors.darkGray, width: 1.5),
+                    borderSide:
+                        BorderSide(color: AppColors.darkGray, width: 1.5),
                   ),
                   fillColor: Colors.white,
                   prefixIcon: const Icon(
@@ -702,7 +703,8 @@ Widget step2(BuildContext context) {
                 decoration: textFielDecoratiom.copyWith(
                   focusedBorder: const OutlineInputBorder(
                     borderRadius: BorderRadius.all(Radius.circular(18)),
-                    borderSide: BorderSide(color: AppColors.darkGray, width: 1.5),
+                    borderSide:
+                        BorderSide(color: AppColors.darkGray, width: 1.5),
                   ),
                   fillColor: Colors.white,
                   prefixIcon: const Icon(
@@ -736,7 +738,8 @@ Widget step2(BuildContext context) {
                 decoration: textFielDecoratiom.copyWith(
                   focusedBorder: const OutlineInputBorder(
                     borderRadius: BorderRadius.all(Radius.circular(18)),
-                    borderSide: BorderSide(color: AppColors.darkGray, width: 1.5),
+                    borderSide:
+                        BorderSide(color: AppColors.darkGray, width: 1.5),
                   ),
                   fillColor: Colors.white,
                   prefixIcon: const Icon(
@@ -770,7 +773,8 @@ Widget step2(BuildContext context) {
                 decoration: textFielDecoratiom.copyWith(
                   focusedBorder: const OutlineInputBorder(
                     borderRadius: BorderRadius.all(Radius.circular(18)),
-                    borderSide: BorderSide(color: AppColors.darkGray, width: 1.5),
+                    borderSide:
+                        BorderSide(color: AppColors.darkGray, width: 1.5),
                   ),
                   fillColor: Colors.white,
                   prefixIcon: const Icon(
@@ -861,7 +865,8 @@ Widget step3(BuildContext contex) {
                 decoration: textFielDecoratiom.copyWith(
                   focusedBorder: const OutlineInputBorder(
                     borderRadius: BorderRadius.all(Radius.circular(18)),
-                    borderSide: BorderSide(color: AppColors.darkGray, width: 1.5),
+                    borderSide:
+                        BorderSide(color: AppColors.darkGray, width: 1.5),
                   ),
                   fillColor: Colors.white,
                   prefixIcon: const Icon(
@@ -895,7 +900,8 @@ Widget step3(BuildContext contex) {
                 decoration: textFielDecoratiom.copyWith(
                   focusedBorder: const OutlineInputBorder(
                     borderRadius: BorderRadius.all(Radius.circular(18)),
-                    borderSide: BorderSide(color: AppColors.darkGray, width: 1.5),
+                    borderSide:
+                        BorderSide(color: AppColors.darkGray, width: 1.5),
                   ),
                   fillColor: Colors.white,
                   prefixIcon: const Icon(
@@ -929,7 +935,8 @@ Widget step3(BuildContext contex) {
                 decoration: textFielDecoratiom.copyWith(
                   focusedBorder: const OutlineInputBorder(
                     borderRadius: BorderRadius.all(Radius.circular(18)),
-                    borderSide: BorderSide(color: AppColors.darkGray, width: 1.5),
+                    borderSide:
+                        BorderSide(color: AppColors.darkGray, width: 1.5),
                   ),
                   fillColor: Colors.white,
                   prefixIcon: const Icon(

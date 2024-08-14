@@ -1,4 +1,4 @@
-// ignore_for_file: non_constant_identifier_names, unused_local_variable, no_leading_underscores_for_local_identifiers, prefer_typing_uninitialized_variables, avoid_function_literals_in_foreach_calls, deprecated_member_use
+// ignore_for_file: non_constant_identifier_names, unused_local_variable, no_leading_underscores_for_local_identifiers, prefer_typing_uninitialized_variables, avoid_function_literals_in_foreach_calls, deprecated_member_use, prefer_const_literals_to_create_immutables, prefer_const_constructors
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -233,7 +233,8 @@ class _HotelSearchViewState extends State<HotelSearchView> {
               return ListView(
                 children: [
                   Padding(
-                    padding: const EdgeInsets.all(15.0),
+                    padding: const EdgeInsets.only(
+                        left: 15.0, right: 15.0, bottom: 15.0),
                     child: Column(
                       children: [
                         Container(
@@ -325,7 +326,7 @@ class _HotelSearchViewState extends State<HotelSearchView> {
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
                                   Text(
-                                    'Room amenities',
+                                    'Property Amenity',
                                     style: TextStyle(
                                         fontSize: 13,
                                         color: AppColors.grayText,
@@ -586,31 +587,25 @@ class _HotelSearchViewState extends State<HotelSearchView> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                (isCheckedCleaningServices == false &&
-                                        isCheckedFoodDrink == false &&
-                                        isCheckedFreeWifi == false &&
-                                        isCheckedPrivateParking == false &&
-                                        isCheckedPrivatePool == false &&
-                                        _currentRangeValues.start
-                                                .round()
-                                                .toString() ==
-                                            MinPrice &&
-                                        _currentRangeValues.end
-                                                .round()
-                                                .toString() ==
-                                            MaxPrice)
-                                    ? Text(
-                                        'Show ${HotelRooms.value.length} of ${HotelRooms.value.length} Rooms',
-                                        style: const TextStyle(
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.w500),
-                                      )
-                                    : Text(
-                                        'Show $NumberOfResultFilteredHotelRooms of ${HotelRooms.value.length} Rooms',
-                                        style: const TextStyle(
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.w500),
-                                      ),
+                                Text(
+                                  'Show ${'100'} of ${'316'} Rooms',
+                                  style: const TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.w500),
+                                )
+                                // (NumberOfResultFilteredHotelRooms == 0)
+                                //     ? Text(
+                                //         'Show ${NumberOfResultFilteredHotelRooms} of ${HotelRooms.value.length} Rooms',
+                                //         style: const TextStyle(
+                                //             color: Colors.white,
+                                //             fontWeight: FontWeight.w500),
+                                //       )
+                                //     : Text(
+                                //         'Show $NumberOfResultFilteredHotelRooms of ${HotelRooms.value.length} Rooms',
+                                //         style: const TextStyle(
+                                //             color: Colors.white,
+                                //             fontWeight: FontWeight.w500),
+                                //       ),
                               ],
                             ),
                           ),

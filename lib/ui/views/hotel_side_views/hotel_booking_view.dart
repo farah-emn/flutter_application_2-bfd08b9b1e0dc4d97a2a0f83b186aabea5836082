@@ -13,12 +13,14 @@ import 'package:traveling/cards/hotel_finished_booking_card.dart';
 import 'package:traveling/cards/car_side_finished_card.dart';
 import 'package:traveling/cards/hotel_side_finished_card.dart';
 import 'package:traveling/cards/hotel_side_upcoming_card.dart';
+import 'package:traveling/cards/hotel_side_upcoming_card1.dart';
 import 'package:traveling/classes/flight_booking_class.dart';
 import 'package:traveling/classes/hotel_bookings_class.dart';
 import 'package:traveling/classes/hotel_side_finished_class.dart';
 import 'package:traveling/classes/hotel_side_upcoming_class.dart';
 import 'package:traveling/ui/shared/custom_widgets/white_container.dart';
 import 'package:traveling/ui/shared/text_size.dart';
+import '../../../cards/hotel_side_finished_card1.dart';
 import '../../shared/colors.dart';
 import '../../shared/custom_widgets/custom_button.dart';
 import '../../shared/custom_widgets/custom_textfield2.dart';
@@ -140,7 +142,7 @@ class _HotelBookingViewState extends State<HotelBookingView>
           child: ListView.builder(
             shrinkWrap: true,
             itemCount: HotelbookingsDetails2.length,
-            itemBuilder: (context, index) => HotelSideUpcomingCard(
+            itemBuilder: (context, index) => HotelSideUpcomingCard1(
               size: size,
               itemIndex: index,
               hotelBookingsDetails2: HotelbookingsDetails2[index],
@@ -159,7 +161,7 @@ class _HotelBookingViewState extends State<HotelBookingView>
           child: ListView.builder(
             shrinkWrap: true,
             itemCount: HotelFinishedDetails2.length,
-            itemBuilder: (context, index) => HotelSideFinishedCard(
+            itemBuilder: (context, index) => HotelSideFinishedCard1(
               size: size,
               itemIndex: index,
               hotelBookingsDetails2: HotelFinishedDetails2[index],

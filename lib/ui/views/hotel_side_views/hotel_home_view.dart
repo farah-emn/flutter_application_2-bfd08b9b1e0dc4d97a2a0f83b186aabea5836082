@@ -173,12 +173,27 @@ class _HotelHomeViewState extends State<HotelHomeView> {
                 Icons.currency_exchange_rounded,
                 color: AppColors.purple,
               ),
-              title: const Text(
-                'Currency',
-                style: TextStyle(
-                  fontSize: TextSize.header2,
-                  fontWeight: FontWeight.w500,
-                ),
+              title: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text(
+                    'Currency',
+                    style: TextStyle(
+                      fontSize: TextSize.header2,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                  Obx(
+                    () => Text(
+                      HotelCurrency_Controller.selectedCurrency.value,
+                      style: TextStyle(
+                        fontSize: 15,
+                        // color: AppColors.grayText,
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
+                  )
+                ],
               ),
               onTap: () {
                 Get.to(CurrencyPage());
@@ -412,15 +427,17 @@ class _HotelHomeViewState extends State<HotelHomeView> {
                                 SizedBox(
                                   height: 5,
                                 ),
-                                Row(
-                                  children: [
-                                    Text(
-                                      '\ ${HotelCurrency_Controller.convert(HotelCurrency_Controller.selectedCurrency.value, incoming)} ${HotelCurrency_Controller.selectedCurrency.value}',
-                                      style: TextStyle(
-                                          color: Colors.white, fontSize: 16),
-                                    ),
-                                  ],
-                                ),
+                                Obx(
+                                  () => Row(
+                                    children: [
+                                      Text(
+                                        '\ ${HotelCurrency_Controller.convert(HotelCurrency_Controller.selectedCurrency.value, incoming)} ${HotelCurrency_Controller.selectedCurrency.value}',
+                                        style: TextStyle(
+                                            color: Colors.white, fontSize: 16),
+                                      ),
+                                    ],
+                                  ),
+                                )
                               ],
                             ),
                           ),

@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:traveling/classes/hotel.dart';
 import 'package:traveling/ui/shared/colors.dart';
 import 'package:traveling/ui/shared/text_size.dart';
-import 'package:traveling/ui/views/traveller_side_views/hotel_details_view.dart';
 
 class HotelCard extends StatefulWidget {
   const HotelCard({
@@ -26,9 +25,9 @@ class _HotelCardState extends State<HotelCard> {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Get.to(
-          HotelDetailsView(),
-        );
+        // Get.to(
+        //     // HotelDetailsView(),
+        //     );
       },
       child: Container(
         margin: const EdgeInsets.only(bottom: 20, right: 15),

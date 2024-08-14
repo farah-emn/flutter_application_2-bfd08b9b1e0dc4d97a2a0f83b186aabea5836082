@@ -9,7 +9,6 @@ import 'package:traveling/ui/shared/utils.dart';
 import 'package:traveling/ui/views/first_view.dart';
 import 'package:traveling/ui/views/traveller_side_views/currency_display.dart';
 import 'package:traveling/ui/views/traveller_side_views/profile_view.dart';
-
 import '../../shared/custom_widgets/custom_textfield2.dart';
 
 class MenuView extends StatefulWidget {

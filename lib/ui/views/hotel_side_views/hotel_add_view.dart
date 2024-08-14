@@ -1137,7 +1137,6 @@ class _HotelAddViewState extends State<HotelAddView> {
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
-                                        
                                         Text(
                                           'Bathrooms',
                                           style: TextStyle(
@@ -1185,10 +1184,11 @@ class _HotelAddViewState extends State<HotelAddView> {
                       InkWell(
                         onTap: _confirm,
                         child: CustomButton(
-                            backgroundColor: AppColors.purple,
-                            text: 'Add',
-                            textColor: Colors.white,
-                            widthPercent: size.width,),
+                          backgroundColor: AppColors.purple,
+                          text: 'Add',
+                          textColor: Colors.white,
+                          widthPercent: size.width,
+                        ),
                       ),
                       const SizedBox(
                         height: 40,

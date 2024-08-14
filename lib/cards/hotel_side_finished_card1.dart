@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:traveling/classes/hotel_bookings_class.dart';
+import 'package:traveling/classes/hotel_side_finished_class.dart';
 import 'package:traveling/classes/hotel_side_upcoming_class.dart';
 import 'package:traveling/ui/shared/colors.dart';
 import 'package:traveling/ui/shared/custom_widgets/custom_button.dart';
 import 'package:traveling/ui/shared/text_size.dart';
+import 'package:traveling/ui/views/traveller_side_views/room_view.dart';
 
-import '../classes/hotel_side_upcoming_class1.dart';
-import '../controllers/currency_controller.dart';
-
-class HotelSideUpcomingCard extends StatefulWidget {
-  const HotelSideUpcomingCard({
+class HotelSideFinishedCard1 extends StatefulWidget {
+  const HotelSideFinishedCard1({
     super.key,
     required this.size,
     required this.hotelBookingsDetails2,
@@ -18,24 +17,23 @@ class HotelSideUpcomingCard extends StatefulWidget {
   });
 
   final Size size;
-  final HotelSideBookingsClass1 hotelBookingsDetails2;
+  final HotelSideFinishedClass hotelBookingsDetails2;
   final int itemIndex;
 
   @override
-  State<HotelSideUpcomingCard> createState() => _HotelSideUpcomingCardState();
+  State<HotelSideFinishedCard1> createState() => _HotelSideFinishedCard1State();
 }
 
-class _HotelSideUpcomingCardState extends State<HotelSideUpcomingCard> {
-  CurrencyController currencyController = Get.put(CurrencyController());
+class _HotelSideFinishedCard1State extends State<HotelSideFinishedCard1> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return InkWell(
-      // onTap: () {
-      //   Get.to(
-      //     RoomView(),
-      //   );
-      // },
+      onTap: () {
+        Get.to(
+          RoomView(),
+        );
+      },
       child: Container(
         margin: const EdgeInsets.only(
           bottom: 20,
@@ -67,11 +65,7 @@ class _HotelSideUpcomingCardState extends State<HotelSideUpcomingCard> {
                       topRight: Radius.circular(20),
                     ),
                     image: DecorationImage(
-                      image: NetworkImage(
-                          widget.hotelBookingsDetails2.image != null &&
-                                  widget.hotelBookingsDetails2.image.isNotEmpty
-                              ? widget.hotelBookingsDetails2.image
-                              : ''),
+                      image: AssetImage(widget.hotelBookingsDetails2.image),
                       fit: BoxFit.fill,
                     ),
                   ),
@@ -91,8 +85,7 @@ class _HotelSideUpcomingCardState extends State<HotelSideUpcomingCard> {
                             children: [
                               SizedBox(
                                 child: Text(
-                                  widget.hotelBookingsDetails2.customerName ??
-                                      '',
+                                  widget.hotelBookingsDetails2.customerName,
                                   style: const TextStyle(
                                     fontWeight: FontWeight.w600,
                                     fontSize: TextSize.header1,
@@ -115,7 +108,7 @@ class _HotelSideUpcomingCardState extends State<HotelSideUpcomingCard> {
                                 width: 5,
                               ),
                               Text(
-                                widget.hotelBookingsDetails2.email ?? '',
+                                widget.hotelBookingsDetails2.email,
                                 style: const TextStyle(
                                     color: AppColors.grayText,
                                     fontSize: TextSize.header2),
@@ -243,12 +236,7 @@ class _HotelSideUpcomingCardState extends State<HotelSideUpcomingCard> {
                         width: 5,
                       ),
                       Text(
-                        currencyController
-                            .convert(
-                                currencyController.selectedCurrency.value,
-                                widget.hotelBookingsDetails2.totalPrice
-                                    .toDouble())
-                            .toString(),
+                        '${widget.hotelBookingsDetails2.totalPrice} USD',
                         style: const TextStyle(
                             color: AppColors.purple,
                             fontSize: TextSize.header1,
@@ -261,6 +249,51 @@ class _HotelSideUpcomingCardState extends State<HotelSideUpcomingCard> {
                   ),
                 ],
               ),
+            ),
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 15),
+              child: Row(
+                children: [
+                  Text(
+                    'Customer Rating',
+                    style: TextStyle(
+                      fontSize: TextSize.header2,
+                    ),
+                  ),
+                  Spacer(),
+                  Icon(
+                    Icons.star_rounded,
+                    color: AppColors.gold,
+                    size: 20,
+                  ),
+                  Icon(
+                    Icons.star_rounded,
+                    color: AppColors.gold,
+                    size: 20,
+                  ),
+                  Icon(
+                    Icons.star_rounded,
+                    color: AppColors.gold,
+                    size: 20,
+                  ),
+                  Icon(
+                    Icons.star_half_rounded,
+                    color: AppColors.gold,
+                    size: 20,
+                  ),
+                  Icon(
+                    Icons.star_border_rounded,
+                    color: AppColors.gold,
+                    size: 20,
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(
+              height: 15,
             ),
           ],
         ),

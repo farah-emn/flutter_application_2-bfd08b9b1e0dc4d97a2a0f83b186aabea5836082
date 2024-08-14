@@ -1,34 +1,111 @@
+// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
+
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:traveling/classes/hotel_room_details_class1.dart';
 import 'package:traveling/ui/shared/colors.dart';
 import 'package:traveling/ui/shared/text_size.dart';
-import '../ui/views/traveller_side_views/room_view.dart';
+import '../classes/amenities_class.dart';
+import '../classes/hotel_room_details_class.dart';
+import '../controllers/currency_controller.dart';
+import '../ui/views/traveller_side_views/hotel_room_view.dart';
 
 class HotelCard2 extends StatefulWidget {
-  const HotelCard2({
+  HotelCard2({
     super.key,
     required this.size,
     required this.room,
-    required this.itemIndex,
+    required this.HotelId,
   });
 
   final Size size;
-  final HotelRoomClass1 room;
-  final int itemIndex;
+  final RoomDetailsClass room;
+  final String HotelId;
 
   @override
   State<HotelCard2> createState() => _HotelCard2State();
 }
 
 class _HotelCard2State extends State<HotelCard2> {
+  final CurrencyController HotelCurrency_Controller =
+      Get.put(CurrencyController());
+  late User loggedinUser;
+  final _auth = FirebaseAuth.instance;
+  Map<dynamic, dynamic> RoomData = {};
+  List<RoomDetailsClass> HotelRoom = [];
+  List<AmenitiesClass> Amenities = [];
+  double incoming = 0.0;
+  int completedFlight = 0;
+  @override
+  void initState() {
+    getData();
+    super.initState();
+  }
+
+  void getData() async {
+    if (mounted) {
+      fetchAmenities().then((fetchAmenities) {});
+    }
+  }
+
+  Future<Map> fetchAmenities() async {
+    FirebaseDatabase.instance
+        .reference()
+        .child('Room')
+        .once()
+        .then((DatabaseEvent event) {
+      if (event.snapshot.exists) {
+        var RoomData = Map<dynamic, dynamic>.from(event.snapshot.value as Map);
+        RoomData.forEach((Roomkey, value) {
+          if (Roomkey == widget.room.id) {
+            Amenities.clear(); // Clear the Amenities list here
+            if (mounted) {
+              setState(() {
+                if (value['isCheckedFreeWifi']) {
+                  Amenities.add(AmenitiesClass(
+                      icon: Icons.wifi_rounded, title: 'Free Wifi'));
+                }
+
+                if (value['isCheckedFoodAnddrink']) {
+                  Amenities.add(AmenitiesClass(
+                      icon: Icons.coffee, title: 'Food & drink'));
+                }
+
+                if (value['isCheckedPrivatePool']) {
+                  Amenities.add(
+                      AmenitiesClass(icon: Icons.pool, title: 'Private Pool'));
+                }
+                if (value['isCheckedPrivateParking']) {
+                  Amenities.add(AmenitiesClass(
+                      icon: Icons.local_parking_rounded,
+                      title: 'Private parking'));
+                }
+
+                if (value['isCheckedCleaningServices']) {
+                  Amenities.add(AmenitiesClass(
+                      icon: Icons.cleaning_services_rounded,
+                      title: 'Cleaning services'));
+                }
+              });
+            }
+          }
+        });
+      }
+    });
+
+    return RoomData;
+  }
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return InkWell(
       onTap: () {
         Get.to(
-          const RoomView(),
+          RoomView(
+              Amenities: Amenities, Room: widget.room, HotelId: widget.HotelId),
         );
       },
       child: Container(
@@ -57,12 +134,14 @@ class _HotelCard2State extends State<HotelCard2> {
               height: 150,
               width: 150,
               decoration: BoxDecoration(
-                borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(20),
-                  bottomLeft: Radius.circular(20),
+                borderRadius: const BorderRadius.all(
+                  Radius.circular(20),
                 ),
                 image: DecorationImage(
-                  image: AssetImage(widget.room.image),
+                  image: NetworkImage(widget.room.RoomPhoto != null &&
+                          widget.room.RoomPhoto!.isNotEmpty
+                      ? widget.room.RoomPhoto!.first
+                      : ''),
                   fit: BoxFit.fill,
                 ),
               ),
@@ -75,7 +154,7 @@ class _HotelCard2State extends State<HotelCard2> {
                 children: [
                   Text(
                     softWrap: true,
-                    widget.room.name,
+                    widget.room.Overview,
                     style: const TextStyle(
                       fontWeight: FontWeight.w500,
                       fontSize: TextSize.header1,
@@ -103,7 +182,7 @@ class _HotelCard2State extends State<HotelCard2> {
                                 width: 5,
                               ),
                               Text(
-                                widget.room.beds,
+                                '2 Twin Beds',
                                 style: const TextStyle(
                                     color: AppColors.grayText,
                                     fontSize: TextSize.header2),
@@ -121,7 +200,7 @@ class _HotelCard2State extends State<HotelCard2> {
                                 width: 5,
                               ),
                               Text(
-                                widget.room.view,
+                                'Partial Sea View',
                                 style: const TextStyle(
                                     color: AppColors.grayText,
                                     fontSize: TextSize.header2),
@@ -135,7 +214,7 @@ class _HotelCard2State extends State<HotelCard2> {
                       ),
                     ],
                   ),
-                  const Row(
+                  Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Row(
@@ -168,7 +247,7 @@ class _HotelCard2State extends State<HotelCard2> {
                         ],
                       ),
                       Text(
-                        '100\$',
+                        '${HotelCurrency_Controller.convert(HotelCurrency_Controller.selectedCurrency.value, widget.room.Price.toDouble())} ${HotelCurrency_Controller.selectedCurrency.value}',
                         style: TextStyle(
                             color: AppColors.purple,
                             fontSize: TextSize.header1,

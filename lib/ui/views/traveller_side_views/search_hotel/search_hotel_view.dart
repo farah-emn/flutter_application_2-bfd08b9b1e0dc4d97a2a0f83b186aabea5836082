@@ -20,27 +20,31 @@ import 'package:traveling/ui/views/traveller_side_views/search_flight/list_arriv
 import 'package:traveling/ui/views/traveller_side_views/search_flight/list_arrival_city_round.dart';
 import 'package:traveling/ui/views/traveller_side_views/search_flight/list_departure_city_oneway.dart';
 import 'package:traveling/ui/views/traveller_side_views/search_flight/list_departure_city_round.dart';
+
+import '../../../../controllers/hotel_search_controller.dart';
+import 'departure_date_arrival_date.dart';
+import 'list_destonation_hotel.dart';
 // import 'package:traveling/ui/views/traveller_side_views/traveller_details_view/traveller_details_view2.dart';
 
 class SearchHotelView extends StatefulWidget {
-  String? DepartureCity;
-  String? ArrivalCity;
-  SearchHotelView({this.DepartureCity, this.ArrivalCity, Key? key})
-      : super(key: key);
+  String? Destination;
+
+  SearchHotelView({this.Destination, Key? key}) : super(key: key);
 
   @override
   SearchHotelViewState createState() => SearchHotelViewState();
 }
 
 class SearchHotelViewState extends State<SearchHotelView> {
-  final TextEditingController dateController = TextEditingController();
+  final TextEditingController DeparturedateController = TextEditingController();
+  final TextEditingController ArrivalDateController = TextEditingController();
+
   void _handleDateSelection(String dateText) {
     controller.updateSelectedDate();
-    dateController.text = dateText;
+    DeparturedateController.text = dateText;
   }
 
-  final SearchViewOneWayController controller =
-      Get.put(SearchViewOneWayController());
+  final SearchHotelController controller = Get.put(SearchHotelController());
 
   @override
   void initState() {
@@ -50,6 +54,13 @@ class SearchHotelViewState extends State<SearchHotelView> {
   @override
   void dispose() {
     super.dispose();
+  }
+
+  void _searchForHotel() async {
+    if (widget.Destination != null) {
+      controller.setDestnation(widget.Destination!);
+    }
+    controller.searchForHotel();
   }
 
   @override
@@ -94,34 +105,12 @@ class SearchHotelViewState extends State<SearchHotelView> {
                     final result = await Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => ListDepartureCity(),
+                        builder: (context) => ListDestonationHotel(),
                       ),
                     );
                     if (result != null) {
                       setState(() {
-                        if (result != null) {
-                          setState(() {
-                            if (widget.ArrivalCity != '') {
-                              if (result['DepartureCity'] ==
-                                  widget.ArrivalCity) {
-                                showDialog(
-                                  context: context,
-                                  builder: (BuildContext context) {
-                                    return AlertDialog(
-                                      title: Text('Invalid City Selection'),
-                                      content: Text(
-                                          'Arrival city cannot be the same as the departure city.'),
-                                    );
-                                  },
-                                );
-                              } else {
-                                widget.DepartureCity = result['DepartureCity'];
-                              }
-                            } else {
-                              widget.DepartureCity = result['DepartureCity'];
-                            }
-                          });
-                        }
+                        widget.Destination = result['Destination'];
                       });
                     }
                   },
@@ -133,7 +122,7 @@ class SearchHotelViewState extends State<SearchHotelView> {
                         width: 5,
                       ),
                       Text(
-                        widget.DepartureCity ?? '',
+                        widget.Destination ?? '',
                         style: TextStyle(
                             fontSize: 15, fontWeight: FontWeight.w500),
                       ),
@@ -144,125 +133,12 @@ class SearchHotelViewState extends State<SearchHotelView> {
               SizedBox(
                 height: 20,
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          SizedBox(
-                            width: 10,
-                          ),
-                          Text(
-                            'Arrival Date',
-                            style: TextStyle(
-                                fontSize: 13,
-                                color: AppColors.grayText,
-                                fontWeight: FontWeight.w500),
-                          ),
-                        ],
-                      ),
-                      InkWell(
-                        onTap: () async {
-                          DateTime? newDepartureDate = await showDatePicker(
-                              context: context,
-                              initialDate: DateTime(2024),
-                              firstDate: DateTime(2024),
-                              lastDate: DateTime(2026));
-                        },
-                        child: Container(
-                          padding: EdgeInsets.only(right: 10, left: 10),
-                          width: size.width / 2 - 20,
-                          height: 40,
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(20),
-                            border: Border.all(
-                                color: AppColors.LightGrayColor, width: 1),
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: const [
-                              Icon(Icons.calendar_month_rounded,
-                                  color: AppColors.purple),
-                              SizedBox(
-                                width: 10,
-                              ),
-                              Text(
-                                '2024/10',
-                                style: TextStyle(
-                                    fontSize: TextSize.header2,
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.w500),
-                              )
-                            ],
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          SizedBox(
-                            width: 10,
-                          ),
-                          Text(
-                            'Depature Date',
-                            style: TextStyle(
-                                fontSize: 13,
-                                color: AppColors.grayText,
-                                fontWeight: FontWeight.w500),
-                          ),
-                        ],
-                      ),
-                      InkWell(
-                        onTap: () async {
-                          DateTime? newDepartureDate = await showDatePicker(
-                              context: context,
-                              initialDate: DateTime(2024),
-                              firstDate: DateTime(2024),
-                              lastDate: DateTime(2026));
-                        },
-                        child: Container(
-                          padding: EdgeInsets.only(right: 10, left: 10),
-                          width: size.width / 2 - 20,
-                          height: 40,
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(20),
-                            border: Border.all(
-                                color: AppColors.LightGrayColor, width: 1),
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: const [
-                              Icon(Icons.calendar_month_rounded,
-                                  color: AppColors.purple),
-                              SizedBox(
-                                width: 10,
-                              ),
-                              Text(
-                                '2024/11',
-                                style: TextStyle(
-                                    fontSize: TextSize.header2,
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.w500),
-                              )
-                            ],
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
+              DepartureDateArrivalDateDetails(
+                  onDateSelected: _handleDateSelection,
+                  DepartureDate: controller.departureDate,
+                  ArrivalDate: controller.ArrivalDate,
+                  DeparturedateController: DeparturedateController,
+                  ArrivalDateController: ArrivalDateController),
               SizedBox(
                 height: 20,
               ),
@@ -290,7 +166,7 @@ class SearchHotelViewState extends State<SearchHotelView> {
                       Container(
                         padding: EdgeInsets.only(right: 10, left: 10),
                         width: size.width / 2 - 20,
-                        height: 40,
+                        height: 50,
                         decoration: BoxDecoration(
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(20),
@@ -304,8 +180,8 @@ class SearchHotelViewState extends State<SearchHotelView> {
                             SizedBox(
                               width: 10,
                             ),
-                            GetBuilder<SearchViewOneWayController>(
-                              init: SearchViewOneWayController(),
+                            GetBuilder<SearchHotelController>(
+                              init: SearchHotelController(),
                               builder: (controller) {
                                 return Text(
                                   '${controller.Adultcounter} Adult',
@@ -324,14 +200,14 @@ class SearchHotelViewState extends State<SearchHotelView> {
                                     controller.incrementAdult();
                                   },
                                   child: Icon(Icons.arrow_drop_up_sharp,
-                                      color: AppColors.purple, size: 17),
+                                      color: AppColors.purple, size: 20),
                                 ),
                                 InkWell(
                                   onTap: () {
                                     controller.decrementAdult();
                                   },
                                   child: Icon(Icons.arrow_drop_down_sharp,
-                                      color: AppColors.purple, size: 17),
+                                      color: AppColors.purple, size: 20),
                                 ),
                               ],
                             )
@@ -361,7 +237,7 @@ class SearchHotelViewState extends State<SearchHotelView> {
                       Container(
                         padding: EdgeInsets.only(right: 10, left: 10),
                         width: size.width / 2 - 20,
-                        height: 40,
+                        height: 50,
                         decoration: BoxDecoration(
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(20),
@@ -375,8 +251,8 @@ class SearchHotelViewState extends State<SearchHotelView> {
                             SizedBox(
                               width: 10,
                             ),
-                            GetBuilder<SearchViewOneWayController>(
-                              init: SearchViewOneWayController(),
+                            GetBuilder<SearchHotelController>(
+                              init: SearchHotelController(),
                               builder: (controller) {
                                 return Text(
                                   '${controller.Childcounter} Children',
@@ -395,14 +271,14 @@ class SearchHotelViewState extends State<SearchHotelView> {
                                     controller.incrementChild();
                                   },
                                   child: Icon(Icons.arrow_drop_up_sharp,
-                                      color: AppColors.purple, size: 17),
+                                      color: AppColors.purple, size: 20),
                                 ),
                                 InkWell(
                                   onTap: () {
                                     controller.decrementChild();
                                   },
                                   child: Icon(Icons.arrow_drop_down_sharp,
-                                      color: AppColors.purple, size: 17),
+                                      color: AppColors.purple, size: 20),
                                 ),
                               ],
                             )
@@ -417,9 +293,7 @@ class SearchHotelViewState extends State<SearchHotelView> {
                 height: 30,
               ),
               InkWell(
-                onTap: () {
-                  Get.to(AllHotelView());
-                },
+                onTap: _searchForHotel,
                 child: CustomButton(
                   text: 'Search',
                   textColor: AppColors.backgroundgrayColor,

@@ -43,7 +43,7 @@ class HotelWelcomeView extends StatelessWidget {
                         backgroundColor: AppColors.darkBlue,
                         text: 'Sign up',
                         textColor: AppColors.backgroundgrayColor,
-                        widthPercent: size.width,
+                        widthPercent: 1.1,
                       ),
                     ),
                   ),

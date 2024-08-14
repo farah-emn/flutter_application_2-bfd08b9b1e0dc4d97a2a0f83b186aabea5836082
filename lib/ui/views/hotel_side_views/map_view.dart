@@ -27,51 +27,51 @@ class _MapViewState extends State<MapView> {
   @override
   void initState() {
     super.initState();
-      markers = {
-        Marker(
-            markerId: defaultMarkerId,
-            position: LatLng(28.383406363992062, 41.31760530173779),
-            draggable: true, // Allow the marker to be moved
-            onDragEnd: (newPosition) {
-              _updateMarker(newPosition);
-            })
-      };
-    }
+    markers = {
+      Marker(
+          markerId: defaultMarkerId,
+          position: LatLng(28.383406363992062, 41.31760530173779),
+          draggable: true, // Allow the marker to be moved
+          onDragEnd: (newPosition) {
+            _updateMarker(newPosition);
+          })
+    };
+  }
 
-    void _onMapCreated(GoogleMapController controller) {
-      mapController = controller;
-    }
+  void _onMapCreated(GoogleMapController controller) {
+    mapController = controller;
+  }
 
-    var latLng = null;
-    void _searchLocation() async {
-      final query = _searchController.text;
-      if (query.isNotEmpty) {
-        try {
-          final locations = await locationFromAddress(query);
-          if (locations.isNotEmpty) {
-            latLng = LatLng(locations.first.latitude, locations.first.longitude);
-            mapController!.animateCamera(CameraUpdate.newLatLngZoom(latLng, 18));
-            _updateMarker(latLng);
-          } else {
-            Fluttertoast.showToast(
-              msg: "No results found for the supplied address",
-              toastLength: Toast.LENGTH_SHORT,
-              gravity: ToastGravity.CENTER,
-            );
-          }
-        } catch (e) {
+  var latLng = null;
+  void _searchLocation() async {
+    final query = _searchController.text;
+    if (query.isNotEmpty) {
+      try {
+        final locations = await locationFromAddress(query);
+        if (locations.isNotEmpty) {
+          latLng = LatLng(locations.first.latitude, locations.first.longitude);
+          mapController!.animateCamera(CameraUpdate.newLatLngZoom(latLng, 18));
+          _updateMarker(latLng);
+        } else {
           Fluttertoast.showToast(
-            msg: "Error occurred: $e",
+            msg: "No results found for the supplied address",
             toastLength: Toast.LENGTH_SHORT,
             gravity: ToastGravity.CENTER,
           );
         }
-      } else {
+      } catch (e) {
         Fluttertoast.showToast(
-          msg: "Please enter a location",
+          msg: "Error occurred: $e",
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.CENTER,
         );
+      }
+    } else {
+      Fluttertoast.showToast(
+        msg: "Please enter a location",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.CENTER,
+      );
     }
   }
 
@@ -140,15 +140,14 @@ class _MapViewState extends State<MapView> {
       body: Stack(
         children: [
           Expanded(
-          child:
-          GoogleMap(
-            markers: markers!,
-            onMapCreated: _onMapCreated,
-            initialCameraPosition: CameraPosition(
-                target: LatLng(28.383406363992062, 41.31760530173779),
-                zoom: 1),
+            child: GoogleMap(
+              markers: markers!,
+              onMapCreated: _onMapCreated,
+              initialCameraPosition: CameraPosition(
+                  target: LatLng(28.383406363992062, 41.31760530173779),
+                  zoom: 1),
+            ),
           ),
-           ),
           Positioned(
             top: 50,
             left: 8,
@@ -156,45 +155,42 @@ class _MapViewState extends State<MapView> {
             child: SizedBox(
               height: 45,
               width: size.width - 30,
-              child:
-           TextField(
-
-            controller: _searchController,
-            onSubmitted: (value) => _searchLocation(),
-            textAlignVertical: TextAlignVertical.bottom,
-            decoration: searchTextFielDecoratiom.copyWith(
-              hintText: "Search",
-              prefixIcon: const Icon(
-                Icons.search,
-                color: AppColors.grayText,
+              child: TextField(
+                controller: _searchController,
+                onSubmitted: (value) => _searchLocation(),
+                textAlignVertical: TextAlignVertical.bottom,
+                decoration: searchTextFielDecoratiom.copyWith(
+                  hintText: "Search",
+                  prefixIcon: const Icon(
+                    Icons.search,
+                    color: AppColors.grayText,
+                  ),
+                ),
               ),
             ),
           ),
-          ),
-            ),
           Positioned(
             bottom: 15,
             left: size.width / 4,
             child: InkWell(
-                onTap: () {
-                  if (latLng != null) {
-                    _ConfirmLocation(latLng);
-                  } else {
-                    Fluttertoast.showToast(
-                      msg: "Please search for a location first",
-                      toastLength: Toast.LENGTH_SHORT,
-                      gravity: ToastGravity.CENTER,
-                    );
-                  }
-                },
-                child: CustomButton(
-                  text: 'Confirm location',
-                  textColor: AppColors.backgroundgrayColor,
-                  backgroundColor: AppColors.purple,
-                  widthPercent: size.width / 2,
-                 
-                ),
-                ),
+              onTap: () {
+                if (latLng != null) {
+                  _ConfirmLocation(latLng);
+                } else {
+                  Fluttertoast.showToast(
+                    msg: "Please search for a location first",
+                    toastLength: Toast.LENGTH_SHORT,
+                    gravity: ToastGravity.CENTER,
+                  );
+                }
+              },
+              child: CustomButton(
+                text: 'Confirm location',
+                textColor: AppColors.backgroundgrayColor,
+                backgroundColor: AppColors.purple,
+                widthPercent: size.width / 2,
+              ),
+            ),
           ),
         ],
       ),

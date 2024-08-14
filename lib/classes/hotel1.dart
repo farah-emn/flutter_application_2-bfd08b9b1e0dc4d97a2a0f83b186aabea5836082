@@ -5,6 +5,9 @@ class HotelClass1 {
   final String? stars;
   final num StartPrice;
   final String Id;
+  final String email;
+  final String address;
+  final String mobilenumber;
 
   HotelClass1(
       {required this.Name,
@@ -12,7 +15,10 @@ class HotelClass1 {
       required this.Image,
       this.stars,
       required this.StartPrice,
-      required this.Id});
+      required this.Id,
+      required this.email,
+      required this.address,
+      required this.mobilenumber});
 
   factory HotelClass1.fromMap(Map<dynamic, dynamic> map) {
     return HotelClass1(
@@ -21,6 +27,9 @@ class HotelClass1 {
       Image: map['image'] is String ? map['image'] : '',
       StartPrice: map['StartPrice'] is num ? map['StartPrice'] : 0,
       Id: map['Id'] is String ? map['Id'] : '',
+      email: map['email'] is String ? map['email'] : '',
+      address: map['address'] is String ? map['address'] : '',
+      mobilenumber: map['mobilenumber'] is String ? map['mobilenumber'] : '',
     );
   }
 }

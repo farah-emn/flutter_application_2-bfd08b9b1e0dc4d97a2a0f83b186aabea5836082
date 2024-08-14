@@ -2,13 +2,8 @@
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:get/get.dart';
 import 'package:traveling/ui/shared/text_size.dart';
-import 'package:traveling/ui/shared/utils.dart';
-import 'package:traveling/ui/views/hotel_side_views/hotel_currency.dart';
 import '../../shared/colors.dart';
 import '../../shared/custom_widgets/custom_textfield2.dart';
 
@@ -23,6 +18,9 @@ class _HotelAboutUsViewState extends State<HotelAboutUsView> {
   var HotelImage;
   final _emailController = TextEditingController();
   final _HotelNameController = TextEditingController();
+  final _MobileController = TextEditingController();
+  final _LocationController = TextEditingController();
+
   final _auth = FirebaseAuth.instance;
   late final User? user;
   late DatabaseReference ref;
@@ -41,6 +39,8 @@ class _HotelAboutUsViewState extends State<HotelAboutUsView> {
     final userData = Map<dynamic, dynamic>.from(event.value as Map);
     _HotelNameController.text = userData['HotelName'];
     _emailController.text = userData['email'];
+    _LocationController.text =
+        ' ${userData['location']} - ${userData['address']}';
     if (mounted) {
       setState(() {
         HotelImage = userData['image'];
@@ -271,6 +271,7 @@ class _HotelAboutUsViewState extends State<HotelAboutUsView> {
                           height: 40,
                           width: size.width,
                           child: TextField(
+                            controller: _LocationController,
                             decoration: textFielDecoratiom.copyWith(
                               focusedBorder: const OutlineInputBorder(
                                 borderRadius:

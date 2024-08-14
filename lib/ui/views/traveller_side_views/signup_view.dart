@@ -279,7 +279,7 @@ class _SignUpViewState extends State<SignUpView> {
                                         email: email, password: password);
                                 User? user = _auth.currentUser;
                                 if (newUser != null) {
-                                  Get.offAll(const Home());
+                                  Get.offAll(Home());
                                   ref.child(user!.uid.toString()).set({
                                     'email': email,
                                     'password': password,

@@ -547,11 +547,11 @@ class _HotelSignUpImageViewState extends State<HotelSignUpImageView> {
                             }
                           },
                           child: CustomButton(
-                              text: 'Confirm location',
-                              textColor: AppColors.backgroundgrayColor,
-                              backgroundColor: AppColors.purple,
-                              widthPercent: size.width,
-                              ),
+                            text: 'Confirm location',
+                            textColor: AppColors.backgroundgrayColor,
+                            backgroundColor: AppColors.purple,
+                            widthPercent: size.width,
+                          ),
                         ),
                       ],
                     )

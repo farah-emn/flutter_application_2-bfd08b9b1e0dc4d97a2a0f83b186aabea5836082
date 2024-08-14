@@ -161,7 +161,7 @@ class _HotelSignInViewState extends State<HotelSignInView> {
                       'Sign in ',
                       style: TextStyle(
                           fontSize: TextSize.header1,
-                              fontWeight: FontWeight.w700),
+                          fontWeight: FontWeight.w700),
                     ),
                     const SizedBox(
                       height: 20,
@@ -240,7 +240,6 @@ class _HotelSignInViewState extends State<HotelSignInView> {
                     const SizedBox(
                       height: 10,
                     ),
-                  
                     Text(
                       errorText,
                       style: const TextStyle(color: Colors.red),
@@ -324,7 +323,6 @@ class _HotelSignInViewState extends State<HotelSignInView> {
                         backgroundColor: AppColors.purple,
                         text: 'Sign in',
                         textColor: AppColors.backgroundgrayColor,
-                 
                         widthPercent: size.width,
                       ),
                     ),

@@ -1,20 +1,25 @@
-import 'package:flutter/cupertino.dart';
+// ignore_for_file: must_be_immutable, prefer_const_literals_to_create_immutables, prefer_const_constructors
+
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:get/get.dart';
 import 'package:traveling/cards/amenities_card.dart';
-import 'package:traveling/cards/hotel_card2.dart';
 import 'package:traveling/cards/image_card.dart';
 import 'package:traveling/classes/amenities_class.dart';
-import 'package:traveling/classes/hotel_room_details_class1.dart';
 import 'package:traveling/classes/image.dart';
+import 'package:traveling/controllers/hotel_controller.dart';
+import 'package:traveling/controllers/hotel_rooms_controller.dart';
+import 'package:traveling/controllers/hotel_search_controller.dart';
 import 'package:traveling/ui/shared/colors.dart';
-import 'package:traveling/ui/shared/custom_widgets/tab_item.dart';
-import 'package:traveling/ui/shared/custom_widgets/white_container.dart';
 import 'package:traveling/ui/shared/text_size.dart';
-
-import '../../../classes/hotel_room_details_class.dart';
+import '../../../../cards/hotel_card2.dart';
+import '../../../../classes/hotel1.dart';
+import 'hotel_map_view.dart';
 
 class HotelDetailsView extends StatefulWidget {
+  HotelClass1? Hotel;
+
+  HotelDetailsView({super.key, this.Hotel});
   @override
   State<HotelDetailsView> createState() => _HotelDetailsViewState();
 }
@@ -22,15 +27,23 @@ class HotelDetailsView extends StatefulWidget {
 class _HotelDetailsViewState extends State<HotelDetailsView>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
-
+  final SearchHotelController hotelscontroller =
+      Get.put(SearchHotelController());
+  final HotelController Hotel_Controller = Get.put(HotelController());
+  final HotelRoomsController hotelRoomsController =
+      Get.put(HotelRoomsController());
   @override
   void initState() {
     super.initState();
+
     _tabController = TabController(length: 2, vsync: this);
   }
 
   @override
   Widget build(BuildContext context) {
+    hotelRoomsController.getAllRoomRatings(widget.Hotel!.Id ?? '');
+    final HotelRoomsController controller = Get.put(HotelRoomsController());
+
     Size size = MediaQuery.of(context).size;
     return DefaultTabController(
       length: 2,
@@ -93,13 +106,13 @@ class _HotelDetailsViewState extends State<HotelDetailsView>
                   ],
                 ),
               ),
-              const Padding(
+              Padding(
                 padding: EdgeInsets.only(top: 100, left: 15, right: 15),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Shangri-La Bosphorus, Istanbul',
+                      widget.Hotel!.Name ?? '',
                       style: TextStyle(
                           fontSize: TextSize.header1,
                           fontWeight: FontWeight.w700),
@@ -114,13 +127,39 @@ class _HotelDetailsViewState extends State<HotelDetailsView>
                           height: 5,
                         ),
                         Text(
-                          'Shangri-La Bosphorus, Istanbul',
+                          hotelscontroller
+                              .Hotels[Hotel_Controller.selectedIndex.value]
+                              .location,
                           style: TextStyle(
                             fontSize: TextSize.header2,
                           ),
                         ),
                       ],
                     ),
+                    InkWell(
+                      onTap: () {
+                        Get.to(HotelMapView(
+                            Location:
+                                '${widget.Hotel!.Name}, ${widget.Hotel!.location}, ${widget.Hotel!.address}'));
+                      },
+                      child: Row(
+                        children: [
+                          // Icon(
+                          //   Icons.location_on_rounded,
+                          //   color: AppColors.gold,
+                          // ),
+                          SizedBox(
+                            height: 5,
+                          ),
+                          Text(
+                            'Go to Map view',
+                            style: TextStyle(
+                              fontSize: TextSize.header2,
+                            ),
+                          ),
+                        ],
+                      ),
+                    )
                   ],
                 ),
               ),
@@ -191,11 +230,29 @@ class _HotelDetailsViewState extends State<HotelDetailsView>
             const SizedBox(
               height: 5,
             ),
-            const Text(
-              'Description Description Description Description Description Description Description',
-              style: TextStyle(
-                fontSize: TextSize.header2,
-              ),
+            Column(
+              children: [
+                Row(
+                  children: [
+                    Text(
+                      '${widget.Hotel!.location} - ${widget.Hotel!.address}',
+                      style: TextStyle(
+                        fontSize: TextSize.header2,
+                      ),
+                    ),
+                  ],
+                ),
+                Row(
+                  children: [
+                    Text(
+                      '${widget.Hotel!.email}',
+                      style: TextStyle(
+                        fontSize: TextSize.header2,
+                      ),
+                    ),
+                  ],
+                )
+              ],
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -296,10 +353,16 @@ class _HotelDetailsViewState extends State<HotelDetailsView>
                 Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    const Text(
-                      '4.5',
-                      style: TextStyle(fontSize: 50),
-                    ),
+                    (hotelRoomsController.HotelaverageRating.value < 1)
+                        ? Text(
+                            ' 1',
+                            style: TextStyle(fontSize: 50),
+                          )
+                        : Text(
+                            hotelRoomsController.HotelaverageRating.value
+                                .toString(),
+                            style: TextStyle(fontSize: 50),
+                          ),
                     RatingBarIndicator(
                       itemSize: 25,
                       rating: 4.5,
@@ -322,9 +385,20 @@ class _HotelDetailsViewState extends State<HotelDetailsView>
                         ),
                         SizedBox(
                             width: size.width / 2,
-                            child: const LinearProgressIndicator(
+                            child: LinearProgressIndicator(
                               minHeight: 15,
-                              value: 0.8,
+                              value: hotelRoomsController
+                                          .HotelaverageRating.value >=
+                                      5
+                                  ? 1
+                                  : (5 -
+                                              hotelRoomsController
+                                                  .HotelaverageRating.value <
+                                          1
+                                      ? 5 -
+                                          hotelRoomsController
+                                              .HotelaverageRating.value
+                                      : 0),
                               color: AppColors.purple,
                               backgroundColor: AppColors.lightPurple,
                               borderRadius:
@@ -340,9 +414,20 @@ class _HotelDetailsViewState extends State<HotelDetailsView>
                         ),
                         SizedBox(
                             width: size.width / 2,
-                            child: const LinearProgressIndicator(
+                            child: LinearProgressIndicator(
                               minHeight: 15,
-                              value: 0.7,
+                              value: hotelRoomsController
+                                          .HotelaverageRating.value >=
+                                      4
+                                  ? 1
+                                  : (4 -
+                                              hotelRoomsController
+                                                  .HotelaverageRating.value <
+                                          1
+                                      ? 4 -
+                                          hotelRoomsController
+                                              .HotelaverageRating.value
+                                      : 0),
                               color: AppColors.purple,
                               backgroundColor: AppColors.lightPurple,
                               borderRadius:
@@ -358,9 +443,20 @@ class _HotelDetailsViewState extends State<HotelDetailsView>
                         ),
                         SizedBox(
                             width: size.width / 2,
-                            child: const LinearProgressIndicator(
+                            child: LinearProgressIndicator(
                               minHeight: 15,
-                              value: 0.8,
+                              value: hotelRoomsController
+                                          .HotelaverageRating.value >=
+                                      3
+                                  ? 1
+                                  : (3 -
+                                              hotelRoomsController
+                                                  .HotelaverageRating.value <
+                                          1
+                                      ? 3 -
+                                          hotelRoomsController
+                                              .HotelaverageRating.value
+                                      : 0),
                               color: AppColors.purple,
                               backgroundColor: AppColors.lightPurple,
                               borderRadius:
@@ -376,9 +472,20 @@ class _HotelDetailsViewState extends State<HotelDetailsView>
                         ),
                         SizedBox(
                             width: size.width / 2,
-                            child: const LinearProgressIndicator(
+                            child: LinearProgressIndicator(
                               minHeight: 15,
-                              value: 0.5,
+                              value: hotelRoomsController
+                                          .HotelaverageRating.value >=
+                                      2
+                                  ? 1
+                                  : (2 -
+                                              hotelRoomsController
+                                                  .HotelaverageRating.value <
+                                          1
+                                      ? 2 -
+                                          hotelRoomsController
+                                              .HotelaverageRating.value
+                                      : 0),
                               color: AppColors.purple,
                               backgroundColor: AppColors.lightPurple,
                               borderRadius:
@@ -394,9 +501,18 @@ class _HotelDetailsViewState extends State<HotelDetailsView>
                         ),
                         SizedBox(
                           width: size.width / 2,
-                          child: const LinearProgressIndicator(
+                          child: LinearProgressIndicator(
                             minHeight: 15,
-                            value: 0.2,
+                            value:
+                                hotelRoomsController.HotelaverageRating.value >=
+                                        1
+                                    ? 1
+                                    : (1 -
+                                                hotelRoomsController
+                                                    .HotelaverageRating.value <
+                                            1
+                                        ? 1
+                                        : 0),
                             color: AppColors.purple,
                             backgroundColor: AppColors.lightPurple,
                             borderRadius: BorderRadius.all(Radius.circular(10)),
@@ -418,17 +534,24 @@ class _HotelDetailsViewState extends State<HotelDetailsView>
   }
 
   Widget SelectRoom(BuildContext context) {
+    final HotelRoomsController controller = Get.put(HotelRoomsController());
+    print(controller.hotelRooms.length);
+    print('wertyuiolknbv');
     Size size = MediaQuery.of(context).size;
-    return Container(
-      child: ListView.builder(
-        shrinkWrap: true,
-        itemCount: room.length,
-        itemBuilder: (context, index) => HotelCard2(
-          size: size,
-          itemIndex: index,
-          room: room[index],
-        ),
-      ),
-    );
+    return Obx(() {
+      return (controller.hotelRooms.isEmpty)
+          ? const CircularProgressIndicator()
+          : Expanded(
+              child: ListView.builder(
+                shrinkWrap: true,
+                itemCount: controller.hotelRooms.length,
+                itemBuilder: (context, index) => HotelCard2(
+                  size: size,
+                  HotelId: controller.hotelRooms[index].id,
+                  room: controller.hotelRooms[index],
+                ),
+              ),
+            );
+    });
   }
 }

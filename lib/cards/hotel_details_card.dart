@@ -1,41 +1,60 @@
+// ignore_for_file: prefer_const_constructors_in_immutables, prefer_const_constructors
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:traveling/classes/car_class.dart';
-import 'package:traveling/classes/hotel.dart';
+import 'package:traveling/classes/hotel1.dart';
+import 'package:traveling/controllers/currency_controller.dart';
+import 'package:traveling/controllers/hotel_rooms_controller.dart';
 import 'package:traveling/ui/shared/colors.dart';
 import 'package:traveling/ui/shared/text_size.dart';
-import 'package:traveling/ui/views/car_side_views/car_details_view.dart';
 
-class CarCard extends StatefulWidget {
-  const CarCard({
+import '../ui/views/traveller_side_views/hotel_details_view/hotel_details_view.dart';
+
+class HotelDetailsCard extends StatefulWidget {
+  HotelDetailsCard({
     super.key,
     required this.size,
-    required this.carDetails,
+    required this.hotelDetails,
     required this.itemIndex,
   });
 
   final Size size;
-  final CarClass carDetails;
+  final HotelClass1 hotelDetails;
   final int itemIndex;
 
   @override
-  State<CarCard> createState() => _CarCardState();
+  State<HotelDetailsCard> createState() => _HotelDetailsCardState();
 }
 
-class _CarCardState extends State<CarCard> {
+class _HotelDetailsCardState extends State<HotelDetailsCard> {
+  final HotelRoomsController controller = Get.put(HotelRoomsController());
+  CurrencyController currencyController = Get.put(CurrencyController());
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
         Get.to(
-          CarDetailsView(),
+          FutureBuilder(
+            future: controller.SpecificHotelRooms(widget.hotelDetails.Id),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const Center(child: CircularProgressIndicator());
+              } else {
+                return HotelDetailsView(
+                  Hotel: widget.hotelDetails,
+                );
+              }
+            },
+          ),
         );
       },
       child: Container(
-        margin: const EdgeInsets.only(
-          bottom: 20,
-          right: 15,
-        ),
+        margin: const EdgeInsets.only(bottom: 20, right: 15),
         decoration: BoxDecoration(
           color: Colors.white,
           boxShadow: List.filled(
@@ -58,12 +77,14 @@ class _CarCardState extends State<CarCard> {
                   height: 200,
                   width: widget.size.width,
                   decoration: BoxDecoration(
-                    borderRadius: const BorderRadius.only(
-                      topLeft: Radius.circular(20),
-                      topRight: Radius.circular(20),
+                    borderRadius: const BorderRadius.all(
+                      Radius.circular(20),
                     ),
                     image: DecorationImage(
-                      image: AssetImage(widget.carDetails.image),
+                      image: NetworkImage(widget.hotelDetails.Image != null &&
+                              widget.hotelDetails.Image.isNotEmpty
+                          ? widget.hotelDetails.Image
+                          : ''),
                       fit: BoxFit.fill,
                     ),
                   ),
@@ -81,9 +102,7 @@ class _CarCardState extends State<CarCard> {
                         children: [
                           SizedBox(
                             child: Text(
-                              widget.carDetails.company +
-                                  ' - ' +
-                                  widget.carDetails.model,
+                              widget.hotelDetails.Name,
                               style: const TextStyle(
                                 fontWeight: FontWeight.w600,
                                 fontSize: TextSize.header1,
@@ -96,63 +115,19 @@ class _CarCardState extends State<CarCard> {
                         height: 5,
                       ),
                       Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Row(
-                            children: [
-                              const Icon(
-                                Icons.directions_car_rounded,
-                                color: AppColors.darkGray,
-                                size: 20,
-                              ),
-                              Text(
-                                widget.carDetails.model,
-                                style: const TextStyle(
-                                    color: AppColors.grayText,
-                                    fontSize: TextSize.header2),
-                              ),
-                            ],
+                          const Icon(
+                            Icons.location_on,
+                            color: AppColors.purple,
+                            size: 20,
                           ),
-                          const SizedBox(
-                            width: 15,
-                          ),
-                          Row(
-                            children: [
-                              const Icon(
-                                Icons.flight_class_rounded,
-                                color: AppColors.darkGray,
-                                size: 20,
-                              ),
-                              Text(
-                                widget.carDetails.seats,
-                                style: const TextStyle(
-                                    color: AppColors.grayText,
-                                    fontSize: TextSize.header2),
-                              ),
-                            ],
-                          ),
-                          const SizedBox(
-                            width: 15,
-                          ),
-                          Row(
-                            children: [
-                              const Icon(
-                                Icons.speed,
-                                color: AppColors.darkGray,
-                                size: 20,
-                              ),
-                              Text(
-                                widget.carDetails.topSpeed,
-                                style: const TextStyle(
-                                    color: AppColors.grayText,
-                                    fontSize: TextSize.header2),
-                              ),
-                            ],
+                          Text(
+                            widget.hotelDetails.location,
+                            style: const TextStyle(
+                                color: AppColors.grayText,
+                                fontSize: TextSize.header2),
                           ),
                         ],
-                      ),
-                      const SizedBox(
-                        height: 10,
                       ),
                       const Row(
                         children: [
@@ -189,21 +164,32 @@ class _CarCardState extends State<CarCard> {
                     ],
                   ),
                   const Spacer(),
-                  const Column(
+                  Column(
                     children: [
                       Text(
-                        'Per day:',
+                        'Start from:',
                         style: TextStyle(
                           color: AppColors.grayText,
                         ),
                       ),
-                      Text(
-                        '500\$',
-                        style: TextStyle(
-                            color: AppColors.darkGray,
-                            fontSize: TextSize.header1,
-                            fontWeight: FontWeight.w600),
-                      ),
+                      Row(
+                        children: [
+                          Text(
+                            '${currencyController.convert(currencyController.selectedCurrency.value, widget.hotelDetails.StartPrice.toDouble())} ',
+                            style: TextStyle(
+                                color: AppColors.purple,
+                                fontSize: TextSize.header1,
+                                fontWeight: FontWeight.w600),
+                          ),
+                          Text(
+                            currencyController.selectedCurrency.value,
+                            style: TextStyle(
+                                color: AppColors.purple,
+                                fontSize: TextSize.header2,
+                                fontWeight: FontWeight.w600),
+                          ),
+                        ],
+                      )
                     ],
                   )
                 ],

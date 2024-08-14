@@ -70,7 +70,7 @@ class _SplashViewState extends State<SplashView> {
       return const HoteltHome();
     }
     if (TravellerData.isNotEmpty) {
-      return const Home();
+      return Home();
     }
     if (FlightData.isNotEmpty) {
       return const FlightHome();
