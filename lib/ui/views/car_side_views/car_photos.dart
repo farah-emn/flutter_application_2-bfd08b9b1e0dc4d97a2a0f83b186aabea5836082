@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import '../../shared/colors.dart';
 
 class CarPhotos extends StatefulWidget {
-  List<String>? RoomPhotos;
-  CarPhotos({super.key, required this.RoomPhotos});
+  List<String>? carPhotos;
+  CarPhotos({super.key, required this.carPhotos});
   @override
   State<CarPhotos> createState() => _CarPhotosState();
 }
@@ -28,7 +28,7 @@ class _CarPhotosState extends State<CarPhotos> {
                     width: MediaQuery.of(context).size.width - 40,
                     height: MediaQuery.of(context).size.height,
                     child: Image.network(
-                      widget.RoomPhotos![selectedIndex],
+                      widget.carPhotos![selectedIndex],
                       fit: BoxFit.contain,
                     ),
                   ),
@@ -40,7 +40,7 @@ class _CarPhotosState extends State<CarPhotos> {
                   child: IconButton(
                     icon: Icon(
                       Icons.keyboard_arrow_left_sharp,
-                      color: AppColors.purple,
+                      color: AppColors.darkGray,
                     ),
                     onPressed: () {
                       setState(() {
@@ -58,11 +58,11 @@ class _CarPhotosState extends State<CarPhotos> {
                   child: IconButton(
                     icon: Icon(
                       Icons.keyboard_arrow_right_sharp,
-                      color: AppColors.purple,
+                      color: AppColors.darkGray,
                     ),
                     onPressed: () {
                       setState(() {
-                        if (selectedIndex < widget.RoomPhotos!.length - 1) {
+                        if (selectedIndex < widget.carPhotos!.length - 1) {
                           selectedIndex++;
                         }
                       });
@@ -76,7 +76,7 @@ class _CarPhotosState extends State<CarPhotos> {
             height: 60,
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
-              itemCount: widget.RoomPhotos!.length,
+              itemCount: widget.carPhotos!.length,
               itemBuilder: (context, index) {
                 return GestureDetector(
                   onTap: () {
@@ -89,12 +89,12 @@ class _CarPhotosState extends State<CarPhotos> {
                     decoration: BoxDecoration(
                       border: Border.all(
                         color: selectedIndex == index
-                            ? Colors.purple
+                            ? AppColors.darkGray
                             : Colors.transparent,
                         width: 2,
                       ),
                     ),
-                    child: Image.network(widget.RoomPhotos![index]),
+                    child: Image.network(widget.carPhotos![index]),
                   ),
                 );
               },

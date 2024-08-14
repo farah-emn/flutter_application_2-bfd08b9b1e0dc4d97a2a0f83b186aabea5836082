@@ -7,8 +7,7 @@ import 'package:traveling/cards/hotel_card.dart';
 import 'package:traveling/classes/hotel.dart';
 import 'package:traveling/ui/shared/colors.dart';
 import 'package:traveling/ui/shared/text_size.dart';
-import 'package:traveling/cards/car_card.dart';
-import 'package:traveling/cards/car_card2.dart';
+
 import 'package:traveling/classes/car_class.dart';
 
 import 'package:traveling/ui/shared/utils.dart';
@@ -16,6 +15,7 @@ import 'package:traveling/ui/views/first_view.dart';
 import 'package:traveling/ui/views/car_splash_view.dart';
 import 'package:traveling/ui/views/hotel_splash_view.dart';
 
+import '../../../cards/car_card_home.dart';
 import '../../../classes/hotel_info_class.dart';
 
 late User loggedinUser;
@@ -475,7 +475,7 @@ class _HomeViewState extends State<HomeView> {
                       scrollDirection: Axis.horizontal,
                       shrinkWrap: true,
                       itemCount: cars.length,
-                      itemBuilder: (context, index) => CarCard(
+                      itemBuilder: (context, index) => CarCardHome(
                         size: size,
                         itemIndex: index,
                         carDetails: cars[index],

@@ -1,5 +1,3 @@
-// ignore_for_file: prefer_const_constructors
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:traveling/classes/car_class.dart';
@@ -7,13 +5,9 @@ import 'package:traveling/classes/hotel.dart';
 import 'package:traveling/ui/shared/colors.dart';
 import 'package:traveling/ui/shared/text_size.dart';
 import 'package:traveling/ui/views/car_side_views/car_details_view.dart';
-import 'package:traveling/ui/views/traveller_side_views/hotel_details_view/hotel_details_view.dart';
 
-import '../classes/car_class1.dart';
-import '../controllers/currency_controller.dart';
-
-class CarCard extends StatefulWidget {
-  const CarCard({
+class CarCardHome extends StatefulWidget {
+  const CarCardHome({
     super.key,
     required this.size,
     required this.carDetails,
@@ -21,26 +15,26 @@ class CarCard extends StatefulWidget {
   });
 
   final Size size;
-  final CarClass1 carDetails;
+  final CarClass carDetails;
   final int itemIndex;
 
   @override
-  State<CarCard> createState() => _CarCardState();
+  State<CarCardHome> createState() => _CarCardHomeState();
 }
 
-class _CarCardState extends State<CarCard> {
-  CurrencyController currencyController = Get.put(CurrencyController());
+class _CarCardHomeState extends State<CarCardHome> {
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Get.to(
-          CarDetailsView(carDetails: widget.carDetails),
-        );
+        // Get.to(
+        //   CarDetailsView(),
+        // );
       },
       child: Container(
         margin: const EdgeInsets.only(
           bottom: 20,
+          right: 15,
         ),
         decoration: BoxDecoration(
           color: Colors.white,
@@ -69,10 +63,7 @@ class _CarCardState extends State<CarCard> {
                       topRight: Radius.circular(20),
                     ),
                     image: DecorationImage(
-                      image: NetworkImage(widget.carDetails.image != null &&
-                              widget.carDetails.image!.isNotEmpty
-                          ? widget.carDetails.image!.first
-                          : ''),
+                      image: AssetImage(widget.carDetails.image),
                       fit: BoxFit.fill,
                     ),
                   ),
@@ -90,7 +81,9 @@ class _CarCardState extends State<CarCard> {
                         children: [
                           SizedBox(
                             child: Text(
-                              widget.carDetails.company,
+                              widget.carDetails.company +
+                                  ' - ' +
+                                  widget.carDetails.model,
                               style: const TextStyle(
                                 fontWeight: FontWeight.w600,
                                 fontSize: TextSize.header1,
@@ -113,7 +106,7 @@ class _CarCardState extends State<CarCard> {
                                 size: 20,
                               ),
                               Text(
-                                widget.carDetails.company,
+                                widget.carDetails.model,
                                 style: const TextStyle(
                                     color: AppColors.grayText,
                                     fontSize: TextSize.header2),
@@ -196,7 +189,7 @@ class _CarCardState extends State<CarCard> {
                     ],
                   ),
                   const Spacer(),
-                  Column(
+                  const Column(
                     children: [
                       Text(
                         'Per day:',
@@ -205,7 +198,7 @@ class _CarCardState extends State<CarCard> {
                         ),
                       ),
                       Text(
-                        '${widget.carDetails.rentalInDay} ${currencyController.selectedCurrency.value}',
+                        '500\$',
                         style: TextStyle(
                             color: AppColors.darkGray,
                             fontSize: TextSize.header1,

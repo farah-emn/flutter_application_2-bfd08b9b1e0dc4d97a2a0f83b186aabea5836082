@@ -22,7 +22,16 @@ import 'package:traveling/ui/views/hotel_side_views/hotel_home_screen.dart';
 import 'package:traveling/ui/views/hotel_side_views/map_view.dart';
 
 class CarSignUpImageView extends StatefulWidget {
-  const CarSignUpImageView({super.key});
+  String email;
+  String password;
+  String CarRentalCompany;
+  String mobileNumber;
+  CarSignUpImageView(
+      {super.key,
+      required this.email,
+      required this.password,
+      required this.CarRentalCompany,
+      required this.mobileNumber});
 
   @override
   _CarSignUpImageViewState createState() => _CarSignUpImageViewState();
@@ -48,6 +57,9 @@ class _CarSignUpImageViewState extends State<CarSignUpImageView> {
     setState(() {
       AirelineCompany = _auth.currentUser;
       AirelineCompanyId = AirelineCompany?.uid.toString() ?? '';
+      final databaseReference = FirebaseDatabase.instance.reference();
+      DatabaseReference idRefCar =
+          databaseReference.child('Car_Rental_Company');
     });
   }
 
@@ -55,17 +67,53 @@ class _CarSignUpImageViewState extends State<CarSignUpImageView> {
     if (_Address.text.isNotEmpty &&
         _Country.text.isNotEmpty &&
         _City.text.isNotEmpty) {
-      File file = File(image.path);
-      var imagename = basename(image.path);
-      var Firebase_Storage = FirebaseStorage.instance.ref(imagename);
-      await Firebase_Storage.putFile(file);
-      String url = await Firebase_Storage.getDownloadURL();
-      FirebaseDatabase.instance.ref("Hotel").child(AirelineCompanyId).update({
-        "image": url,
-        "location": '${_City.text}, ${_Country.text}',
-        "address": '${_Address.text}'
-      });
-      Get.offAll(CarHome());
+      final auth = FirebaseAuth.instance;
+      final DatabaseReference ref =
+          FirebaseDatabase.instance.ref("Car_Rental_Company");
+
+      try {
+        final newAirelineCompany = await auth.createUserWithEmailAndPassword(
+            email: widget.email, password: widget.password);
+        User? AirelineCompany = auth.currentUser;
+
+        if (AirelineCompany != null) {
+          File file = File(image.path);
+          var imagename = basename(image.path);
+          var firebaseStorageRef = FirebaseStorage.instance.ref(imagename);
+          await firebaseStorageRef.putFile(file);
+          String url = await firebaseStorageRef.getDownloadURL();
+
+          ref.child(AirelineCompany.uid.toString()).set({
+            'email': widget.email,
+            'password': widget.password,
+            'mobile_number': widget.mobileNumber,
+            'car_name_company': widget.CarRentalCompany,
+            "image": url,
+            "location": '${_City.text}, ${_Country.text}',
+            "address": '${_Address.text}'
+          });
+
+          Get.offAll(CarHome());
+        }
+      } catch (e) {
+        if (e is FirebaseAuthException) {
+          switch (e.code) {
+            case 'weak-password':
+              setState(() {
+                // errorText = 'Password is too weak.';
+              });
+              break;
+            case 'email-already-in-use':
+              setState(() {
+                // errorText = 'Email is already registered.';
+              });
+              break;
+            // Add more cases as needed
+            default:
+            // Use the default error message
+          }
+        }
+      }
     } else {
       Fluttertoast.showToast(
           msg: "Please enter all fields",
@@ -77,6 +125,87 @@ class _CarSignUpImageViewState extends State<CarSignUpImageView> {
           fontSize: 16.0);
     }
   }
+
+  // void _uploadImageToFirebase(XFile image) async {
+  //   print('jjjjjjjjj');
+  //   if (_Address.text.isNotEmpty &&
+  //       _Country.text.isNotEmpty &&
+  //       _City.text.isNotEmpty) {
+  //     print('object');
+  //     // File file = File(image.path);
+  //     // var imagename = basename(image.path);
+  //     // var Firebase_Storage = FirebaseStorage.instance.ref(imagename);
+  //     // await Firebase_Storage.putFile(file);
+  //     // String url = await Firebase_Storage.getDownloadURL();
+  //     // FirebaseDatabase.instance.ref("Hotel").child(AirelineCompanyId).update({
+  //     //   "image": url,
+  //     //   "location": '${_City.text}, ${_Country.text}',
+  //     //   "address": '${_Address.text}'
+  //     // });
+  //     final auth = FirebaseAuth.instance;
+  //     final DatabaseReference ref =
+  //         FirebaseDatabase.instance.ref("Car_Rental_Company");
+  //     try {
+  //       final newAirelineCompany = await auth.createUserWithEmailAndPassword(
+  //           email: widget.email, password: widget.password);
+  //       User? AirelineCompany = auth.currentUser;
+  //       print(AirelineCompany);
+  //       File file = File(image.path);
+  //       var imagename = basename(image.path);
+  //       var Firebase_Storage = FirebaseStorage.instance.ref(imagename);
+  //       await Firebase_Storage.putFile(file);
+  //       String url = await Firebase_Storage.getDownloadURL();
+  //       // FirebaseDatabase.instance.ref("Hotel").child(AirelineCompanyId).update({
+  //       //   "image": url,
+  //       //   "location": '${_City.text}, ${_Country.text}',
+  //       //   "address": '${_Address.text}'
+  //       // });
+
+  //       if (AirelineCompany != null) {
+  //         // Get.offAll(HotelSignUpImageView());
+  //         ref.child(AirelineCompany.uid.toString()).set({
+  //           'email': widget.email,
+  //           'password': widget.password,
+  //           'mobile_number': '',
+  //           'car_name_company': widget.CarRentalCompany,
+  //           "image": url,
+  //           "location": '${_City.text}, ${_Country.text}',
+  //           "address": '${_Address.text}'
+  //         });
+  //         Get.offAll(CarHome());
+  //       }
+  //     } catch (e) {
+  //       if (e is FirebaseAuthException) {
+  //         switch (e.code) {
+  //           case 'weak-password':
+  //             setState(() {
+  //               // errorText = 'Password is too weak.';
+  //             });
+  //             break;
+  //           case 'email-already-in-use':
+  //             setState(() {
+  //               // errorText = 'Email is already registered.';
+  //             });
+
+  //             break;
+  //           // Add more cases as needed
+  //           default:
+  //           // Use the default error message
+  //         }
+  //       }
+  //     }
+  //     Get.offAll(CarHome());
+  //   } else {
+  //     Fluttertoast.showToast(
+  //         msg: "Please enter all fields",
+  //         toastLength: Toast.LENGTH_SHORT,
+  //         gravity: ToastGravity.BOTTOM,
+  //         timeInSecForIosWeb: 1,
+  //         backgroundColor: const Color.fromARGB(255, 158, 165, 174),
+  //         textColor: Colors.white,
+  //         fontSize: 16.0);
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -445,8 +574,8 @@ class _CarSignUpImageViewState extends State<CarSignUpImageView> {
                         decoration: textFielDecoratiom.copyWith(
                           focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.all(Radius.circular(18)),
-                            borderSide:
-                                BorderSide(color: AppColors.darkGray, width: 1.5),
+                            borderSide: BorderSide(
+                                color: AppColors.darkGray, width: 1.5),
                           ),
                           prefixIcon: const Icon(
                             Icons.location_on_rounded,
@@ -479,8 +608,8 @@ class _CarSignUpImageViewState extends State<CarSignUpImageView> {
                         decoration: textFielDecoratiom.copyWith(
                           focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.all(Radius.circular(18)),
-                            borderSide:
-                                BorderSide(color: AppColors.darkGray, width: 1.5),
+                            borderSide: BorderSide(
+                                color: AppColors.darkGray, width: 1.5),
                           ),
                           prefixIcon: const Icon(
                             Icons.location_on_rounded,
@@ -513,8 +642,8 @@ class _CarSignUpImageViewState extends State<CarSignUpImageView> {
                         decoration: textFielDecoratiom.copyWith(
                           focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.all(Radius.circular(18)),
-                            borderSide:
-                                BorderSide(color: AppColors.darkGray, width: 1.5),
+                            borderSide: BorderSide(
+                                color: AppColors.darkGray, width: 1.5),
                           ),
                           prefixIcon: const Icon(
                             Icons.location_on_rounded,
@@ -533,7 +662,7 @@ class _CarSignUpImageViewState extends State<CarSignUpImageView> {
                         SizedBox(height: 20),
                         InkWell(
                           onTap: () {
-                            Get.offAll(CarHome());
+                            _uploadImageToFirebase(photo!);
                           },
                           // onTap: () {
                           //   if (photo != null) {
@@ -551,11 +680,11 @@ class _CarSignUpImageViewState extends State<CarSignUpImageView> {
                           //   }
                           // },
                           child: CustomButton(
-                              text: 'Confirm location',
-                              textColor: AppColors.backgroundgrayColor,
-                              backgroundColor: AppColors.darkGray,
-                              widthPercent: size.width,
-                            ),
+                            text: 'Confirm location',
+                            textColor: AppColors.backgroundgrayColor,
+                            backgroundColor: AppColors.darkGray,
+                            widthPercent: size.width,
+                          ),
                         ),
                       ],
                     )

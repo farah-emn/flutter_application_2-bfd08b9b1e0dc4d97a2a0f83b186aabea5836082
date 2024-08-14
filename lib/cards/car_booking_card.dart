@@ -8,6 +8,8 @@ import 'package:traveling/ui/shared/text_size.dart';
 import 'package:traveling/ui/views/car_side_views/car_details_view.dart';
 import 'package:traveling/ui/views/traveller_side_views/room_view.dart';
 
+import '../controllers/currency_controller.dart';
+
 class CarBookingCard extends StatefulWidget {
   const CarBookingCard({
     super.key,
@@ -25,14 +27,16 @@ class CarBookingCard extends StatefulWidget {
 }
 
 class _CarBookingCardState extends State<CarBookingCard> {
+  final CurrencyController CarCurrency_Controller =
+      Get.put(CurrencyController());
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return InkWell(
       onTap: () {
-        Get.to(
-          CarDetailsView(),
-        );
+        // Get.to(
+        //   CarDetailsView(),
+        // );
       },
       child: Container(
         margin: const EdgeInsets.only(
@@ -283,7 +287,7 @@ class _CarBookingCardState extends State<CarBookingCard> {
                         width: 5,
                       ),
                       Text(
-                        widget.carBookingsDetails.totalPrice,
+                        '${widget.carBookingsDetails.totalPrice} ${CarCurrency_Controller.selectedCurrency.value}',
                         style: const TextStyle(
                             color: AppColors.darkGray,
                             fontSize: TextSize.header1,

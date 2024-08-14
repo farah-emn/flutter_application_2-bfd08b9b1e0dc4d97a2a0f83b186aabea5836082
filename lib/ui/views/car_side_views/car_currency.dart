@@ -97,7 +97,7 @@ class CurrencyPage extends StatelessWidget {
     final CurrencyController controller = Get.find();
 
     return Scaffold(
-      backgroundColor: AppColors.lightPurple,
+      backgroundColor: AppColors.lightGray,
       body: SafeArea(
         child: Stack(
           children: [
@@ -111,7 +111,7 @@ class CurrencyPage extends StatelessWidget {
                     onTap: () => Get.back(),
                     child: Icon(
                       Icons.arrow_back,
-                      color: AppColors.purple,
+                      color: AppColors.darkGray,
                     ),
                   ),
                   Text(
@@ -119,11 +119,11 @@ class CurrencyPage extends StatelessWidget {
                     style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.w700,
-                        color: AppColors.purple),
+                        color: Colors.white),
                   ),
                   Icon(
                     Icons.arrow_back,
-                    color: AppColors.lightPurple,
+                    color: AppColors.lightGray,
                   ),
                 ],
               ),
@@ -172,7 +172,7 @@ class CurrencyPage extends StatelessWidget {
                           trailing: controller.selectedCurrency.value == key
                               ? Icon(
                                   Icons.check,
-                                  color: Colors.purple,
+                                  color: AppColors.darkGray,
                                 )
                               : null,
                           onTap: () {

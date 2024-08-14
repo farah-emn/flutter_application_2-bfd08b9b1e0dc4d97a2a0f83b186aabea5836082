@@ -3,7 +3,7 @@
 import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
-// import 'package:firebase_storage/firebase_storage.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
@@ -11,6 +11,8 @@ import 'package:traveling/ui/shared/text_size.dart';
 import '../../shared/colors.dart';
 import '../../shared/custom_widgets/custom_button.dart';
 import '../../shared/custom_widgets/custom_textfield2.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:path/path.dart';
 
 class CarAddView extends StatefulWidget {
   const CarAddView({super.key});
@@ -24,31 +26,32 @@ class _CarAddViewState extends State<CarAddView> {
   bool? isCheckedFoodAnddrink = false;
   bool? isCheckedPrivateParking = false;
   bool? isCheckedCleaningServices = false;
+
   final _Overview = TextEditingController();
-  final _price = TextEditingController();
-  final _RoomNumber = TextEditingController();
-  final _Adults = TextEditingController();
-  final _Children = TextEditingController();
-  final _BedRooms = TextEditingController();
-  final _NumberOfRoomAvilable = TextEditingController();
-  final _Bathrooms = TextEditingController();
+  final _priceDay = TextEditingController();
+  final _PriceWeek = TextEditingController();
+  final _PlateNumber = TextEditingController();
+  final _speed = TextEditingController();
+  // final _BedRooms = TextEditingController();
+  // final _NumberOfRoomAvilable = TextEditingController();
+  // final _Bathrooms = TextEditingController();
+
   final ImagePicker _picker = ImagePicker();
   late String errorTextRoomPhoto = '';
 
   List<XFile> _images = [];
   int _current = 0;
-  int IdRoom = 0;
+  int IdCar = 0;
   int IdAirport = 0;
   int IdPlane = 0;
   int IdStop_location = 0;
-  User? Hotel;
-  var HotelId = '';
+  User? car;
+  var CarId = '';
   var uid;
   final _auth = FirebaseAuth.instance;
   var currentUser;
   int selectedIndex = 0;
-  DatabaseReference HotelRoom =
-      FirebaseDatabase.instance.reference().child('Room');
+  DatabaseReference Car = FirebaseDatabase.instance.reference().child(' Car');
   List<String?> selectedValues = List.filled(0, null);
   final List<String> ChildrenAge = [
     'Under 1 year old',
@@ -84,172 +87,173 @@ class _CarAddViewState extends State<CarAddView> {
 
   String sorteBy = 'Normal';
 
-  // @override
-  // void dispose() {
-  //   _isWidgetActive = false;
-  //   super.dispose();
-  // }
+  @override
+  void dispose() {
+    _isWidgetActive = false;
+    super.dispose();
+  }
 
   @override
   void initState() {
     super.initState();
-    // currentUser = _auth.currentUser;
-    // uid = currentUser?.uid;
-    // setState(() {
-    //   Hotel = _auth.currentUser;
-    //   HotelId = Hotel?.uid.toString() ?? '';
-    // });
-    // HotelRoom.once().then((DatabaseEvent event) {
-    //   DataSnapshot snapshot = event.snapshot;
-    //   if (mounted) {
-    //     setState(() {
-    //       IdRoom = event.snapshot.children.length + 1;
-    //     });
-    //   }
-    // });
-    // super.initState();
+    currentUser = _auth.currentUser;
+    uid = currentUser?.uid;
+    setState(() {
+      car = _auth.currentUser;
+      CarId = car?.uid.toString() ?? '';
+    });
+    Car.once().then((DatabaseEvent event) {
+      DataSnapshot snapshot = event.snapshot;
+      if (mounted) {
+        setState(() {
+          IdCar = event.snapshot.children.length + 1;
+        });
+      }
+    });
+    print('nnnnnnnnnnnn5511nn666654366633nnnnnnnnnnnnn');
+    print(isSelected[0]);
+
+    super.initState();
   }
 
-  // Future<void> _pickImages() async {
-  //   final List<XFile>? images = await _picker.pickMultiImage();
-  //   if (images != null) {
-  //     for (var image in images) {
-  //       if (!_images.any((x) => x.path == image.path)) {
-  //         _images.add(image);
-  //       }
-  //     }
-  //   }
-  //   setState(() {});
-  // }
+  Future<void> _pickImages() async {
+    final List<XFile>? images = await _picker.pickMultiImage();
+    if (images != null) {
+      for (var image in images) {
+        if (!_images.any((x) => x.path == image.path)) {
+          _images.add(image);
+        }
+      }
+    }
+    setState(() {});
+  }
 
   bool _isLoading = false;
 
-  // Future<bool> _uploadToFirebase(
-  //     List<XFile> images, BuildContext context) async {
-  //   int IdOfRoomPhoto = 0;
-  //   int IdOfChild = 0;
-  //   final databaseReference = FirebaseDatabase.instance.reference();
-  //   databaseReference.child('Room/$IdRoom:').update({
-  //     "HotelId": HotelId,
-  //     "Price": double.parse(_price.text.replaceAll('\u{00A0}', '')),
-  //     "Overview": _Overview.text,
-  //     "NumberOfRooms": int.parse(
-  //         _NumberOfRoomAvilable.value.text.replaceAll('\u{00A0}', '')),
-  //     "RoomNumber": _RoomNumber.text,
-  //     "NumberOfBathrooms":
-  //         int.parse(_Bathrooms.text.replaceAll('\u{00A0}', '')),
-  //     "NumberOfBedrooms": int.parse(_BedRooms.text.replaceAll('\u{00A0}', '')),
-  //     "Adults": int.parse(_Adults.text.replaceAll('\u{00A0}', '')),
-  //     "Children": int.parse(_Children.text.replaceAll('\u{00A0}', '')),
-  //     "isCheckedFreeWifi": isCheckedFreeWifi,
-  //     "isCheckedPrivatePool": isCheckedPrivatePool,
-  //     "isCheckedFoodAnddrink": isCheckedFoodAnddrink,
-  //     "isCheckedCleaningServices": isCheckedCleaningServices,
-  //     "isCheckedPrivateParking": isCheckedPrivateParking,
-  //     "is_reserved": false,
-  //   });
-  //   //image
-  //   // if (images.isNotEmpty) {
-  //   //   for (var image in images) {
-  //   //     IdOfRoomPhoto += 1;
-  //   //     File file = File(image.path);
-  //   //     var imagename = basename(image.path);
-  //   //     var Firebase_Storage = FirebaseStorage.instance.ref(imagename);
-  //   //     await Firebase_Storage.putFile(file);
-  //   //     String url = await Firebase_Storage.getDownloadURL();
-  //   //     databaseReference
-  //   //         .child('Room/$IdRoom:/RoomPhoto')
-  //   //         .update({'$IdOfRoomPhoto': url});
-  //   //   }
-  //   // }
+  Future<bool> _uploadToFirebase(
+      List<XFile> images, BuildContext context) async {
+    int IdOfRoomPhoto = 0;
+    int IdOfChild = 0;
+    final databaseReference = FirebaseDatabase.instance.reference();
+    databaseReference.child('Car/$IdCar:').update({
+      "CarCompanyId": CarId,
+      "RentalInDay": double.parse(_priceDay.text.replaceAll('\u{00A0}', '')),
+      "RentalInWeek": double.parse(_priceDay.text.replaceAll('\u{00A0}', '')),
+      "model": _Overview.text,
+      "Color": getColorName(selectedColor.value),
+      "CarCompany": dropdownValue2,
+      "Ger": sorteBy,
+      "PlateNumber": _PlateNumber.text,
+      "Speed": _speed.text,
+      "Seats": (isSelected[0] == true)
+          ? 2
+          : (isSelected[1] == true)
+              ? 4
+              : (isSelected[2] == 2)
+                  ? 6
+                  : null,
+      "is_reserved": false,
+    });
+    //image
+    if (images.isNotEmpty) {
+      for (var image in images) {
+        IdOfRoomPhoto += 1;
+        File file = File(image.path);
+        var imagename = basename(image.path);
+        var Firebase_Storage = FirebaseStorage.instance.ref(imagename);
+        await Firebase_Storage.putFile(file);
+        String url = await Firebase_Storage.getDownloadURL();
+        databaseReference
+            .child('Car/$IdCar:/CarPhoto')
+            .update({'$IdOfRoomPhoto': url});
+      }
+    }
 
-  //   // if (selectedValues.isNotEmpty)
-  //   //   for (var i in selectedValues) {
-  //   //     IdOfChild++;
-  //   //     databaseReference
-  //   //         .child('Room/$IdRoom:/ChildrenAge')
-  //   //         .update({'$IdOfChild': i});
-  //   //   }
-  //   setState(() {
-  //     _isWidgetActive = false;
-  //     _isLoading = false;
-  //   });
-  //   setState(() {
-  //     _Adults.clear();
-  //     _Bathrooms.clear();
-  //     _BedRooms.clear();
-  //     _Children.clear();
-  //     _NumberOfRoomAvilable.clear();
-  //     _Overview.clear();
-  //     _RoomNumber.clear();
-  //     _price.clear();
-  //     _images.clear();
-  //     ChildrenAge.clear();
-  //     isCheckedCleaningServices = false;
-  //     isCheckedFoodAnddrink = false;
-  //     isCheckedFreeWifi = false;
-  //     isCheckedPrivateParking = false;
-  //     isCheckedPrivatePool = false;
-  //     errorTextRoomPhoto = '';
-  //   });
+    // if (selectedValues.isNotEmpty)
+    //   for (var i in selectedValues) {
+    //     IdOfChild++;
+    //     databaseReference
+    //         .child('Room/$IdRoom:/ChildrenAge')
+    //         .update({'$IdOfChild': i});
+    //   }
+    setState(() {
+      _isWidgetActive = false;
+      _isLoading = false;
+    });
+    setState(() {
+      _Overview.clear();
+      _PlateNumber.clear();
+      _PriceWeek.clear();
+      _priceDay.clear();
+      _speed.clear();
+      _images.clear();
+      ChildrenAge.clear();
+      isCheckedCleaningServices = false;
+      isCheckedFoodAnddrink = false;
+      isCheckedFreeWifi = false;
+      isCheckedPrivateParking = false;
+      isCheckedPrivatePool = false;
+      errorTextRoomPhoto = '';
+    });
 
-  //   return true;
-  // }
+    return true;
+  }
 
   String? selectedValue;
   String dropdownValue2 = 'Toyota';
 
   @override
   Widget build(BuildContext context) {
-    // void _confirm() async {
-    //   if (_price.text.isNotEmpty &&
-    //       _NumberOfRoomAvilable.text.isNotEmpty &&
-    //       _RoomNumber.text.isNotEmpty &&
-    //       _Overview.text.isNotEmpty &&
-    //       _BedRooms.text.isNotEmpty &&
-    //       _Adults.text.isNotEmpty &&
-    //       _Bathrooms.text.isNotEmpty) {
-    //     if (_images.length < 6) {
-    //       setState(() {
-    //         errorTextRoomPhoto = 'Please enter at least 6 photos';
-    //       });
-    //     } else if (_images.length >= 6) {
-    //       // Show a dialog with a CircularProgressIndicator
-    //       showDialog(
-    //         context: context,
-    //         barrierDismissible: false,
-    //         builder: (BuildContext context) {
-    //           return Dialog(
-    //             child: new Row(
-    //               mainAxisSize: MainAxisSize.min,
-    //               children: [
-    //                 new CircularProgressIndicator(),
-    //                 new Text("Loading"),
-    //               ],
-    //             ),
-    //           );
-    //         },
-    //       );
+    void _confirm() async {
+      if (_PriceWeek.text.isNotEmpty &&
+          _priceDay.text.isNotEmpty &&
+          _PlateNumber.text.isNotEmpty &&
+          _Overview.text.isNotEmpty &&
+          selectedColor.value != '' &&
+          isSelected != '' &&
+          dropdownValue2 != '' &&
+          sorteBy != '') {
+        if (_images.length < 6) {
+          setState(() {
+            errorTextRoomPhoto = 'Please enter at least 6 photos';
+          });
+        } else if (_images.length >= 6) {
+          // Show a dialog with a CircularProgressIndicator
+          showDialog(
+            context: context,
+            barrierDismissible: false,
+            builder: (BuildContext context) {
+              return Dialog(
+                child: new Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    new CircularProgressIndicator(),
+                    new Text("Loading"),
+                  ],
+                ),
+              );
+            },
+          );
 
-    //       // Call the _uploadToFirebase function
-    //       bool uploadResult = await _uploadToFirebase(_images, context);
+          // Call the _uploadToFirebase function
+          bool uploadResult = await _uploadToFirebase(_images, context);
 
-    //       // Dismiss the loading dialog regardless of the result
-    //       if (uploadResult) {
-    //         Navigator.pop(context);
-    //       }
-    //     }
-    //   } else {
-    //     Fluttertoast.showToast(
-    //         msg: "Please Add all fields",
-    //         toastLength: Toast.LENGTH_SHORT,
-    //         gravity: ToastGravity.BOTTOM,
-    //         timeInSecForIosWeb: 1,
-    //         backgroundColor: Colors.grey,
-    //         textColor: Colors.white,
-    //         fontSize: 16.0);
-    //   }
-    // }
+          // Dismiss the loading dialog regardless of the result
+          if (uploadResult) {
+            Navigator.pop(context);
+          }
+        }
+      } else {
+        Fluttertoast.showToast(
+            msg: "Please Add all fields",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.BOTTOM,
+            timeInSecForIosWeb: 1,
+            backgroundColor: Colors.grey,
+            textColor: Colors.white,
+            fontSize: 16.0);
+      }
+    }
 
     String dropdownValue = 'under 1';
 
@@ -320,7 +324,7 @@ class _CarAddViewState extends State<CarAddView> {
                           children: [
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: const [
+                              children: [
                                 Text(
                                   'Car photos',
                                   style: TextStyle(
@@ -329,7 +333,7 @@ class _CarAddViewState extends State<CarAddView> {
                                       fontWeight: FontWeight.w500),
                                 ),
                                 InkWell(
-                                  // onTap: _pickImages,
+                                  onTap: _pickImages,
                                   child: Icon(
                                     Icons.add,
                                     color: AppColors.darkGray,
@@ -472,7 +476,7 @@ class _CarAddViewState extends State<CarAddView> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  'Overview',
+                                  'Model',
                                   style: TextStyle(
                                       fontSize: 13,
                                       color: AppColors.grayText,
@@ -482,7 +486,7 @@ class _CarAddViewState extends State<CarAddView> {
                                   height: 40,
                                   width: size.width - 35,
                                   child: TextField(
-                                    controller: _price,
+                                    controller: _Overview,
                                     decoration: textFielDecoratiom.copyWith(
                                         focusedBorder: const OutlineInputBorder(
                                           borderSide: BorderSide(
@@ -573,7 +577,7 @@ class _CarAddViewState extends State<CarAddView> {
                                       height: 40,
                                       width: size.width / 2 - 35,
                                       child: TextField(
-                                        controller: _price,
+                                        controller: _PlateNumber,
                                         keyboardType: TextInputType.number,
                                         decoration: textFielDecoratiom.copyWith(
                                             focusedBorder:
@@ -608,7 +612,7 @@ class _CarAddViewState extends State<CarAddView> {
                                       height: 40,
                                       width: size.width / 2 - 35,
                                       child: TextField(
-                                        controller: _RoomNumber,
+                                        controller: _speed,
                                         keyboardType: TextInputType.number,
                                         decoration: textFielDecoratiom.copyWith(
                                             focusedBorder:
@@ -710,7 +714,9 @@ class _CarAddViewState extends State<CarAddView> {
                                       autofocus: true,
                                       groupValue: sorteBy,
                                       onChanged: (value) {
-                                        sorteBy = value.toString();
+                                        setState(() {
+                                          sorteBy = value.toString();
+                                        });
                                       },
                                     ),
                                     const Text('Normal'),
@@ -723,7 +729,9 @@ class _CarAddViewState extends State<CarAddView> {
                                       value: 'Automatic',
                                       groupValue: sorteBy,
                                       onChanged: (value) {
-                                        sorteBy = value.toString();
+                                        setState(() {
+                                          sorteBy = value.toString();
+                                        });
                                       },
                                     ),
                                     const Text('Automatic'),
@@ -825,7 +833,7 @@ class _CarAddViewState extends State<CarAddView> {
                                       height: 40,
                                       width: size.width / 2 - 35,
                                       child: TextField(
-                                        controller: _price,
+                                        controller: _priceDay,
                                         keyboardType: TextInputType.number,
                                         decoration: textFielDecoratiom.copyWith(
                                             focusedBorder:
@@ -860,7 +868,7 @@ class _CarAddViewState extends State<CarAddView> {
                                       height: 40,
                                       width: size.width / 2 - 35,
                                       child: TextField(
-                                        controller: _RoomNumber,
+                                        controller: _PriceWeek,
                                         keyboardType: TextInputType.number,
                                         decoration: textFielDecoratiom.copyWith(
                                             focusedBorder:
@@ -911,4 +919,19 @@ class _CarAddViewState extends State<CarAddView> {
       ),
     );
   }
+}
+
+String getColorName(int color) {
+  Map<int, String> colorNames = {
+    4286141768: 'Brown',
+    4294198070: 'Red',
+    4281626336: 'Blue',
+    4288585374: 'Grey',
+    4294965753: 'White',
+    4278190080: 'Black',
+    // Color(0xFF000000): 'Black',
+    // Color(0xFFFFFFF9): 'white ',
+  };
+  print(colorNames[color]);
+  return colorNames[color] ?? 'Unknown Color';
 }

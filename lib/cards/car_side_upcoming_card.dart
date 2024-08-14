@@ -8,6 +8,8 @@ import 'package:traveling/ui/shared/custom_widgets/custom_button.dart';
 import 'package:traveling/ui/shared/text_size.dart';
 import 'package:traveling/ui/views/traveller_side_views/room_view.dart';
 
+import '../controllers/currency_controller.dart';
+
 class CarSideUpcomingCard extends StatefulWidget {
   const CarSideUpcomingCard({
     super.key,
@@ -25,6 +27,8 @@ class CarSideUpcomingCard extends StatefulWidget {
 }
 
 class _CarSideUpcomingCardState extends State<CarSideUpcomingCard> {
+  final CurrencyController CarCurrency_Controller =
+      Get.put(CurrencyController());
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -211,7 +215,7 @@ class _CarSideUpcomingCardState extends State<CarSideUpcomingCard> {
                       width: 5,
                     ),
                     Text(
-                      widget.carBookingsDetails.totalPrice,
+                      '${widget.carBookingsDetails.totalPrice}${CarCurrency_Controller.selectedCurrency.value}',
                       style: const TextStyle(
                           color: AppColors.lightGray,
                           fontSize: TextSize.header1,
