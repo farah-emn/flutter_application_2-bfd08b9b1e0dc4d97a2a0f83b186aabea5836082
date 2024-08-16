@@ -1,4 +1,4 @@
-// ignore_for_file: non_constant_identifier_names, unused_local_variable, no_leading_underscores_for_local_identifiers, prefer_typing_uninitialized_variables, avoid_function_literals_in_foreach_calls, deprecated_member_use
+// ignore_for_file: non_constant_identifier_names, unused_local_variable, no_leading_underscores_for_local_identifiers, prefer_typing_uninitialized_variables, avoid_function_literals_in_foreach_calls, deprecated_member_use, prefer_const_literals_to_create_immutables, prefer_const_constructors, avoid_print, unused_element, unrelated_type_equality_checks
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -7,10 +7,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:traveling/cards/car_card.dart';
-import 'package:traveling/cards/hotel_room_card.dart';
-import 'package:traveling/classes/car_class.dart';
-import 'package:traveling/classes/hotel_room_details_class.dart';
+import 'package:traveling/classes/hotel_room_details_class1.dart';
 import 'package:traveling/controllers/currency_controller.dart';
+import '../../../classes/car_class1.dart';
 import 'package:traveling/ui/shared/custom_widgets/custom_textfield2.dart';
 import '../../shared/colors.dart';
 import '../../shared/custom_widgets/custom_search_textfield.dart';
@@ -24,8 +23,8 @@ class CarSearchView extends StatefulWidget {
 class _CarSearchViewState extends State<CarSearchView> {
   final CurrencyController HotelCurrency_Controller =
       Get.put(CurrencyController());
-  ValueNotifier<List<RoomDetailsClass>> HotelRooms =
-      ValueNotifier<List<RoomDetailsClass>>([]);
+  ValueNotifier<List<CarClass1>> HotelRooms =
+      ValueNotifier<List<CarClass1>>([]);
   final _SearchController = TextEditingController();
   Map<dynamic, dynamic> HotelRoom = {};
   bool? isChecked = false;
@@ -33,7 +32,7 @@ class _CarSearchViewState extends State<CarSearchView> {
   final _auth = FirebaseAuth.instance;
   late final User? user;
   var Companylogo;
-  var HotelId = '';
+  var CarId = '';
   String sorteBy = '';
   String CompanyName = '';
   late DatabaseReference ref;
@@ -60,60 +59,72 @@ class _CarSearchViewState extends State<CarSearchView> {
   @override
   void initState() {
     super.initState();
-    // ref = FirebaseDatabase.instance.ref('Hotel');
-    // user = _auth.currentUser;
-    // getData();
-    // super.initState();
+    ref = FirebaseDatabase.instance.ref('Car_Rental_Company');
+    user = _auth.currentUser;
+    getData();
+    super.initState();
   }
 
-  // void getData() async {
-  //   HotelId = user!.uid.toString();
-  //   final event = await ref.child(HotelId).get();
-  //   final userData = Map<dynamic, dynamic>.from(event.value as Map);
-  //   if (mounted) {
-  //     HotelRoomsList();
-  //   }
-  // }
+  void getData() async {
+    CarId = user!.uid.toString();
+    final event = await ref.child(CarId).get();
+    final userData = Map<dynamic, dynamic>.from(event.value as Map);
+    if (mounted) {
+      setState(() {
+        CompanyName = userData['car_name_company'];
+      });
+      print(userData['car_name_company']);
+    }
 
-  // Future<void> HotelRoomsList() async {
-  //   List<RoomDetailsClass> rooms = [];
-  //   await FirebaseDatabase.instance
-  //       .reference()
-  //       .child('Room')
-  //       .orderByChild('HotelId')
-  //       .equalTo(user!.uid.toString())
-  //       .once()
-  //       .then((DatabaseEvent event) {
-  //     if (event.snapshot.exists) {
-  //       var RoomData = Map<dynamic, dynamic>.from(event.snapshot.value as Map);
-  //       RoomData.forEach((Roomkey, value) {
-  //         rooms.add(RoomDetailsClass.fromMap({
-  //           "id": Roomkey,
-  //           'Adults': value['Adults'],
-  //           "Children": value['Children'],
-  //           "Overview": value['Overview'],
-  //           "Price": value['Price'],
-  //           "NumberOfBedrooms": value['NumberOfBedrooms'],
-  //           "NumberOfBeds": value['NumberOfBeds'],
-  //           "RoomNumber": value['RoomNumber'],
-  //           "NumberOfRooms": value['NumberOfRooms'],
-  //           "RoomPhoto": value['RoomPhoto'],
-  //           "isCheckedPrivateParking": value['isCheckedPrivateParking'],
-  //           "isCheckedCleaningServices": value['isCheckedCleaningServices'],
-  //           "isCheckedFoodAnddrink": value['isCheckedFoodAnddrink'],
-  //           "isCheckedFreeWifi": value['isCheckedFreeWifi'],
-  //           "isCheckedPrivatePool": value['isCheckedPrivatePool'],
-  //           "is_reserved": value['is_reserved']
-  //         }));
-  //       });
-  //     }
-  //   });
-  //   if (mounted) {
-  //     setState(() {
-  //       HotelRooms.value = rooms;
-  //     });
-  //   }
-  // }
+    if (mounted) {
+      HotelRoomsList();
+    }
+  }
+
+  List<CarClass1> originalHotelRooms = []; // Store the original list of rooms
+
+  Future<void> HotelRoomsList() async {
+    List<CarClass1> rooms = [];
+    await FirebaseDatabase.instance
+        .reference()
+        .child('Car')
+        .orderByChild('CarCompanyId')
+        .equalTo(user!.uid.toString())
+        .once()
+        .then((DatabaseEvent event) {
+      if (event.snapshot.exists) {
+        var RoomData = Map<dynamic, dynamic>.from(event.snapshot.value as Map);
+        RoomData.forEach((Roomkey, value) {
+          print('fgggggg');
+          print(value['Seats']);
+          rooms.add(CarClass1.fromMap({
+            'id': Roomkey,
+            'color': value['Color'],
+            'company': value['CarCompany'],
+            'ger': value['Ger'],
+            // 'overview': value['Overview'],
+            'plate': value['PlateNumber'],
+            'rentalInDay': value['RentalInDay'],
+            'rentalInWeak': value['RentalInWeek'],
+            'seats': value['Seats'].toString(),
+            'topSpeed': value['Speed'],
+            'image': value['CarPhoto'],
+            'model': value['model'],
+            'is_reserved': value['is_reserved'],
+            'companyRentailName': CompanyName
+          }));
+        });
+      }
+    });
+    if (mounted) {
+      setState(() {
+        HotelRooms.value = rooms;
+        originalHotelRooms = List.from(HotelRooms.value);
+        print('[]]');
+        print(HotelRooms.value.length);
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -138,8 +149,9 @@ class _CarSearchViewState extends State<CarSearchView> {
 
     void _showBottomShest() {
       var filteredEntries;
-      var HotelRoomPrice =
-          HotelRooms.value.map((entry) => entry.Price.toDouble()).toList();
+      var HotelRoomPrice = HotelRooms.value
+          .map((entry) => entry.rentalInDay.toDouble())
+          .toList();
 
       if (HotelRoomPrice.isNotEmpty) {
         MinPrice = convert(
@@ -153,51 +165,101 @@ class _CarSearchViewState extends State<CarSearchView> {
             HotelRoomPrice.reduce(
                 (value, element) => value > element ? value : element));
       }
-      RangeValues _currentRangeValues = RangeValues(MinPrice, MaxPrice);
+      RangeValues _currentRangeValues = RangeValues(100, 1000);
+      // Future<void> _Confirm() async {
+      //   List<CarClass1> filteredRooms = [];
+      //   for (var Room in originalHotelRooms) {
+      //     // Use originalHotelRooms for filtering
+      //     var HotelRoomPrice = convert(
+      //         'USD',
+      //         HotelCurrency_Controller.selectedCurrency.value,
+      //         double.parse(Room.rentalInDay.toString()));
+
+      //     bool company = (Room.company == dropdownValue2);
+      //     print(
+      //         "Company filter: $dropdownValue2, Room company: ${Room.company}");
+
+      //     if (company) {
+      //       filteredRooms.add(Room);
+      //     }
+      //   }
+
+      //   setState(() {
+      //     HotelRooms.value = filteredRooms;
+      //   });
+
+      //   if (filteredRooms.isEmpty) {
+      //     // Show a message or handle the empty state
+      //     print("No rooms match the selected criteria.");
+      //     // You can also update the UI to show a message to the user
+      //   }
+
+      //   Navigator.pop(context);
+      // }
       Future<void> _Confirm() async {
-        List<RoomDetailsClass> filteredRooms = [];
-        for (var Room in HotelRooms.value) {
+        List<CarClass1> filteredRooms = [];
+        for (var Room in originalHotelRooms) {
+          // Use originalHotelRooms for filtering
           var HotelRoomPrice = convert(
               'USD',
               HotelCurrency_Controller.selectedCurrency.value,
-              double.parse(Room.Price.toString()));
-          bool matchesFreeWifi = ((Room.isCheckedFreeWifi == true) &&
-                  (isCheckedFreeWifi == true)) ||
-              (isCheckedFreeWifi == false);
-          bool CheckedPrivatePool = ((Room.isCheckedPrivatePool == true) &&
-                  (Room.isCheckedPrivatePool == true)) ||
-              (isCheckedPrivatePool == false);
-          bool CheckedFoodAnddrink = ((Room.isCheckedFoodAnddrink == true) &&
-                  (isCheckedFoodDrink == true)) ||
-              (isCheckedFoodDrink == false);
-          bool CheckedCleaningServices =
-              ((Room.isCheckedCleaningServices == true) &&
-                      (isCheckedCleaningServices == true)) ||
-                  (isCheckedCleaningServices == false);
-          bool Checked24HourFrontDesk =
-              ((Room.isCheckedPrivateParking == true) &&
-                      (isCheckedPrivateParking == true)) ||
-                  (isCheckedPrivateParking == false);
-          bool PriceRange =
-              (HotelRoomPrice >= _currentRangeValues.start.round() &&
-                  HotelRoomPrice <= _currentRangeValues.end.round());
-          if (matchesFreeWifi &&
-              CheckedPrivatePool &&
-              CheckedFoodAnddrink &&
-              CheckedCleaningServices &&
-              Checked24HourFrontDesk &&
-              PriceRange) {
-            filteredRooms.add(Room);
+              double.parse(Room.rentalInDay.toString()));
+
+          bool company = (Room.company == dropdownValue2);
+          bool Color = Room.color == getColorName(selectedColor.value) ||
+              selectedColor == '';
+          bool ger = (Room.ger == sorteBy) || (sorteBy == '');
+          bool Seats = true;
+          bool s2 = false;
+          bool s4 = false;
+          bool s6 = false;
+
+          for (int i = 0; i < isSelected.length; i++) {
+            setState(() {
+              if (isSelected[0] == true) {
+                s2 = true;
+              }
+              if (isSelected[1] == true) {
+                s4 = true;
+              }
+              if (isSelected[2] == true) {
+                s6 = true;
+              }
+            });
+          }
+
+          print(s2);
+          print(s4);
+          print(s6);
+          if (company && Color) {
+            if (s2) {
+              print('33');
+              if (Room.seats == 2) filteredRooms.add(Room);
+            }
+            if (s4) {
+              print('44');
+              filteredRooms.add(Room);
+            }
+            if (s6) {
+              print('66');
+              if (Room.seats == 6) filteredRooms.add(Room);
+            }
           }
         }
+
         setState(() {
           HotelRooms.value = filteredRooms;
+          NumberOfResultFilteredHotelRooms = filteredRooms.length;
         });
+        if (filteredRooms.isEmpty) {}
         Navigator.pop(context);
       }
 
-      void NumberOfHotelRooms() {
-        int NumberOfResultFilteredHotelRooms = HotelRooms.value.length;
+      void _Search() {
+        setState(() {
+          HotelRooms.value = List.from(originalHotelRooms);
+        });
+        _Confirm();
       }
 
       showModalBottomSheet(
@@ -207,45 +269,28 @@ class _CarSearchViewState extends State<CarSearchView> {
           return StatefulBuilder(
             builder: (BuildContext context, StateSetter setModalState) {
               void NumberOfHotelRooms() {
-                filteredEntries = null;
                 filteredEntries = HotelRooms.value.where((Room) {
                   var HotelRoomPrice = convert(
                       'USD',
                       HotelCurrency_Controller.selectedCurrency.value,
-                      double.parse(Room.Price.toString()));
-                  bool matchesFreeWifi = ((Room.isCheckedFreeWifi == true) &&
-                          (isCheckedFreeWifi == true)) ||
-                      (isCheckedFreeWifi == false);
-                  bool CheckedPrivatePool =
-                      ((Room.isCheckedPrivatePool == true) &&
-                              (Room.isCheckedPrivatePool == true)) ||
-                          (isCheckedPrivatePool == false);
-                  bool CheckedFoodAnddrink =
-                      ((Room.isCheckedFoodAnddrink == true) &&
-                              (isCheckedFoodDrink == true)) ||
-                          (isCheckedFoodDrink == false);
-                  bool CheckedCleaningServices =
-                      ((Room.isCheckedCleaningServices == true) &&
-                              (isCheckedCleaningServices == true)) ||
-                          (isCheckedCleaningServices == false);
-                  bool Checked24HourFrontDesk =
-                      ((Room.isCheckedPrivateParking == true) &&
-                              (isCheckedPrivateParking == true)) ||
-                          (isCheckedPrivateParking == false);
+                      double.parse(Room.rentalInDay.toString()));
+                  bool matchescompany = (Room.company == dropdownValue2);
+                  bool Color =
+                      Room.color == getColorName(selectedColor.value) ||
+                          selectedColor == '';
+                  bool ger = (Room.ger == sorteBy) || (sorteBy == '');
                   bool matchesPriceRange =
                       (HotelRoomPrice >= _currentRangeValues.start.round() &&
                           HotelRoomPrice <= _currentRangeValues.end.round());
-                  return matchesFreeWifi &&
-                      CheckedPrivatePool &&
-                      CheckedFoodAnddrink &&
-                      CheckedCleaningServices &&
-                      Checked24HourFrontDesk &&
-                      matchesPriceRange;
-                });
+                  return matchescompany && Color && ger && matchesPriceRange;
+                }).toList();
+
                 setState(() {
                   NumberOfResultFilteredHotelRooms = filteredEntries.length;
+                  HotelRooms.value = filteredEntries;
                 });
-                filteredEntries = null;
+
+                if (filteredEntries.isEmpty) {}
               }
 
               return ListView(
@@ -262,75 +307,10 @@ class _CarSearchViewState extends State<CarSearchView> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              // const Row(
-                              //   mainAxisAlignment: MainAxisAlignment.start,
-                              //   children: [
-                              //     Text(
-                              //       'Stops',
-                              //       style: TextStyle(
-                              //           fontSize: 13,
-                              //           color: AppColors.grayText,
-                              //           fontWeight: FontWeight.w500),
-                              //     ),
-                              //   ],
-                              // ),
                               const Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
-                                children: [
-                                  // Row(
-                                  //   children: [
-                                  //     Checkbox(
-                                  //       value: isCheckedDirect,
-                                  //       onChanged: (bool? newValue) {
-                                  //         setModalState(
-                                  //           () {
-                                  //             isCheckedDirect = newValue!;
-                                  //             isCheckedIndirect = false;
-                                  //             // filterFlights(
-                                  //             //     _FromSearchController.text,
-                                  //             //     _ToSearchController.text,
-                                  //             //     isCheckedDirect!,
-                                  //             //     isCheckedIndirect!,
-                                  //             //     sorteBy,
-                                  //             //     _currentRangeValues.start
-                                  //             //         .round(),
-                                  //             //     _currentRangeValues.end
-                                  //             //         .round());
-                                  //           },
-                                  //         );
-                                  //       },
-                                  //     ),
-                                  //     const Text('Direct Flight'),
-                                  //   ],
-                                  // ),
-                                  // Row(
-                                  //   children: [
-                                  //     Checkbox(
-                                  //       value: isCheckedIndirect,
-                                  //       onChanged: (bool? newValue) {
-                                  //         setModalState(
-                                  //           () {
-                                  //             isCheckedIndirect = newValue!;
-                                  //             isCheckedDirect = false;
-                                  //             // filterFlights(
-                                  //             //     _FromSearchController.text,
-                                  //             //     _ToSearchController.text,
-                                  //             //     isCheckedDirect!,
-                                  //             //     isCheckedIndirect!,
-                                  //             //     sorteBy,
-                                  //             //     _currentRangeValues.start
-                                  //             //         .round(),
-                                  //             //     _currentRangeValues.end
-                                  //             //         .round());
-                                  //           },
-                                  //         );
-                                  //       },
-                                  //     ),
-                                  //     const Text('Indirect Flight'),
-                                  //   ],
-                                  // ),
-                                ],
+                                children: [],
                               ),
                               const Row(
                                 children: [
@@ -378,8 +358,11 @@ class _CarSearchViewState extends State<CarSearchView> {
                                     );
                                   }).toList(),
                                   onChanged: (String? newValue) {
-                                    setState(() {
+                                    setModalState(() {
+                                      print(newValue);
+                                      print('lllllllll');
                                       dropdownValue2 = newValue!;
+                                      NumberOfHotelRooms();
                                     });
                                   },
                                 ),
@@ -408,9 +391,13 @@ class _CarSearchViewState extends State<CarSearchView> {
                                   children: colors.map((color) {
                                     return GestureDetector(
                                       onTap: () {
-                                        setState(() {
+                                        setModalState(() {
                                           selectedColor = color;
                                         });
+                                        print(selectedColor.value);
+                                        print(
+                                            getColorName(selectedColor.value));
+                                        print('qwertyuiopv');
                                       },
                                       child: Container(
                                         margin:
@@ -430,7 +417,6 @@ class _CarSearchViewState extends State<CarSearchView> {
                                   }).toList(),
                                 ),
                               ),
-
                               Container(
                                 margin:
                                     const EdgeInsets.symmetric(vertical: 15),
@@ -451,11 +437,12 @@ class _CarSearchViewState extends State<CarSearchView> {
 
                                 isSelected: isSelected,
                                 onPressed: (int index) {
-                                  setState(() {
+                                  setModalState(() {
                                     for (int i = 0;
                                         i < isSelected.length;
                                         i++) {
                                       isSelected[i] = i == index;
+                                      print(isSelected[i]);
                                     }
                                   });
                                 },
@@ -503,12 +490,14 @@ class _CarSearchViewState extends State<CarSearchView> {
                                   Row(
                                     children: [
                                       Radio(
-                                        activeColor: AppColors.darkGray,
+                                        activeColor: AppColors.orange,
                                         value: 'Normal',
                                         autofocus: true,
                                         groupValue: sorteBy,
                                         onChanged: (value) {
-                                          sorteBy = value.toString();
+                                          setModalState(() {
+                                            sorteBy = value.toString();
+                                          });
                                         },
                                       ),
                                       const Text('Normal'),
@@ -517,11 +506,13 @@ class _CarSearchViewState extends State<CarSearchView> {
                                   Row(
                                     children: [
                                       Radio(
-                                        activeColor: AppColors.darkGray,
+                                        activeColor: AppColors.orange,
                                         value: 'Automatic',
                                         groupValue: sorteBy,
                                         onChanged: (value) {
-                                          sorteBy = value.toString();
+                                          setModalState(() {
+                                            sorteBy = value.toString();
+                                          });
                                         },
                                       ),
                                       const Text('Automatic'),
@@ -556,8 +547,10 @@ class _CarSearchViewState extends State<CarSearchView> {
                                       values: _currentRangeValues,
                                       activeColor: AppColors.darkGray,
                                       inactiveColor: AppColors.gray,
-                                      min: MinPrice,
-                                      max: MaxPrice,
+                                      // min: MinPrice,
+                                      // max: MaxPrice,
+                                      min: 100,
+                                      max: 1000,
                                       divisions: 100,
                                       labels: RangeLabels(
                                         _currentRangeValues.start
@@ -603,31 +596,40 @@ class _CarSearchViewState extends State<CarSearchView> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                (isCheckedCleaningServices == false &&
-                                        isCheckedFoodDrink == false &&
-                                        isCheckedFreeWifi == false &&
-                                        isCheckedPrivateParking == false &&
-                                        isCheckedPrivatePool == false &&
-                                        _currentRangeValues.start
-                                                .round()
-                                                .toString() ==
-                                            MinPrice &&
-                                        _currentRangeValues.end
-                                                .round()
-                                                .toString() ==
-                                            MaxPrice)
-                                    ? Text(
-                                        'Show ${HotelRooms.value.length} of ${HotelRooms.value.length} Rooms',
-                                        style: const TextStyle(
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.w500),
-                                      )
-                                    : Text(
-                                        'Show $NumberOfResultFilteredHotelRooms of ${HotelRooms.value.length} Rooms',
-                                        style: const TextStyle(
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.w500),
-                                      ),
+                                Text(
+                                  'Show 138 of 210 Rooms',
+
+                                  // dropdownValue2 == 'Toyota' && sorteBy == ''
+                                  //     // selectedColor.value == ''
+                                  //     ? 'Show ${originalHotelRooms.length} of ${originalHotelRooms.length} Rooms'
+                                  //     : 'Show $NumberOfResultFilteredHotelRooms of ${originalHotelRooms.length} Rooms',
+                                  style: const TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.w500),
+                                ),
+
+                                // (dropdownValue2 == 'Toyota'
+                                //     // _currentRangeValues.start
+                                //     //         .round()
+                                //     //         .toString() ==
+                                //     //     MinPrice &&
+                                //     // _currentRangeValues.end
+                                //     //         .round()
+                                //     //         .toString() ==
+                                //     //     MaxPrice
+                                //     )
+                                //     ? Text(
+                                //         'Show ${HotelRooms.value.length} of ${originalHotelRooms.length} Rooms',
+                                //         style: const TextStyle(
+                                //             color: Colors.white,
+                                //             fontWeight: FontWeight.w500),
+                                //       )
+                                //     : Text(
+                                //         'Show $NumberOfResultFilteredHotelRooms of ${originalHotelRooms.length} Rooms',
+                                //         style: const TextStyle(
+                                //             color: Colors.white,
+                                //             fontWeight: FontWeight.w500),
+                                //       ),
                               ],
                             ),
                           ),
@@ -646,6 +648,7 @@ class _CarSearchViewState extends State<CarSearchView> {
     return Scaffold(
         resizeToAvoidBottomInset: false,
         backgroundColor: AppColors.lightGray,
+
         // appBar: AppBar(
         //   title: Row(
         //     mainAxisAlignment: MainAxisAlignment.center,
@@ -747,31 +750,44 @@ class _CarSearchViewState extends State<CarSearchView> {
         ]));
   }
 
-  void _SearchRoomController(String value) {
+  void _SearchCarController(String value) {
     setState(() {
-      HotelRooms.value = HotelRoom.entries.where((Room) {
+      HotelRooms.value = originalHotelRooms.where((Room) {
         bool HotelRoom = (_SearchController.text.isEmpty) ||
-            (Room.value['Overview']
+            (Room.model
                 .toLowerCase()
                 .contains(_SearchController.text.toLowerCase()));
         return HotelRoom;
       }).map((entry) {
-        return RoomDetailsClass.fromMap({
-          "id": entry.key,
-          'Adults': entry.value['Adults'],
-          "Children": entry.value['Children'],
-          "Overview": entry.value['Overview'],
-          "Price": entry.value['Price'],
-          "NumberOfBedrooms": entry.value['NumberOfBedrooms'],
-          "NumberOfBeds": entry.value['NumberOfBeds'],
-          "RoomPhoto": entry.value['RoomPhoto'],
-          "isChecked24-hourFrontDesk": entry.value['isChecked24-hourFrontDesk'],
-          "isCheckedCleaningServices": entry.value['isCheckedCleaningServices'],
-          "isCheckedFoodAnddrink": entry.value['isCheckedFoodAnddrink'],
-          "isCheckedFreeWifi": entry.value['isCheckedFreeWifi'],
-          "isCheckedPrivatePool": entry.value['isCheckedPrivatePool'],
+        return CarClass1.fromMap({
+          "id": entry.id,
+          'color': entry.color,
+          'company': entry.company,
+          'ger': entry.ger,
+          'plate': entry.plate,
+          'rentalInDay': entry.rentalInDay,
+          'rentalInWeak': entry.rentalInWeak,
+          'seats': entry.seats.toString(),
+          'topSpeed': entry.topSpeed,
+          'image': entry.image,
+          'model': entry.model,
+          'is_reserved': entry.is_reserved,
         });
       }).toList();
     });
+  }
+
+  String getColorName(int color) {
+    print('kmm');
+    Map<int, String> colorNames = {
+      4286141768: 'Brown',
+      4294198070: 'Red',
+      4281626336: 'Blue',
+      4288585374: 'Grey',
+      4294965753: 'White',
+      4278190080: 'Black',
+    };
+    print(colorNames[color]);
+    return colorNames[color] ?? 'Unknown Color';
   }
 }

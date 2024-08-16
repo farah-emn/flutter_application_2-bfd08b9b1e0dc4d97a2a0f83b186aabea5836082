@@ -22,6 +22,8 @@ class _CarAboutUsViewState extends State<CarAboutUsView> {
   late String CompanyName;
   var CarImage;
   final _emailController = TextEditingController();
+  final _locationController = TextEditingController();
+  final _mobileNumberController = TextEditingController();
   final _CarNameController = TextEditingController();
   final _auth = FirebaseAuth.instance;
   late final User? user;
@@ -29,25 +31,29 @@ class _CarAboutUsViewState extends State<CarAboutUsView> {
   @override
   void initState() {
     super.initState();
-    // ref = FirebaseDatabase.instance.ref('Hotel');
-    // user = _auth.currentUser;
+    ref = FirebaseDatabase.instance.ref('Car_Rental_Company');
+    user = _auth.currentUser;
 
-    // getData();
+    getData();
   }
 
-  // void getData() async {
-  //   final userId = user!.uid.toString();
-  //   final event = await ref.child(userId).get();
-  //   final userData = Map<dynamic, dynamic>.from(event.value as Map);
-  //   _CarNameController.text = userData['HotelName'];
-  //   _emailController.text = userData['email'];
-  //   if (mounted) {
-  //     setState(() {
-  //       CarImage = userData['image'];
-  //     });
-  //   }
-  //   // _mobileNumberController.text = userData['mobile_number'];
-  // }
+  void getData() async {
+    final userId = user!.uid.toString();
+    final event = await ref.child(userId).get();
+    final userData = Map<dynamic, dynamic>.from(event.value as Map);
+    _CarNameController.text = userData['car_name_company'];
+    _emailController.text = userData['email'];
+    _mobileNumberController.text = userData['mobile_number'];
+
+    _locationController.text =
+        '${userData['location']} - ${userData['address']}';
+    if (mounted) {
+      setState(() {
+        CarImage = userData['image'];
+      });
+    }
+    // _mobileNumberController.text = userData['mobile_number'];
+  }
 
   @override
   Widget build(BuildContext context) {

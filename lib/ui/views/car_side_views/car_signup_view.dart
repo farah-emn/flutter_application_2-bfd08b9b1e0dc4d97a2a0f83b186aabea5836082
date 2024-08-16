@@ -35,6 +35,7 @@ class _CarSignUpViewState extends State<CarSignUpView> {
   final _passwordController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
   final _CarNameController = TextEditingController();
+  final _mobileNumber = TextEditingController();
   @override
   void initState() {
     final databaseReference = FirebaseDatabase.instance.reference();
@@ -165,7 +166,7 @@ class _CarSignUpViewState extends State<CarSignUpView> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const SizedBox(
-                      height: 330,
+                      height: 310,
                     ),
                     Text(
                       'Sign up ',
@@ -195,8 +196,8 @@ class _CarSignUpViewState extends State<CarSignUpView> {
                         decoration: textFielDecoratiom.copyWith(
                           focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.all(Radius.circular(18)),
-                            borderSide:
-                                BorderSide(color: AppColors.darkGray, width: 1.5),
+                            borderSide: BorderSide(
+                                color: AppColors.darkGray, width: 1.5),
                           ),
                           prefixIcon: const Icon(
                             Icons.email_rounded,
@@ -240,8 +241,8 @@ class _CarSignUpViewState extends State<CarSignUpView> {
                         decoration: textFielDecoratiom.copyWith(
                           focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.all(Radius.circular(18)),
-                            borderSide:
-                                BorderSide(color: AppColors.darkGray, width: 1.5),
+                            borderSide: BorderSide(
+                                color: AppColors.darkGray, width: 1.5),
                           ),
                           prefixIcon: const Icon(
                             Icons.location_city_rounded,
@@ -265,7 +266,41 @@ class _CarSignUpViewState extends State<CarSignUpView> {
                         : SizedBox(
                             height: 20,
                           ),
-
+                    const Row(
+                      children: [
+                        Text(
+                          'Mobile number',
+                          style: TextStyle(
+                              fontSize: 13,
+                              color: AppColors.grayText,
+                              fontWeight: FontWeight.w500),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 40,
+                      child: TextFormField(
+                        keyboardType: TextInputType.visiblePassword,
+                        decoration: textFielDecoratiom.copyWith(
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(18)),
+                            borderSide: BorderSide(
+                                color: AppColors.darkGray, width: 1.5),
+                          ),
+                          prefixIcon: const Icon(
+                            Icons.phone,
+                            color: AppColors.darkGray,
+                          ),
+                        ),
+                        controller: _mobileNumber,
+                        onChanged: (value) {
+                          password = value;
+                        },
+                      ),
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
                     const Row(
                       children: [
                         Text(
@@ -284,8 +319,8 @@ class _CarSignUpViewState extends State<CarSignUpView> {
                         decoration: textFielDecoratiom.copyWith(
                           focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.all(Radius.circular(18)),
-                            borderSide:
-                                BorderSide(color: AppColors.darkGray, width: 1.5),
+                            borderSide: BorderSide(
+                                color: AppColors.darkGray, width: 1.5),
                           ),
                           prefixIcon: const Icon(
                             Icons.lock,
@@ -299,7 +334,7 @@ class _CarSignUpViewState extends State<CarSignUpView> {
                       ),
                     ),
 
-                    (errorTextPassword != null)
+                    (errorTextPassword != '')
                         ? Padding(
                             padding: EdgeInsetsDirectional.only(
                                 start: 6, top: 5, bottom: 15),
@@ -315,7 +350,7 @@ class _CarSignUpViewState extends State<CarSignUpView> {
                     const Row(
                       children: [
                         Text(
-                          'Conferm Password',
+                          'Confirm Password',
                           style: TextStyle(
                               fontSize: 13,
                               color: AppColors.grayText,
@@ -330,8 +365,8 @@ class _CarSignUpViewState extends State<CarSignUpView> {
                         decoration: textFielDecoratiom.copyWith(
                           focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.all(Radius.circular(18)),
-                            borderSide:
-                                BorderSide(color: AppColors.darkGray, width: 1.5),
+                            borderSide: BorderSide(
+                                color: AppColors.darkGray, width: 1.5),
                           ),
                           prefixIcon: const Icon(
                             Icons.lock,
@@ -364,109 +399,112 @@ class _CarSignUpViewState extends State<CarSignUpView> {
                     //   height: 15,
                     // ),
                     InkWell(
-                        onTap: () {
-                          Get.offAll(CarSignUpImageView());
+                        onTap: () async {
+                          // Get.offAll(HotelSignUpImageView());
+
+                          try {
+                            if (_emailController.value.text.isEmpty ||
+                                !_emailController.value.text.isEmail) {
+                              setState(() {
+                                errorTextEmail = "Please enter valid email";
+                              });
+                            } else {
+                              setState(() {
+                                errorTextEmail = '';
+                              });
+                            }
+                            if (_passwordController.value.text.isEmpty) {
+                              setState(() {
+                                errorTextPassword =
+                                    "Please enter a valid password";
+                              });
+                            } else if (_passwordController.value.text.length <
+                                    7 &&
+                                _passwordController.value.text.isNotEmpty) {
+                              setState(() {
+                                errorTextPassword =
+                                    "Password can't be less than 6 charecters";
+                              });
+                            } else {
+                              setState(() {
+                                errorTextPassword = '';
+                              });
+                            }
+
+                            if (_passwordController.value.text !=
+                                _confirmPasswordController.value.text) {
+                              setState(() {
+                                errorTextConfirmPassword =
+                                    "Password and verification do not match";
+                              });
+                            } else {
+                              errorTextConfirmPassword = '';
+                            }
+                            if (_CarNameController.value.text.isEmpty) {
+                              setState(() {
+                                errorTextCompanyName =
+                                    "Please enter a valid Hotel name";
+                              });
+                            } else {
+                              errorTextCompanyName = '';
+                            }
+                            if (errorTextAirlineCode.isEmpty &&
+                                errorTextEmail.isEmpty &&
+                                errorTextPassword.isEmpty &&
+                                errorTextConfirmPassword.isEmpty) {
+                              Get.offAll(CarSignUpImageView(
+                                email: email,
+                                password: password,
+                                CarRentalCompany: _CarNameController.text,
+                                mobileNumber: _mobileNumber.text,
+                              ));
+                            }
+                            //   try {
+                            //     final newAirelineCompany =
+                            //         await auth.createUserWithEmailAndPassword(
+                            //             email: email, password: password);
+                            //     User? AirelineCompany = auth.currentUser;
+
+                            //     if (AirelineCompany != null) {
+                            //       Get.offAll(HotelSignUpImageView());
+                            //       ref
+                            //           .child(AirelineCompany.uid.toString())
+                            //           .set({
+                            //         'email': email,
+                            //         'password': password,
+                            //         'mobile_number': '',
+                            //         'HotelName': _CarNameController.text,
+                            //         "location": ''
+                            //       });
+                            //     }
+                            //   } catch (e) {
+                            //     if (e is FirebaseAuthException) {
+                            //       switch (e.code) {
+                            //         case 'weak-password':
+                            //           setState(() {
+                            //             errorText = 'Password is too weak.';
+                            //           });
+                            //           break;
+                            //         case 'email-already-in-use':
+                            //           setState(() {
+                            //             errorText =
+                            //                 'Email is already registered.';
+                            //           });
+
+                            //           break;
+                            //         // Add more cases as needed
+                            //         default:
+                            //         // Use the default error message
+                            //       }
+                            //     }
+                            //   }
+                            // }
+                          } catch (e) {}
                         },
-                        // onTap: () async {
-                        //   // Get.offAll(HotelSignUpImageView());
-
-                        //   try {
-                        //     if (_emailController.value.text.isEmpty ||
-                        //         !_emailController.value.text.isEmail) {
-                        //       setState(() {
-                        //         errorTextEmail = "Please enter valid email";
-                        //       });
-                        //     } else {
-                        //       setState(() {
-                        //         errorTextEmail = '';
-                        //       });
-                        //     }
-                        //     if (_passwordController.value.text.isEmpty) {
-                        //       setState(() {
-                        //         errorTextPassword =
-                        //             "Please enter a valid password";
-                        //       });
-                        //     } else if (_passwordController.value.text.length <
-                        //             7 &&
-                        //         _passwordController.value.text.isNotEmpty) {
-                        //       setState(() {
-                        //         errorTextPassword =
-                        //             "Password can't be less than 6 charecters";
-                        //       });
-                        //     } else {
-                        //       setState(() {
-                        //         errorTextPassword = '';
-                        //       });
-                        //     }
-
-                        //     if (_passwordController.value.text !=
-                        //         _confirmPasswordController.value.text) {
-                        //       setState(() {
-                        //         errorTextConfirmPassword =
-                        //             "Password and verification do not match";
-                        //       });
-                        //     } else {
-                        //       errorTextConfirmPassword = '';
-                        //     }
-                        //     if (_CarNameController.value.text.isEmpty) {
-                        //       setState(() {
-                        //         errorTextCompanyName =
-                        //             "Please enter a valid Hotel name";
-                        //       });
-                        //     } else {
-                        //       errorTextCompanyName = '';
-                        //     }
-                        //     if (errorTextAirlineCode.isEmpty &&
-                        //         errorTextEmail.isEmpty &&
-                        //         errorTextPassword.isEmpty &&
-                        //         errorTextConfirmPassword.isEmpty) {
-                        //       try {
-                        //         final newAirelineCompany =
-                        //             await auth.createUserWithEmailAndPassword(
-                        //                 email: email, password: password);
-                        //         User? AirelineCompany = auth.currentUser;
-
-                        //         if (AirelineCompany != null) {
-                        //           Get.offAll(HotelSignUpImageView());
-                        //           ref
-                        //               .child(AirelineCompany.uid.toString())
-                        //               .set({
-                        //             'email': email,
-                        //             'password': password,
-                        //             'mobile_number': '',
-                        //             'HotelName': _CarNameController.text,
-                        //             "location": ''
-                        //           });
-                        //         }
-                        //       } catch (e) {
-                        //         if (e is FirebaseAuthException) {
-                        //           switch (e.code) {
-                        //             case 'weak-password':
-                        //               setState(() {
-                        //                 errorText = 'Password is too weak.';
-                        //               });
-                        //               break;
-                        //             case 'email-already-in-use':
-                        //               setState(() {
-                        //                 errorText =
-                        //                     'Email is already registered.';
-                        //               });
-
-                        //               break;
-                        //             // Add more cases as needed
-                        //             default:
-                        //             // Use the default error message
-                        //           }
-                        //         }
-                        //       }
-                        //     }
-                        //   } catch (e) {}
-                        // },
                         child: CustomButton(
                           backgroundColor: AppColors.darkGray,
                           text: 'Sign up',
                           textColor: AppColors.backgroundgrayColor,
-                        
                           widthPercent: size.width,
                         )),
                     const SizedBox(

@@ -1,7 +1,6 @@
 // ignore_for_file: body_might_complete_normally_nullable, prefer_typing_uninitialized_variables, non_constant_identifier_names, prefer_const_constructors, prefer_const_literals_to_create_immutables, sized_box_for_whitespace, no_leading_underscores_for_local_identifiers, unused_element
 
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:traveling/ui/shared/colors.dart';
 import 'package:traveling/controllers/search_oneway_controller.dart';
@@ -9,7 +8,6 @@ import 'package:traveling/controllers/search_roundtrip_controller.dart';
 import 'package:traveling/ui/shared/custom_widgets/custom_button.dart';
 import 'package:traveling/ui/shared/custom_widgets/custom_textfield2.dart';
 import 'package:traveling/ui/shared/text_size.dart';
-import 'package:traveling/ui/views/hotel_side_views/hotel_search_view.dart';
 import 'package:traveling/ui/views/traveller_side_views/car_view.dart';
 import 'package:traveling/ui/views/traveller_side_views/search_flight/DepartureDateDetails.dart';
 import 'package:traveling/ui/views/traveller_side_views/search_flight/DepartureDateReturnDateDetails.dart';
@@ -19,11 +17,17 @@ import 'package:traveling/ui/views/traveller_side_views/search_flight/list_depar
 import 'package:traveling/ui/views/traveller_side_views/search_flight/list_departure_city_round.dart';
 import 'package:traveling/ui/views/traveller_side_views/search_hotel/search_hotel_view.dart';
 
+import '../../../controllers/car_search_controller.dart';
+import 'car_search/list_pickup_location_car.dart';
+import 'car_search/pickup_time_drop_off_time.dart';
+
 class SearchView extends StatefulWidget {
   String? DepartureCityOneWay;
   String? ArrivalCityOnyWay;
   String? DepartureCityRoundTrip;
   String? ArrivalCityOnyRoundTrip;
+  String? PickUpLocation;
+
   SearchView(
       {this.DepartureCityOneWay,
       this.ArrivalCityOnyWay,
@@ -1361,9 +1365,81 @@ class _SearchViewState extends State<SearchView>
   }
 
   Widget carSearch(BuildContext context, Size size) {
+    final TextEditingController PickupDateController = TextEditingController();
+    final TextEditingController DropOffDateController = TextEditingController();
+    CarSearchController carSearchController = Get.put(CarSearchController());
+    void _searchForCar() async {
+      if (widget.PickUpLocation != null) {
+        carSearchController.setPickUplocation(widget.PickUpLocation ?? '');
+      }
+      carSearchController.searchForCarRenatl(
+          sorteBy, isSelected, selectedColor, dropdownValue2);
+    }
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
+        const Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Text(
+              'Destonation',
+              style: TextStyle(
+                  fontSize: 13,
+                  color: AppColors.grayText,
+                  fontWeight: FontWeight.w500),
+            ),
+          ],
+        ),
+        Container(
+          width: size.width,
+          height: 40,
+          child: ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              foregroundColor: Colors.black, elevation: 0,
+              backgroundColor: Colors.transparent, // Text color
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(15),
+              ),
+              side: BorderSide(color: AppColors.LightGrayColor, width: 1),
+            ),
+            onPressed: () async {
+              final result = await Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ListPickupLocation(),
+                ),
+              );
+              if (result != null) {
+                setState(() {
+                  widget.PickUpLocation = result['PickUpLocation'];
+                });
+              }
+            },
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Icon(Icons.flight_takeoff, color: AppColors.darkGray),
+                SizedBox(
+                  width: 10,
+                ),
+                Text(
+                  widget.PickUpLocation ?? '',
+                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
+                ),
+              ],
+            ),
+          ),
+        ),
+        SizedBox(
+          height: 20,
+        ),
+        PickupDateDropOffDateDetails(
+            onDateSelected: _handleDateSelection,
+            PickupTime: carSearchController.PickUpDate,
+            DropoffTime: carSearchController.DropOffDate,
+            PickupController: PickupDateController,
+            DropOffController: DropOffDateController),
         const SizedBox(
           height: 20,
         ),
@@ -1416,78 +1492,78 @@ class _SearchViewState extends State<SearchView>
             ),
           ],
         ),
-        const SizedBox(
-          height: 20,
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Plate Number',
-                  style: TextStyle(
-                      fontSize: 13,
-                      color: AppColors.grayText,
-                      fontWeight: FontWeight.w500),
-                ),
-                SizedBox(
-                  height: 40,
-                  width: size.width / 2 - 35,
-                  child: TextField(
-                    keyboardType: TextInputType.number,
-                    decoration: textFielDecoratiom.copyWith(
-                        focusedBorder: const OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color: AppColors.lightGray,
-                          ),
-                          borderRadius: BorderRadius.all(Radius.circular(18)),
-                        ),
-                        fillColor: Colors.white,
-                        prefixIcon: const Icon(
-                          Icons.numbers_rounded,
-                          color: AppColors.lightGray,
-                        )),
-                    onChanged: (value) {},
-                  ),
-                ),
-              ],
-            ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Top Speed',
-                  style: TextStyle(
-                      fontSize: 13,
-                      color: AppColors.grayText,
-                      fontWeight: FontWeight.w500),
-                ),
-                SizedBox(
-                  height: 40,
-                  width: size.width / 2 - 35,
-                  child: TextField(
-                    keyboardType: TextInputType.number,
-                    decoration: textFielDecoratiom.copyWith(
-                        focusedBorder: const OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color: AppColors.lightGray,
-                          ),
-                          borderRadius: BorderRadius.all(Radius.circular(18)),
-                        ),
-                        fillColor: Colors.white,
-                        prefixIcon: const Icon(
-                          Icons.speed,
-                          color: AppColors.lightGray,
-                        )),
-                    onChanged: (value) {},
-                  ),
-                ),
-              ],
-            ),
-          ],
-        ),
+        // const SizedBox(
+        //   height: 20,
+        // ),
+        // Row(
+        //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        //   children: [
+        //     Column(
+        //       crossAxisAlignment: CrossAxisAlignment.start,
+        //       children: [
+        //         Text(
+        //           'Plate Number',
+        //           style: TextStyle(
+        //               fontSize: 13,
+        //               color: AppColors.grayText,
+        //               fontWeight: FontWeight.w500),
+        //         ),
+        //         SizedBox(
+        //           height: 40,
+        //           width: size.width / 2 - 35,
+        //           child: TextField(
+        //             keyboardType: TextInputType.number,
+        //             decoration: textFielDecoratiom.copyWith(
+        //                 focusedBorder: const OutlineInputBorder(
+        //                   borderSide: BorderSide(
+        //                     color: AppColors.lightOrange,
+        //                   ),
+        //                   borderRadius: BorderRadius.all(Radius.circular(18)),
+        //                 ),
+        //                 fillColor: Colors.white,
+        //                 prefixIcon: const Icon(
+        //                   Icons.numbers_rounded,
+        //                   color: AppColors.orange,
+        //                 )),
+        //             onChanged: (value) {},
+        //           ),
+        //         ),
+        //       ],
+        //     ),
+        //     Column(
+        //       crossAxisAlignment: CrossAxisAlignment.start,
+        //       children: [
+        //         Text(
+        //           'Top Speed',
+        //           style: TextStyle(
+        //               fontSize: 13,
+        //               color: AppColors.grayText,
+        //               fontWeight: FontWeight.w500),
+        //         ),
+        //         SizedBox(
+        //           height: 40,
+        //           width: size.width / 2 - 35,
+        //           child: TextField(
+        //             keyboardType: TextInputType.number,
+        //             decoration: textFielDecoratiom.copyWith(
+        //                 focusedBorder: const OutlineInputBorder(
+        //                   borderSide: BorderSide(
+        //                     color: AppColors.lightOrange,
+        //                   ),
+        //                   borderRadius: BorderRadius.all(Radius.circular(18)),
+        //                 ),
+        //                 fillColor: Colors.white,
+        //                 prefixIcon: const Icon(
+        //                   Icons.speed,
+        //                   color: AppColors.orange,
+        //                 )),
+        //             onChanged: (value) {},
+        //           ),
+        //         ),
+        //       ],
+        //     ),
+        //   ],
+        // ),
         const SizedBox(
           height: 20,
         ),
@@ -1508,7 +1584,6 @@ class _SearchViewState extends State<SearchView>
           decoration: BoxDecoration(
             border: Border.all(color: AppColors.LightGrayColor),
             borderRadius: BorderRadius.circular(15),
-            color: Colors.white,
           ),
           child: DropdownButton<String>(
             dropdownColor: Colors.white,
@@ -1562,12 +1637,14 @@ class _SearchViewState extends State<SearchView>
             Row(
               children: [
                 Radio(
-                  activeColor: AppColors.lightGray,
+                  activeColor: AppColors.darkGray,
                   value: 'Normal',
                   autofocus: true,
                   groupValue: sorteBy,
                   onChanged: (value) {
-                    sorteBy = value.toString();
+                    setState(() {
+                      sorteBy = value.toString();
+                    });
                   },
                 ),
                 const Text('Normal'),
@@ -1576,11 +1653,13 @@ class _SearchViewState extends State<SearchView>
             Row(
               children: [
                 Radio(
-                  activeColor: AppColors.lightGray,
+                  activeColor: AppColors.darkGray,
                   value: 'Automatic',
                   groupValue: sorteBy,
                   onChanged: (value) {
-                    sorteBy = value.toString();
+                    setState(() {
+                      sorteBy = value.toString();
+                    });
                   },
                 ),
                 const Text('Automatic'),
@@ -1634,12 +1713,14 @@ class _SearchViewState extends State<SearchView>
         ),
         InkWell(
           onTap: () {
-            Get.to(CarView());
+            print('jj9j');
+            // Get.to(CarView());
+            _searchForCar();
           },
           child: CustomButton(
             text: 'Search',
             textColor: AppColors.backgroundgrayColor,
-            backgroundColor: AppColors.lightGray,
+            backgroundColor: AppColors.darkGray,
             widthPercent: size.width,
           ),
         ),

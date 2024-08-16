@@ -40,7 +40,7 @@ class _CarPhotosState extends State<CarPhotos> {
                   child: IconButton(
                     icon: Icon(
                       Icons.keyboard_arrow_left_sharp,
-                      color: AppColors.darkGray,
+                      color: AppColors.purple,
                     ),
                     onPressed: () {
                       setState(() {
@@ -58,7 +58,7 @@ class _CarPhotosState extends State<CarPhotos> {
                   child: IconButton(
                     icon: Icon(
                       Icons.keyboard_arrow_right_sharp,
-                      color: AppColors.darkGray,
+                      color: AppColors.purple,
                     ),
                     onPressed: () {
                       setState(() {
@@ -89,7 +89,7 @@ class _CarPhotosState extends State<CarPhotos> {
                     decoration: BoxDecoration(
                       border: Border.all(
                         color: selectedIndex == index
-                            ? AppColors.darkGray
+                            ? Colors.purple
                             : Colors.transparent,
                         width: 2,
                       ),

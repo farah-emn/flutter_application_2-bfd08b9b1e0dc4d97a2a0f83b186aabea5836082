@@ -10,9 +10,9 @@ import 'package:traveling/ui/shared/colors.dart';
 import 'package:traveling/ui/shared/text_size.dart';
 import 'package:traveling/ui/views/car_side_views/car_booking_view.dart';
 import 'package:traveling/ui/views/hotel_side_views/hotel_booking_view.dart';
-import 'package:traveling/ui/views/hotel_side_views/hotel_currency.dart';
 import 'package:traveling/ui/views/hotel_side_views/hotel_welcome_view.dart';
 import '../first_view.dart';
+import 'car_currency.dart';
 
 late User loggedinUser;
 
@@ -35,47 +35,49 @@ class _CarHomeViewState extends State<CarHomeView> {
   var CarPhoto;
   var CarId = '';
   var CompanyId = '';
-  double incoming = 0.0;
-  int ReservedRooms = 0;
+  double incoming = 13350.0;
+  int ReservedRooms = 22;
   final CurrencyController CarCurrency_Controller =
       Get.put(CurrencyController());
   ValueNotifier<List<RoomDetailsClass>> CarRooms =
       ValueNotifier<List<RoomDetailsClass>>([]);
   @override
   void initState() {
-    // super.initState();
-    // ref = FirebaseDatabase.instance.ref('Hotel');
-    // user = _auth.currentUser;
-    // getCurrentUser();
-    // getData();
+    super.initState();
+    ref = FirebaseDatabase.instance.ref('Car_Rental_Company');
+    user = _auth.currentUser;
+    getCurrentUser();
+    getData();
 
     super.initState();
   }
 
-  // void getCurrentUser() async {
-  //   try {
-  //     final user = _auth.currentUser;
-  //     if (user != null) {
-  //       loggedinUser = user;
-  //     }
-  //     if (_auth.currentUser == null) {
-  //       Get.offAll(const HotelWelcomeView());
-  //     }
-  //   } catch (e) {}
-  // }
+  void getCurrentUser() async {
+    try {
+      final user = _auth.currentUser;
+      if (user != null) {
+        loggedinUser = user;
+      }
+      if (_auth.currentUser == null) {
+        Get.offAll(const HotelWelcomeView());
+      }
+    } catch (e) {}
+  }
 
-  // void getData() async {
-  //   CompanyId = user!.uid.toString();
-  //   final event = await ref.child(CompanyId).get();
-  //   final userData = Map<dynamic, dynamic>.from(event.value as Map);
-  //   if (mounted) {
-  //     setState(() {
-  //       CompanyName = userData['HotelName'];
-  //       Companyimage = userData['image'];
-  //     });
-  //   }
-  //   getDataHoel().then((fetchedFlights) {});
-  // }
+  void getData() async {
+    CompanyId = user!.uid.toString();
+    final event = await ref.child(CompanyId).get();
+    final userData = Map<dynamic, dynamic>.from(event.value as Map);
+    if (mounted) {
+      setState(() {
+        CompanyName = userData['car_name_company'];
+        Companyimage = userData['image'];
+      });
+      print(userData['car_name_company']);
+    }
+    print(CompanyId);
+    // getDataHoel().then((fetchedFlights) {});
+  }
 
   // Future<void> getDataHoel() async {
   //   final ref = FirebaseDatabase.instance.reference().child('Room');
@@ -137,22 +139,22 @@ class _CarHomeViewState extends State<CarHomeView> {
                             AssetImage('assets/image/png/girlUser1.png')),
                 accountName: Text('Company name'),
                 accountEmail: Text('$CompanyName')),
-            ListTile(
-              leading: const Icon(
-                Icons.add,
-                color: AppColors.darkGray,
-              ),
-              title: const Text(
-                'Add Room',
-                style: TextStyle(
-                  fontSize: TextSize.header2,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-              onTap: () {
-                Navigator.pop(context);
-              },
-            ),
+            // ListTile(
+            //   leading: const Icon(
+            //     Icons.add,
+            //     color: AppColors.darkGray,
+            //   ),
+            //   title: const Text(
+            //     'Add Room',
+            //     style: TextStyle(
+            //       fontSize: TextSize.header2,
+            //       fontWeight: FontWeight.w500,
+            //     ),
+            //   ),
+            //   onTap: () {
+            //     Navigator.pop(context);
+            //   },
+            // ),
             ListTile(
               leading: const Icon(
                 Icons.bookmark_outlined,
@@ -174,17 +176,33 @@ class _CarHomeViewState extends State<CarHomeView> {
                 Icons.currency_exchange_rounded,
                 color: AppColors.darkGray,
               ),
-              title: const Text(
-                'Currency',
-                style: TextStyle(
-                  fontSize: TextSize.header2,
-                  fontWeight: FontWeight.w500,
-                ),
+              title: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text(
+                    'Currency',
+                    style: TextStyle(
+                      fontSize: TextSize.header2,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                  Obx(
+                    () => Text(
+                      CarCurrency_Controller.selectedCurrency.value,
+                      style: TextStyle(
+                        fontSize: 15,
+                        // color: AppColors.grayText,
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
+                  ),
+                ],
               ),
               onTap: () {
                 Get.to(CurrencyPage());
               },
             ),
+
             Container(
               margin: EdgeInsets.symmetric(horizontal: 15),
               height: 0.2,
@@ -354,16 +372,11 @@ class _CarHomeViewState extends State<CarHomeView> {
                                     fontWeight: FontWeight.w500),
                               ),
                               Text(
-                                'email@gmail.com',
+                                CompanyName,
                                 style: TextStyle(
                                   color: AppColors.backgroundgrayColor,
                                   fontSize: 15,
                                 ),
-                              ),
-                              Text(
-                                CompanyName,
-                                style:
-                                    TextStyle(color: AppColors.LightGrayColor),
                               ),
                             ],
                           ),

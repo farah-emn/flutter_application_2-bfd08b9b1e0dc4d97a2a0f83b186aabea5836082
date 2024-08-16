@@ -9,6 +9,7 @@ import 'package:traveling/classes/amenities_class.dart';
 import 'package:traveling/classes/amenities_class.dart';
 import 'package:traveling/classes/amenities_class.dart';
 import 'package:traveling/classes/car_class.dart';
+import 'package:traveling/classes/car_class1.dart';
 import 'package:traveling/classes/hotel_room_details_class.dart';
 import 'package:traveling/ui/shared/colors.dart';
 import 'package:traveling/ui/shared/custom_widgets/custom_button.dart';
@@ -17,12 +18,16 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:traveling/ui/views/hotel_side_views/hotel_room_photos.dart';
 import 'package:traveling/ui/views/traveller_side_views/booking_car_summary_view.dart';
 
-import '../../../classes/amenities_class.dart';
-import '../../../classes/amenities_class1.dart';
+import '../../../../classes/amenities_class.dart';
+import '../../../../classes/amenities_class1.dart';
+import '../car_details_Photos.dart';
+import 'car_map_view.dart';
 
 class CarDetailsView extends StatefulWidget {
+  CarClass1 CarDeails;
   CarDetailsView({
     super.key,
+    required this.CarDeails,
   });
   @override
   State<CarDetailsView> createState() => _CarDetailsViewState();
@@ -31,6 +36,7 @@ class CarDetailsView extends StatefulWidget {
 class _CarDetailsViewState extends State<CarDetailsView> {
   @override
   Widget build(BuildContext context) {
+    print(widget.CarDeails.pickupLocation);
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: AppColors.lightGray,
@@ -43,19 +49,19 @@ class _CarDetailsViewState extends State<CarDetailsView> {
               pinned: true,
               expandedHeight: 350,
               toolbarHeight: 120,
-              // flexibleSpace: FlexibleSpaceBar(
-              //   background: Stack(
-              //     children: [
-              //       SizedBox(
-              //         height: 350,
-              //         child: Image(
-              //           image: NetworkImage(widget.Room.RoomPhoto!.first),
-              //           fit: BoxFit.fill,
-              //         ),
-              //       ),
-              //     ],
-              //   ),
-              // ),
+              flexibleSpace: FlexibleSpaceBar(
+                background: Stack(
+                  children: [
+                    SizedBox(
+                      height: 350,
+                      child: Image(
+                        image: NetworkImage(widget.CarDeails.image!.first),
+                        fit: BoxFit.fill,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
               bottom: PreferredSize(
                 preferredSize: const Size.fromHeight(0.0),
                 child: Container(
@@ -73,7 +79,7 @@ class _CarDetailsViewState extends State<CarDetailsView> {
                         width: 15,
                       ),
                       Text(
-                        'Honday',
+                        "   ${widget.CarDeails.company}-${widget.CarDeails.model}",
                         style: TextStyle(
                           fontSize: TextSize.header1,
                           fontWeight: FontWeight.w600,
@@ -97,19 +103,19 @@ class _CarDetailsViewState extends State<CarDetailsView> {
                     ),
                     Row(
                       children: [
-                        Icon(
-                          Icons.edit,
-                          color: Colors.white,
-                          size: 25,
-                        ),
-                        SizedBox(
-                          width: 10,
-                        ),
-                        Icon(
-                          Icons.favorite_rounded,
-                          color: Colors.white,
-                          size: 25,
-                        ),
+                        // Icon(
+                        //   Icons.edit,
+                        //   color: Colors.white,
+                        //   size: 25,
+                        // ),
+                        // SizedBox(
+                        //   width: 10,
+                        // ),
+                        // Icon(
+                        //   Icons.favorite_rounded,
+                        //   color: Colors.white,
+                        //   size: 25,
+                        // ),
                       ],
                     ),
                   ],
@@ -127,164 +133,164 @@ class _CarDetailsViewState extends State<CarDetailsView> {
                       SizedBox(
                         width: 30,
                       ),
-                      // Stack(
-                      //   children: [
-                      //     (widget.car.RoomPhoto!.length >= 2)
-                      //         ? Container(
-                      //             width: size.width / 2.2,
-                      //             height: size.width / 2.2,
-                      //             // margin: EdgeInsets.only(top: 370),
-                      //             decoration: BoxDecoration(
-                      //               borderRadius: BorderRadius.only(
-                      //                   topLeft: Radius.circular(15),
-                      //                   bottomLeft: Radius.circular(15)),
-                      //               image: DecorationImage(
-                      //                   image: NetworkImage(
-                      //                       widget.car.RoomPhoto![1]),
-                      //                   fit: BoxFit.fill),
-                      //             ),
-                      //           )
-                      //         : SizedBox(),
-                      //     (widget.car.RoomPhoto!.length >= 3)
-                      //         ? Container(
-                      //             width: ((size.width / 2.2) / 2) - 5,
-                      //             height: ((size.width / 2.2) / 2) - 5,
-                      //             margin: EdgeInsets.only(
-                      //               left: (size.width / 2.2) + 10,
-                      //               //  top: 370
-                      //             ),
-                      //             decoration: BoxDecoration(
-                      //               image: DecorationImage(
-                      //                   image: NetworkImage(
-                      //                       widget.car.RoomPhoto![2]),
-                      //                   fit: BoxFit.fill),
-                      //             ),
-                      //           )
-                      //         : SizedBox(),
-                      //     (widget.car.RoomPhoto!.length >= 4)
-                      //         ? Container(
-                      //             width: ((size.width / 2.2) / 2) - 5,
-                      //             height: ((size.width / 2.2) / 2) - 5,
-                      //             margin: EdgeInsets.only(
-                      //                 left: (size.width / 2.2) + 10,
-                      //                 top: ((size.width / 2.2) / 2) + 5),
-                      //             decoration: BoxDecoration(
-                      //               image: DecorationImage(
-                      //                   image: NetworkImage(
-                      //                       widget.car.RoomPhoto![3]),
-                      //                   fit: BoxFit.fill),
-                      //             ),
-                      //           )
-                      //         : SizedBox(),
-                      //     (widget.car.RoomPhoto!.length >= 5)
-                      //         ? Container(
-                      //             width: ((size.width / 2.2) / 2) - 5,
-                      //             height: ((size.width / 2.2) / 2) - 5,
-                      //             margin: EdgeInsets.only(
-                      //               left: (size.width / 2.2) +
-                      //                   10 +
-                      //                   ((size.width / 2.2) / 2) +
-                      //                   5,
-                      //               // top: 370
-                      //             ),
-                      //             decoration: BoxDecoration(
-                      //               borderRadius: BorderRadius.only(
-                      //                 topRight: Radius.circular(15),
-                      //               ),
-                      //               image: DecorationImage(
-                      //                   image: NetworkImage(
-                      //                       widget.car.RoomPhoto![4]),
-                      //                   fit: BoxFit.fill),
-                      //             ),
-                      //           )
-                      //         : SizedBox(),
-                      //     Stack(
-                      //       children: [
-                      //         (widget.car.RoomPhoto!.length >= 6)
-                      //             ? Container(
-                      //                 width: ((size.width / 2.2) / 2) - 5,
-                      //                 height: ((size.width / 2.2) / 2) - 5,
-                      //                 margin: EdgeInsets.only(
-                      //                     left: (size.width / 2.2) +
-                      //                         10 +
-                      //                         ((size.width / 2.2) / 2) +
-                      //                         5,
-                      //                     top: ((size.width / 2.2) / 2) + 5),
-                      //                 decoration: BoxDecoration(
-                      //                   color:
-                      //                       Color.fromARGB(88, 158, 158, 158),
-                      //                   borderRadius: BorderRadius.only(
-                      //                     bottomRight: Radius.circular(15),
-                      //                   ),
-                      //                   image: DecorationImage(
-                      //                       image: NetworkImage(
-                      //                           widget.car.RoomPhoto![5]),
-                      //                       fit: BoxFit.fill),
-                      //                 ),
-                      //               )
-                      //             : SizedBox(),
-                      //         (6 < widget.car.RoomPhoto!.length &&
-                      //                 widget.car.RoomPhoto![6].isNotEmpty)
-                      //             ? InkWell(
-                      //                 onTap: () {
-                      //                   Get.to(
-                      //                     HotelRoomPhotos(
-                      //                       RoomPhotos: widget.car.RoomPhoto!
-                      //                           .sublist(5),
-                      //                     ),
-                      //                   );
-                      //                 },
-                      //                 child: Container(
-                      //                   width: ((size.width / 2.2) / 2) - 5,
-                      //                   height: ((size.width / 2.2) / 2) - 5,
-                      //                   margin: EdgeInsets.only(
-                      //                       left: (size.width / 2.2) +
-                      //                           10 +
-                      //                           ((size.width / 2.2) / 2) +
-                      //                           5,
-                      //                       top: ((size.width / 2.2) / 2) + 5),
-                      //                   decoration: const BoxDecoration(
-                      //                     color:
-                      //                         Color.fromARGB(178, 33, 33, 33),
-                      //                     borderRadius: BorderRadius.only(
-                      //                       bottomRight: Radius.circular(15),
-                      //                     ),
-                      //                   ),
-                      //                 ),
-                      //               )
-                      //             : SizedBox(),
-                      //         (6 < widget.car.RoomPhoto!.length &&
-                      //                 widget.car.RoomPhoto![6].isNotEmpty)
-                      //             ? InkWell(
-                      //                 onTap: () {
-                      //                   Get.to(
-                      //                     HotelRoomPhotos(
-                      //                       RoomPhotos: widget.car.RoomPhoto!
-                      //                           .sublist(5),
-                      //                     ),
-                      //                   );
-                      //                 },
-                      //                 child: Padding(
-                      //                   padding: EdgeInsets.only(
-                      //                       left: (size.width / 2.2) +
-                      //                           10 +
-                      //                           ((size.width / 2.2) / 2) +
-                      //                           25,
-                      //                       top: ((size.width / 2.2) / 2) + 35),
-                      //                   child: Text(
-                      //                     '+${widget.car.RoomPhoto!.sublist(5).length.toString()}',
-                      //                     style: TextStyle(
-                      //                         color: Colors.white,
-                      //                         fontSize: 20,
-                      //                         fontWeight: FontWeight.w500),
-                      //                   ),
-                      //                 ),
-                      //               )
-                      //             : SizedBox()
-                      //       ],
-                      //     ),
-                      //   ],
-                      // ),
+                      Stack(
+                        children: [
+                          (widget.CarDeails.image!.length >= 2)
+                              ? Container(
+                                  width: size.width / 2.2,
+                                  height: size.width / 2.2,
+                                  // margin: EdgeInsets.only(top: 370),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.only(
+                                        topLeft: Radius.circular(15),
+                                        bottomLeft: Radius.circular(15)),
+                                    image: DecorationImage(
+                                        image: NetworkImage(
+                                            widget.CarDeails.image![1]),
+                                        fit: BoxFit.fill),
+                                  ),
+                                )
+                              : SizedBox(),
+                          (widget.CarDeails.image!.length >= 3)
+                              ? Container(
+                                  width: ((size.width / 2.2) / 2) - 5,
+                                  height: ((size.width / 2.2) / 2) - 5,
+                                  margin: EdgeInsets.only(
+                                    left: (size.width / 2.2) + 10,
+                                    //  top: 370
+                                  ),
+                                  decoration: BoxDecoration(
+                                    image: DecorationImage(
+                                        image: NetworkImage(
+                                            widget.CarDeails.image![2]),
+                                        fit: BoxFit.fill),
+                                  ),
+                                )
+                              : SizedBox(),
+                          (widget.CarDeails.image!.length >= 4)
+                              ? Container(
+                                  width: ((size.width / 2.2) / 2) - 5,
+                                  height: ((size.width / 2.2) / 2) - 5,
+                                  margin: EdgeInsets.only(
+                                      left: (size.width / 2.2) + 10,
+                                      top: ((size.width / 2.2) / 2) + 5),
+                                  decoration: BoxDecoration(
+                                    image: DecorationImage(
+                                        image: NetworkImage(
+                                            widget.CarDeails.image![3]),
+                                        fit: BoxFit.fill),
+                                  ),
+                                )
+                              : SizedBox(),
+                          (widget.CarDeails.image!.length >= 5)
+                              ? Container(
+                                  width: ((size.width / 2.2) / 2) - 5,
+                                  height: ((size.width / 2.2) / 2) - 5,
+                                  margin: EdgeInsets.only(
+                                    left: (size.width / 2.2) +
+                                        10 +
+                                        ((size.width / 2.2) / 2) +
+                                        5,
+                                    // top: 370
+                                  ),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.only(
+                                      topRight: Radius.circular(15),
+                                    ),
+                                    image: DecorationImage(
+                                        image: NetworkImage(
+                                            widget.CarDeails.image![4]),
+                                        fit: BoxFit.fill),
+                                  ),
+                                )
+                              : SizedBox(),
+                          Stack(
+                            children: [
+                              (widget.CarDeails.image!.length >= 6)
+                                  ? Container(
+                                      width: ((size.width / 2.2) / 2) - 5,
+                                      height: ((size.width / 2.2) / 2) - 5,
+                                      margin: EdgeInsets.only(
+                                          left: (size.width / 2.2) +
+                                              10 +
+                                              ((size.width / 2.2) / 2) +
+                                              5,
+                                          top: ((size.width / 2.2) / 2) + 5),
+                                      decoration: BoxDecoration(
+                                        color:
+                                            Color.fromARGB(88, 158, 158, 158),
+                                        borderRadius: BorderRadius.only(
+                                          bottomRight: Radius.circular(15),
+                                        ),
+                                        image: DecorationImage(
+                                            image: NetworkImage(
+                                                widget.CarDeails.image![5]),
+                                            fit: BoxFit.fill),
+                                      ),
+                                    )
+                                  : SizedBox(),
+                              (6 < widget.CarDeails.image!.length &&
+                                      widget.CarDeails.image![6].isNotEmpty)
+                                  ? InkWell(
+                                      onTap: () {
+                                        Get.to(
+                                          CarPhotos(
+                                            carPhotos: widget.CarDeails.image!
+                                                .sublist(5),
+                                          ),
+                                        );
+                                      },
+                                      child: Container(
+                                        width: ((size.width / 2.2) / 2) - 5,
+                                        height: ((size.width / 2.2) / 2) - 5,
+                                        margin: EdgeInsets.only(
+                                            left: (size.width / 2.2) +
+                                                10 +
+                                                ((size.width / 2.2) / 2) +
+                                                5,
+                                            top: ((size.width / 2.2) / 2) + 5),
+                                        decoration: const BoxDecoration(
+                                          color:
+                                              Color.fromARGB(178, 33, 33, 33),
+                                          borderRadius: BorderRadius.only(
+                                            bottomRight: Radius.circular(15),
+                                          ),
+                                        ),
+                                      ),
+                                    )
+                                  : SizedBox(),
+                              (6 < widget.CarDeails.image!.length &&
+                                      widget.CarDeails.image![6].isNotEmpty)
+                                  ? InkWell(
+                                      onTap: () {
+                                        Get.to(
+                                          HotelRoomPhotos(
+                                            RoomPhotos: widget.CarDeails.image!
+                                                .sublist(5),
+                                          ),
+                                        );
+                                      },
+                                      child: Padding(
+                                        padding: EdgeInsets.only(
+                                            left: (size.width / 2.2) +
+                                                10 +
+                                                ((size.width / 2.2) / 2) +
+                                                25,
+                                            top: ((size.width / 2.2) / 2) + 35),
+                                        child: Text(
+                                          '+${widget.CarDeails.image!.sublist(5).length.toString()}',
+                                          style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.w500),
+                                        ),
+                                      ),
+                                    )
+                                  : SizedBox()
+                            ],
+                          ),
+                        ],
+                      ),
                       SizedBox(
                         height: 30,
                       ),
@@ -294,23 +300,22 @@ class _CarDetailsViewState extends State<CarDetailsView> {
                             width: 15,
                           ),
                           Text(
-                            'Overview',
+                            'Car rental company: ',
                             style: TextStyle(
                                 fontSize: TextSize.header1,
                                 fontWeight: FontWeight.bold),
                           ),
+                          Container(
+                            child: Text(
+                              widget.CarDeails.companyRentailName,
+                              style: TextStyle(
+                                  fontSize: TextSize.header2,
+                                  color: AppColors.grayText),
+                            ),
+                          ),
                         ],
                       ),
 
-                      Container(
-                        width: size.width - 30,
-                        child: Text(
-                          'hgghghhhhhhhhhhhhhhhhhhhnnnnnnnnnnnnnnnnnnnnnnnnn',
-                          style: TextStyle(
-                              fontSize: TextSize.header2,
-                              color: AppColors.grayText),
-                        ),
-                      ),
                       SizedBox(
                         height: 15,
                       ),
@@ -326,7 +331,7 @@ class _CarDetailsViewState extends State<CarDetailsView> {
                                 fontWeight: FontWeight.bold),
                           ),
                           Text(
-                            '1152',
+                            widget.CarDeails.plate,
                             style: TextStyle(
                                 fontSize: TextSize.header2,
                                 color: AppColors.grayText),
@@ -350,10 +355,10 @@ class _CarDetailsViewState extends State<CarDetailsView> {
                                   size: 35,
                                 ),
                                 Text(
-                                  '280',
+                                  widget.CarDeails.topSpeed,
                                   style: TextStyle(
                                       fontSize: TextSize.header2,
-                                      color: AppColors.grayText),
+                                      color: AppColors.darkGray),
                                 ),
                               ],
                             ),
@@ -365,7 +370,7 @@ class _CarDetailsViewState extends State<CarDetailsView> {
                                   size: 35,
                                 ),
                                 Text(
-                                  'Red',
+                                  widget.CarDeails.color,
                                   style: TextStyle(
                                       fontSize: TextSize.header2,
                                       color: AppColors.grayText),
@@ -380,7 +385,7 @@ class _CarDetailsViewState extends State<CarDetailsView> {
                                   size: 35,
                                 ),
                                 Text(
-                                  'Automatic',
+                                  widget.CarDeails.ger,
                                   style: TextStyle(
                                       fontSize: TextSize.header2,
                                       color: AppColors.grayText),
@@ -395,7 +400,7 @@ class _CarDetailsViewState extends State<CarDetailsView> {
                                   size: 35,
                                 ),
                                 Text(
-                                  '4 Seats',
+                                  widget.CarDeails.seats,
                                   style: TextStyle(
                                       fontSize: TextSize.header2,
                                       color: AppColors.grayText),
@@ -426,6 +431,7 @@ class _CarDetailsViewState extends State<CarDetailsView> {
                       SizedBox(
                         height: 30,
                       ),
+
                       Row(
                         children: [
                           SizedBox(
@@ -480,8 +486,7 @@ class _CarDetailsViewState extends State<CarDetailsView> {
                                           minHeight: 15,
                                           value: 0.8,
                                           color: AppColors.darkGray,
-                                          backgroundColor:
-                                              AppColors.lightGray,
+                                          backgroundColor: AppColors.lightGray,
                                           borderRadius: BorderRadius.all(
                                               Radius.circular(10)),
                                         )),
@@ -499,8 +504,7 @@ class _CarDetailsViewState extends State<CarDetailsView> {
                                           minHeight: 15,
                                           value: 0.7,
                                           color: AppColors.darkGray,
-                                          backgroundColor:
-                                              AppColors.lightGray,
+                                          backgroundColor: AppColors.lightGray,
                                           borderRadius: BorderRadius.all(
                                               Radius.circular(10)),
                                         )),
@@ -518,8 +522,7 @@ class _CarDetailsViewState extends State<CarDetailsView> {
                                           minHeight: 15,
                                           value: 0.8,
                                           color: AppColors.darkGray,
-                                          backgroundColor:
-                                              AppColors.lightGray,
+                                          backgroundColor: AppColors.lightGray,
                                           borderRadius: BorderRadius.all(
                                               Radius.circular(10)),
                                         )),
@@ -537,8 +540,7 @@ class _CarDetailsViewState extends State<CarDetailsView> {
                                           minHeight: 15,
                                           value: 0.5,
                                           color: AppColors.darkGray,
-                                          backgroundColor:
-                                              AppColors.lightGray,
+                                          backgroundColor: AppColors.lightGray,
                                           borderRadius: BorderRadius.all(
                                               Radius.circular(10)),
                                         )),
@@ -575,7 +577,8 @@ class _CarDetailsViewState extends State<CarDetailsView> {
                         padding: const EdgeInsets.symmetric(horizontal: 15),
                         child: InkWell(
                           onTap: () {
-                            Get.to(BookingCarSummaryView());
+                            Get.to(BookingCarSummaryView(
+                                CarDeails: widget.CarDeails));
                           },
                           child: CustomButton(
                             text: 'Search',
@@ -585,6 +588,13 @@ class _CarDetailsViewState extends State<CarDetailsView> {
                           ),
                         ),
                       ),
+                      // InkWell(
+                      //   onTap: () {
+                      //     Get.to(CarMapView(
+                      //       Location: widget.CarDeails.pickupLocation,
+                      //     ));
+                      //   },
+                      // ),
                     ],
                   ),
                 ),

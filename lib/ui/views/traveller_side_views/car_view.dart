@@ -10,6 +10,7 @@ import 'package:traveling/cards/car_card2.dart';
 import 'package:traveling/classes/car_class.dart';
 import 'package:traveling/classes/hotel_room_details_class.dart';
 import 'package:traveling/controllers/currency_controller.dart';
+import '../../../controllers/car_search_controller.dart';
 import '../../shared/colors.dart';
 
 class CarView extends StatefulWidget {
@@ -19,6 +20,7 @@ class CarView extends StatefulWidget {
 }
 
 class _CarViewState extends State<CarView> {
+  CarSearchController carSearchController = Get.put(CarSearchController());
   final CurrencyController HotelCurrency_Controller =
       Get.put(CurrencyController());
   ValueNotifier<List<RoomDetailsClass>> HotelRooms =
@@ -254,11 +256,12 @@ class _CarViewState extends State<CarView> {
                         child: ListView.builder(
                           scrollDirection: Axis.vertical,
                           shrinkWrap: true,
-                          itemCount: cars.length,
+                          itemCount: carSearchController.carsList.value.length,
                           itemBuilder: (context, index) => CarCard2(
                             size: size,
                             itemIndex: index,
-                            carDetails: cars[index],
+                            carDetails:
+                                carSearchController.carsList.value[index],
                           ),
                         ),
                       ),

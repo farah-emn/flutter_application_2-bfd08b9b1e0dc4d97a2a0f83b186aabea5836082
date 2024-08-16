@@ -33,9 +33,9 @@ class _CarFinishedBookingCardState extends State<CarFinishedBookingCard> {
     Size size = MediaQuery.of(context).size;
     return InkWell(
       onTap: () {
-        Get.to(
-          CarDetailsView(),
-        );
+        // Get.to(
+        //     // CarDetailsView(),
+        //     );
       },
       child: Container(
         margin: const EdgeInsets.only(
