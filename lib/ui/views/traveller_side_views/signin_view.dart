@@ -45,16 +45,16 @@ class _SignInViewState extends State<SignInView> {
         children: [
           Column(
             children: [
-               Padding(
-                padding: const EdgeInsets.all(15.0),
+               const Padding(
+                padding: EdgeInsets.all(15.0),
                 child: Column(
                   children: [
-                    const SizedBox(
+                    SizedBox(
                       height: 110,
                     ),
                     Stack(
                       children: [
-                        const Row(
+                        Row(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
                             Icon(
@@ -69,7 +69,7 @@ class _SignInViewState extends State<SignInView> {
                         ),
                         Column(
                           children: [
-                            const SizedBox(
+                            SizedBox(
                               height: 40,
                             ),
                             Row(
@@ -82,18 +82,18 @@ class _SignInViewState extends State<SignInView> {
                                       fontSize: 40,
                                       fontWeight: FontWeight.w500),
                                 ),
-                                const Spacer(),
-                                const Icon(
+                                Spacer(),
+                                Icon(
                                   Icons.cloud,
                                   color: Color.fromARGB(76, 249, 249, 249),
                                   size: 50,
                                 ),
-                                const SizedBox(
+                                SizedBox(
                                   width: 70,
                                 ),
                               ],
                             ),
-                            const Row(
+                            Row(
                               children: [],
                             ),
                             Row(
@@ -114,7 +114,7 @@ class _SignInViewState extends State<SignInView> {
                   ],
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 100,
               ),
               Container(
@@ -328,7 +328,7 @@ class _SignInViewState extends State<SignInView> {
                           child: const Text(
                             'Sign up',
                             style: TextStyle(
-                              color: AppColors.mainColorBlue,
+                              color: AppColors.darkBlue,
                               fontWeight: FontWeight.bold,
                             ),
                           ),

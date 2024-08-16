@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
@@ -23,19 +24,23 @@ class flightSplashView extends StatelessWidget {
       backgroundColor: AppColors.Blue,
       body: Stack(
         children: [
+           Positioned(
+            top: 110,
+             child: Container(
+                  height: size.height / 2,
+                  width: size.width + 40,
+                  decoration: const BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage('assets/image/png/splash2.png'),
+                      fit: BoxFit.fitWidth,
+                    ),
+                  ),
+                ),
+           ),
           Column(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              Container(
-                height: size.height / 2 + 100,
-                width: size.width,
-                decoration: const BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage('assets/image/png/splash5.png'),
-                    fit: BoxFit.fitWidth,
-                  ),
-                ),
-              ),
+             
               Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -69,7 +74,7 @@ class flightSplashView extends StatelessWidget {
                   Container(
                     height: 5,
                     width: 30,
-                    decoration:  BoxDecoration(
+                    decoration: BoxDecoration(
                       color: AppColors.backgroundgrayColor,
                       borderRadius: const BorderRadius.all(
                         Radius.circular(20),
@@ -99,7 +104,7 @@ class flightSplashView extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         const Text(
-                          'Booking Best Hotel',
+                          'Booking Best Flight',
                           style: TextStyle(
                               fontSize: 20, fontWeight: FontWeight.w500),
                         ),
@@ -107,7 +112,7 @@ class flightSplashView extends StatelessWidget {
                           height: 15,
                         ),
                         const Text(
-                          'Browse and book at more than 200 hotel around the world and save a lot though offers ',
+                          'Browse and book at more than 1000 flight and choise the best for you ',
                           style: TextStyle(
                             fontSize: TextSize.header1,
                           ),

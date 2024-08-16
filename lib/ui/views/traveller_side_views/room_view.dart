@@ -98,6 +98,7 @@ class _RoomViewState extends State<RoomView> {
           ),
           SliverToBoxAdapter(
             child: Container(
+              height: size.height,
               color: AppColors.backgroundgrayColor,
               child: Padding(
                 padding: const EdgeInsets.only(top: 15),

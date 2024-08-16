@@ -94,7 +94,7 @@ class _CheckInCheckOutDetailsState
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    Icon(Icons.calendar_month_rounded, color: AppColors.gold),
+                    Icon(Icons.calendar_month_rounded, color: AppColors.Blue),
                     SizedBox(
                       width: 10,
                     ),
@@ -156,7 +156,7 @@ class _CheckInCheckOutDetailsState
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Icon(Icons.calendar_month_rounded, color: AppColors.gold),
+                    Icon(Icons.calendar_month_rounded, color: AppColors.Blue),
                     SizedBox(
                       width: 10,
                     ),

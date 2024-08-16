@@ -21,140 +21,148 @@ class _FlightAboutUsViewState extends State<FlightAboutUsView> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: AppColors.StatusBarColor,
-      body: SafeArea(
-        child: Stack(
-          children: [
-            const Padding(
-              padding: EdgeInsets.only(left: 15, right: 15, top: 22),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+      body: Stack(
+        children: [
+          const Padding(
+            padding: EdgeInsets.only(left: 15, right: 15, top: 35),
+            child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
+                  Icon(
+                    Icons.save_as,
+                    color: AppColors.Blue,
+                  ),
                   Text(
                     'About Us',
                     style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.w700,
-                        color: AppColors.backgroundgrayColor),
+                        color: Colors.white),
                   ),
-                  SizedBox(),
+                  InkWell(
+                    child: Icon(
+                      Icons.save_as,
+                      color: Colors.white,
+                    ),
+                  ),
                 ],
               ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(
+              top: 70,
             ),
-            Padding(
-              padding: const EdgeInsets.only(
-                top: 60,
+            child: Container(
+              decoration: const BoxDecoration(
+                image: DecorationImage(
+                    image: AssetImage('assets/image/png/background1.png'),
+                    fit: BoxFit.fill),
               ),
-              child: Container(
-                decoration: const BoxDecoration(
-                  image: DecorationImage(
-                      image: AssetImage('assets/image/png/background1.png'),
-                      fit: BoxFit.fill),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 90, right: 15, left: 15),
+            child: Column(
+              children: [
+                const Column(
+                  children: [
+                    SizedBox(
+                      width: 120,
+                      height: 120,
+                      child: CircleAvatar(
+                        radius: 48,
+                        backgroundImage:
+                            AssetImage('assets/image/png/girlUser1.png'),
+                      ),
+                    ),
+                  ],
                 ),
-              ),
+                const SizedBox(
+                  height: 50,
+                ),
+                const Row(
+                  children: [
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Text(
+                      'Company name',
+                      style: TextStyle(
+                          fontSize: 13,
+                          color: AppColors.grayText,
+                          fontWeight: FontWeight.w500),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: 40,
+                  width: size.width,
+                  child: TextField(
+                    keyboardType: TextInputType.phone,
+                    decoration: textFielDecoratiom.copyWith(
+                        prefixIcon: const Icon(Icons.business_outlined)),
+                    onChanged: (value) {},
+                  ),
+                ),
+                const SizedBox(
+                  height: 30,
+                ),
+                const Row(
+                  children: [
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Text(
+                      'Email',
+                      style: TextStyle(
+                          fontSize: 13,
+                          color: AppColors.grayText,
+                          fontWeight: FontWeight.w500),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: 40,
+                  width: size.width,
+                  child: TextField(
+                    keyboardType: TextInputType.phone,
+                    decoration: textFielDecoratiom.copyWith(
+                        prefixIcon: const Icon(Icons.email)),
+                    onChanged: (value) {},
+                  ),
+                ),
+                const SizedBox(
+                  height: 30,
+                ),
+                const Row(
+                  children: [
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Text(
+                      'Mobile number',
+                      style: TextStyle(
+                          fontSize: 13,
+                          color: AppColors.grayText,
+                          fontWeight: FontWeight.w500),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: 40,
+                  width: size.width,
+                  child: TextField(
+                    keyboardType: TextInputType.phone,
+                    decoration: textFielDecoratiom.copyWith(
+                        prefixIcon: const Icon(Icons.call)),
+                    onChanged: (value) {},
+                  ),
+                ),
+              ],
             ),
-            Padding(
-              padding: const EdgeInsets.only(top: 90, right: 15, left: 15),
-              child: Column(
-                children: [
-                  const Column(
-                    children: [
-                      SizedBox(
-                        width: 120,
-                        height: 120,
-                        child: CircleAvatar(
-                          radius: 48,
-                          backgroundImage:
-                              AssetImage('assets/image/png/girlUser1.png'),
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 50,
-                  ),
-                  const Row(
-                    children: [
-                      SizedBox(
-                        width: 10,
-                      ),
-                      Text(
-                        'Company name',
-                        style: TextStyle(
-                            fontSize: 13,
-                            color: AppColors.grayText,
-                            fontWeight: FontWeight.w500),
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 45,
-                    width: size.width,
-                    child: TextField(
-                      keyboardType: TextInputType.phone,
-                      decoration: textFielDecoratiom.copyWith(
-                          prefixIcon: const Icon(Icons.business_outlined)),
-                      onChanged: (value) {},
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 30,
-                  ),
-                  const Row(
-                    children: [
-                      SizedBox(
-                        width: 10,
-                      ),
-                      Text(
-                        'Email',
-                        style: TextStyle(
-                            fontSize: 13,
-                            color: AppColors.grayText,
-                            fontWeight: FontWeight.w500),
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 45,
-                    width: size.width,
-                    child: TextField(
-                      keyboardType: TextInputType.phone,
-                      decoration: textFielDecoratiom.copyWith(
-                          prefixIcon: const Icon(Icons.email)),
-                      onChanged: (value) {},
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 30,
-                  ),
-                  const Row(
-                    children: [
-                      SizedBox(
-                        width: 10,
-                      ),
-                      Text(
-                        'Mobile number',
-                        style: TextStyle(
-                            fontSize: 13,
-                            color: AppColors.grayText,
-                            fontWeight: FontWeight.w500),
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 45,
-                    width: size.width,
-                    child: TextField(
-                      keyboardType: TextInputType.phone,
-                      decoration: textFielDecoratiom.copyWith(
-                          prefixIcon: const Icon(Icons.call)),
-                      onChanged: (value) {},
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

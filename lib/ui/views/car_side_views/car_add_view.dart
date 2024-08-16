@@ -257,657 +257,650 @@ class _CarAddViewState extends State<CarAddView> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: AppColors.lightGray,
-      body: SafeArea(
-        child: Stack(
-          children: [
-            const Padding(
-              padding: EdgeInsets.only(left: 15, right: 15, top: 10),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'Add Car',
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.w700,
-                      color: Colors.white,
-                    ),
+      body: Stack(
+        children: [
+          const Padding(
+            padding: EdgeInsets.only(left: 15, right: 15, top: 35),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  'Add Car',
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.w700,
+                    color: Colors.white,
                   ),
-                  SizedBox(),
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(
-                top: 50,
-              ),
-              child: Container(
-                decoration: const BoxDecoration(
-                  image: DecorationImage(
-                      image: AssetImage('assets/image/png/background1.png'),
-                      fit: BoxFit.fill),
                 ),
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 20, left: 15, right: 15),
-                  child: ListView(
-                    children: [
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      const Text(
-                        'Car Details',
-                        style: TextStyle(
-                            fontSize: 16, fontWeight: FontWeight.w500),
-                      ),
-                      const SizedBox(
-                        height: 15,
-                      ),
-                      Container(
-                        width: size.width,
-                        padding: EdgeInsets.all(15),
-                        decoration: BoxDecoration(
-                            boxShadow: List.filled(
-                              10,
-                              const BoxShadow(
-                                  color: AppColors.gray,
-                                  blurRadius: BorderSide.strokeAlignOutside,
-                                  blurStyle: BlurStyle.outer),
-                            ),
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(20)),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: const [
-                                Text(
-                                  'Car photos',
-                                  style: TextStyle(
-                                      fontSize: 13,
-                                      color: AppColors.grayText,
-                                      fontWeight: FontWeight.w500),
-                                ),
-                                InkWell(
-                                  // onTap: _pickImages,
-                                  child: Icon(
-                                    Icons.add,
-                                    color: AppColors.darkGray,
-                                  ),
-                                )
-                              ],
-                            ),
-                            (errorTextRoomPhoto != null && _images.length == 0)
-                                ? Row(
-                                    children: [
-                                      Padding(
-                                        padding: EdgeInsetsDirectional.only(
-                                            start: 6, top: 0),
-                                        child: Text(
-                                          errorTextRoomPhoto,
-                                          style: TextStyle(
-                                              fontSize: 11, color: Colors.red),
-                                        ),
-                                      ),
-                                    ],
-                                  )
-                                : SizedBox(
-                                    height: 15,
-                                  ),
-                            SizedBox(
-                              height: 12,
-                            ),
-                            if (_images.isNotEmpty)
-                              SizedBox(
-                                height: 280,
-                                child: Column(
-                                  children: [
-                                    Column(children: [
-                                      Stack(
-                                        children: [
-                                          Center(
-                                            child: Image.file(
-                                              File(_images[selectedIndex].path),
-                                              fit: BoxFit.contain,
-                                              height: size.height / 5 + 20,
-                                            ),
-                                          ),
-                                          Positioned(
-                                            left: -12,
-                                            bottom: 0,
-                                            top: 0,
-                                            child: IconButton(
-                                              icon: Icon(
-                                                Icons.keyboard_arrow_left_sharp,
-                                                color: AppColors.darkGray,
-                                                size: 25,
-                                              ),
-                                              onPressed: () {
-                                                setState(() {
-                                                  if (selectedIndex > 0) {
-                                                    selectedIndex--;
-                                                  }
-                                                });
-                                              },
-                                            ),
-                                          ),
-                                          Positioned(
-                                            right: -12,
-                                            bottom: 0,
-                                            top: 0,
-                                            child: IconButton(
-                                              icon: Icon(
-                                                Icons
-                                                    .keyboard_arrow_right_sharp,
-                                                color: AppColors.darkGray,
-                                                size: 25,
-                                              ),
-                                              onPressed: () {
-                                                setState(() {
-                                                  if (selectedIndex <
-                                                      _images.length - 1) {
-                                                    selectedIndex++;
-                                                  }
-                                                });
-                                              },
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ]),
-                                    Center(
-                                      child: SizedBox(
-                                        height: 50,
-                                        child: ListView.builder(
-                                          scrollDirection: Axis.horizontal,
-                                          itemCount: _images.length,
-                                          itemBuilder: (context, index) {
-                                            return GestureDetector(
-                                              onTap: () {
-                                                setState(() {
-                                                  selectedIndex = index;
-                                                });
-                                              },
-                                              child: Container(
-                                                  margin: EdgeInsets.all(8.0),
-                                                  decoration: BoxDecoration(
-                                                    border: Border.all(
-                                                      color: selectedIndex ==
-                                                              index
-                                                          ? AppColors.darkGray
-                                                          : Colors.transparent,
-                                                      width: 2,
-                                                    ),
-                                                  ),
-                                                  child: Image.file(File(
-                                                      _images[index].path))),
-                                            );
-                                          },
-                                        ),
-                                      ),
-                                    ),
-                                    (errorTextRoomPhoto != null)
-                                        ? Row(
-                                            children: [
-                                              Padding(
-                                                padding:
-                                                    EdgeInsetsDirectional.only(
-                                                        start: 6, top: 0),
-                                                child: Text(
-                                                  errorTextRoomPhoto,
-                                                  style: TextStyle(
-                                                      fontSize: 11,
-                                                      color: Colors.red),
-                                                ),
-                                              ),
-                                            ],
-                                          )
-                                        : SizedBox(
-                                            height: 15,
-                                          ),
-                                  ],
-                                ),
-                              ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  'Overview',
-                                  style: TextStyle(
-                                      fontSize: 13,
-                                      color: AppColors.grayText,
-                                      fontWeight: FontWeight.w500),
-                                ),
-                                SizedBox(
-                                  height: 40,
-                                  width: size.width - 35,
-                                  child: TextField(
-                                    controller: _price,
-                                    decoration: textFielDecoratiom.copyWith(
-                                        focusedBorder: const OutlineInputBorder(
-                                          borderSide: BorderSide(
-                                            color: AppColors.lightGray,
-                                          ),
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(18)),
-                                        ),
-                                        fillColor: Colors.white,
-                                        prefixIcon: const Icon(
-                                          Icons.description_rounded,
-                                          color: AppColors.darkGray,
-                                        )),
-                                    onChanged: (value) {},
-                                  ),
-                                ),
-                              ],
-                            ),
-                            const SizedBox(
-                              height: 20,
-                            ),
-                            Row(
-                              children: const [
-                                Text(
-                                  'Seats',
-                                  style: TextStyle(
-                                      fontSize: 13,
-                                      color: AppColors.grayText,
-                                      fontWeight: FontWeight.w500),
-                                ),
-                              ],
-                            ),
-                            ToggleButtons(
-                              disabledColor: AppColors.grayText,
-
-                              borderColor: AppColors.LightGrayColor,
-                              borderRadius: BorderRadius.circular(15),
-                              // focusColor: AppColors.grayText,
-                              fillColor: AppColors.lightGray,
-                              selectedColor: AppColors.blackColor,
-                              selectedBorderColor: AppColors.lightGray,
-                              color: AppColors.grayText,
-
-                              isSelected: isSelected,
-                              onPressed: (int index) {
-                                setState(() {
-                                  for (int i = 0; i < isSelected.length; i++) {
-                                    isSelected[i] = i == index;
-                                  }
-                                });
-                              },
-                              constraints: BoxConstraints(
-                                minWidth: size.width / 3 - 21.5,
-                                minHeight: 40.0,
-                              ),
-                              children: const <Widget>[
-                                Padding(
-                                  padding: EdgeInsets.all(0.0),
-                                  child: Text('2 Seats'),
-                                ),
-                                Padding(
-                                  padding: EdgeInsets.all(0.0),
-                                  child: Text('4 Seats'),
-                                ),
-                                Padding(
-                                  padding: EdgeInsets.all(0.0),
-                                  child: Text('6 Seats'),
-                                ),
-                              ],
-                            ),
-                            const SizedBox(
-                              height: 20,
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      'Plate Number',
-                                      style: TextStyle(
-                                          fontSize: 13,
-                                          color: AppColors.grayText,
-                                          fontWeight: FontWeight.w500),
-                                    ),
-                                    SizedBox(
-                                      height: 40,
-                                      width: size.width / 2 - 35,
-                                      child: TextField(
-                                        controller: _price,
-                                        keyboardType: TextInputType.number,
-                                        decoration: textFielDecoratiom.copyWith(
-                                            focusedBorder:
-                                                const OutlineInputBorder(
-                                              borderSide: BorderSide(
-                                                color: AppColors.lightGray,
-                                              ),
-                                              borderRadius: BorderRadius.all(
-                                                  Radius.circular(18)),
-                                            ),
-                                            fillColor: Colors.white,
-                                            prefixIcon: const Icon(
-                                              Icons.numbers_rounded,
-                                              color: AppColors.darkGray,
-                                            )),
-                                        onChanged: (value) {},
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      'Top Speed',
-                                      style: TextStyle(
-                                          fontSize: 13,
-                                          color: AppColors.grayText,
-                                          fontWeight: FontWeight.w500),
-                                    ),
-                                    SizedBox(
-                                      height: 40,
-                                      width: size.width / 2 - 35,
-                                      child: TextField(
-                                        controller: _RoomNumber,
-                                        keyboardType: TextInputType.number,
-                                        decoration: textFielDecoratiom.copyWith(
-                                            focusedBorder:
-                                                const OutlineInputBorder(
-                                              borderSide: BorderSide(
-                                                color: AppColors.lightGray,
-                                              ),
-                                              borderRadius: BorderRadius.all(
-                                                  Radius.circular(18)),
-                                            ),
-                                            fillColor: Colors.white,
-                                            prefixIcon: const Icon(
-                                              Icons.speed,
-                                              color: AppColors.darkGray,
-                                            )),
-                                        onChanged: (value) {},
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                            const SizedBox(
-                              height: 20,
-                            ),
-                            Row(
-                              children: const [
-                                Text(
-                                  'Company',
-                                  style: TextStyle(
-                                      fontSize: 13,
-                                      color: AppColors.grayText,
-                                      fontWeight: FontWeight.w500),
-                                ),
-                              ],
-                            ),
-                            Container(
-                              width: size.width - 35,
-                              height: 40,
-                              decoration: BoxDecoration(
-                                border:
-                                    Border.all(color: AppColors.LightGrayColor),
-                                borderRadius: BorderRadius.circular(15),
-                              ),
-                              child: DropdownButton<String>(
-                                dropdownColor: Colors.white,
-                                padding: EdgeInsets.only(left: 15),
-                                underline: DecoratedBox(
-                                  decoration: BoxDecoration(),
-                                ),
-                                value: dropdownValue2,
-                                items: <String>[
-                                  'Marceds',
-                                  'KIA',
-                                  'Rang Rover',
-                                  'Roz Raiz',
-                                  'Honday',
-                                  'Honda',
-                                  'Toyota',
-                                  'GMC',
-                                  'Odi',
-                                  'BMW',
-                                  'Other'
-                                ].map<DropdownMenuItem<String>>((String value) {
-                                  return DropdownMenuItem<String>(
-                                    value: value,
-                                    child: Text(value),
-                                  );
-                                }).toList(),
-                                onChanged: (String? newValue) {
-                                  setState(() {
-                                    dropdownValue2 = newValue!;
-                                  });
-                                },
-                              ),
-                            ),
-                            const SizedBox(
-                              height: 20,
-                            ),
-                            Row(
-                              children: const [
-                                Text(
-                                  'Ger',
-                                  style: TextStyle(
-                                      fontSize: 13,
-                                      color: AppColors.grayText,
-                                      fontWeight: FontWeight.w500),
-                                ),
-                              ],
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Row(
-                                  children: [
-                                    Radio(
-                                      activeColor: AppColors.darkGray,
-                                      value: 'Normal',
-                                      autofocus: true,
-                                      groupValue: sorteBy,
-                                      onChanged: (value) {
-                                        sorteBy = value.toString();
-                                      },
-                                    ),
-                                    const Text('Normal'),
-                                  ],
-                                ),
-                                Row(
-                                  children: [
-                                    Radio(
-                                      activeColor: AppColors.darkGray,
-                                      value: 'Automatic',
-                                      groupValue: sorteBy,
-                                      onChanged: (value) {
-                                        sorteBy = value.toString();
-                                      },
-                                    ),
-                                    const Text('Automatic'),
-                                  ],
-                                ),
-                                SizedBox(),
-                              ],
-                            ),
-                            SizedBox(
-                              height: 20,
-                            ),
-                            Row(
-                              children: const [
-                                Text(
-                                  'Color',
-                                  style: TextStyle(
-                                      fontSize: 13,
-                                      color: AppColors.grayText,
-                                      fontWeight: FontWeight.w500),
-                                ),
-                              ],
-                            ),
-                            SingleChildScrollView(
-                              scrollDirection: Axis.horizontal,
-                              child: Row(
-                                children: colors.map((color) {
-                                  return GestureDetector(
-                                    onTap: () {
-                                      setState(() {
-                                        selectedColor = color;
-                                      });
-                                    },
-                                    child: Container(
-                                      margin:
-                                          EdgeInsets.symmetric(horizontal: 5),
-                                      width: 35,
-                                      height: 35,
-                                      decoration: BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        color: color,
-                                        border: selectedColor == color
-                                            ? Border.all(
-                                                color: Colors.black, width: 3)
-                                            : null,
-                                      ),
-                                    ),
-                                  );
-                                }).toList(),
-                              ),
-                            ),
-                            if (_isLoading)
-                              Center(
-                                child: CircularProgressIndicator(),
-                              ),
-                          ],
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 40,
-                      ),
-                      const Row(
+                SizedBox(),
+              ],
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(
+              top: 70,
+            ),
+            child: Container(
+              decoration: const BoxDecoration(
+                image: DecorationImage(
+                    image: AssetImage('assets/image/png/background1.png'),
+                    fit: BoxFit.fill),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.only(top: 20, left: 15, right: 15),
+                child: ListView(
+                  children: [
+                    const Text(
+                      'Car Details',
+                      style:
+                          TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+                    ),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    Container(
+                      width: size.width,
+                      padding: EdgeInsets.all(15),
+                      decoration: BoxDecoration(
+                          boxShadow: List.filled(
+                            10,
+                            const BoxShadow(
+                                color: AppColors.gray,
+                                blurRadius: BorderSide.strokeAlignOutside,
+                                blurStyle: BlurStyle.outer),
+                          ),
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(20)),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: const [
+                              Text(
+                                'Car photos',
+                                style: TextStyle(
+                                    fontSize: 13,
+                                    color: AppColors.grayText,
+                                    fontWeight: FontWeight.w500),
+                              ),
+                              InkWell(
+                                // onTap: _pickImages,
+                                child: Icon(
+                                  Icons.add,
+                                  color: AppColors.darkGray,
+                                ),
+                              )
+                            ],
+                          ),
+                          (errorTextRoomPhoto != null && _images.length == 0)
+                              ? Row(
+                                  children: [
+                                    Padding(
+                                      padding: EdgeInsetsDirectional.only(
+                                          start: 6, top: 0),
+                                      child: Text(
+                                        errorTextRoomPhoto,
+                                        style: TextStyle(
+                                            fontSize: 11, color: Colors.red),
+                                      ),
+                                    ),
+                                  ],
+                                )
+                              : SizedBox(
+                                  height: 15,
+                                ),
+                          SizedBox(
+                            height: 12,
+                          ),
+                          if (_images.isNotEmpty)
+                            SizedBox(
+                              height: 280,
+                              child: Column(
+                                children: [
+                                  Column(children: [
+                                    Stack(
+                                      children: [
+                                        Center(
+                                          child: Image.file(
+                                            File(_images[selectedIndex].path),
+                                            fit: BoxFit.contain,
+                                            height: size.height / 5 + 20,
+                                          ),
+                                        ),
+                                        Positioned(
+                                          left: -12,
+                                          bottom: 0,
+                                          top: 0,
+                                          child: IconButton(
+                                            icon: Icon(
+                                              Icons.keyboard_arrow_left_sharp,
+                                              color: AppColors.darkGray,
+                                              size: 25,
+                                            ),
+                                            onPressed: () {
+                                              setState(() {
+                                                if (selectedIndex > 0) {
+                                                  selectedIndex--;
+                                                }
+                                              });
+                                            },
+                                          ),
+                                        ),
+                                        Positioned(
+                                          right: -12,
+                                          bottom: 0,
+                                          top: 0,
+                                          child: IconButton(
+                                            icon: Icon(
+                                              Icons.keyboard_arrow_right_sharp,
+                                              color: AppColors.darkGray,
+                                              size: 25,
+                                            ),
+                                            onPressed: () {
+                                              setState(() {
+                                                if (selectedIndex <
+                                                    _images.length - 1) {
+                                                  selectedIndex++;
+                                                }
+                                              });
+                                            },
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ]),
+                                  Center(
+                                    child: SizedBox(
+                                      height: 50,
+                                      child: ListView.builder(
+                                        scrollDirection: Axis.horizontal,
+                                        itemCount: _images.length,
+                                        itemBuilder: (context, index) {
+                                          return GestureDetector(
+                                            onTap: () {
+                                              setState(() {
+                                                selectedIndex = index;
+                                              });
+                                            },
+                                            child: Container(
+                                                margin: EdgeInsets.all(8.0),
+                                                decoration: BoxDecoration(
+                                                  border: Border.all(
+                                                    color: selectedIndex ==
+                                                            index
+                                                        ? AppColors.darkGray
+                                                        : Colors.transparent,
+                                                    width: 2,
+                                                  ),
+                                                ),
+                                                child: Image.file(
+                                                    File(_images[index].path))),
+                                          );
+                                        },
+                                      ),
+                                    ),
+                                  ),
+                                  (errorTextRoomPhoto != null)
+                                      ? Row(
+                                          children: [
+                                            Padding(
+                                              padding:
+                                                  EdgeInsetsDirectional.only(
+                                                      start: 6, top: 0),
+                                              child: Text(
+                                                errorTextRoomPhoto,
+                                                style: TextStyle(
+                                                    fontSize: 11,
+                                                    color: Colors.red),
+                                              ),
+                                            ),
+                                          ],
+                                        )
+                                      : SizedBox(
+                                          height: 15,
+                                        ),
+                                ],
+                              ),
+                            ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                'User details',
+                                'Overview',
                                 style: TextStyle(
-                                    fontSize: 16, fontWeight: FontWeight.w500),
+                                    fontSize: 13,
+                                    color: AppColors.grayText,
+                                    fontWeight: FontWeight.w500),
+                              ),
+                              SizedBox(
+                                height: 40,
+                                width: size.width - 35,
+                                child: TextField(
+                                  controller: _price,
+                                  decoration: textFielDecoratiom.copyWith(
+                                      focusedBorder: const OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: AppColors.lightGray,
+                                        ),
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(18)),
+                                      ),
+                                      fillColor: Colors.white,
+                                      prefixIcon: const Icon(
+                                        Icons.description_rounded,
+                                        color: AppColors.darkGray,
+                                      )),
+                                  onChanged: (value) {},
+                                ),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          Row(
+                            children: const [
+                              Text(
+                                'Seats',
+                                style: TextStyle(
+                                    fontSize: 13,
+                                    color: AppColors.grayText,
+                                    fontWeight: FontWeight.w500),
+                              ),
+                            ],
+                          ),
+                          ToggleButtons(
+                            disabledColor: AppColors.grayText,
+
+                            borderColor: AppColors.LightGrayColor,
+                            borderRadius: BorderRadius.circular(15),
+                            // focusColor: AppColors.grayText,
+                            fillColor: AppColors.lightGray,
+                            selectedColor: AppColors.blackColor,
+                            selectedBorderColor: AppColors.lightGray,
+                            color: AppColors.grayText,
+
+                            isSelected: isSelected,
+                            onPressed: (int index) {
+                              setState(() {
+                                for (int i = 0; i < isSelected.length; i++) {
+                                  isSelected[i] = i == index;
+                                }
+                              });
+                            },
+                            constraints: BoxConstraints(
+                              minWidth: size.width / 3 - 21.5,
+                              minHeight: 40.0,
+                            ),
+                            children: const <Widget>[
+                              Padding(
+                                padding: EdgeInsets.all(0.0),
+                                child: Text('2 Seats'),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.all(0.0),
+                                child: Text('4 Seats'),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.all(0.0),
+                                child: Text('6 Seats'),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    'Plate Number',
+                                    style: TextStyle(
+                                        fontSize: 13,
+                                        color: AppColors.grayText,
+                                        fontWeight: FontWeight.w500),
+                                  ),
+                                  SizedBox(
+                                    height: 40,
+                                    width: size.width / 2 - 35,
+                                    child: TextField(
+                                      controller: _price,
+                                      keyboardType: TextInputType.number,
+                                      decoration: textFielDecoratiom.copyWith(
+                                          focusedBorder:
+                                              const OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                              color: AppColors.lightGray,
+                                            ),
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(18)),
+                                          ),
+                                          fillColor: Colors.white,
+                                          prefixIcon: const Icon(
+                                            Icons.numbers_rounded,
+                                            color: AppColors.darkGray,
+                                          )),
+                                      onChanged: (value) {},
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    'Top Speed',
+                                    style: TextStyle(
+                                        fontSize: 13,
+                                        color: AppColors.grayText,
+                                        fontWeight: FontWeight.w500),
+                                  ),
+                                  SizedBox(
+                                    height: 40,
+                                    width: size.width / 2 - 35,
+                                    child: TextField(
+                                      controller: _RoomNumber,
+                                      keyboardType: TextInputType.number,
+                                      decoration: textFielDecoratiom.copyWith(
+                                          focusedBorder:
+                                              const OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                              color: AppColors.lightGray,
+                                            ),
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(18)),
+                                          ),
+                                          fillColor: Colors.white,
+                                          prefixIcon: const Icon(
+                                            Icons.speed,
+                                            color: AppColors.darkGray,
+                                          )),
+                                      onChanged: (value) {},
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          Row(
+                            children: const [
+                              Text(
+                                'Company',
+                                style: TextStyle(
+                                    fontSize: 13,
+                                    color: AppColors.grayText,
+                                    fontWeight: FontWeight.w500),
+                              ),
+                            ],
+                          ),
+                          Container(
+                            width: size.width - 35,
+                            height: 40,
+                            decoration: BoxDecoration(
+                              border:
+                                  Border.all(color: AppColors.LightGrayColor),
+                              borderRadius: BorderRadius.circular(15),
+                            ),
+                            child: DropdownButton<String>(
+                              dropdownColor: Colors.white,
+                              padding: EdgeInsets.only(left: 15),
+                              underline: DecoratedBox(
+                                decoration: BoxDecoration(),
+                              ),
+                              value: dropdownValue2,
+                              items: <String>[
+                                'Marceds',
+                                'KIA',
+                                'Rang Rover',
+                                'Roz Raiz',
+                                'Honday',
+                                'Honda',
+                                'Toyota',
+                                'GMC',
+                                'Odi',
+                                'BMW',
+                                'Other'
+                              ].map<DropdownMenuItem<String>>((String value) {
+                                return DropdownMenuItem<String>(
+                                  value: value,
+                                  child: Text(value),
+                                );
+                              }).toList(),
+                              onChanged: (String? newValue) {
+                                setState(() {
+                                  dropdownValue2 = newValue!;
+                                });
+                              },
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          Row(
+                            children: const [
+                              Text(
+                                'Ger',
+                                style: TextStyle(
+                                    fontSize: 13,
+                                    color: AppColors.grayText,
+                                    fontWeight: FontWeight.w500),
+                              ),
+                            ],
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Row(
+                                children: [
+                                  Radio(
+                                    activeColor: AppColors.darkGray,
+                                    value: 'Normal',
+                                    autofocus: true,
+                                    groupValue: sorteBy,
+                                    onChanged: (value) {
+                                      sorteBy = value.toString();
+                                    },
+                                  ),
+                                  const Text('Normal'),
+                                ],
+                              ),
+                              Row(
+                                children: [
+                                  Radio(
+                                    activeColor: AppColors.darkGray,
+                                    value: 'Automatic',
+                                    groupValue: sorteBy,
+                                    onChanged: (value) {
+                                      sorteBy = value.toString();
+                                    },
+                                  ),
+                                  const Text('Automatic'),
+                                ],
+                              ),
+                              SizedBox(),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Row(
+                            children: const [
+                              Text(
+                                'Color',
+                                style: TextStyle(
+                                    fontSize: 13,
+                                    color: AppColors.grayText,
+                                    fontWeight: FontWeight.w500),
+                              ),
+                            ],
+                          ),
+                          SingleChildScrollView(
+                            scrollDirection: Axis.horizontal,
+                            child: Row(
+                              children: colors.map((color) {
+                                return GestureDetector(
+                                  onTap: () {
+                                    setState(() {
+                                      selectedColor = color;
+                                    });
+                                  },
+                                  child: Container(
+                                    margin: EdgeInsets.symmetric(horizontal: 5),
+                                    width: 35,
+                                    height: 35,
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color: color,
+                                      border: selectedColor == color
+                                          ? Border.all(
+                                              color: Colors.black, width: 3)
+                                          : null,
+                                    ),
+                                  ),
+                                );
+                              }).toList(),
+                            ),
+                          ),
+                          if (_isLoading)
+                            Center(
+                              child: CircularProgressIndicator(),
+                            ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 40,
+                    ),
+                    const Row(
+                      children: [
+                        Row(
+                          children: [
+                            Text(
+                              'User details',
+                              style: TextStyle(
+                                  fontSize: 16, fontWeight: FontWeight.w500),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    Container(
+                      padding: const EdgeInsets.all(15),
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(20)),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    'Rental in day',
+                                    style: TextStyle(
+                                        fontSize: 13,
+                                        color: AppColors.grayText,
+                                        fontWeight: FontWeight.w500),
+                                  ),
+                                  SizedBox(
+                                    height: 40,
+                                    width: size.width / 2 - 35,
+                                    child: TextField(
+                                      controller: _price,
+                                      keyboardType: TextInputType.number,
+                                      decoration: textFielDecoratiom.copyWith(
+                                          focusedBorder:
+                                              const OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                              color: AppColors.lightGray,
+                                            ),
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(18)),
+                                          ),
+                                          fillColor: Colors.white,
+                                          prefixIcon: const Icon(
+                                            Icons.attach_money_sharp,
+                                            color: AppColors.darkGray,
+                                          )),
+                                      onChanged: (value) {},
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    'Rental in weak',
+                                    style: TextStyle(
+                                        fontSize: 13,
+                                        color: AppColors.grayText,
+                                        fontWeight: FontWeight.w500),
+                                  ),
+                                  SizedBox(
+                                    height: 40,
+                                    width: size.width / 2 - 35,
+                                    child: TextField(
+                                      controller: _RoomNumber,
+                                      keyboardType: TextInputType.number,
+                                      decoration: textFielDecoratiom.copyWith(
+                                          focusedBorder:
+                                              const OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                              color: AppColors.lightGray,
+                                            ),
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(18)),
+                                          ),
+                                          fillColor: Colors.white,
+                                          prefixIcon: const Icon(
+                                            Icons.attach_money_sharp,
+                                            color: AppColors.darkGray,
+                                          )),
+                                      onChanged: (value) {},
+                                    ),
+                                  ),
+                                ],
                               ),
                             ],
                           ),
                         ],
                       ),
-                      const SizedBox(
-                        height: 15,
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    InkWell(
+                      // onTap: _confirm,
+                      child: CustomButton(
+                        backgroundColor: AppColors.darkGray,
+                        text: 'Add',
+                        textColor: Colors.white,
+                        widthPercent: size.width,
                       ),
-                      Container(
-                        padding: const EdgeInsets.all(15),
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(20)),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      'Rental in day',
-                                      style: TextStyle(
-                                          fontSize: 13,
-                                          color: AppColors.grayText,
-                                          fontWeight: FontWeight.w500),
-                                    ),
-                                    SizedBox(
-                                      height: 40,
-                                      width: size.width / 2 - 35,
-                                      child: TextField(
-                                        controller: _price,
-                                        keyboardType: TextInputType.number,
-                                        decoration: textFielDecoratiom.copyWith(
-                                            focusedBorder:
-                                                const OutlineInputBorder(
-                                              borderSide: BorderSide(
-                                                color: AppColors.lightGray,
-                                              ),
-                                              borderRadius: BorderRadius.all(
-                                                  Radius.circular(18)),
-                                            ),
-                                            fillColor: Colors.white,
-                                            prefixIcon: const Icon(
-                                              Icons.attach_money_sharp,
-                                              color: AppColors.darkGray,
-                                            )),
-                                        onChanged: (value) {},
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      'Rental in weak',
-                                      style: TextStyle(
-                                          fontSize: 13,
-                                          color: AppColors.grayText,
-                                          fontWeight: FontWeight.w500),
-                                    ),
-                                    SizedBox(
-                                      height: 40,
-                                      width: size.width / 2 - 35,
-                                      child: TextField(
-                                        controller: _RoomNumber,
-                                        keyboardType: TextInputType.number,
-                                        decoration: textFielDecoratiom.copyWith(
-                                            focusedBorder:
-                                                const OutlineInputBorder(
-                                              borderSide: BorderSide(
-                                                color: AppColors.lightGray,
-                                              ),
-                                              borderRadius: BorderRadius.all(
-                                                  Radius.circular(18)),
-                                            ),
-                                            fillColor: Colors.white,
-                                            prefixIcon: const Icon(
-                                              Icons.attach_money_sharp,
-                                              color: AppColors.darkGray,
-                                            )),
-                                        onChanged: (value) {},
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      InkWell(
-                        // onTap: _confirm,
-                        child: CustomButton(
-                          backgroundColor: AppColors.darkGray,
-                          text: 'Add',
-                          textColor: Colors.white,
-                          widthPercent: size.width,
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 40,
-                      ),
-                    ],
-                  ),
+                    ),
+                    const SizedBox(
+                      height: 40,
+                    ),
+                  ],
                 ),
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

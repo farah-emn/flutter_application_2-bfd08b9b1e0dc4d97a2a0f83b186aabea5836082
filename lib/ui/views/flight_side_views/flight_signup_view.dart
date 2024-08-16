@@ -8,8 +8,10 @@ import 'package:traveling/ui/shared/colors.dart';
 import 'package:traveling/ui/shared/custom_widgets/custom_button.dart';
 import 'package:traveling/ui/shared/custom_widgets/custom_image.dart';
 import 'package:traveling/ui/shared/custom_widgets/custom_textgray.dart';
+import 'package:traveling/ui/shared/text_size.dart';
 import 'package:traveling/ui/shared/utils.dart';
 import 'package:traveling/ui/views/flight_side_views/flight_home_view.dart';
+import 'package:traveling/ui/views/flight_side_views/flight_signin_view.dart';
 import 'package:traveling/ui/views/traveller_side_views/signin_view.dart';
 import '../../shared/custom_widgets/custom_textfield2.dart';
 import '../traveller_side_views/home_screen.dart';
@@ -50,36 +52,86 @@ class _FlightSignUpViewState extends State<FlightSignUpView> {
       backgroundColor: AppColors.StatusBarColor,
       body: Stack(
         children: [
-          const Column(
+          Column(
             children: [
-              SizedBox(
+              const Padding(
+                padding: EdgeInsets.all(15.0),
+                child: Column(
+                  children: [
+                    SizedBox(
+                      height: 110,
+                    ),
+                    Stack(
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            Icon(
+                              Icons.cloud,
+                              color: Color.fromARGB(76, 249, 249, 249),
+                              size: 60,
+                            ),
+                            SizedBox(
+                              width: 10,
+                            ),
+                          ],
+                        ),
+                        Column(
+                          children: [
+                            SizedBox(
+                              height: 40,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "Travelling",
+                                  style: TextStyle(
+                                      color: AppColors.backgroundgrayColor,
+                                      fontSize: 40,
+                                      fontWeight: FontWeight.w500),
+                                ),
+                                Spacer(),
+                                Icon(
+                                  Icons.cloud,
+                                  color: Color.fromARGB(76, 249, 249, 249),
+                                  size: 50,
+                                ),
+                                SizedBox(
+                                  width: 70,
+                                ),
+                              ],
+                            ),
+                            Row(
+                              children: [],
+                            ),
+                            Row(
+                              children: [
+                                Text(
+                                  "Wellcome back",
+                                  style: TextStyle(
+                                    color: AppColors.backgroundgrayColor,
+                                    fontSize: 25,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(
                 height: 100,
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    "T",
-                    style: TextStyle(
-                        fontSize: 60,
-                        fontWeight: FontWeight.w700,
-                        color: AppColors.mainColorBlue),
-                  ),
-                  Text(
-                    "ravell",
-                    style: TextStyle(
-                        fontSize: 60,
-                        fontWeight: FontWeight.w700,
-                        color: Color.fromARGB(255, 219, 186, 223)),
-                  ),
-                  Text(
-                    "ing",
-                    style: TextStyle(
-                        fontSize: 60,
-                        fontWeight: FontWeight.w700,
-                        color: Colors.white),
-                  ),
-                ],
+              Container(
+                decoration: const BoxDecoration(
+                  image: DecorationImage(
+                      image: AssetImage('assets/image/png/background1.png'),
+                      fit: BoxFit.fill),
+                ),
               ),
             ],
           ),
@@ -87,7 +139,7 @@ class _FlightSignUpViewState extends State<FlightSignUpView> {
             children: [
               Padding(
                 padding: const EdgeInsets.only(
-                  top: 200,
+                  top: 300,
                 ),
                 child: Container(
                   decoration: const BoxDecoration(
@@ -103,22 +155,19 @@ class _FlightSignUpViewState extends State<FlightSignUpView> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const SizedBox(
-                      height: 280,
+                      height: 350,
                     ),
-                    Text(
+                    const Text(
                       'Sign up ',
                       style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: size.width / 20),
+                          fontSize: TextSize.header1,
+                          fontWeight: FontWeight.w700),
                     ),
                     const SizedBox(
                       height: 35,
                     ),
                     const Row(
                       children: [
-                        SizedBox(
-                          width: 10,
-                        ),
                         Text(
                           'Email',
                           style: TextStyle(
@@ -129,24 +178,23 @@ class _FlightSignUpViewState extends State<FlightSignUpView> {
                       ],
                     ),
                     SizedBox(
-                      height: 30,
+                      height: 45,
                       child: TextFormField(
                         keyboardType: TextInputType.emailAddress,
                         controller: _emailController,
-                        decoration: textFielDecoratiom.copyWith(),
+                        decoration: textFielDecoratiom.copyWith(
+                          prefixIcon: Icon(Icons.email_rounded),
+                        ),
                         onChanged: (value) {
                           email = value;
                         },
                       ),
                     ),
                     const SizedBox(
-                      height: 30,
+                      height: 20,
                     ),
                     const Row(
                       children: [
-                        SizedBox(
-                          width: 10,
-                        ),
                         Text(
                           'Password',
                           style: TextStyle(
@@ -157,10 +205,12 @@ class _FlightSignUpViewState extends State<FlightSignUpView> {
                       ],
                     ),
                     SizedBox(
-                      height: 30,
+                      height: 45,
                       child: TextFormField(
                         keyboardType: TextInputType.visiblePassword,
-                        decoration: textFielDecoratiom.copyWith(),
+                        decoration: textFielDecoratiom.copyWith(
+                          prefixIcon: Icon(Icons.lock_rounded),
+                        ),
                         controller: _passwordController,
                         onChanged: (value) {
                           password = value;
@@ -168,13 +218,11 @@ class _FlightSignUpViewState extends State<FlightSignUpView> {
                       ),
                     ),
                     const SizedBox(
-                      height: 35,
+                      height: 20,
                     ),
                     const Row(
                       children: [
-                        SizedBox(
-                          width: 10,
-                        ),
+                      
                         Text(
                           'Conferm Password',
                           style: TextStyle(
@@ -185,10 +233,12 @@ class _FlightSignUpViewState extends State<FlightSignUpView> {
                       ],
                     ),
                     SizedBox(
-                      height: 30,
+                      height: 45,
                       child: TextFormField(
                         controller: _confirmPasswordController,
-                        decoration: textFielDecoratiom.copyWith(),
+                        decoration: textFielDecoratiom.copyWith(
+                          prefixIcon: Icon(Icons.lock_rounded),
+                        ),
                         onChanged: (value) {
                           confermPassword = value;
                         },
@@ -210,79 +260,11 @@ class _FlightSignUpViewState extends State<FlightSignUpView> {
                             () => const FlightHome(),
                           );
                         },
-                        //  () async {
-                        //   try {
-                        //     if (_emailController.value.text.isEmpty ||
-                        //         _passwordController.value.text.isEmpty) {
-                        //       setState(() {
-                        //         errorText = "Please enter all fields";
-                        //       });
-                        //     } else if (!_emailController.value.text.isEmail) {
-                        //       setState(() {
-                        //         errorText = "Please enter valid email";
-                        //       });
-                        //     } else if (password.length < 7) {
-                        //       setState(() {
-                        //         errorText =
-                        //             "Password can't be less than 6 charecters";
-                        //       });
-                        //     } else if (password != confermPassword) {
-                        //       setState(() {
-                        //         errorText =
-                        //             "Password and verification do not match";
-                        //       });
-                        //     } else {
-                        //       try {
-                        //         final newUser =
-                        //             await _auth.createUserWithEmailAndPassword(
-                        //                 email: email, password: password);
-                        //         User? user = _auth.currentUser;
-                        //         if (newUser != null) {
-                        //           Get.offAll(const Home());
-                        //           ref.child(user!.uid.toString()).set({
-                        //             'email': email,
-                        //             'password': password,
-                        //             'first_name': '',
-                        //             'last_name': '',
-                        //             'nationality': '',
-                        //             'gender': '',
-                        //             'mobile_number': '',
-                        //             'day': '',
-                        //             'month': '',
-                        //             'year': '',
-                        //           });
-                        //         }
-                        //       } catch (e) {
-                        //         if (e is FirebaseAuthException) {
-                        //           switch (e.code) {
-                        //             case 'weak-password':
-                        //               setState(() {
-                        //                 errorText = 'Password is too weak.';
-                        //               });
-                        //               break;
-                        //             case 'email-already-in-use':
-                        //               setState(() {
-                        //                 errorText =
-                        //                     'Email is already registered.';
-                        //               });
-
-                        //               break;
-                        //             // Add more cases as needed
-                        //             default:
-                        //             // Use the default error message
-                        //           }
-                        //         }
-                        //       }
-                        //     }
-                        //   } catch (e) {}
-                        // },
                         child: CustomButton(
                           backgroundColor: AppColors.darkBlue,
-
-
                           text: 'Sign up',
                           textColor: AppColors.backgroundgrayColor,
-                          widthPercent: 1,
+                          widthPercent: size.width,
                         )),
                     const SizedBox(
                       height: 20,
@@ -309,16 +291,20 @@ class _FlightSignUpViewState extends State<FlightSignUpView> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        const CustomTextGray(
-                            mainText: 'You already have account? '),
+                        const Text(
+                          'You already have account?  ',
+                          style: TextStyle(
+                            color: AppColors.grayText,
+                          ),
+                        ),
                         InkWell(
                           onTap: () {
-                            Get.offAll(const SignInView());
+                            Get.offAll(const FlightSignInView());
                           },
                           child: const Text(
                             'Sign in',
                             style: TextStyle(
-                              color: AppColors.mainColorBlue,
+                              color: AppColors.darkBlue,
                               fontWeight: FontWeight.bold,
                             ),
                           ),

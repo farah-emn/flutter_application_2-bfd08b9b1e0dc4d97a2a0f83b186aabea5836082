@@ -49,162 +49,135 @@ class _HotelDetailsViewState extends State<HotelDetailsView>
       length: 2,
       child: Scaffold(
         backgroundColor: AppColors.lightPurple,
-        body: SafeArea(
-          child: Stack(
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(
-                  top: 60,
+        body: Stack(
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(
+                top: 70,
+              ),
+              child: Container(
+                decoration: const BoxDecoration(
+                  image: DecorationImage(
+                      image: AssetImage('assets/image/png/background1.png'),
+                      fit: BoxFit.fill),
                 ),
-                child: Container(
-                  decoration: const BoxDecoration(
-                    image: DecorationImage(
-                        image: AssetImage('assets/image/png/background1.png'),
-                        fit: BoxFit.fill),
+              ),
+            ),
+            const Padding(
+              padding: EdgeInsets.only(top: 35),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    'Hotel Details',
+                    style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w700,
+                        color: AppColors.purple),
+                  )
+                ],
+              ),
+            ),
+            const Padding(
+              padding: EdgeInsets.only(left: 15, right: 15, top: 40),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Icon(
+                    Icons.arrow_back,
+                    color: AppColors.purple,
                   ),
-                ),
+                ],
               ),
-              const Padding(
-                padding: EdgeInsets.only(top: 20),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      'Hotel Details',
-                      style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.w700,
-                          color: AppColors.purple),
-                    )
-                  ],
-                ),
-              ),
-              const Padding(
-                padding: EdgeInsets.only(left: 15, right: 15, top: 20),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Icon(
-                      Icons.arrow_back,
-                      color: Color.fromARGB(255, 255, 255, 255),
-                    ),
-                    Row(
-                      children: [
-                        Icon(
-                          Icons.favorite_rounded,
-                          color: Color.fromARGB(255, 255, 255, 255),
+            ),
+            Padding(
+              padding: EdgeInsets.only(top: 100, left: 15, right: 15),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    widget.Hotel!.Name ?? '',
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
+                  ),
+                  InkWell(
+                    onTap: () {
+                      Get.to(HotelMapView(
+                          Location:
+                              '${widget.Hotel!.Name}, ${widget.Hotel!.location}, ${widget.Hotel!.address}'));
+                    },
+                    child: Container(
+                      padding: EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                      width: size.width / 2 + 50,
+                      decoration: BoxDecoration(
+                        color: AppColors.LightGrayColor,
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(15),
                         ),
-                        SizedBox(
-                          width: 5,
-                        ),
-                        Icon(
-                          Icons.share_rounded,
-                          color: Color.fromARGB(255, 255, 255, 255),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.only(top: 100, left: 15, right: 15),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      widget.Hotel!.Name ?? '',
-                      style: TextStyle(
-                          fontSize: TextSize.header1,
-                          fontWeight: FontWeight.w700),
-                    ),
-                    Row(
-                      children: [
-                        Icon(
-                          Icons.location_on_rounded,
-                          color: AppColors.gold,
-                        ),
-                        SizedBox(
-                          height: 5,
-                        ),
-                        Text(
-                          hotelscontroller
-                              .Hotels[Hotel_Controller.selectedIndex.value]
-                              .location,
-                          style: TextStyle(
-                            fontSize: TextSize.header2,
-                          ),
-                        ),
-                      ],
-                    ),
-                    InkWell(
-                      onTap: () {
-                        Get.to(HotelMapView(
-                            Location:
-                                '${widget.Hotel!.Name}, ${widget.Hotel!.location}, ${widget.Hotel!.address}'));
-                      },
+                      ),
                       child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          // Icon(
-                          //   Icons.location_on_rounded,
-                          //   color: AppColors.gold,
-                          // ),
-                          SizedBox(
-                            height: 5,
+                          Icon(
+                            Icons.location_on_rounded,
+                            color: AppColors.purple,
                           ),
                           Text(
-                            'Go to Map view',
+                            ' Show location on map',
                             style: TextStyle(
                               fontSize: TextSize.header2,
+                              color: AppColors.purple,
+                              fontWeight: FontWeight.w500,
                             ),
                           ),
                         ],
                       ),
-                    )
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 15),
+              child: Container(
+                margin: const EdgeInsets.only(top: 170),
+                width: size.width - 30,
+                height: 50,
+                decoration: const BoxDecoration(
+                  color: AppColors.backgroundgrayColor,
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(15),
+                  ),
+                ),
+                child: TabBar(
+                  controller: _tabController,
+                  indicatorSize: TabBarIndicatorSize.tab,
+                  dividerColor: AppColors.LightGrayColor,
+                  indicatorColor: AppColors.purple,
+                  labelColor: AppColors.purple,
+                  unselectedLabelColor: AppColors.lightPurple,
+                  tabs: [
+                    Tab(
+                      text: 'Hotel Details',
+                    ),
+                    Tab(text: 'Rooms'),
                   ],
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 15),
-                child: Container(
-                  margin: const EdgeInsets.only(top: 170),
-                  width: size.width - 30,
-                  height: 50,
-                  decoration: const BoxDecoration(
-                    color: AppColors.backgroundgrayColor,
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(15),
-                    ),
-                  ),
-                  child: TabBar(
-                    controller: _tabController,
-                    indicatorSize: TabBarIndicatorSize.tab,
-                    dividerColor: AppColors.LightGrayColor,
-                    indicatorColor: AppColors.purple,
-                    labelColor: AppColors.purple,
-                    unselectedLabelColor: AppColors.lightPurple,
-                    tabs: [
-                      Tab(
-                        text: 'Hotel Details',
-                      ),
-                      Tab(text: 'Rooms'),
-                    ],
-                  ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 220, left: 15, right: 15),
+              child: Expanded(
+                child: TabBarView(
+                  controller: _tabController,
+                  children: [
+                    HotelDetails(context),
+                    SelectRoom(context),
+                  ],
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.only(top: 230, left: 15, right: 15),
-                child: Expanded(
-                  child: TabBarView(
-                    controller: _tabController,
-                    children: [
-                      HotelDetails(context),
-                      SelectRoom(context),
-                    ],
-                  ),
-                ),
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
@@ -217,9 +190,6 @@ class _HotelDetailsViewState extends State<HotelDetailsView>
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const SizedBox(
-              height: 5,
-            ),
             const Text(
               'Overview',
               style: TextStyle(
@@ -234,6 +204,10 @@ class _HotelDetailsViewState extends State<HotelDetailsView>
               children: [
                 Row(
                   children: [
+                    Icon(
+                      Icons.location_on_rounded,
+                      color: AppColors.purple,
+                    ),
                     Text(
                       '${widget.Hotel!.location} - ${widget.Hotel!.address}',
                       style: TextStyle(
@@ -242,8 +216,15 @@ class _HotelDetailsViewState extends State<HotelDetailsView>
                     ),
                   ],
                 ),
+                const SizedBox(
+                  height: 5,
+                ),
                 Row(
                   children: [
+                    Icon(
+                      Icons.email,
+                      color: AppColors.purple,
+                    ),
                     Text(
                       '${widget.Hotel!.email}',
                       style: TextStyle(

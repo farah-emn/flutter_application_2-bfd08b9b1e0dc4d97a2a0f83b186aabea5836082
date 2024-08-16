@@ -123,7 +123,7 @@ class _BookingSummaryViewState extends State<BookingSummaryView> {
                         color: AppColors.purple,
                       ),
                       Text(
-                        'Add Room',
+                        'Booking Summery',
                         style: TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.w700,
@@ -419,11 +419,14 @@ Widget step1(BuildContext context, String HotelId, RoomDetailsClass room) {
                           SizedBox(
                             width: 5,
                           ),
-                          Text(
-                            hotelscontroller
-                                .Hotels[Hotel_Controller.selectedIndex.value]
-                                .location,
-                            style: TextStyle(color: AppColors.grayText),
+                          Container(
+                            width: size.width / 2 + 115,
+                            child: Text(
+                              hotelscontroller
+                                  .Hotels[Hotel_Controller.selectedIndex.value]
+                                  .location,
+                              style: TextStyle(color: AppColors.grayText),
+                            ),
                           )
                         ],
                       ),
@@ -1055,20 +1058,17 @@ Widget step3(BuildContext contex, RoomDetailsClass room) {
           children: [
             const Row(
               children: [
-                SizedBox(
-                  width: 10,
-                ),
                 Text(
                   'Name of card holder',
                   style: TextStyle(
-                      fontSize: 13,
-                      color: AppColors.grayText,
-                      fontWeight: FontWeight.w500),
+                    fontSize: TextSize.header2,
+                    color: AppColors.grayText,
+                  ),
                 ),
               ],
             ),
             SizedBox(
-              height: 45,
+              height: 40,
               child: TextField(
                 controller: HotelSummary_Controller.cardHolderController,
                 onChanged: (value) {},
@@ -1094,25 +1094,19 @@ Widget step3(BuildContext contex, RoomDetailsClass room) {
                     style: TextStyle(fontSize: 12, color: Colors.red),
                   )),
             ]),
-            const SizedBox(
-              height: 20,
-            ),
             const Row(
               children: [
-                SizedBox(
-                  width: 10,
-                ),
                 Text(
                   'Card Number',
                   style: TextStyle(
-                      fontSize: 13,
-                      color: AppColors.grayText,
-                      fontWeight: FontWeight.w500),
+                    fontSize: TextSize.header2,
+                    color: AppColors.grayText,
+                  ),
                 ),
               ],
             ),
             SizedBox(
-              height: 45,
+              height: 40,
               child: TextFormField(
                 keyboardType: TextInputType.number,
                 controller: HotelSummary_Controller.cardNumberController,
@@ -1139,29 +1133,24 @@ Widget step3(BuildContext contex, RoomDetailsClass room) {
                     style: TextStyle(fontSize: 12, color: Colors.red),
                   )),
             ]),
-            const SizedBox(
-              height: 20,
-            ),
             Row(
               children: [
                 Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const Row(
                       children: [
-                        SizedBox(
-                          width: 10,
-                        ),
                         Text(
-                          'Expiry Date (MM)',
+                          'Expiry (MM)',
                           style: TextStyle(
-                              fontSize: 13,
-                              color: AppColors.grayText,
-                              fontWeight: FontWeight.w500),
+                            fontSize: TextSize.header2,
+                            color: AppColors.grayText,
+                          ),
                         ),
                       ],
                     ),
                     SizedBox(
-                      height: 45,
+                      height: 40,
                       width: 100,
                       child: TextFormField(
                         inputFormatters: [
@@ -1192,23 +1181,21 @@ Widget step3(BuildContext contex, RoomDetailsClass room) {
                   width: 10,
                 ),
                 Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const Row(
                       children: [
-                        SizedBox(
-                          width: 10,
-                        ),
                         Text(
-                          'Expiry Date (yy)',
+                          'Expiry (yy)',
                           style: TextStyle(
-                              fontSize: 13,
-                              color: AppColors.grayText,
-                              fontWeight: FontWeight.w500),
+                            fontSize: TextSize.header2,
+                            color: AppColors.grayText,
+                          ),
                         ),
                       ],
                     ),
                     SizedBox(
-                      height: 45,
+                      height: 40,
                       width: 100,
                       child: TextFormField(
                         controller:
@@ -1239,23 +1226,21 @@ Widget step3(BuildContext contex, RoomDetailsClass room) {
                   width: 10,
                 ),
                 Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const Row(
                       children: [
-                        SizedBox(
-                          width: 10,
-                        ),
                         Text(
                           'CVV',
                           style: TextStyle(
-                              fontSize: 13,
-                              color: AppColors.grayText,
-                              fontWeight: FontWeight.w500),
+                            fontSize: TextSize.header2,
+                            color: AppColors.grayText,
+                          ),
                         ),
                       ],
                     ),
                     SizedBox(
-                      height: 45,
+                      height: 40,
                       width: 100,
                       child: TextField(
                         inputFormatters: [
@@ -1279,9 +1264,7 @@ Widget step3(BuildContext contex, RoomDetailsClass room) {
                     ),
                   ],
                 ),
-                SizedBox(
-                  height: 50,
-                ),
+
                 // GetBuilder<HotelSummaryController>(
                 //   init: HotelSummary_Controller,
                 //   builder: (Step3Controller) => Container(
@@ -1329,19 +1312,11 @@ Widget step3(BuildContext contex, RoomDetailsClass room) {
             ),
             Row(mainAxisAlignment: MainAxisAlignment.start, children: [
               Obx(() => Text(
-                    HotelSummary_Controller.errorTextYYexpiryDate.value,
-                    style: TextStyle(fontSize: 12, color: Colors.red),
-                  )),
-            ]),
-            Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-              Obx(() => Text(
-                    HotelSummary_Controller.errorTextMMexpiryDate.value,
-                    style: TextStyle(fontSize: 12, color: Colors.red),
-                  )),
-            ]),
-            Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-              Obx(() => Text(
-                    HotelSummary_Controller.errorTextcvv.value,
+                    HotelSummary_Controller.errorTextYYexpiryDate.value +
+                        ' - ' +
+                        HotelSummary_Controller.errorTextcvv.value +
+                        ' - ' +
+                        HotelSummary_Controller.errorTextMMexpiryDate.value,
                     style: TextStyle(fontSize: 12, color: Colors.red),
                   )),
             ]),

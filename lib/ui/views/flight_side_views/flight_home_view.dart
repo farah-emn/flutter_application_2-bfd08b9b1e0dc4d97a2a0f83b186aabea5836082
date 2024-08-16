@@ -147,6 +147,7 @@ class _FlightHomeViewState extends State<FlightHomeView> {
         ),
       ),
       body: CustomScrollView(
+
         slivers: [
           SliverAppBar(
             backgroundColor: AppColors.IconBlueColor,
@@ -154,6 +155,7 @@ class _FlightHomeViewState extends State<FlightHomeView> {
             pinned: true,
             expandedHeight: 335,
             flexibleSpace: FlexibleSpaceBar(
+              
               background: Container(
                   color: AppColors.StatusBarColor,
                   child: const Padding(
@@ -227,6 +229,7 @@ class _FlightHomeViewState extends State<FlightHomeView> {
                   )),
             ),
             bottom: PreferredSize(
+
               preferredSize: const Size.fromHeight(0.0),
               child: Container(
                 padding: const EdgeInsets.only(top: 15, bottom: 15),
@@ -379,6 +382,7 @@ class _FlightHomeViewState extends State<FlightHomeView> {
             ),
           ),
           SliverToBoxAdapter(
+
             child: Padding(
               padding: const EdgeInsets.all(15.0),
               child: Column(
@@ -517,7 +521,7 @@ class _FlightHomeViewState extends State<FlightHomeView> {
                                     Text(
                                       'Des. 22, 2024',
                                       style: TextStyle(
-                                          color: AppColors.TextgrayColor,
+                                          color: AppColors.grayText,
                                           fontSize: 15),
                                     )
                                   ],
@@ -543,7 +547,7 @@ class _FlightHomeViewState extends State<FlightHomeView> {
                                               'AM',
                                               style: TextStyle(
                                                   color:
-                                                      AppColors.TextgrayColor,
+                                                      AppColors.grayText,
                                                   fontSize: 15),
                                             ),
                                           ],
@@ -554,7 +558,7 @@ class _FlightHomeViewState extends State<FlightHomeView> {
                                               'CAI',
                                               style: TextStyle(
                                                   color:
-                                                      AppColors.TextgrayColor,
+                                                      AppColors.grayText,
                                                   fontSize: 15),
                                             ),
                                           ],
@@ -575,7 +579,7 @@ class _FlightHomeViewState extends State<FlightHomeView> {
                                               'AM',
                                               style: TextStyle(
                                                   color:
-                                                      AppColors.TextgrayColor,
+                                                      AppColors.grayText,
                                                   fontSize: 15),
                                             ),
                                           ],
@@ -586,7 +590,7 @@ class _FlightHomeViewState extends State<FlightHomeView> {
                                               'RUH',
                                               style: TextStyle(
                                                   color:
-                                                      AppColors.TextgrayColor,
+                                                      AppColors.grayText,
                                                   fontSize: 15),
                                             ),
                                           ],

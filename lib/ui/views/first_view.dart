@@ -44,15 +44,17 @@ class _FirstViewState extends State<FirstView> {
     Size size = MediaQuery.of(context).size;
 
     return Scaffold(
-      backgroundColor: AppColors.Blue,
+      backgroundColor: AppColors.lightBlue,
       body: Stack(children: [
         Positioned(
+          left: -50,
+          top: 10,
           child: Container(
             height: size.height / 2,
-            width: size.width - 50,
+            width: size.width - 100,
             decoration: const BoxDecoration(
               image: DecorationImage(
-                image: AssetImage('assets/image/png/splash5.png'),
+                image: AssetImage('assets/image/png/splash7.png'),
                 fit: BoxFit.fitWidth,
               ),
             ),
@@ -60,6 +62,7 @@ class _FirstViewState extends State<FirstView> {
         ),
         Positioned(
           top: 250,
+          left: 70,
           child: Container(
             height: size.height / 2,
             width: size.width - 50,
@@ -72,14 +75,14 @@ class _FirstViewState extends State<FirstView> {
           ),
         ),
         Positioned(
-          top: 300,
-          left: size.width / 3,
+          top: 340,
+          left: 0,
           child: Container(
             height: size.height / 2,
             width: size.width / 2 + 100,
             decoration: const BoxDecoration(
               image: DecorationImage(
-                image: AssetImage('assets/image/png/splash1.png'),
+                image: AssetImage('assets/image/png/splash8.png'),
                 fit: BoxFit.fitWidth,
               ),
             ),
@@ -94,8 +97,8 @@ class _FirstViewState extends State<FirstView> {
               decoration: BoxDecoration(
                 color: AppColors.backgroundgrayColor,
                 borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(70),
-                  topRight: Radius.circular(70),
+                  topLeft: Radius.circular(30),
+                  topRight: Radius.circular(30),
                 ),
               ),
               child: Padding(

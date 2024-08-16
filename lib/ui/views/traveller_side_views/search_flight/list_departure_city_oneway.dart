@@ -68,13 +68,14 @@ class _ListDepartureCityState extends State<ListDepartureCity> {
             Padding(
                 padding: EdgeInsets.only(top: 20, right: 15, left: 15),
                 child: Container(
-                  height: 50,
+                  height: 40,
                   child: TextField(
                     onChanged: _filterSearchResults,
                     controller: _searchController,
                     decoration: InputDecoration(
                       filled: true,
-                      fillColor: Color.fromARGB(255, 237, 241, 244),
+                      
+                      fillColor: Colors.white,
                       hintText: 'Where are you flying from?',
                       prefixIcon: Icon(Icons.search),
                       border: OutlineInputBorder(

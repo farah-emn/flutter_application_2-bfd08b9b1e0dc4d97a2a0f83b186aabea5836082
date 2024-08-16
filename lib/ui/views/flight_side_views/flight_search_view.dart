@@ -432,82 +432,74 @@ class _FlightSearchViewState extends State<FlightSearchView> {
     return Scaffold(
         resizeToAvoidBottomInset: false,
         backgroundColor: AppColors.StatusBarColor,
-        body: SafeArea(
-          child: Stack(children: [
-            const Padding(
-              padding: EdgeInsets.only(left: 15, right: 15, top: 22),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'Flights',
-                    style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w700,
-                        color: AppColors.backgroundgrayColor),
-                  ),
-                  SizedBox(),
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(
-                top: 60,
-              ),
-              child: Container(
-                decoration: const BoxDecoration(
-                  image: DecorationImage(
-                      image: AssetImage('assets/image/png/background1.png'),
-                      fit: BoxFit.fill),
+        body: Stack(children: [
+          const Padding(
+            padding: EdgeInsets.only(left: 15, right: 15, top: 35),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  'Flights',
+                  style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w700,
+                      color: AppColors.backgroundgrayColor),
                 ),
-                child: Padding(
-                  padding: const EdgeInsets.all(15),
-                  child: Column(
-                    children: [
-                      const SizedBox(
-                        height: 30,
-                      ),
-                      SizedBox(
-                        height: 45,
-                        width: size.width - 30,
-                        child: TextField(
-                          textAlignVertical: TextAlignVertical.bottom,
-                          decoration: searchTextFielDecoratiom.copyWith(
-                            hintText: "Search for flight",
-                            suffixIcon: InkWell(
-                              onTap: _showBottomShest,
-                              child: const Icon(
-                                Icons.filter_alt,
-                                color: AppColors.LightGrayColor,
-                              ),
-                            ),
-                            prefixIcon: const Icon(
-                              Icons.search,
-                              color: AppColors.grayText,
-                            ),
+                SizedBox(),
+              ],
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(
+              top: 70,
+            ),
+            child: Container(
+              decoration: const BoxDecoration(
+                image: DecorationImage(
+                    image: AssetImage('assets/image/png/background1.png'),
+                    fit: BoxFit.fill),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(15),
+                child: Column(
+                  children: [
+                    const SizedBox(
+                      height: 30,
+                    ),
+                    SizedBox(
+                      height: 45,
+                      width: size.width - 30,
+                      child: TextField(
+                        textAlignVertical: TextAlignVertical.bottom,
+                        decoration: textFielDecoratiom.copyWith(
+                          fillColor: Colors.white,
+                          // hintText: 'What ypu search for?',
+                          prefixIcon: const Icon(
+                            Icons.search,
+                            color: AppColors.Blue,
                           ),
                         ),
                       ),
-                      const SizedBox(
-                        height: 15,
-                      ),
-                      // Expanded(
-                      //   child: ListView.builder(
-                      //     scrollDirection: Axis.vertical,
-                      //     shrinkWrap: true,
-                      //     itemCount: flightsDetails.length,
-                      //     itemBuilder: (context, index) => FlightDetailsCard(
-                      //       itemIndex: index,
-                      //       flightModel: flightsDetails[index],
-                      //     ),
-                      //   ),
-                      // ),
-                    ],
-                  ),
+                    ),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    // Expanded(
+                    //   child: ListView.builder(
+                    //     scrollDirection: Axis.vertical,
+                    //     shrinkWrap: true,
+                    //     itemCount: flightsDetails.length,
+                    //     itemBuilder: (context, index) => FlightDetailsCard(
+                    //       itemIndex: index,
+                    //       flightModel: flightsDetails[index],
+                    //     ),
+                    //   ),
+                    // ),
+                  ],
                 ),
               ),
             ),
-          ]),
-        ));
+          ),
+        ]));
   }
 }

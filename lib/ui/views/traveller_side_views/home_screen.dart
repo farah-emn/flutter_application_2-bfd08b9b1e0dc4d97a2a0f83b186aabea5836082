@@ -58,7 +58,7 @@ class _HomeState extends State<Home> {
       body: _screens[_selectedIndex],
       bottomNavigationBar: NavigationBarTheme(
         data: const NavigationBarThemeData(
-          indicatorColor: AppColors.darkBlue,
+          indicatorColor: AppColors.lightBlue,
           backgroundColor: Colors.white,
           shadowColor: AppColors.Blue,
         ),
@@ -66,7 +66,7 @@ class _HomeState extends State<Home> {
           elevation: 1,
           height: 60,
           selectedIndex: _selectedIndex,
-          labelBehavior: NavigationDestinationLabelBehavior.alwaysHide,
+          labelBehavior: NavigationDestinationLabelBehavior.alwaysShow,
           animationDuration: const Duration(seconds: 2),
           onDestinationSelected: (index) => setState(() {
             _selectedIndex = index;
@@ -76,7 +76,7 @@ class _HomeState extends State<Home> {
               icon: Icon(Icons.home_outlined),
               selectedIcon: Icon(
                 Icons.home_filled,
-                color: AppColors.backgroundgrayColor,
+                color: AppColors.Blue,
               ),
               label: 'Home',
             ),
@@ -84,15 +84,15 @@ class _HomeState extends State<Home> {
               icon: Icon(Icons.search_outlined),
               selectedIcon: Icon(
                 Icons.search_outlined,
-                color: AppColors.backgroundgrayColor,
+                color: AppColors.Blue,
               ),
               label: 'Search',
             ),
             NavigationDestination(
-              icon: Icon(Icons.notifications),
+              icon: Icon(Icons.bookmark),
               selectedIcon: Icon(
                 Icons.notifications,
-                color: AppColors.backgroundgrayColor,
+                color: AppColors.Blue,
               ),
               label: 'Bookings',
             ),
@@ -100,7 +100,7 @@ class _HomeState extends State<Home> {
               icon: Icon(Icons.person_2_rounded),
               selectedIcon: Icon(
                 Icons.person_2_rounded,
-                color: AppColors.backgroundgrayColor,
+                color: AppColors.Blue,
               ),
               label: 'Menu',
             ),

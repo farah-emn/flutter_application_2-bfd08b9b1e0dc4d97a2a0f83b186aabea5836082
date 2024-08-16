@@ -32,7 +32,8 @@ class AppColors {
   static const grayText = Color.fromRGBO(130, 143, 163, 1);
   static const darkText = Color.fromRGBO(33, 53, 88, 1);
   static const BlueText = Color.fromRGBO(8, 66, 160, 1);
-  static const purple = Color.fromRGBO(111, 50, 153, 1);
+  static const purple = Color.fromRGBO(175, 109, 182, 1);
+  // static const purple = Color.fromRGBO(111, 50, 153, 1);
   // static const purple = Color.fromRGBO(204, 153, 204, 1);
   static const lightPurple = Color.fromRGBO(227, 207, 238, 1);
   static const gold = Color.fromARGB(255, 241, 192, 76);

@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
@@ -23,19 +24,37 @@ class HotelSplashView extends StatelessWidget {
       backgroundColor: AppColors.lightPurple,
       body: Stack(
         children: [
+          Positioned(
+            top: -30,
+            left: -35,
+            child: Container(
+              height: size.height / 2,
+              width: size.width - 150,
+              decoration: const BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage('assets/image/png/splash7.png'),
+                  fit: BoxFit.fitWidth,
+                ),
+              ),
+            ),
+          ),
+          Positioned(
+            top: 190,
+            left: 50,
+            child: Container(
+              height: size.height / 2,
+              width: size.width - 100,
+              decoration: const BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage('assets/image/png/splash6.png'),
+                  fit: BoxFit.fitWidth,
+                ),
+              ),
+            ),
+          ),
           Column(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              Container(
-                height: size.height / 2 + 100,
-                width: size.width,
-                decoration: const BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage('assets/image/png/splash6.png'),
-                    fit: BoxFit.fitWidth,
-                  ),
-                ),
-              ),
               Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -56,7 +75,7 @@ class HotelSplashView extends StatelessWidget {
                   Container(
                     height: 5,
                     width: 30,
-                    decoration:  BoxDecoration(
+                    decoration: BoxDecoration(
                       color: AppColors.backgroundgrayColor,
                       borderRadius: BorderRadius.all(
                         Radius.circular(20),
@@ -69,7 +88,7 @@ class HotelSplashView extends StatelessWidget {
                   Container(
                     height: 5,
                     width: 30,
-                    decoration:  BoxDecoration(
+                    decoration: BoxDecoration(
                       color: AppColors.backgroundgrayColor,
                       borderRadius: BorderRadius.all(
                         Radius.circular(20),
@@ -83,7 +102,7 @@ class HotelSplashView extends StatelessWidget {
               ),
               Container(
                 height: size.height / 3,
-                decoration:  BoxDecoration(
+                decoration: BoxDecoration(
                   color: AppColors.backgroundgrayColor,
                   borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(30),
@@ -146,7 +165,7 @@ class HotelSplashView extends StatelessWidget {
                                     ),
                                     Icon(
                                       Icons.arrow_forward_rounded,
-                                      color:AppColors.backgroundgrayColor,
+                                      color: AppColors.backgroundgrayColor,
                                     ),
                                   ],
                                 ),

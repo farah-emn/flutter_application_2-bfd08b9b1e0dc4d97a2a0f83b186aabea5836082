@@ -3,6 +3,8 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
+import 'package:traveling/ui/shared/colors.dart';
+import 'package:traveling/ui/shared/custom_widgets/custom_textfield2.dart';
 
 class ListDestonationHotel extends StatefulWidget {
   @override
@@ -62,24 +64,23 @@ class _ListDestonationHotelState extends State<ListDestonationHotel> {
               ),
             ),
             Padding(
-                padding: EdgeInsets.only(top: 20, right: 15, left: 15),
-                child: Container(
-                  height: 50,
-                  child: TextField(
-                    onChanged: _filterSearchResults,
-                    controller: _searchController,
-                    decoration: InputDecoration(
-                      filled: true,
-                      fillColor: Color.fromARGB(255, 237, 241, 244),
-                      hintText: 'Where are you flying from?',
-                      prefixIcon: Icon(Icons.search),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(15.0),
-                        borderSide: BorderSide.none,
-                      ),
+              padding: EdgeInsets.only(top: 20, right: 15, left: 15),
+              child: Container(
+                height: 40,
+                child: TextField(
+                  onChanged: _filterSearchResults,
+                  controller: _searchController,
+                  decoration: textFielDecoratiom.copyWith(
+                    prefixIcon: Icon(
+                      Icons.search,
+                      color: AppColors.purple,
                     ),
+                    hintText: 'Were is your destonaion?',
+                    fillColor: Colors.white,
                   ),
-                )),
+                ),
+              ),
+            ),
             Expanded(
               child: filtered_list.isEmpty
                   ? Center(child: CircularProgressIndicator())
@@ -102,7 +103,10 @@ class _ListDestonationHotelState extends State<ListDestonationHotel> {
                                     : Colors.transparent,
                               ),
                             ),
-                            leading: Icon(Icons.airplanemode_active),
+                            leading: Icon(
+                              Icons.location_on_rounded,
+                              color: AppColors.purple,
+                            ),
                             // subtitle: Text(Destination['location']!),
                             // trailing: Text(arrivalCity['city']!),
                             onTap: () async {

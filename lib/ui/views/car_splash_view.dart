@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
@@ -22,19 +23,36 @@ class carSplashView extends StatelessWidget {
       backgroundColor: AppColors.lightGray,
       body: Stack(
         children: [
+          Positioned(
+            left: 240,
+            top: 90,
+            child: Container(
+              height: size.height / 3,
+              width: size.width / 2 - 50,
+              decoration: const BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage('assets/image/png/splash10.png'),
+                  fit: BoxFit.fitWidth,
+                ),
+              ),
+            ),
+          ),
+          Positioned(
+            top: 100,
+            child: Container(
+              height: size.height / 2 + 100,
+              width: size.width,
+              decoration: const BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage('assets/image/png/splash8.png'),
+                  fit: BoxFit.fitWidth,
+                ),
+              ),
+            ),
+          ),
           Column(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              Container(
-                height: size.height / 2 + 100,
-                width: size.width,
-                decoration: const BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage('assets/image/png/splash1.png'),
-                    fit: BoxFit.fitWidth,
-                  ),
-                ),
-              ),
               Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,

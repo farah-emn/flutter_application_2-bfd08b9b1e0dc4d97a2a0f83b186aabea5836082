@@ -326,25 +326,8 @@ class _SignUpViewState extends State<SignUpView> {
                     const SizedBox(
                       height: 20,
                     ),
-                    // const Center(
-                    //   child: CustomTextGray(
-                    //     mainText: 'or sign in with ',
-                    //   ),
-                    // ),
-                    // const SizedBox(
-                    //   height: 20,
-                    // ),
-                    // const Row(
-                    //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    //   children: [
-                    //     CustomImage(imagename: 'facebook_icon'),
-                    //     CustomImage(imagename: 'google_icon'),
-                    //     CustomImage(imagename: 'twitter_icon'),
-                    //   ],
-                    // ),
-                    SizedBox(
-                      height: 15,
-                    ),
+                  
+                  
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -361,7 +344,7 @@ class _SignUpViewState extends State<SignUpView> {
                           child: const Text(
                             'Sign in',
                             style: TextStyle(
-                              color: AppColors.mainColorBlue,
+                              color: AppColors.darkBlue,
                               fontWeight: FontWeight.bold,
                             ),
                           ),

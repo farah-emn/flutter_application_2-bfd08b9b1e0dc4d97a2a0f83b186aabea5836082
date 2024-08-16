@@ -2,6 +2,7 @@
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
@@ -10,6 +11,7 @@ import 'package:traveling/cards/hotel_room_card.dart';
 import 'package:traveling/classes/car_class.dart';
 import 'package:traveling/classes/hotel_room_details_class.dart';
 import 'package:traveling/controllers/currency_controller.dart';
+import 'package:traveling/ui/shared/custom_widgets/custom_textfield2.dart';
 import '../../shared/colors.dart';
 import '../../shared/custom_widgets/custom_search_textfield.dart';
 
@@ -652,107 +654,97 @@ class _CarSearchViewState extends State<CarSearchView> {
         //     ],
         //   ),
         // ),
-        body: SafeArea(
-          child: Stack(children: [
-            const Padding(
-              padding: EdgeInsets.only(left: 15, right: 15, top: 10),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'Search',
-                    style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w700,
-                        color: AppColors.backgroundgrayColor),
-                  ),
-                  SizedBox(),
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(
-                top: 50,
-              ),
-              child: Container(
-                decoration: const BoxDecoration(
-                  image: DecorationImage(
-                      image: AssetImage('assets/image/png/background1.png'),
-                      fit: BoxFit.fill),
+        body: Stack(children: [
+          Padding(
+            padding: EdgeInsets.only(left: 15, right: 15, top: 35),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  'Search',
+                  style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w700,
+                      color: AppColors.backgroundgrayColor),
                 ),
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 15, right: 15, left: 15),
-                  child: Column(
-                    children: [
-                      const SizedBox(
-                        height: 30,
-                      ),
-                      SizedBox(
-                        height: 45,
-                        width: size.width - 30,
-                        child: TextField(
-                          // onSubmitted: _SearchRoomController,
-                          // onChanged: (value) {
-                          //   setState(() {
-                          //     _SearchController.text = value;
-                          //     // _SearchRoomController(value);
-                          //   });
-                          onChanged: (value) {
-                            _SearchRoomController(value);
-                          },
-                          controller: _SearchController,
-                          textAlignVertical: TextAlignVertical.bottom,
-                          decoration: searchTextFielDecoratiom.copyWith(
-                            focusedBorder: const OutlineInputBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(18)),
-                              borderSide: BorderSide(
-                                  color: AppColors.darkGray, width: 1.5),
+                SizedBox(),
+              ],
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(
+              top: 70,
+            ),
+            child: Container(
+              decoration: const BoxDecoration(
+                image: DecorationImage(
+                    image: AssetImage('assets/image/png/background1.png'),
+                    fit: BoxFit.fill),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.only(top: 15, left: 15, right: 15),
+                child: Column(
+                  children: [
+                    const SizedBox(
+                      height: 25,
+                    ),
+                    Container(
+                      height: 40,
+                      width: size.width - 20,
+                      child: TextField(
+                        onChanged: (value) {
+                          _SearchRoomController(value);
+                        },
+                        controller: _SearchController,
+                        textAlignVertical: TextAlignVertical.bottom,
+                        decoration: textFielDecoratiom.copyWith(
+                          focusedBorder: const OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(18)),
+                            borderSide: BorderSide(
+                                color: AppColors.darkGray, width: 1.5),
+                          ),
+                          suffixIcon: InkWell(
+                            onTap: _showBottomShest,
+                            child: const Icon(
+                              Icons.filter_alt,
+                              color: AppColors.LightGrayColor,
                             ),
-                            hintText: "Search",
-                            suffixIcon: InkWell(
-                              onTap: _showBottomShest,
-                              child: const Icon(
-                                Icons.filter_alt,
-                                color: AppColors.LightGrayColor,
-                              ),
-                            ),
-                            prefixIcon: const Icon(
-                              Icons.search,
-                              color: AppColors.grayText,
-                            ),
+                          ),
+                          prefixIcon: const Icon(
+                            Icons.search,
+                            color: AppColors.grayText,
                           ),
                         ),
                       ),
-                      const SizedBox(
-                        height: 15,
-                      ),
-                      // (HotelRooms.value.isEmpty)
-                      //     ? const CircularProgressIndicator()
-                      //     : (HotelRooms.value.isNotEmpty)
-                      //         ? Expanded(
-                      // child:
-                      Expanded(
-                        child: ListView.builder(
-                          scrollDirection: Axis.vertical,
-                          shrinkWrap: true,
-                          itemCount: cars.length,
-                          itemBuilder: (context, index) => CarCard(
-                            size: size,
-                            itemIndex: index,
-                            carDetails: cars[index],
-                          ),
+                    ),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    // (HotelRooms.value.isEmpty)
+                    //     ? const CircularProgressIndicator()
+                    //     : (HotelRooms.value.isNotEmpty)
+                    //         ? Expanded(
+                    // child:
+                    Expanded(
+                      child: ListView.builder(
+                        scrollDirection: Axis.vertical,
+                        shrinkWrap: true,
+                        itemCount: cars.length,
+                        itemBuilder: (context, index) => CarCard(
+                          size: size,
+                          itemIndex: index,
+                          carDetails: cars[index],
                         ),
                       ),
-                      // )
-                      // : SizedBox(),
-                    ],
-                  ),
+                    ),
+                    // )
+                    // : SizedBox(),
+                  ],
                 ),
               ),
             ),
-          ]),
-        ));
+          ),
+        ]));
   }
 
   void _SearchRoomController(String value) {

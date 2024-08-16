@@ -148,7 +148,7 @@ class _HotelFinishedBookingCardState extends State<HotelFinishedBookingCard> {
                           Text(
                             '100\$',
                             style: TextStyle(
-                                color: AppColors.darkBlue,
+                                color: AppColors.purple,
                                 fontSize: TextSize.header1,
                                 fontWeight: FontWeight.w600),
                           ),
@@ -272,7 +272,7 @@ class _HotelFinishedBookingCardState extends State<HotelFinishedBookingCard> {
                       Text(
                         widget.hotelBookingsDetails.totalPrice,
                         style: const TextStyle(
-                            color: AppColors.darkBlue,
+                            color: AppColors.purple,
                             fontSize: TextSize.header1,
                             fontWeight: FontWeight.w500),
                       ),

@@ -22,211 +22,208 @@ class _FlightAddViewState extends State<FlightAddView> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: AppColors.StatusBarColor,
-      body: SafeArea(
-        child: Stack(
-          children: [
-            const Padding(
-              padding: EdgeInsets.only(left: 15, right: 15, top: 22),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'Add Flight',
-                    style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w700,
-                        color: AppColors.backgroundgrayColor),
-                  ),
-                  SizedBox(),
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(
-                top: 60,
-              ),
-              child: Container(
-                decoration: const BoxDecoration(
-                  image: DecorationImage(
-                      image: AssetImage('assets/image/png/background1.png'),
-                      fit: BoxFit.fill),
+      body: Stack(
+        children: [
+          const Padding(
+            padding: EdgeInsets.only(left: 15, right: 15, top: 35),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  'Add Flight',
+                  style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w700,
+                      color: AppColors.backgroundgrayColor),
                 ),
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 20, left: 15, right: 15),
-                  child: ListView(
-                    children: [
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      const Text(
-                        'Plane Details',
-                        style: TextStyle(
-                            fontSize: 16, fontWeight: FontWeight.w500),
-                      ),
-                      const SizedBox(
-                        height: 15,
-                      ),
-                      Container(
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(20)),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            const SizedBox(
-                              height: 15,
-                            ),
-                            const Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                SizedBox(
-                                  width: 10,
-                                ),
-                                Text(
-                                  'Plane id',
-                                  style: TextStyle(
-                                      fontSize: 13,
-                                      color: AppColors.grayText,
-                                      fontWeight: FontWeight.w500),
-                                ),
-                              ],
-                            ),
-                            SizedBox(
-                              height: 45,
-                              width: size.width - 50,
-                              child: TextField(
-                                keyboardType: TextInputType.phone,
-                                decoration: textFielDecoratiom.copyWith(
-                                    fillColor: Colors.white,
-                                    prefixIcon: const Icon(
-                                        Icons.flight_takeoff_outlined)),
-                                onChanged: (value) {},
+                SizedBox(),
+              ],
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(
+              top: 70,
+            ),
+            child: Container(
+              decoration: const BoxDecoration(
+                image: DecorationImage(
+                    image: AssetImage('assets/image/png/background1.png'),
+                    fit: BoxFit.fill),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.only(top: 20, left: 15, right: 15),
+                child: ListView(
+                  children: [
+                    const Text(
+                      'Plane Details',
+                      style:
+                          TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+                    ),
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    Container(
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(20)),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          const SizedBox(
+                            height: 15,
+                          ),
+                          const Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              SizedBox(
+                                width: 10,
                               ),
-                            ),
-                            const SizedBox(
-                              height: 40,
-                            ),
-                            const Row(
-                              children: [
-                                SizedBox(
-                                  width: 10,
-                                ),
-                                Text(
-                                  'Plane Features',
-                                  style: TextStyle(
-                                      fontSize: 13,
-                                      color: AppColors.grayText,
-                                      fontWeight: FontWeight.w500),
-                                ),
-                              ],
-                            ),
-                            SizedBox(
-                              height: 45,
-                              width: size.width - 50,
-                              child: TextField(
-                                keyboardType: TextInputType.phone,
-                                decoration: textFielDecoratiom.copyWith(
-                                    fillColor: Colors.white,
-                                    prefixIcon: const Icon(
-                                        Icons.flight_takeoff_outlined)),
-                                onChanged: (value) {},
+                              Text(
+                                'Plane id',
+                                style: TextStyle(
+                                    fontSize: 13,
+                                    color: AppColors.grayText,
+                                    fontWeight: FontWeight.w500),
                               ),
-                            ),
-                            const SizedBox(
-                              height: 15,
-                            ),
-                          ],
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 40,
-                      ),
-                      const Text(
-                        'Flight details',
-                        style: TextStyle(
-                            fontSize: 16, fontWeight: FontWeight.w500),
-                      ),
-                      const SizedBox(
-                        height: 15,
-                      ),
-                      Container(
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(20)),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            const SizedBox(
-                              height: 15,
-                            ),
-                            const Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                SizedBox(
-                                  width: 10,
-                                ),
-                                Text(
-                                  'From',
-                                  style: TextStyle(
-                                      fontSize: 13,
-                                      color: AppColors.grayText,
-                                      fontWeight: FontWeight.w500),
-                                ),
-                              ],
-                            ),
-                            SizedBox(
-                              height: 45,
-                              width: size.width - 50,
-                              child: TextField(
-                                keyboardType: TextInputType.phone,
-                                decoration: textFielDecoratiom.copyWith(
-                                    fillColor: Colors.white,
-                                    prefixIcon: const Icon(
-                                        Icons.flight_takeoff_outlined)),
-                                onChanged: (value) {},
+                            ],
+                          ),
+                          SizedBox(
+                            height: 40,
+                            width: size.width - 50,
+                            child: TextField(
+                              keyboardType: TextInputType.phone,
+                              decoration: textFielDecoratiom.copyWith(
+                                fillColor: Colors.white,
+                                prefixIcon:
+                                    const Icon(Icons.flight_takeoff_outlined),
                               ),
+                              onChanged: (value) {},
                             ),
-                            const SizedBox(
-                              height: 40,
-                            ),
-                            const Row(
-                              children: [
-                                SizedBox(
-                                  width: 10,
-                                ),
-                                Text(
-                                  'To',
-                                  style: TextStyle(
-                                      fontSize: 13,
-                                      color: AppColors.grayText,
-                                      fontWeight: FontWeight.w500),
-                                ),
-                              ],
-                            ),
-                            SizedBox(
-                              height: 45,
-                              width: size.width - 50,
-                              child: TextField(
-                                keyboardType: TextInputType.phone,
-                                decoration: textFielDecoratiom.copyWith(
-                                    fillColor: Colors.white,
-                                    prefixIcon: const Icon(Icons.flight_land)),
-                                onChanged: (value) {},
+                          ),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          const Row(
+                            children: [
+                              SizedBox(
+                                width: 10,
                               ),
+                              Text(
+                                'Plane Features',
+                                style: TextStyle(
+                                    fontSize: 13,
+                                    color: AppColors.grayText,
+                                    fontWeight: FontWeight.w500),
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 40,
+                            width: size.width - 50,
+                            child: TextField(
+                              keyboardType: TextInputType.phone,
+                              decoration: textFielDecoratiom.copyWith(
+                                  fillColor: Colors.white,
+                                  prefixIcon: const Icon(
+                                      Icons.flight_takeoff_outlined)),
+                              onChanged: (value) {},
                             ),
-                            const SizedBox(
-                              height: 40,
+                          ),
+                          const SizedBox(
+                            height: 15,
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 40,
+                    ),
+                    const Text(
+                      'Flight details',
+                      style:
+                          TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+                    ),
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    Container(
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(20)),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          const SizedBox(
+                            height: 15,
+                          ),
+                          const Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              SizedBox(
+                                width: 10,
+                              ),
+                              Text(
+                                'From',
+                                style: TextStyle(
+                                    fontSize: 13,
+                                    color: AppColors.grayText,
+                                    fontWeight: FontWeight.w500),
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 40,
+                            width: size.width - 50,
+                            child: TextField(
+                              keyboardType: TextInputType.phone,
+                              decoration: textFielDecoratiom.copyWith(
+                                  fillColor: Colors.white,
+                                  prefixIcon: const Icon(
+                                      Icons.flight_takeoff_outlined)),
+                              onChanged: (value) {},
                             ),
-                            Row(
+                          ),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          const Row(
+                            children: [
+                              SizedBox(
+                                width: 10,
+                              ),
+                              Text(
+                                'To',
+                                style: TextStyle(
+                                    fontSize: 13,
+                                    color: AppColors.grayText,
+                                    fontWeight: FontWeight.w500),
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 40,
+                            width: size.width - 50,
+                            child: TextField(
+                              keyboardType: TextInputType.phone,
+                              decoration: textFielDecoratiom.copyWith(
+                                  fillColor: Colors.white,
+                                  prefixIcon: const Icon(Icons.flight_land)),
+                              onChanged: (value) {},
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 10),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     const Row(
                                       children: [
-                                        SizedBox(
-                                          width: 15,
-                                        ),
                                         Text(
                                           'Depature Time',
                                           style: TextStyle(
@@ -237,8 +234,8 @@ class _FlightAddViewState extends State<FlightAddView> {
                                       ],
                                     ),
                                     SizedBox(
-                                      height: 45,
-                                      width: size.width / 2 - 15,
+                                      height: 40,
+                                      width: size.width / 2 - 30,
                                       child: TextField(
                                         keyboardType: TextInputType.phone,
                                         decoration: textFielDecoratiom.copyWith(
@@ -255,9 +252,6 @@ class _FlightAddViewState extends State<FlightAddView> {
                                   children: [
                                     const Row(
                                       children: [
-                                        SizedBox(
-                                          width: 10,
-                                        ),
                                         Text(
                                           'Return Time',
                                           style: TextStyle(
@@ -268,8 +262,8 @@ class _FlightAddViewState extends State<FlightAddView> {
                                       ],
                                     ),
                                     SizedBox(
-                                      height: 45,
-                                      width: size.width / 2 - 15,
+                                      height: 40,
+                                      width: size.width / 2 - 30,
                                       child: TextField(
                                         keyboardType: TextInputType.phone,
                                         decoration: textFielDecoratiom.copyWith(
@@ -283,19 +277,20 @@ class _FlightAddViewState extends State<FlightAddView> {
                                 )
                               ],
                             ),
-                            const SizedBox(
-                              height: 40,
-                            ),
-                            Row(
+                          ),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 10),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     const Row(
                                       children: [
-                                        SizedBox(
-                                          width: 10,
-                                        ),
                                         Text(
                                           'Depature Date',
                                           style: TextStyle(
@@ -306,8 +301,8 @@ class _FlightAddViewState extends State<FlightAddView> {
                                       ],
                                     ),
                                     SizedBox(
-                                      height: 45,
-                                      width: size.width / 2 - 15,
+                                      height: 40,
+                                      width: size.width / 2 - 30,
                                       child: TextField(
                                         keyboardType: TextInputType.phone,
                                         decoration: textFielDecoratiom.copyWith(
@@ -324,9 +319,6 @@ class _FlightAddViewState extends State<FlightAddView> {
                                   children: [
                                     const Row(
                                       children: [
-                                        SizedBox(
-                                          width: 10,
-                                        ),
                                         Text(
                                           'Return Date',
                                           style: TextStyle(
@@ -337,8 +329,8 @@ class _FlightAddViewState extends State<FlightAddView> {
                                       ],
                                     ),
                                     SizedBox(
-                                      height: 45,
-                                      width: size.width / 2 - 15,
+                                      height: 40,
+                                      width: size.width / 2 - 30,
                                       child: TextField(
                                         keyboardType: TextInputType.phone,
                                         decoration: textFielDecoratiom.copyWith(
@@ -352,127 +344,123 @@ class _FlightAddViewState extends State<FlightAddView> {
                                 )
                               ],
                             ),
-                            const SizedBox(
-                              height: 30,
-                            ),
-                            Row(
-                              children: [
-                                Checkbox(
-                                  value: isChecked,
-                                  onChanged: (bool? newValue) {
-                                    setState(
-                                      () {
-                                        isChecked = newValue;
-                                      },
-                                    );
-                                  },
-                                ),
-                                const Text('Direct Flight'),
-                              ],
-                            ),
-                          ],
-                        ),
+                          ),
+                          const SizedBox(
+                            height: 2,
+                          ),
+                          Row(
+                            children: [
+                              Checkbox(
+                                value: isChecked,
+                                onChanged: (bool? newValue) {
+                                  setState(
+                                    () {
+                                      isChecked = newValue;
+                                    },
+                                  );
+                                },
+                              ),
+                              const Text('Direct Flight'),
+                            ],
+                          ),
+                        ],
                       ),
-                      const SizedBox(
-                        height: 40,
-                      ),
-                      const Text(
-                        'Tickets and Seats',
-                        style: TextStyle(
-                            fontSize: 16, fontWeight: FontWeight.w500),
-                      ),
-                      const SizedBox(
-                        height: 15,
-                      ),
-                      Container(
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(20)),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            const SizedBox(
-                              height: 15,
-                            ),
-                            Row(
-                              children: [
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    const Row(
-                                      children: [
-                                        SizedBox(
-                                          width: 15,
-                                        ),
-                                        Text(
-                                          'Number of economy seats',
-                                          style: TextStyle(
-                                              fontSize: 13,
-                                              color: AppColors.grayText,
-                                              fontWeight: FontWeight.w500),
-                                        ),
-                                      ],
-                                    ),
-                                    SizedBox(
-                                      height: 45,
-                                      width: size.width / 2 - 15,
-                                      child: TextField(
-                                        keyboardType: TextInputType.phone,
-                                        decoration: textFielDecoratiom.copyWith(
-                                            fillColor: Colors.white,
-                                            prefixIcon: const Icon(Icons
-                                                .airline_seat_recline_normal)),
-                                        onChanged: (value) {},
+                    ),
+                    const SizedBox(
+                      height: 40,
+                    ),
+                    const Text(
+                      'Tickets and Seats',
+                      style:
+                          TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+                    ),
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    Container(
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(20)),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          const SizedBox(
+                            height: 15,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  const Row(
+                                    children: [
+                                      Text(
+                                        'Number of economy seats',
+                                        style: TextStyle(
+                                            fontSize: 13,
+                                            color: AppColors.grayText,
+                                            fontWeight: FontWeight.w500),
                                       ),
+                                    ],
+                                  ),
+                                  SizedBox(
+                                    height: 40,
+                                    width: size.width / 2 - 30,
+                                    child: TextField(
+                                      keyboardType: TextInputType.phone,
+                                      decoration: textFielDecoratiom.copyWith(
+                                          fillColor: Colors.white,
+                                          prefixIcon: const Icon(Icons
+                                              .airline_seat_recline_normal)),
+                                      onChanged: (value) {},
                                     ),
-                                  ],
-                                ),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    const Row(
-                                      children: [
-                                        SizedBox(
-                                          width: 10,
-                                        ),
-                                        Text(
-                                          'Ticket Price',
-                                          style: TextStyle(
-                                              fontSize: 13,
-                                              color: AppColors.grayText,
-                                              fontWeight: FontWeight.w500),
-                                        ),
-                                      ],
-                                    ),
-                                    SizedBox(
-                                      height: 45,
-                                      width: size.width / 2 - 15,
-                                      child: TextField(
-                                        keyboardType: TextInputType.phone,
-                                        decoration: textFielDecoratiom.copyWith(
-                                            fillColor: Colors.white,
-                                            prefixIcon: const Icon(Icons
-                                                .airplane_ticket_outlined)),
-                                        onChanged: (value) {},
+                                  ),
+                                ],
+                              ),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  const Row(
+                                    children: [
+                                      Text(
+                                        'Ticket Price',
+                                        style: TextStyle(
+                                            fontSize: 13,
+                                            color: AppColors.grayText,
+                                            fontWeight: FontWeight.w500),
                                       ),
+                                    ],
+                                  ),
+                                  SizedBox(
+                                    height: 40,
+                                    width: size.width / 2 - 30,
+                                    child: TextField(
+                                      keyboardType: TextInputType.phone,
+                                      decoration: textFielDecoratiom.copyWith(
+                                          fillColor: Colors.white,
+                                          prefixIcon: const Icon(
+                                              Icons.airplane_ticket_outlined)),
+                                      onChanged: (value) {},
                                     ),
-                                  ],
-                                )
-                              ],
-                            ),
-                            const SizedBox(
-                              height: 40,
-                            ),
-                            Row(
+                                  ),
+                                ],
+                              )
+                            ],
+                          ),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 10),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     const Row(
                                       children: [
-                                        SizedBox(
-                                          width: 15,
-                                        ),
                                         Text(
                                           'Number of first class seats',
                                           style: TextStyle(
@@ -483,8 +471,8 @@ class _FlightAddViewState extends State<FlightAddView> {
                                       ],
                                     ),
                                     SizedBox(
-                                      height: 45,
-                                      width: size.width / 2 - 15,
+                                      height: 40,
+                                      width: size.width / 2 - 30,
                                       child: TextField(
                                         keyboardType: TextInputType.phone,
                                         decoration: textFielDecoratiom.copyWith(
@@ -501,9 +489,6 @@ class _FlightAddViewState extends State<FlightAddView> {
                                   children: [
                                     const Row(
                                       children: [
-                                        SizedBox(
-                                          width: 10,
-                                        ),
                                         Text(
                                           'Ticket Price',
                                           style: TextStyle(
@@ -514,8 +499,8 @@ class _FlightAddViewState extends State<FlightAddView> {
                                       ],
                                     ),
                                     SizedBox(
-                                      height: 45,
-                                      width: size.width / 2 - 15,
+                                      height: 40,
+                                      width: size.width / 2 - 30,
                                       child: TextField(
                                         keyboardType: TextInputType.phone,
                                         decoration: textFielDecoratiom.copyWith(
@@ -529,21 +514,22 @@ class _FlightAddViewState extends State<FlightAddView> {
                                 )
                               ],
                             ),
-                            const SizedBox(
-                              height: 40,
-                            ),
-                            Row(
+                          ),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 10),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     const Row(
                                       children: [
-                                        SizedBox(
-                                          width: 15,
-                                        ),
                                         Text(
-                                          'Child economy ticket price',
+                                          'Child economy  price',
                                           style: TextStyle(
                                               fontSize: 13,
                                               color: AppColors.grayText,
@@ -552,8 +538,8 @@ class _FlightAddViewState extends State<FlightAddView> {
                                       ],
                                     ),
                                     SizedBox(
-                                      height: 45,
-                                      width: size.width / 2 - 15,
+                                      height: 40,
+                                      width: size.width / 2 - 30,
                                       child: TextField(
                                         keyboardType: TextInputType.phone,
                                         decoration: textFielDecoratiom.copyWith(
@@ -570,11 +556,8 @@ class _FlightAddViewState extends State<FlightAddView> {
                                   children: [
                                     const Row(
                                       children: [
-                                        SizedBox(
-                                          width: 10,
-                                        ),
                                         Text(
-                                          'Child first class ticket price',
+                                          'Child first class  price',
                                           style: TextStyle(
                                               fontSize: 13,
                                               color: AppColors.grayText,
@@ -583,14 +566,15 @@ class _FlightAddViewState extends State<FlightAddView> {
                                       ],
                                     ),
                                     SizedBox(
-                                      height: 45,
-                                      width: size.width / 2 - 15,
+                                      height: 40,
+                                      width: size.width / 2 - 30,
                                       child: TextField(
                                         keyboardType: TextInputType.phone,
                                         decoration: textFielDecoratiom.copyWith(
-                                            fillColor: Colors.white,
-                                            prefixIcon:
-                                                const Icon(Icons.child_care)),
+                                          fillColor: Colors.white,
+                                          prefixIcon:
+                                              const Icon(Icons.child_care),
+                                        ),
                                         onChanged: (value) {},
                                       ),
                                     ),
@@ -598,22 +582,31 @@ class _FlightAddViewState extends State<FlightAddView> {
                                 )
                               ],
                             ),
-                            const SizedBox(
-                              height: 15,
-                            ),
-                          ],
-                        ),
+                          ),
+                          const SizedBox(
+                            height: 15,
+                          ),
+                        ],
                       ),
-                      const SizedBox(
-                        height: 15,
-                      ),
-                    ],
-                  ),
+                    ),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    CustomButton(
+                      backgroundColor: AppColors.darkBlue,
+                      text: 'Add',
+                      textColor: AppColors.backgroundgrayColor,
+                      widthPercent: size.width,
+                    ),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                  ],
                 ),
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

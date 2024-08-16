@@ -1,12 +1,15 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:traveling/ui/shared/colors.dart';
 import 'package:traveling/ui/shared/custom_widgets/custom_button.dart';
 import 'package:traveling/ui/shared/custom_widgets/custom_image.dart';
 import 'package:traveling/ui/shared/custom_widgets/custom_textfiled.dart';
 import 'package:traveling/ui/shared/custom_widgets/custom_textgray.dart';
+import 'package:traveling/ui/shared/text_size.dart';
 import 'package:traveling/ui/shared/utils.dart';
+import 'package:traveling/ui/views/flight_side_views/flight_signup_view.dart';
 import 'package:traveling/ui/views/traveller_side_views/home_screen.dart';
 import 'package:traveling/ui/views/traveller_side_views/home_view.dart';
 import 'package:traveling/ui/views/traveller_side_views/signup_view.dart';
@@ -42,36 +45,88 @@ class _FlightSignInViewState extends State<FlightSignInView> {
       backgroundColor: AppColors.StatusBarColor,
       body: Stack(
         children: [
-          const Column(
+          Column(
             children: [
+              const Padding(
+                padding: EdgeInsets.all(15.0),
+                child: Column(
+                  children: [
+                    SizedBox(
+                      height: 110,
+                    ),
+                    Stack(
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            Icon(
+                              Icons.cloud,
+                              color: Color.fromARGB(76, 249, 249, 249),
+                              size: 60,
+                            ),
+                            SizedBox(
+                              width: 10,
+                            ),
+                          ],
+                        ),
+                        Column(
+                          children: [
+                            SizedBox(
+                              height: 40,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "Travelling",
+                                  style: TextStyle(
+                                      color: AppColors.backgroundgrayColor,
+                                      fontSize: 40,
+                                      fontWeight: FontWeight.w500),
+                                ),
+                                Spacer(),
+                                Icon(
+                                  Icons.cloud,
+                                  color: Color.fromARGB(76, 249, 249, 249),
+                                  size: 50,
+                                ),
+                                SizedBox(
+                                  width: 70,
+                                ),
+                              ],
+                            ),
+                            Row(
+                              children: [],
+                            ),
+                            Row(
+                              children: [
+                                Text(
+                                  "Wellcome",
+                                  style: TextStyle(
+                                    color: AppColors.backgroundgrayColor,
+                                    fontSize: 25,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
               SizedBox(
                 height: 100,
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    "T",
-                    style: TextStyle(
-                        fontSize: 60,
-                        fontWeight: FontWeight.w700,
-                        color: AppColors.mainColorBlue),
-                  ),
-                  Text(
-                    "ravell",
-                    style: TextStyle(
-                        fontSize: 60,
-                        fontWeight: FontWeight.w700,
-                        color: Color(0xFF9A9CC2)),
-                  ),
-                  Text(
-                    "ing",
-                    style: TextStyle(
-                        fontSize: 60,
-                        fontWeight: FontWeight.w700,
-                        color: Colors.white),
-                  ),
-                ],
+              Container(
+                height: 50,
+                decoration: BoxDecoration(color: Colors.black
+
+                    // image: DecorationImage(
+                    //     image: AssetImage('assets/image/png/background1.png'),
+                    //     fit: BoxFit.fill),
+                    ),
               ),
             ],
           ),
@@ -79,7 +134,7 @@ class _FlightSignInViewState extends State<FlightSignInView> {
             children: [
               Padding(
                 padding: const EdgeInsets.only(
-                  top: 200,
+                  top: 300,
                 ),
                 child: Container(
                   decoration: const BoxDecoration(
@@ -95,22 +150,20 @@ class _FlightSignInViewState extends State<FlightSignInView> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const SizedBox(
-                      height: 280,
+                      height: 350,
                     ),
-                    Text(
+                    const Text(
                       'Sign in ',
                       style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: size.width / 20),
+                          fontSize: TextSize.header1,
+                          fontWeight: FontWeight.w700),
                     ),
                     const SizedBox(
-                      height: 35,
+                      height: 30,
                     ),
                     const Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        SizedBox(
-                          width: 10,
-                        ),
                         Text(
                           'Email',
                           style: TextStyle(
@@ -121,7 +174,7 @@ class _FlightSignInViewState extends State<FlightSignInView> {
                       ],
                     ),
                     SizedBox(
-                      height: 30,
+                      height: 45,
                       child: TextFormField(
                         controller: _emailController,
                         keyboardType: TextInputType.emailAddress,
@@ -134,13 +187,10 @@ class _FlightSignInViewState extends State<FlightSignInView> {
                       ),
                     ),
                     const SizedBox(
-                      height: 30,
+                      height: 20,
                     ),
                     const Row(
                       children: [
-                        SizedBox(
-                          width: 10,
-                        ),
                         Text(
                           'Password',
                           style: TextStyle(
@@ -151,7 +201,7 @@ class _FlightSignInViewState extends State<FlightSignInView> {
                       ],
                     ),
                     SizedBox(
-                      height: 30,
+                      height: 45,
                       child: TextFormField(
                         controller: _passwordController,
                         keyboardType: TextInputType.visiblePassword,
@@ -224,16 +274,14 @@ class _FlightSignInViewState extends State<FlightSignInView> {
                         } catch (e) {}
                       },
                       child: CustomButton(
-                          backgroundColor: AppColors.darkBlue,
-                        
+                        backgroundColor: AppColors.darkBlue,
                         text: 'Sign in',
                         textColor: AppColors.backgroundgrayColor,
-                        
-                        widthPercent: 1,
+                        widthPercent: size.width,
                       ),
                     ),
-                    SizedBox(
-                      height: screenHeight(20),
+                    const SizedBox(
+                      height: 20,
                     ),
                     // const Center(
                     //   child: CustomTextGray(
@@ -254,16 +302,20 @@ class _FlightSignInViewState extends State<FlightSignInView> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        const CustomTextGray(
-                            mainText: 'You already have account? '),
+                        const Text(
+                          'You already have account?  ',
+                          style: TextStyle(
+                            color: AppColors.grayText,
+                          ),
+                        ),
                         InkWell(
                           onTap: () {
-                            Get.offAll(const SignUpView());
+                            Get.offAll(const FlightSignUpView());
                           },
                           child: const Text(
                             'Sign up',
                             style: TextStyle(
-                              color: AppColors.mainColorBlue,
+                              color: AppColors.darkBlue,
                               fontWeight: FontWeight.bold,
                             ),
                           ),

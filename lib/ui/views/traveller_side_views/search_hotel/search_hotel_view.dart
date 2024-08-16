@@ -166,7 +166,7 @@ class SearchHotelViewState extends State<SearchHotelView> {
                       Container(
                         padding: EdgeInsets.only(right: 10, left: 10),
                         width: size.width / 2 - 20,
-                        height: 50,
+                        height: 40,
                         decoration: BoxDecoration(
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(20),
@@ -200,14 +200,14 @@ class SearchHotelViewState extends State<SearchHotelView> {
                                     controller.incrementAdult();
                                   },
                                   child: Icon(Icons.arrow_drop_up_sharp,
-                                      color: AppColors.purple, size: 20),
+                                      color: AppColors.purple, size: 17),
                                 ),
                                 InkWell(
                                   onTap: () {
                                     controller.decrementAdult();
                                   },
                                   child: Icon(Icons.arrow_drop_down_sharp,
-                                      color: AppColors.purple, size: 20),
+                                      color: AppColors.purple, size: 17),
                                 ),
                               ],
                             )
@@ -237,7 +237,7 @@ class SearchHotelViewState extends State<SearchHotelView> {
                       Container(
                         padding: EdgeInsets.only(right: 10, left: 10),
                         width: size.width / 2 - 20,
-                        height: 50,
+                        height: 40,
                         decoration: BoxDecoration(
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(20),
@@ -271,14 +271,14 @@ class SearchHotelViewState extends State<SearchHotelView> {
                                     controller.incrementChild();
                                   },
                                   child: Icon(Icons.arrow_drop_up_sharp,
-                                      color: AppColors.purple, size: 20),
+                                      color: AppColors.purple, size: 17),
                                 ),
                                 InkWell(
                                   onTap: () {
                                     controller.decrementChild();
                                   },
                                   child: Icon(Icons.arrow_drop_down_sharp,
-                                      color: AppColors.purple, size: 20),
+                                      color: AppColors.purple, size: 17),
                                 ),
                               ],
                             )
