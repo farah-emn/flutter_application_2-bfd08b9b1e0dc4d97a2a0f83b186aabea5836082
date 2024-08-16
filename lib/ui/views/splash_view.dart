@@ -89,8 +89,18 @@ class _SplashViewState extends State<SplashView> {
         splash: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            // Container(
+            //   child: Text('Travelling'),
+            // ),
             Container(
-              child: Text('Travelling'),
+              height: size.height / 3,
+              width: size.width / 2 - 50,
+              decoration: const BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage('assets/image/png/Group11.png'),
+                  fit: BoxFit.fitWidth,
+                ),
+              ),
             ),
           ],
         ),
@@ -98,7 +108,10 @@ class _SplashViewState extends State<SplashView> {
           future: getData(),
           builder: (BuildContext context, AsyncSnapshot<Widget> snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return Text('Travelling...');
+              return Container(
+                color: AppColors.Blue,
+                child: Text('Travelling...'),
+              );
               // CircularProgressIndicator();
             } else {
               if (snapshot.hasError) {

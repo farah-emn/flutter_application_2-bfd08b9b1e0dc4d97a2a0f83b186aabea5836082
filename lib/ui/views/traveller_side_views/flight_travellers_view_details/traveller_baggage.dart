@@ -80,7 +80,10 @@ class _TravellerBaggageState extends State<TravellerBaggage> {
                           key: UniqueKey(), // Add this line
 
                           title: Text('15 KG'),
-                          subtitle: Text('Max 1 piece'),
+                          subtitle: Text(
+                            'Max 1 piece',
+                            style: TextStyle(color: AppColors.grayText),
+                          ),
                           trailing: Text('SAR 100'),
                           leading: Radio<BaggageOption>(
                             value: BaggageOption.option15kg,
@@ -178,229 +181,240 @@ class _TravellerBaggageState extends State<TravellerBaggage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
-      body: SafeArea(
-        child: Column(
-          children: [
-            Padding(
-                padding: const EdgeInsets.only(left: 15, right: 15, top: 22),
-                child: Row(
+      backgroundColor: AppColors.Blue,
+      body: Stack(children: [
+        Padding(
+          padding: EdgeInsets.only(left: 15, right: 15, top: 35),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              InkWell(
+                onTap: () {
+                  Get.back();
+                },
+                child: const Icon(
+                  Icons.arrow_back,
+                  color: Colors.white,
+                ),
+              ),
+              Text(
+                'Add Traveller',
+                style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.w700,
+                    color: AppColors.backgroundgrayColor),
+              ),
+              SizedBox(),
+            ],
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(top: 70),
+          child: Container(
+            decoration: const BoxDecoration(
+              image: DecorationImage(
+                  image: AssetImage('assets/image/png/background1.png'),
+                  fit: BoxFit.fill),
+            ),
+            child: Column(
+              children: [
+                SizedBox(
+                  height: 80,
+                ),
+                Padding(
+                  padding: EdgeInsetsDirectional.only(start: 20),
+                  child: Row(
+                    children: [
+                      Text(deparure_from),
+                      SizedBox(width: 8),
+                      Icon(
+                        Icons.compare_arrows_rounded,
+                        color: AppColors.TextgrayColor,
+                      ),
+                      SizedBox(
+                        width: 8,
+                      ),
+                      Text(arrival_to)
+                    ],
+                  ),
+                ),
+                Container(
+                  margin: EdgeInsets.symmetric(horizontal: 15),
+                  padding: EdgeInsetsDirectional.only(
+                      start: 10, end: 10, top: 10, bottom: 10),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(20),
+                    border: Border.all(
+                      width: 1,
+                      color: const Color.fromARGB(255, 225, 223, 223),
+                    ),
+                  ),
+                  width: MediaQuery.of(context).size.width,
+                  child: Column(
+                    children: [
+                      Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            Row(
+                              children: [
+                                Icon(
+                                  Icons.check_circle,
+                                  color: Color.fromARGB(255, 169, 210, 158),
+                                ),
+                                Text('7 kg cabin baggage'),
+                                Spacer(),
+                                Text('Max 1 piece'),
+                              ],
+                            ),
+                            SizedBox(
+                              height: 15,
+                            ),
+                            Row(
+                              children: [
+                                Icon(
+                                  Icons.cancel,
+                                  color: Color.fromARGB(255, 255, 67, 49),
+                                ),
+                                Text('Checked baggage not included'),
+                                Spacer(),
+                                Text('105.87'),
+                              ],
+                            ),
+                            SizedBox(
+                              height: 15,
+                            ),
+                            InkWell(
+                                onTap: () {
+                                  showBaggageOptions();
+                                },
+                                child: InkWell(
+                                    onTap: () {
+                                      showBaggageOptions();
+                                      print(selectedOption);
+                                    },
+                                    child: selectedOption == BaggageOption.option15kg ||
+                                            widget.Extrabaggage ==
+                                                BaggageOption.option15kg
+                                        ? IconTextRow(
+                                            iconData: Icons.check_circle,
+                                            text: '15kg extra Checked baggage',
+                                            subtext: 'Max 1 piece',
+                                            price: 100.50,
+                                            iconColor: const Color.fromARGB(
+                                                255, 142, 191, 255))
+                                        : selectedOption == BaggageOption.option20kg ||
+                                                widget.Extrabaggage ==
+                                                    BaggageOption.option20kg
+                                            ? IconTextRow(
+                                                iconData: Icons.check_circle,
+                                                text:
+                                                    '20kg extra Checked baggage',
+                                                subtext: 'Max 1 piece',
+                                                price: 200.87,
+                                                iconColor: const Color.fromARGB(
+                                                    255, 142, 191, 255))
+                                            : selectedOption == BaggageOption.option25kg ||
+                                                    widget.Extrabaggage ==
+                                                        BaggageOption.option25kg
+                                                ? IconTextRow(
+                                                    iconData:
+                                                        Icons.check_circle,
+                                                    text:
+                                                        '25kg extra Checked baggage',
+                                                    subtext: 'Max 1 piece',
+                                                    price: 300.50,
+                                                    iconColor:
+                                                        const Color.fromARGB(
+                                                            255, 142, 191, 255))
+                                                : widget.Extrabaggage == null ||
+                                                        selectedOption == null
+                                                    ? Row(
+                                                        children: [
+                                                          Icon(
+                                                            Icons.add,
+                                                            color: AppColors
+                                                                .mainColorBlue,
+                                                          ),
+                                                          SizedBox(
+                                                            width: 5,
+                                                          ),
+                                                          Text(
+                                                            'Add extra baggage',
+                                                            style: TextStyle(
+                                                                color: AppColors
+                                                                    .mainColorBlue),
+                                                          ),
+                                                        ],
+                                                      )
+                                                    : Row(
+                                                        children: [
+                                                          Icon(
+                                                            Icons.add,
+                                                            color: AppColors
+                                                                .mainColorBlue,
+                                                          ),
+                                                          SizedBox(
+                                                            width: 5,
+                                                          ),
+                                                          Text(
+                                                            'Add extra baggage',
+                                                            style: TextStyle(
+                                                                color: AppColors
+                                                                    .mainColorBlue),
+                                                          ),
+                                                        ],
+                                                      )))
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(
+                  height: 15,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     InkWell(
                       onTap: () {
-                        Get.back();
-                      },
-                      child: const Icon(
-                        Icons.arrow_back,
-                        color: AppColors.blackColor,
-                      ),
-                    ),
-                    SizedBox(
-                      width: (MediaQuery.of(context).size.width / 3) - 20,
-                    ),
-                    const Text(
-                      'Add baggage',
-                      style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.w400,
-                          color: AppColors.blackColor),
-                    ),
-                  ],
-                )),
-            SizedBox(
-              height: 80,
-            ),
-            Padding(
-              padding: EdgeInsetsDirectional.only(start: 20),
-              child: Row(
-                children: [
-                  Text(deparure_from),
-                  SizedBox(width: 8),
-                  Icon(
-                    Icons.compare_arrows_rounded,
-                    color: AppColors.TextgrayColor,
-                  ),
-                  SizedBox(
-                    width: 8,
-                  ),
-                  Text(arrival_to)
-                ],
-              ),
-            ),
-            Container(
-              padding: EdgeInsetsDirectional.only(start: 20, end: 20, top: 10),
-              child: Container(
-                padding:
-                    EdgeInsetsDirectional.only(start: 20, end: 20, top: 20),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                  border: Border.all(
-                    width: 1,
-                    color: const Color.fromARGB(255, 225, 223, 223),
-                  ),
-                ),
-                height: 230,
-                width: MediaQuery.of(context).size.width,
-                child: Column(
-                  children: [
-                    Center(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          IconTextRow(
-                            iconData: Icons.check_circle,
-                            text: '7 kg cabin baggage',
-                            subtext: 'Max 1 piece',
-                            price: 105.87,
-                            iconColor: Color.fromARGB(255, 169, 210, 158),
-                          ),
-                          SizedBox(
-                            height: 15,
-                          ),
-                          IconTextRow(
-                            iconData: Icons.cancel,
-                            text: 'Checked baggage not included',
-                            subtext: '',
-                            price: 105.87,
-                            iconColor: Color.fromARGB(255, 255, 67, 49),
-                          ),
-                          SizedBox(
-                            height: 15,
-                          ),
-                          InkWell(
-                              onTap: () {
-                                showBaggageOptions();
-                              },
-                              child: InkWell(
-                                  onTap: () {
-                                    showBaggageOptions();
-                                    print(selectedOption);
-                                  },
-                                  child: selectedOption ==
-                                              BaggageOption.option15kg ||
-                                          widget.Extrabaggage ==
-                                              BaggageOption.option15kg
-                                      ? IconTextRow(
-                                          iconData: Icons.check_circle,
-                                          text: '15kg extra Checked baggage',
-                                          subtext: 'Max 1 piece',
-                                          price: 100.50,
-                                          iconColor: const Color.fromARGB(
-                                              255, 142, 191, 255))
-                                      : selectedOption ==
-                                                  BaggageOption.option20kg ||
-                                              widget.Extrabaggage ==
-                                                  BaggageOption.option20kg
-                                          ? IconTextRow(
-                                              iconData: Icons.check_circle,
-                                              text:
-                                                  '20kg extra Checked baggage',
-                                              subtext: 'Max 1 piece',
-                                              price: 200.87,
-                                              iconColor: const Color.fromARGB(
-                                                  255, 142, 191, 255))
-                                          : selectedOption == BaggageOption.option25kg ||
-                                                  widget.Extrabaggage ==
-                                                      BaggageOption.option25kg
-                                              ? IconTextRow(
-                                                  iconData: Icons.check_circle,
-                                                  text:
-                                                      '25kg extra Checked baggage',
-                                                  subtext: 'Max 1 piece',
-                                                  price: 300.50,
-                                                  iconColor:
-                                                      const Color.fromARGB(
-                                                          255, 142, 191, 255))
-                                              : widget.Extrabaggage == null ||
-                                                      selectedOption == null
-                                                  ? Row(
-                                                      children: [
-                                                        Icon(
-                                                          Icons.add,
-                                                          color: AppColors
-                                                              .mainColorBlue,
-                                                        ),
-                                                        SizedBox(
-                                                          width: 5,
-                                                        ),
-                                                        Text(
-                                                          'Add extra baggage',
-                                                          style: TextStyle(
-                                                              color: AppColors
-                                                                  .mainColorBlue),
-                                                        ),
-                                                      ],
-                                                    )
-                                                  : Row(
-                                                      children: [
-                                                        Icon(
-                                                          Icons.add,
-                                                          color: AppColors
-                                                              .mainColorBlue,
-                                                        ),
-                                                        SizedBox(
-                                                          width: 5,
-                                                        ),
-                                                        Text(
-                                                          'Add extra baggage',
-                                                          style: TextStyle(
-                                                              color: AppColors
-                                                                  .mainColorBlue),
-                                                        ),
-                                                      ],
-                                                    )))
-                        ],
-                      ),
-                    ),
-                    SizedBox(
-                      height: 50,
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            SizedBox(
-              height: 15,
-            ),
-            Padding(
-              padding: EdgeInsetsDirectional.only(
-                  start: (MediaQuery.of(context).size.width / 3) - 10),
-              child: Row(
-                children: [
-                  InkWell(
-                    onTap: () {
-                      if (selectedOption != null) {
-                        print(selectedOption);
-                        if (widget.Extrabaggage != null) {
-                          Navigator.of(context).pop([selectedOption, true]);
+                        if (selectedOption != null) {
+                          print(selectedOption);
+                          if (widget.Extrabaggage != null) {
+                            Navigator.of(context).pop([selectedOption, true]);
+                          } else {
+                            Navigator.of(context).pop([selectedOption, false]);
+                          }
+                        } else if (widget.Extrabaggage != null) {
+                          Navigator.of(context)
+                              .pop([widget.Extrabaggage, true]);
                         } else {
-                          Navigator.of(context).pop([selectedOption, false]);
+                          Navigator.of(context).pop([selectedOption, true]);
                         }
-                      } else if (widget.Extrabaggage != null) {
-                        Navigator.of(context).pop([widget.Extrabaggage, true]);
-                      } else {
-                        Navigator.of(context).pop([selectedOption, true]);
-                      }
-                    },
-                    child: Container(
-                        height: 40,
-                        width: 170,
-                        decoration: BoxDecoration(
-                          color: AppColors.darkBlue,
-                          borderRadius: BorderRadius.all(Radius.circular(10)),
-                        ),
-                        child: Center(
-                            child: Text(
-                          'Confirm Extra Baggage',
-                          style: TextStyle(fontSize: 15, color: Colors.white),
-                        ))),
-                  ),
-                ],
-              ),
-            )
-          ],
+                      },
+                      child: Container(
+                          height: 40,
+                          width: MediaQuery.of(context).size.width - 30,
+                          decoration: BoxDecoration(
+                            color: AppColors.darkBlue,
+                            borderRadius: BorderRadius.all(Radius.circular(10)),
+                          ),
+                          child: Center(
+                              child: Text(
+                            'Confirm Extra Baggage',
+                            style: TextStyle(fontSize: 15, color: Colors.white),
+                          ))),
+                    ),
+                  ],
+                )
+              ],
+            ),
+          ),
         ),
-      ),
+      ]),
     );
   }
 }

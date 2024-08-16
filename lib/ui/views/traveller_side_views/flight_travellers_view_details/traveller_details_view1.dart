@@ -257,7 +257,7 @@ class _TravellerDetailsView1State extends State<TravellerDetailsView1> {
                                                       Icons
                                                           .keyboard_arrow_right_sharp,
                                                       color: AppColors
-                                                          .TextgrayColor,
+                                                          .LightGrayColor,
                                                     )),
                                               ]),
                                         ),
@@ -353,7 +353,7 @@ class _TravellerDetailsView1State extends State<TravellerDetailsView1> {
                                                   Icons
                                                       .keyboard_arrow_right_sharp,
                                                   color:
-                                                      AppColors.TextgrayColor,
+                                                      AppColors.LightGrayColor,
                                                 ),
                                               )
                                             ],
@@ -579,7 +579,7 @@ class _TravellerDetailsView1State extends State<TravellerDetailsView1> {
                                                       Icons
                                                           .keyboard_arrow_right_sharp,
                                                       color: AppColors
-                                                          .TextgrayColor,
+                                                          .LightGrayColor,
                                                     )),
                                               ]),
                                         ),
@@ -675,7 +675,7 @@ class _TravellerDetailsView1State extends State<TravellerDetailsView1> {
                                                   Icons
                                                       .keyboard_arrow_right_sharp,
                                                   color:
-                                                      AppColors.TextgrayColor,
+                                                      AppColors.LightGrayColor,
                                                 ),
                                               )
                                             ],
@@ -838,7 +838,7 @@ class _TravellerDetailsView1State extends State<TravellerDetailsView1> {
                           fillColor: Colors.white,
                           prefixIcon: const Icon(
                             Icons.person_2_rounded,
-                            color: AppColors.gold,
+                            color: AppColors.darkBlue,
                           ),
                         ),
                       ),
@@ -878,7 +878,7 @@ class _TravellerDetailsView1State extends State<TravellerDetailsView1> {
                           fillColor: Colors.white,
                           prefixIcon: const Icon(
                             Icons.person_2_rounded,
-                            color: AppColors.gold,
+                            color: AppColors.darkBlue,
                           ),
                         ),
                       ),
@@ -919,7 +919,7 @@ class _TravellerDetailsView1State extends State<TravellerDetailsView1> {
                           fillColor: Colors.white,
                           prefixIcon: const Icon(
                             Icons.email_rounded,
-                            color: AppColors.gold,
+                            color: AppColors.darkBlue,
                           ),
                         ),
                       ),
@@ -969,7 +969,7 @@ class _TravellerDetailsView1State extends State<TravellerDetailsView1> {
                           fillColor: Colors.white,
                           prefixIcon: const Icon(
                             Icons.phone,
-                            color: AppColors.gold,
+                            color: AppColors.darkBlue,
                           ),
                         ),
                       ),

@@ -338,7 +338,7 @@ class _TravellerDetailsView4State extends State<TravellerDetailsView4> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  'Search',
+                  'Add Traveller',
                   style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.w700,
@@ -384,8 +384,8 @@ class _TravellerDetailsView4State extends State<TravellerDetailsView4> {
                               .setgender(TravellerData?.gender ?? '');
                           controller_TravellerDetailsview2.setissuingcountry(
                               TravellerData?.issuingCountry ?? '');
-                          controller_TravellerDetailsView2.setNationality(
-                              TravellerData?.nationality ?? '');
+                          controller_TravellerDetailsView2
+                              .setNationality(TravellerData?.nationality ?? '');
                           controller_TravellerDetailsview2.setbirthdateDay(
                               controller_TravellerDetailsview2
                                   .getFormattedDateDay(
@@ -417,36 +417,36 @@ class _TravellerDetailsView4State extends State<TravellerDetailsView4> {
                           setState(() {
                             controller_TravellerDetailsview2.gender.value =
                                 widget.change_data?.gender;
-                            controller_TravellerDetailsview2.Nationality
-                                .value = widget.change_data?.nationality;
+                            controller_TravellerDetailsview2.Nationality.value =
+                                widget.change_data?.nationality;
                             controller_TravellerDetailsview2.issuingcountry
                                 .value = widget.change_data?.issuingCountry;
-                            controller_TravellerDetailsview2.birthdateDay
-                                .value = (widget.change_data?.birthDate !=
-                                    null)
-                                ? controller_TravellerDetailsview2
-                                    .getFormattedDateDay(
-                                        widget.change_data?.birthDate ?? '')
-                                : controller_TravellerDetailsview2
-                                    .birthdateDay.value;
-                            controller_TravellerDetailsview2.birthdateMonth
-                                .value = (widget.change_data?.birthDate !=
-                                    null)
-                                ? controller_TravellerDetailsview2
-                                    .getFormattedDateMonth(
-                                        widget.change_data?.birthDate ?? '')
-                                : controller_TravellerDetailsview2
-                                    .birthdateMonth.value;
-        
-                            controller_TravellerDetailsview2.birthdateYear
-                                .value = (widget.change_data?.birthDate !=
-                                    null)
-                                ? controller_TravellerDetailsview2
-                                    .getFormattedDateYear(
-                                        widget.change_data?.birthDate ?? '')
-                                : controller_TravellerDetailsview2
-                                    .birthdateYear.value;
-        
+                            controller_TravellerDetailsview2
+                                    .birthdateDay.value =
+                                (widget.change_data?.birthDate != null)
+                                    ? controller_TravellerDetailsview2
+                                        .getFormattedDateDay(
+                                            widget.change_data?.birthDate ?? '')
+                                    : controller_TravellerDetailsview2
+                                        .birthdateDay.value;
+                            controller_TravellerDetailsview2
+                                    .birthdateMonth.value =
+                                (widget.change_data?.birthDate != null)
+                                    ? controller_TravellerDetailsview2
+                                        .getFormattedDateMonth(
+                                            widget.change_data?.birthDate ?? '')
+                                    : controller_TravellerDetailsview2
+                                        .birthdateMonth.value;
+
+                            controller_TravellerDetailsview2
+                                    .birthdateYear.value =
+                                (widget.change_data?.birthDate != null)
+                                    ? controller_TravellerDetailsview2
+                                        .getFormattedDateYear(
+                                            widget.change_data?.birthDate ?? '')
+                                    : controller_TravellerDetailsview2
+                                        .birthdateYear.value;
+
                             controller_TravellerDetailsview2.expiredateDay
                                 .value = (widget.change_data?.expiration !=
                                     null)
@@ -455,7 +455,7 @@ class _TravellerDetailsView4State extends State<TravellerDetailsView4> {
                                         widget.change_data?.expiration ?? '')
                                 : controller_TravellerDetailsview2
                                     .expiredateDay.value;
-        
+
                             controller_TravellerDetailsview2.expiredateMonth
                                 .value = (widget.change_data?.expiration !=
                                     null)
@@ -615,8 +615,7 @@ class _TravellerDetailsView4State extends State<TravellerDetailsView4> {
                                                 textFielDecoratiom.copyWith(
                                                     prefixIcon: Icon(
                                                       Icons.person_2_rounded,
-                                                      color:
-                                                          AppColors.darkBlue,
+                                                      color: AppColors.darkBlue,
                                                     ),
                                                     fillColor: Colors.white),
                                             validator: (value) {
@@ -630,8 +629,9 @@ class _TravellerDetailsView4State extends State<TravellerDetailsView4> {
                                         ),
                                         (errorFirstName != null)
                                             ? Padding(
-                                                padding: EdgeInsetsDirectional
-                                                    .only(start: 6, top: 10),
+                                                padding:
+                                                    EdgeInsetsDirectional.only(
+                                                        start: 6, top: 10),
                                                 child: Text(
                                                   errorFirstName!,
                                                   style: TextStyle(
@@ -662,8 +662,7 @@ class _TravellerDetailsView4State extends State<TravellerDetailsView4> {
                                                 textFielDecoratiom.copyWith(
                                                     prefixIcon: Icon(
                                                       Icons.person_2_rounded,
-                                                      color:
-                                                          AppColors.darkBlue,
+                                                      color: AppColors.darkBlue,
                                                     ),
                                                     fillColor: Colors.white),
                                             validator: (value) {
@@ -677,8 +676,9 @@ class _TravellerDetailsView4State extends State<TravellerDetailsView4> {
                                         ),
                                         (errorLastName != null)
                                             ? Padding(
-                                                padding: EdgeInsetsDirectional
-                                                    .only(start: 6, top: 10),
+                                                padding:
+                                                    EdgeInsetsDirectional.only(
+                                                        start: 6, top: 10),
                                                 child: Text(
                                                   errorLastName!,
                                                   style: TextStyle(
@@ -706,9 +706,8 @@ class _TravellerDetailsView4State extends State<TravellerDetailsView4> {
                                             showGenderOptions();
                                           },
                                           child: Container(
-                                            padding:
-                                                EdgeInsetsDirectional.only(
-                                                    start: 15, end: 15),
+                                            padding: EdgeInsetsDirectional.only(
+                                                start: 15, end: 15),
                                             height: 40,
                                             width: size.width,
                                             decoration: BoxDecoration(
@@ -716,8 +715,8 @@ class _TravellerDetailsView4State extends State<TravellerDetailsView4> {
                                               borderRadius:
                                                   BorderRadius.circular(20),
                                               border: Border.all(
-                                                  color: AppColors
-                                                      .LightGrayColor,
+                                                  color:
+                                                      AppColors.LightGrayColor,
                                                   width: 1),
                                             ),
                                             child: Row(
@@ -725,8 +724,7 @@ class _TravellerDetailsView4State extends State<TravellerDetailsView4> {
                                                   MainAxisAlignment.start,
                                               children: [
                                                 Icon(Icons.male_rounded,
-                                                    color:
-                                                        AppColors.darkBlue),
+                                                    color: AppColors.darkBlue),
                                                 SizedBox(width: 10),
                                                 Obx(
                                                   () => Text(
@@ -749,16 +747,16 @@ class _TravellerDetailsView4State extends State<TravellerDetailsView4> {
                                                     Icons
                                                         .keyboard_arrow_down_rounded,
                                                     size: 25,
-                                                    color:
-                                                        AppColors.grayText),
+                                                    color: AppColors.grayText),
                                               ],
                                             ),
                                           ),
                                         ),
                                         (errorMessageGender != null)
                                             ? Padding(
-                                                padding: EdgeInsetsDirectional
-                                                    .only(start: 6, top: 10),
+                                                padding:
+                                                    EdgeInsetsDirectional.only(
+                                                        start: 6, top: 10),
                                                 child: Text(
                                                   errorMessageGender!,
                                                   style: TextStyle(
@@ -787,8 +785,7 @@ class _TravellerDetailsView4State extends State<TravellerDetailsView4> {
                                             borderRadius:
                                                 BorderRadius.circular(20),
                                             border: Border.all(
-                                                color:
-                                                    AppColors.LightGrayColor,
+                                                color: AppColors.LightGrayColor,
                                                 width: 1),
                                           ),
                                           padding: EdgeInsetsDirectional.only(
@@ -831,17 +828,15 @@ class _TravellerDetailsView4State extends State<TravellerDetailsView4> {
                                               ),
                                               items: items_Nationality
                                                   .map((item) =>
-                                                      DropdownMenuItem<
-                                                              String?>(
+                                                      DropdownMenuItem<String?>(
                                                           value: (item),
                                                           child: Row(
                                                             children: [
                                                               Icon(
                                                                 Icons.public,
                                                                 size: 22,
-                                                                color:
-                                                                    AppColors
-                                                                        .Blue,
+                                                                color: AppColors
+                                                                    .Blue,
                                                               ),
                                                               SizedBox(
                                                                 width: 12,
@@ -866,8 +861,7 @@ class _TravellerDetailsView4State extends State<TravellerDetailsView4> {
                                                   controller_TravellerDetailsView2
                                                       .setNationality(
                                                           value ?? '');
-                                                  isNationalitySelected =
-                                                      true;
+                                                  isNationalitySelected = true;
                                                 });
                                               },
                                               icon: Icon(
@@ -880,8 +874,9 @@ class _TravellerDetailsView4State extends State<TravellerDetailsView4> {
                                         ),
                                         (errorMessageNationality != null)
                                             ? Padding(
-                                                padding: EdgeInsetsDirectional
-                                                    .only(start: 6, top: 10),
+                                                padding:
+                                                    EdgeInsetsDirectional.only(
+                                                        start: 6, top: 10),
                                                 child: Text(
                                                   errorMessageNationality!,
                                                   style: TextStyle(
@@ -946,8 +941,7 @@ class _TravellerDetailsView4State extends State<TravellerDetailsView4> {
                                                                         .value ==
                                                                     'Day')
                                                                 ? Colors.grey
-                                                                : Colors
-                                                                    .black,
+                                                                : Colors.black,
                                                           ),
                                                         )
                                                       : Text(
@@ -957,11 +951,10 @@ class _TravellerDetailsView4State extends State<TravellerDetailsView4> {
                                                 value: selectedBirthDateDay,
                                                 items: daysListBirthDate
                                                     .map((int value) {
-                                                  return DropdownMenuItem<
-                                                      int>(
+                                                  return DropdownMenuItem<int>(
                                                     value: value,
-                                                    child: Text(
-                                                        value.toString()),
+                                                    child:
+                                                        Text(value.toString()),
                                                   );
                                                 }).toList(),
                                                 onChanged: (newValue) {
@@ -1012,8 +1005,7 @@ class _TravellerDetailsView4State extends State<TravellerDetailsView4> {
                                                                           .birthdateMonth
                                                                           .value ==
                                                                       'Month')
-                                                                  ? Colors
-                                                                      .grey
+                                                                  ? Colors.grey
                                                                   : Colors
                                                                       .black),
                                                         )
@@ -1024,11 +1016,10 @@ class _TravellerDetailsView4State extends State<TravellerDetailsView4> {
                                                 value: selectedBirthDateMonth,
                                                 items: monthListBirthDate
                                                     .map((int value) {
-                                                  return DropdownMenuItem<
-                                                      int>(
+                                                  return DropdownMenuItem<int>(
                                                     value: value,
-                                                    child: Text(
-                                                        value.toString()),
+                                                    child:
+                                                        Text(value.toString()),
                                                   );
                                                 }).toList(),
                                                 onChanged: (newValue) {
@@ -1080,8 +1071,7 @@ class _TravellerDetailsView4State extends State<TravellerDetailsView4> {
                                                                         .value ==
                                                                     'Year')
                                                                 ? Colors.grey
-                                                                : Colors
-                                                                    .black,
+                                                                : Colors.black,
                                                           ),
                                                         )
                                                       : Text(
@@ -1091,11 +1081,10 @@ class _TravellerDetailsView4State extends State<TravellerDetailsView4> {
                                                 value: selectedBirthDateYear,
                                                 items: yearListBirthDate
                                                     .map((int value) {
-                                                  return DropdownMenuItem<
-                                                      int>(
+                                                  return DropdownMenuItem<int>(
                                                     value: value,
-                                                    child: Text(
-                                                        value.toString()),
+                                                    child:
+                                                        Text(value.toString()),
                                                   );
                                                 }).toList(),
                                                 onChanged: (newValue) {
@@ -1118,8 +1107,9 @@ class _TravellerDetailsView4State extends State<TravellerDetailsView4> {
                                         ),
                                         (errorMessageBirthDate != null)
                                             ? Padding(
-                                                padding: EdgeInsetsDirectional
-                                                    .only(start: 6, top: 10),
+                                                padding:
+                                                    EdgeInsetsDirectional.only(
+                                                        start: 6, top: 10),
                                                 child: Text(
                                                   errorMessageBirthDate!,
                                                   style: TextStyle(
@@ -1155,8 +1145,8 @@ class _TravellerDetailsView4State extends State<TravellerDetailsView4> {
                                           10,
                                           const BoxShadow(
                                               color: AppColors.gray,
-                                              blurRadius: BorderSide
-                                                  .strokeAlignOutside,
+                                              blurRadius:
+                                                  BorderSide.strokeAlignOutside,
                                               blurStyle: BlurStyle.outer),
                                         ),
                                         color: Colors.white,
@@ -1182,8 +1172,7 @@ class _TravellerDetailsView4State extends State<TravellerDetailsView4> {
                                                 textFielDecoratiom.copyWith(
                                                     prefixIcon: Icon(
                                                       Icons.person_2_rounded,
-                                                      color:
-                                                          AppColors.darkBlue,
+                                                      color: AppColors.darkBlue,
                                                     ),
                                                     fillColor: Colors.white),
                                             validator: (value) {
@@ -1197,8 +1186,9 @@ class _TravellerDetailsView4State extends State<TravellerDetailsView4> {
                                         ),
                                         (errorPassport != null)
                                             ? Padding(
-                                                padding: EdgeInsetsDirectional
-                                                    .only(start: 6, top: 10),
+                                                padding:
+                                                    EdgeInsetsDirectional.only(
+                                                        start: 6, top: 10),
                                                 child: Text(
                                                   errorPassport!,
                                                   style: TextStyle(
@@ -1214,8 +1204,7 @@ class _TravellerDetailsView4State extends State<TravellerDetailsView4> {
                                           children: [
                                             Text('Issuing Country',
                                                 style: TextStyle(
-                                                    fontSize:
-                                                        TextSize.header2,
+                                                    fontSize: TextSize.header2,
                                                     color: Colors.grey)),
                                           ],
                                         ),
@@ -1302,8 +1291,9 @@ class _TravellerDetailsView4State extends State<TravellerDetailsView4> {
                                         ),
                                         (errorMessageissuingcountry != null)
                                             ? Padding(
-                                                padding: EdgeInsetsDirectional
-                                                    .only(start: 6, top: 10),
+                                                padding:
+                                                    EdgeInsetsDirectional.only(
+                                                        start: 6, top: 10),
                                                 child: Text(
                                                   errorMessageissuingcountry!,
                                                   style: TextStyle(
@@ -1362,8 +1352,7 @@ class _TravellerDetailsView4State extends State<TravellerDetailsView4> {
                                                                         .value ==
                                                                     'Day')
                                                                 ? Colors.grey
-                                                                : Colors
-                                                                    .black,
+                                                                : Colors.black,
                                                           ),
                                                         )
                                                       : Text(
@@ -1373,19 +1362,17 @@ class _TravellerDetailsView4State extends State<TravellerDetailsView4> {
                                                 value: selectedExpireDateDay,
                                                 items: daysListExpireDate
                                                     .map((int value) {
-                                                  return DropdownMenuItem<
-                                                      int>(
+                                                  return DropdownMenuItem<int>(
                                                     value: value,
-                                                    child: Text(
-                                                        value.toString()),
+                                                    child:
+                                                        Text(value.toString()),
                                                   );
                                                 }).toList(),
                                                 onChanged: (newValue) {
                                                   setState(() {
                                                     selectedExpireDateDay =
                                                         newValue;
-                                                    isExpireDaySelected =
-                                                        true;
+                                                    isExpireDaySelected = true;
                                                   });
                                                 },
                                                 icon: Icon(
@@ -1427,8 +1414,7 @@ class _TravellerDetailsView4State extends State<TravellerDetailsView4> {
                                                                           .expiredateMonth
                                                                           .value ==
                                                                       'Month')
-                                                                  ? Colors
-                                                                      .grey
+                                                                  ? Colors.grey
                                                                   : Colors
                                                                       .black),
                                                         )
@@ -1436,15 +1422,13 @@ class _TravellerDetailsView4State extends State<TravellerDetailsView4> {
                                                           selectedExpireDateMonth
                                                               .toString()),
                                                 ),
-                                                value:
-                                                    selectedExpireDateMonth,
+                                                value: selectedExpireDateMonth,
                                                 items: monthListExpireDate
                                                     .map((int value) {
-                                                  return DropdownMenuItem<
-                                                      int>(
+                                                  return DropdownMenuItem<int>(
                                                     value: value,
-                                                    child: Text(
-                                                        value.toString()),
+                                                    child:
+                                                        Text(value.toString()),
                                                   );
                                                 }).toList(),
                                                 onChanged: (newValue) {
@@ -1495,8 +1479,7 @@ class _TravellerDetailsView4State extends State<TravellerDetailsView4> {
                                                                         .value ==
                                                                     'Year')
                                                                 ? Colors.grey
-                                                                : Colors
-                                                                    .black,
+                                                                : Colors.black,
                                                           ),
                                                         )
                                                       : Text(
@@ -1506,11 +1489,10 @@ class _TravellerDetailsView4State extends State<TravellerDetailsView4> {
                                                 value: selectedExpireDateYear,
                                                 items: yearListExpireDate
                                                     .map((int value) {
-                                                  return DropdownMenuItem<
-                                                      int>(
+                                                  return DropdownMenuItem<int>(
                                                     value: value,
-                                                    child: Text(
-                                                        value.toString()),
+                                                    child:
+                                                        Text(value.toString()),
                                                   );
                                                 }).toList(),
                                                 onChanged: (newValue) {
@@ -1573,10 +1555,8 @@ class _TravellerDetailsView4State extends State<TravellerDetailsView4> {
                                                 'Set as traveller',
                                                 style: TextStyle(
                                                     color: Colors.white,
-                                                    fontWeight:
-                                                        FontWeight.bold,
-                                                    fontSize:
-                                                        screenWidth(28)),
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: screenWidth(28)),
                                               ),
                                             ),
                                           )),
@@ -1594,10 +1574,8 @@ class _TravellerDetailsView4State extends State<TravellerDetailsView4> {
                                                 'Cancel',
                                                 style: TextStyle(
                                                     color: Colors.grey,
-                                                    fontWeight:
-                                                        FontWeight.bold,
-                                                    fontSize:
-                                                        screenWidth(28)),
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: screenWidth(28)),
                                               ),
                                             ),
                                           )),
@@ -1611,7 +1589,7 @@ class _TravellerDetailsView4State extends State<TravellerDetailsView4> {
                           ],
                         ),
                       ),
-        
+
                       //extend
                     ],
                   ),

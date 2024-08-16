@@ -7,6 +7,7 @@ import 'package:flutter_ocr_sdk/flutter_ocr_sdk_platform_interface.dart';
 import 'package:flutter_ocr_sdk/mrz_line.dart';
 import 'package:flutter_ocr_sdk/mrz_parser.dart';
 import 'package:flutter_ocr_sdk/mrz_result.dart';
+import 'package:traveling/ui/shared/text_size.dart';
 import 'package:traveling/ui/views/traveller_side_views/flight_travellers_view_details/scan_traveller_id/camera_view.dart';
 import 'package:traveling/ui/views/traveller_side_views/flight_travellers_view_details/scan_traveller_id/global.dart';
 import 'package:traveling/ui/views/traveller_side_views/flight_travellers_view_details/scan_traveller_id/utils.dart';
@@ -110,21 +111,9 @@ class _ScanIdState extends State<ScanId> {
 
   @override
   Widget build(BuildContext context) {
-    final title = Row(
-      children: [
-        Container(
-            padding: const EdgeInsets.only(
-              top: 30,
-              left: 33,
-            ),
-            child: const Text('MRZ SCANNER',
-                style: TextStyle(
-                  fontSize: 36,
-                  color: Colors.white,
-                )))
-      ],
-    );
-    final info = Padding(
+    Size size = MediaQuery.of(context).size;
+
+    const info = Padding(
       padding: EdgeInsets.all(16.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -132,7 +121,7 @@ class _ScanIdState extends State<ScanId> {
           Text(
             'Use your passport or GCC National ID to quickly and securely auto-fill traveller /n details.',
             style: TextStyle(
-              fontSize: 18,
+              fontSize: TextSize.header1,
               fontWeight: FontWeight.bold,
             ),
             textAlign: TextAlign.center,
@@ -154,22 +143,6 @@ class _ScanIdState extends State<ScanId> {
           ),
         ],
       ),
-    );
-
-    final description = Row(
-      children: [
-        Container(
-            padding: const EdgeInsets.only(top: 6, left: 33, bottom: 44),
-            child: const SizedBox(
-              width: 271,
-              child: Text(
-                  'Recognizes MRZ code & extracts data from 1D-codes, passports, and visas.',
-                  style: TextStyle(
-                    fontSize: 18,
-                    color: Colors.white,
-                  )),
-            ))
-      ],
     );
 
     final buttons = Column(
@@ -208,32 +181,24 @@ class _ScanIdState extends State<ScanId> {
               }
             },
             child: Container(
-              width: 385,
-              height: 50,
+              width: size.width - 30,
+              height: 40,
               decoration: BoxDecoration(
                 color: Colors.blue,
                 borderRadius: BorderRadius.circular(20),
               ),
-              child: Column(
+              child: const Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      // Image.asset(
-                      //   "images/icon-camera.png",
-                      //   width: 40,
-                      //   height: 30,
-                      // ),
                       SizedBox(
                         width: 3,
                       ),
                       Text(
                         'Camera Scan',
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16),
+                        style: TextStyle(color: Colors.white, fontSize: 16),
                       ),
                     ],
                   ),
@@ -241,15 +206,15 @@ class _ScanIdState extends State<ScanId> {
               ),
             )),
         SizedBox(
-          height: 20,
+          height: 10,
         ),
         GestureDetector(
             onTap: () {
               scanImage();
             },
             child: Container(
-              width: 385,
-              height: 50,
+              width: size.width - 30,
+              height: 40,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(20),
                 border: Border.all(
@@ -269,10 +234,7 @@ class _ScanIdState extends State<ScanId> {
                   ),
                   Text(
                     'Select a photo',
-                    style: TextStyle(
-                        color: Colors.blue,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16),
+                    style: TextStyle(color: Colors.blue, fontSize: 16),
                   ),
                 ],
               ),
@@ -284,12 +246,11 @@ class _ScanIdState extends State<ScanId> {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          title,
           SizedBox(
             height: 240,
           ),
           info,
-          description,
+
           // SizedBox(height: 220),
           buttons,
           const SizedBox(
@@ -350,7 +311,7 @@ class BulletPoint extends StatelessWidget {
             size: 24,
             color: const Color.fromARGB(255, 149, 148, 148),
           ),
-          SizedBox(width: 10),
+          const SizedBox(width: 10),
           Expanded(
             child: Text(
               text,

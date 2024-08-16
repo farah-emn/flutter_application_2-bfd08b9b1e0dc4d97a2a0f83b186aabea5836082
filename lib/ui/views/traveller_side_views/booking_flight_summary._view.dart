@@ -32,7 +32,8 @@ class BookingFlightSummaryView extends StatefulWidget {
       {required this.flightdata, this.key, this.type, this.ReturnFlightData});
 
   @override
-  State<BookingFlightSummaryView> createState() => _BookingFlightSummaryViewState();
+  State<BookingFlightSummaryView> createState() =>
+      _BookingFlightSummaryViewState();
 }
 
 class _BookingFlightSummaryViewState extends State<BookingFlightSummaryView> {
@@ -166,7 +167,7 @@ class _BookingFlightSummaryViewState extends State<BookingFlightSummaryView> {
     }
 
     return Scaffold(
-        backgroundColor: AppColors.LightBlueColor,
+        backgroundColor: AppColors.Blue,
         body: Stack(
           children: <Widget>[
             Padding(
