@@ -52,82 +52,80 @@ class _HotelBookingViewState extends State<HotelBookingView>
       child: Scaffold(
           resizeToAvoidBottomInset: false,
           backgroundColor: AppColors.lightPurple,
-          body: SafeArea(
-            child: Stack(children: [
-              const Padding(
-                padding: EdgeInsets.only(left: 15, right: 15, top: 10),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      'Bookings',
-                      style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.w700,
-                          color: AppColors.purple),
-                    ),
-                  ],
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(
-                  top: 50,
-                ),
-                child: Container(
-                  decoration: const BoxDecoration(
-                    image: DecorationImage(
-                        image: AssetImage('assets/image/png/background1.png'),
-                        fit: BoxFit.fill),
-                  ),
-                ),
-              ),
-              Stack(
+          body: Stack(children: [
+            const Padding(
+              padding: EdgeInsets.only(left: 15, right: 15, top: 35),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 15),
-                    child: Container(
-                      margin: const EdgeInsets.only(top: 100),
-                      width: size.width - 30,
-                      height: 50,
-                      decoration: const BoxDecoration(
-                        color: AppColors.backgroundgrayColor,
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(15),
-                        ),
-                      ),
-                      child: TabBar(
-                        controller: _tabController,
-                        indicatorSize: TabBarIndicatorSize.tab,
-                        dividerColor: AppColors.LightGrayColor,
-                        indicatorColor: AppColors.purple,
-                        labelColor: AppColors.purple,
-                        unselectedLabelColor: AppColors.lightPurple,
-                        tabs: const [
-                          Tab(
-                            text: 'Upcoming',
-                          ),
-                          Tab(text: 'Finished'),
-                        ],
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding:
-                        const EdgeInsets.only(top: 170, left: 15, right: 15),
-                    child: Expanded(
-                      child: TabBarView(
-                        controller: _tabController,
-                        children: [
-                          upcoming(context),
-                          finished(context),
-                        ],
-                      ),
+                  Text(
+                    'Bookings',
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w700,
+                      color: Colors.white,
                     ),
                   ),
                 ],
               ),
-            ]),
-          )),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(
+                top: 70,
+              ),
+              child: Container(
+                decoration: const BoxDecoration(
+                  image: DecorationImage(
+                      image: AssetImage('assets/image/png/background1.png'),
+                      fit: BoxFit.fill),
+                ),
+              ),
+            ),
+            Stack(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 15),
+                  child: Container(
+                    margin: const EdgeInsets.only(top: 100),
+                    width: size.width - 30,
+                    height: 50,
+                    decoration: const BoxDecoration(
+                      color: AppColors.backgroundgrayColor,
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(15),
+                      ),
+                    ),
+                    child: TabBar(
+                      controller: _tabController,
+                      indicatorSize: TabBarIndicatorSize.tab,
+                      dividerColor: AppColors.LightGrayColor,
+                      indicatorColor: AppColors.purple,
+                      labelColor: AppColors.purple,
+                      unselectedLabelColor: AppColors.lightPurple,
+                      tabs: const [
+                        Tab(
+                          text: 'Upcoming',
+                        ),
+                        Tab(text: 'Finished'),
+                      ],
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 170, left: 15, right: 15),
+                  child: Expanded(
+                    child: TabBarView(
+                      controller: _tabController,
+                      children: [
+                        upcoming(context),
+                        finished(context),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ])),
     );
   }
 
@@ -135,9 +133,6 @@ class _HotelBookingViewState extends State<HotelBookingView>
     Size size = MediaQuery.of(context).size;
     return Column(
       children: [
-        const SizedBox(
-          height: 20,
-        ),
         Expanded(
           child: ListView.builder(
             shrinkWrap: true,

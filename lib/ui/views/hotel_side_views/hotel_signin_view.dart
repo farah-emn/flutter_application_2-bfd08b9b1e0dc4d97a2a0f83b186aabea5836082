@@ -182,7 +182,17 @@ class _HotelSignInViewState extends State<HotelSignInView> {
                       child: TextFormField(
                         controller: _emailController,
                         keyboardType: TextInputType.emailAddress,
-                        decoration: textFielDecoratiom.copyWith(),
+                        decoration: textFielDecoratiom.copyWith(
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(18)),
+                            borderSide:
+                                BorderSide(color: AppColors.purple, width: 1.5),
+                          ),
+                          prefixIcon: const Icon(
+                            Icons.email_rounded,
+                            color: AppColors.purple,
+                          ),
+                        ),
                         onChanged: (value) {
                           email = value;
                         },
@@ -219,7 +229,17 @@ class _HotelSignInViewState extends State<HotelSignInView> {
                       child: TextFormField(
                         controller: _passwordController,
                         keyboardType: TextInputType.visiblePassword,
-                        decoration: textFielDecoratiom.copyWith(),
+                         decoration: textFielDecoratiom.copyWith(
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(18)),
+                            borderSide:
+                                BorderSide(color: AppColors.purple, width: 1.5),
+                          ),
+                          prefixIcon: const Icon(
+                            Icons.lock,
+                            color: AppColors.purple,
+                          ),
+                        ),
                         onChanged: (value) {
                           password = value;
                         },
