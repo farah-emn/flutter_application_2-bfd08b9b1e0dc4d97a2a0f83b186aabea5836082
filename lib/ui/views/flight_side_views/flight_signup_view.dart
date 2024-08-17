@@ -150,168 +150,173 @@ class _FlightSignUpViewState extends State<FlightSignUpView> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 15),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const SizedBox(
-                      height: 350,
-                    ),
-                    const Text(
-                      'Sign up ',
-                      style: TextStyle(
-                          fontSize: TextSize.header1,
-                          fontWeight: FontWeight.w700),
-                    ),
-                    const SizedBox(
-                      height: 35,
-                    ),
-                    const Row(
-                      children: [
-                        Text(
-                          'Email',
-                          style: TextStyle(
-                              fontSize: 13,
-                              color: AppColors.grayText,
-                              fontWeight: FontWeight.w500),
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 45,
-                      child: TextFormField(
-                        keyboardType: TextInputType.emailAddress,
-                        controller: _emailController,
-                        decoration: textFielDecoratiom.copyWith(
-                          prefixIcon: Icon(Icons.email_rounded),
-                        ),
-                        onChanged: (value) {
-                          email = value;
-                        },
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    const Row(
-                      children: [
-                        Text(
-                          'Password',
-                          style: TextStyle(
-                              fontSize: 13,
-                              color: AppColors.grayText,
-                              fontWeight: FontWeight.w500),
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 45,
-                      child: TextFormField(
-                        keyboardType: TextInputType.visiblePassword,
-                        decoration: textFielDecoratiom.copyWith(
-                          prefixIcon: Icon(Icons.lock_rounded),
-                        ),
-                        controller: _passwordController,
-                        onChanged: (value) {
-                          password = value;
-                        },
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    const Row(
-                      children: [
-                      
-                        Text(
-                          'Conferm Password',
-                          style: TextStyle(
-                              fontSize: 13,
-                              color: AppColors.grayText,
-                              fontWeight: FontWeight.w500),
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 45,
-                      child: TextFormField(
-                        controller: _confirmPasswordController,
-                        decoration: textFielDecoratiom.copyWith(
-                          prefixIcon: Icon(Icons.lock_rounded),
-                        ),
-                        onChanged: (value) {
-                          confermPassword = value;
-                        },
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 15,
-                    ),
-                    Text(
-                      errorText,
-                      style: const TextStyle(color: Colors.red),
-                    ),
-                    const SizedBox(
-                      height: 15,
-                    ),
-                    InkWell(
-                        onTap: () {
-                          Get.to(
-                            () => const FlightHome(),
-                          );
-                        },
-                        child: CustomButton(
-                          backgroundColor: AppColors.darkBlue,
-                          text: 'Sign up',
-                          textColor: AppColors.backgroundgrayColor,
-                          widthPercent: size.width,
-                        )),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    // const Center(
-                    //   child: CustomTextGray(
-                    //     mainText: 'or sign in with ',
-                    //   ),
-                    // ),
-                    // const SizedBox(
-                    //   height: 20,
-                    // ),
-                    // const Row(
-                    //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    //   children: [
-                    //     CustomImage(imagename: 'facebook_icon'),
-                    //     CustomImage(imagename: 'google_icon'),
-                    //     CustomImage(imagename: 'twitter_icon'),
-                    //   ],
-                    // ),
-                    // SizedBox(
-                    //   height: screenHeight(20),
-                    // ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                padding: const EdgeInsets.only(top: 350),
+                child: SingleChildScrollView(
+                  reverse: true,
+                  child: Padding(
+                    padding: EdgeInsets.only(
+                        left: 15,
+                        right: 15,
+                        bottom: MediaQuery.of(context).viewInsets.bottom),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         const Text(
-                          'You already have account?  ',
+                          'Sign up ',
                           style: TextStyle(
-                            color: AppColors.grayText,
+                              fontSize: TextSize.header1,
+                              fontWeight: FontWeight.w700),
+                        ),
+                        const SizedBox(
+                          height: 35,
+                        ),
+                        const Row(
+                          children: [
+                            Text(
+                              'Email',
+                              style: TextStyle(
+                                  fontSize: 13,
+                                  color: AppColors.grayText,
+                                  fontWeight: FontWeight.w500),
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 45,
+                          child: TextFormField(
+                            keyboardType: TextInputType.emailAddress,
+                            controller: _emailController,
+                            decoration: textFielDecoratiom.copyWith(
+                              prefixIcon: Icon(Icons.email_rounded),
+                            ),
+                            onChanged: (value) {
+                              email = value;
+                            },
                           ),
                         ),
-                        InkWell(
-                          onTap: () {
-                            Get.offAll(const FlightSignInView());
-                          },
-                          child: const Text(
-                            'Sign in',
-                            style: TextStyle(
-                              color: AppColors.darkBlue,
-                              fontWeight: FontWeight.bold,
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        const Row(
+                          children: [
+                            Text(
+                              'Password',
+                              style: TextStyle(
+                                  fontSize: 13,
+                                  color: AppColors.grayText,
+                                  fontWeight: FontWeight.w500),
                             ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 45,
+                          child: TextFormField(
+                            keyboardType: TextInputType.visiblePassword,
+                            decoration: textFielDecoratiom.copyWith(
+                              prefixIcon: Icon(Icons.lock_rounded),
+                            ),
+                            controller: _passwordController,
+                            onChanged: (value) {
+                              password = value;
+                            },
                           ),
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        const Row(
+                          children: [
+                            Text(
+                              'Conferm Password',
+                              style: TextStyle(
+                                  fontSize: 13,
+                                  color: AppColors.grayText,
+                                  fontWeight: FontWeight.w500),
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 45,
+                          child: TextFormField(
+                            controller: _confirmPasswordController,
+                            decoration: textFielDecoratiom.copyWith(
+                              prefixIcon: Icon(Icons.lock_rounded),
+                            ),
+                            onChanged: (value) {
+                              confermPassword = value;
+                            },
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 15,
+                        ),
+                        Text(
+                          errorText,
+                          style: const TextStyle(color: Colors.red),
+                        ),
+                        const SizedBox(
+                          height: 15,
+                        ),
+                        InkWell(
+                            onTap: () {
+                              Get.to(
+                                () => const FlightHome(),
+                              );
+                            },
+                            child: CustomButton(
+                              backgroundColor: AppColors.darkBlue,
+                              text: 'Sign up',
+                              textColor: AppColors.backgroundgrayColor,
+                              widthPercent: size.width,
+                            )),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        // const Center(
+                        //   child: CustomTextGray(
+                        //     mainText: 'or sign in with ',
+                        //   ),
+                        // ),
+                        // const SizedBox(
+                        //   height: 20,
+                        // ),
+                        // const Row(
+                        //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        //   children: [
+                        //     CustomImage(imagename: 'facebook_icon'),
+                        //     CustomImage(imagename: 'google_icon'),
+                        //     CustomImage(imagename: 'twitter_icon'),
+                        //   ],
+                        // ),
+                        // SizedBox(
+                        //   height: screenHeight(20),
+                        // ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const Text(
+                              'You already have account?  ',
+                              style: TextStyle(
+                                color: AppColors.grayText,
+                              ),
+                            ),
+                            InkWell(
+                              onTap: () {
+                                Get.offAll(const FlightSignInView());
+                              },
+                              child: const Text(
+                                'Sign in',
+                                style: TextStyle(
+                                  color: AppColors.darkBlue,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            )
+                          ],
                         )
                       ],
-                    )
-                  ],
+                    ),
+                  ),
                 ),
               ),
             ],

@@ -145,7 +145,7 @@ class _TravellerDetailsView3State extends State<TravellerDetailsView3> {
                           fillColor: Colors.white,
                           prefixIcon: const Icon(
                             Icons.credit_card_rounded,
-                            color: AppColors.gold,
+                            color: AppColors.darkBlue,
                           ),
                         ),
                       ),
@@ -185,7 +185,7 @@ class _TravellerDetailsView3State extends State<TravellerDetailsView3> {
                           fillColor: Colors.white,
                           prefixIcon: const Icon(
                             Icons.date_range,
-                            color: AppColors.gold,
+                            color: AppColors.darkBlue,
                           ),
                         ),
                       ),
@@ -234,7 +234,7 @@ class _TravellerDetailsView3State extends State<TravellerDetailsView3> {
                                   fillColor: Colors.white,
                                   prefixIcon: const Icon(
                                     Icons.person_2_rounded,
-                                    color: AppColors.gold,
+                                    color: AppColors.darkBlue,
                                   ),
                                 ),
                               ),
@@ -280,7 +280,7 @@ class _TravellerDetailsView3State extends State<TravellerDetailsView3> {
                                   fillColor: Colors.white,
                                   prefixIcon: const Icon(
                                     Icons.person_2_rounded,
-                                    color: AppColors.gold,
+                                    color: AppColors.darkBlue,
                                   ),
                                 ),
                               ),
@@ -328,7 +328,7 @@ class _TravellerDetailsView3State extends State<TravellerDetailsView3> {
                                       fillColor: Colors.white,
                                       prefixIcon: const Icon(
                                         Icons.person_2_rounded,
-                                        color: AppColors.gold,
+                                        color: AppColors.darkBlue,
                                       ),
                                     ),
                                   ),
@@ -383,7 +383,6 @@ class _TravellerDetailsView3State extends State<TravellerDetailsView3> {
                     SizedBox(
                       height: 6,
                     ),
-                   
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
@@ -395,7 +394,6 @@ class _TravellerDetailsView3State extends State<TravellerDetailsView3> {
                         ),
                       ],
                     ),
-                    
                   ],
                 ),
               ),

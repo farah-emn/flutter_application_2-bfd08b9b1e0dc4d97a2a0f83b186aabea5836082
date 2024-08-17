@@ -336,7 +336,7 @@ class _TravellerBaggageState extends State<TravellerBaggage> {
                                                           Icon(
                                                             Icons.add,
                                                             color: AppColors
-                                                                .mainColorBlue,
+                                                                .Blue,
                                                           ),
                                                           SizedBox(
                                                             width: 5,
@@ -345,7 +345,7 @@ class _TravellerBaggageState extends State<TravellerBaggage> {
                                                             'Add extra baggage',
                                                             style: TextStyle(
                                                                 color: AppColors
-                                                                    .mainColorBlue),
+                                                                    .Blue),
                                                           ),
                                                         ],
                                                       )
@@ -354,7 +354,7 @@ class _TravellerBaggageState extends State<TravellerBaggage> {
                                                           Icon(
                                                             Icons.add,
                                                             color: AppColors
-                                                                .mainColorBlue,
+                                                                .Blue,
                                                           ),
                                                           SizedBox(
                                                             width: 5,
@@ -363,7 +363,7 @@ class _TravellerBaggageState extends State<TravellerBaggage> {
                                                             'Add extra baggage',
                                                             style: TextStyle(
                                                                 color: AppColors
-                                                                    .mainColorBlue),
+                                                                    .Blue),
                                                           ),
                                                         ],
                                                       )))

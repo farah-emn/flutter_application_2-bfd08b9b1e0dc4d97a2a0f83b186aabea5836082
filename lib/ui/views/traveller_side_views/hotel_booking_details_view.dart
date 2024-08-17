@@ -26,14 +26,19 @@ class _HotelBookingDetailsViewState extends State<HotelBookingDetailsView> {
       body: SafeArea(
         child: Stack(
           children: [
-            const Padding(
+             Padding(
               padding: EdgeInsets.only(left: 15, right: 15, top: 10),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Icon(
-                    Icons.arrow_back,
-                    color: AppColors.darkBlue,
+                  InkWell(
+                    onTap: () {
+                      Get.back();
+                    },
+                    child: Icon(
+                      Icons.arrow_back,
+                      color: AppColors.darkBlue,
+                    ),
                   ),
                   Text(
                     'Booking Details',
