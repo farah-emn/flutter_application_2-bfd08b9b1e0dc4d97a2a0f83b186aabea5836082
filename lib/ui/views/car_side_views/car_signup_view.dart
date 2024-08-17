@@ -9,7 +9,6 @@ import 'package:traveling/ui/shared/custom_widgets/custom_button.dart';
 import 'package:traveling/ui/shared/text_size.dart';
 import 'package:traveling/ui/views/car_side_views/car_signin_view.dart';
 import 'package:traveling/ui/views/car_side_views/car_signup_image_view.dart';
-import 'package:traveling/ui/views/hotel_side_views/hotel_signup_image_view.dart';
 import '../../shared/custom_widgets/custom_textfield2.dart';
 
 class CarSignUpView extends StatefulWidget {
@@ -31,11 +30,14 @@ class _CarSignUpViewState extends State<CarSignUpView> {
   late String errorTextPassword = '';
   late String errorTextCompanyName = '';
   late String errorTextConfirmPassword = '';
+
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
   final _CarNameController = TextEditingController();
   final _mobileNumber = TextEditingController();
+  final TextEditingController _controller = TextEditingController();
+  String _selectedCountryCode = '+963'; // Default
   @override
   void initState() {
     final databaseReference = FirebaseDatabase.instance.reference();
@@ -51,6 +53,8 @@ class _CarSignUpViewState extends State<CarSignUpView> {
     _confirmPasswordController.dispose();
     super.dispose();
   }
+
+  late String errorMobilenumber = '';
 
   @override
   Widget build(BuildContext context) {
@@ -269,7 +273,7 @@ class _CarSignUpViewState extends State<CarSignUpView> {
                     const Row(
                       children: [
                         Text(
-                          'Mobile number',
+                          'Mobile Number',
                           style: TextStyle(
                               fontSize: 13,
                               color: AppColors.grayText,
@@ -277,30 +281,69 @@ class _CarSignUpViewState extends State<CarSignUpView> {
                         ),
                       ],
                     ),
-                    SizedBox(
-                      height: 40,
-                      child: TextFormField(
-                        keyboardType: TextInputType.visiblePassword,
-                        decoration: textFielDecoratiom.copyWith(
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(18)),
-                            borderSide: BorderSide(
-                                color: AppColors.darkGray, width: 1.5),
-                          ),
-                          prefixIcon: const Icon(
-                            Icons.phone,
-                            color: AppColors.darkGray,
-                          ),
+                    Row(
+                      children: [
+                        DropdownButton<String>(
+                          value: _selectedCountryCode,
+                          items: <String>[
+                            '+1',
+                            '+91',
+                            '+44',
+                            '+81',
+                            '+61',
+                            '+966',
+                            '+965',
+                            '+963'
+                          ].map((String value) {
+                            return DropdownMenuItem<String>(
+                              value: value,
+                              child: Text(value),
+                            );
+                          }).toList(),
+                          onChanged: (String? newValue) {
+                            setState(() {
+                              _selectedCountryCode = newValue!;
+                            });
+                          },
                         ),
-                        controller: _mobileNumber,
-                        onChanged: (value) {
-                          password = value;
-                        },
-                      ),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Expanded(
+                            child: SizedBox(
+                          height: 40,
+                          child: TextField(
+                            decoration: textFielDecoratiom.copyWith(
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(18)),
+                                borderSide: BorderSide(
+                                    color: AppColors.purple, width: 1.5),
+                              ),
+                              prefixIcon: const Icon(
+                                Icons.lock,
+                                color: Colors.transparent,
+                              ),
+                            ),
+                            controller: _controller,
+                            keyboardType: TextInputType.phone,
+                          ),
+                        )),
+                      ],
                     ),
-                    SizedBox(
-                      height: 20,
-                    ),
+                    (errorMobilenumber != '')
+                        ? Padding(
+                            padding: EdgeInsetsDirectional.only(
+                                start: 6, top: 5, bottom: 15),
+                            child: Text(
+                              errorMobilenumber,
+                              style: TextStyle(fontSize: 11, color: Colors.red),
+                            ),
+                          )
+                        : SizedBox(
+                            height: 20,
+                          ),
+
                     const Row(
                       children: [
                         Text(
@@ -388,117 +431,74 @@ class _CarSignUpViewState extends State<CarSignUpView> {
                             ),
                           )
                         : SizedBox(
-                            height: 20,
+                            height: 8,
                           ),
 
                     Text(
                       errorText,
                       style: const TextStyle(color: Colors.red),
                     ),
-                    // const SizedBox(
-                    //   height: 15,
-                    // ),
+                    const SizedBox(
+                      height: 4,
+                    ),
                     InkWell(
                         onTap: () async {
-                          // Get.offAll(HotelSignUpImageView());
-
                           try {
-                            if (_emailController.value.text.isEmpty ||
-                                !_emailController.value.text.isEmail) {
-                              setState(() {
-                                errorTextEmail = "Please enter valid email";
-                              });
-                            } else {
-                              setState(() {
-                                errorTextEmail = '';
-                              });
-                            }
-                            if (_passwordController.value.text.isEmpty) {
-                              setState(() {
-                                errorTextPassword =
-                                    "Please enter a valid password";
-                              });
-                            } else if (_passwordController.value.text.length <
-                                    7 &&
-                                _passwordController.value.text.isNotEmpty) {
-                              setState(() {
-                                errorTextPassword =
-                                    "Password can't be less than 6 charecters";
-                              });
-                            } else {
-                              setState(() {
-                                errorTextPassword = '';
-                              });
-                            }
+                            setState(() {
+                              errorText = "";
+                              errorTextEmail = "";
+                              errorTextPassword = "";
+                              errorTextConfirmPassword = "";
+                              errorTextCompanyName = "";
+                              errorMobilenumber = "";
+                              if (_emailController.value.text.isEmpty &&
+                                  _CarNameController.value.text.isEmpty &&
+                                  _passwordController.value.text.isEmpty &&
+                                  _controller.text.isEmpty) {
+                                errorText = "Please enter all fields";
+                              } else {
+                                if (_emailController.value.text.isEmpty ||
+                                    !_emailController.value.text
+                                        .contains('@')) {
+                                  errorTextEmail = "Please enter a valid email";
+                                }
+                                if (_controller.value.text.length < 9) {
+                                  errorMobilenumber =
+                                      "Please enter a valid Mobile number";
+                                }
+                                if (_passwordController.value.text.isEmpty) {
+                                  errorTextPassword =
+                                      "Please enter a valid password";
+                                } else if (_passwordController
+                                        .value.text.length <
+                                    7) {
+                                  errorTextPassword =
+                                      "Password can't be less than 6 characters";
+                                }
 
-                            if (_passwordController.value.text !=
-                                _confirmPasswordController.value.text) {
-                              setState(() {
-                                errorTextConfirmPassword =
-                                    "Password and verification do not match";
-                              });
-                            } else {
-                              errorTextConfirmPassword = '';
-                            }
-                            if (_CarNameController.value.text.isEmpty) {
-                              setState(() {
-                                errorTextCompanyName =
-                                    "Please enter a valid Hotel name";
-                              });
-                            } else {
-                              errorTextCompanyName = '';
-                            }
+                                if (_passwordController.value.text !=
+                                    _confirmPasswordController.value.text) {
+                                  errorTextConfirmPassword =
+                                      "Password and verification do not match";
+                                }
+
+                                if (_CarNameController.value.text.isEmpty) {
+                                  errorTextCompanyName =
+                                      "Please enter a valid Hotel name";
+                                }
+                              }
+                            });
                             if (errorTextAirlineCode.isEmpty &&
                                 errorTextEmail.isEmpty &&
                                 errorTextPassword.isEmpty &&
                                 errorTextConfirmPassword.isEmpty) {
                               Get.offAll(CarSignUpImageView(
-                                email: email,
-                                password: password,
-                                CarRentalCompany: _CarNameController.text,
-                                mobileNumber: _mobileNumber.text,
-                              ));
+                                  email: email,
+                                  password: password,
+                                  mobileNumber:
+                                      '${_selectedCountryCode} ${_controller.text}',
+                                  CarRentalCompany: _CarNameController.text));
                             }
-                            //   try {
-                            //     final newAirelineCompany =
-                            //         await auth.createUserWithEmailAndPassword(
-                            //             email: email, password: password);
-                            //     User? AirelineCompany = auth.currentUser;
-
-                            //     if (AirelineCompany != null) {
-                            //       Get.offAll(HotelSignUpImageView());
-                            //       ref
-                            //           .child(AirelineCompany.uid.toString())
-                            //           .set({
-                            //         'email': email,
-                            //         'password': password,
-                            //         'mobile_number': '',
-                            //         'HotelName': _CarNameController.text,
-                            //         "location": ''
-                            //       });
-                            //     }
-                            //   } catch (e) {
-                            //     if (e is FirebaseAuthException) {
-                            //       switch (e.code) {
-                            //         case 'weak-password':
-                            //           setState(() {
-                            //             errorText = 'Password is too weak.';
-                            //           });
-                            //           break;
-                            //         case 'email-already-in-use':
-                            //           setState(() {
-                            //             errorText =
-                            //                 'Email is already registered.';
-                            //           });
-
-                            //           break;
-                            //         // Add more cases as needed
-                            //         default:
-                            //         // Use the default error message
-                            //       }
-                            //     }
-                            //   }
-                            // }
                           } catch (e) {}
                         },
                         child: CustomButton(

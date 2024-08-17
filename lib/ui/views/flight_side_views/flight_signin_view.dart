@@ -1,19 +1,22 @@
+// ignore_for_file: prefer_const_constructors, unnecessary_null_comparison
+
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:traveling/ui/shared/colors.dart';
 import 'package:traveling/ui/shared/custom_widgets/custom_button.dart';
 import 'package:traveling/ui/shared/custom_widgets/custom_image.dart';
 import 'package:traveling/ui/shared/custom_widgets/custom_textfiled.dart';
 import 'package:traveling/ui/shared/custom_widgets/custom_textgray.dart';
-import 'package:traveling/ui/shared/text_size.dart';
 import 'package:traveling/ui/shared/utils.dart';
+import 'package:traveling/ui/views/flight_side_views/flight_home_screen.dart';
 import 'package:traveling/ui/views/flight_side_views/flight_signup_view.dart';
 import 'package:traveling/ui/views/traveller_side_views/home_screen.dart';
 import 'package:traveling/ui/views/traveller_side_views/home_view.dart';
 import 'package:traveling/ui/views/traveller_side_views/signup_view.dart';
 import '../../shared/custom_widgets/custom_textfield2.dart';
+import '../../shared/text_size.dart';
 
 class FlightSignInView extends StatefulWidget {
   const FlightSignInView({super.key});
@@ -25,21 +28,38 @@ class FlightSignInView extends StatefulWidget {
 class _FlightSignInViewState extends State<FlightSignInView> {
   late String email;
   late String password;
+  late String confermPassword;
+  late String AirelineCode;
+  late String CompanyName;
   late String errorText = '';
+  late String errorTextEmail = '';
+  late String errorTextAirlineCode = '';
+  late String errorTextPassword = '';
+  late String errorTextCompanyName = '';
+  late String errorTextConfirmPassword = '';
+  final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
+  final _AirelineCodeController = TextEditingController();
   final _passwordController = TextEditingController();
+  final _confirmPasswordController = TextEditingController();
+  final _CompanyNameController = TextEditingController();
+
   @override
   void dispose() {
     _emailController.dispose();
     _passwordController.dispose();
+    _AirelineCodeController.dispose();
+    _CompanyNameController.dispose();
+    _confirmPasswordController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    ;
     final _auth = FirebaseAuth.instance;
     final size = MediaQuery.of(context).size;
+    final DatabaseReference ref =
+        FirebaseDatabase.instance.ref("Airline_company");
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: AppColors.StatusBarColor,
@@ -224,29 +244,59 @@ class _FlightSignInViewState extends State<FlightSignInView> {
                       height: 15,
                     ),
                     InkWell(
-                      onTap: () async {
-                        try {
-                          if (_emailController.value.text.isEmpty ||
-                              _passwordController.value.text.isEmpty) {
-                            setState(() {
-                              errorText = "Please enter all fields";
-                            });
-                          } else if (!_emailController.value.text.isEmail) {
-                            setState(() {
-                              errorText = "Please enter valid email";
-                            });
-                          } else if (password.length < 7) {
-                            setState(() {
-                              errorText =
-                                  "Password can't be less than 6 charecters";
-                            });
-                          } else {
+                        onTap: () async {
+                          try {
+                            if (_emailController.value.text.isEmpty ||
+                                !_emailController.value.text.isEmail) {
+                              setState(() {
+                                errorTextEmail = "Please enter valid email";
+                              });
+                            } else {
+                              setState(() {
+                                errorTextEmail = '';
+                              });
+                            }
+                            if (_passwordController.value.text.isEmpty) {
+                              setState(() {
+                                errorTextPassword =
+                                    "Please enter a valid password";
+                              });
+                            } else if (_passwordController.value.text.length <
+                                    7 &&
+                                _passwordController.value.text.isNotEmpty) {
+                              setState(() {
+                                errorTextPassword =
+                                    "Password can't be less than 6 charecters";
+                              });
+                            } else {
+                              setState(() {
+                                errorTextPassword = '';
+                              });
+                            }
+                            if (_passwordController.value.text !=
+                                _confirmPasswordController.value.text) {
+                              setState(() {
+                                errorTextConfirmPassword =
+                                    "Password and verification do not match";
+                              });
+                            } else {
+                              errorTextConfirmPassword = '';
+                            }
+                            if (_CompanyNameController.value.text.isEmpty) {
+                              setState(() {
+                                errorTextCompanyName =
+                                    "Please enter a valid Company name";
+                              });
+                            } else {
+                              errorTextCompanyName = '';
+                            }
+
                             try {
                               final user =
                                   await _auth.signInWithEmailAndPassword(
                                       email: email, password: password);
                               if (user != null) {
-                                Get.offAll(Home());
+                                Get.offAll(FlightHome());
                               }
                             } catch (e) {
                               if (e is FirebaseAuthException) {
@@ -267,47 +317,23 @@ class _FlightSignInViewState extends State<FlightSignInView> {
                                   });
                                 }
                               }
-                              print(e);
                             }
-                          }
-                          ;
-                        } catch (e) {}
-                      },
-                      child: CustomButton(
-                        backgroundColor: AppColors.darkBlue,
-                        text: 'Sign in',
-                        textColor: AppColors.backgroundgrayColor,
-                        widthPercent: size.width,
-                      ),
-                    ),
+                          } catch (e) {}
+                        },
+                        child: CustomButton(
+                          text: 'Sign up',
+                          textColor: AppColors.backgroundgrayColor,
+                          widthPercent: size.width,
+                          backgroundColor: AppColors.mainColorBlue,
+                        )),
                     const SizedBox(
                       height: 20,
                     ),
-                    // const Center(
-                    //   child: CustomTextGray(
-                    //     mainText: 'or sign in with ',
-                    //   ),
-                    // ),
-                    // SizedBox(
-                    //   height: screenHeight(20),
-                    // ),
-                    // const Row(
-                    //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    //   children: [
-                    //     CustomImage(imagename: 'facebook_icon'),
-                    //     CustomImage(imagename: 'google_icon'),
-                    //     CustomImage(imagename: 'twitter_icon'),
-                    //   ],
-                    // ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        const Text(
-                          'You already have account?  ',
-                          style: TextStyle(
-                            color: AppColors.grayText,
-                          ),
-                        ),
+                        const CustomTextGray(
+                            mainText: 'You Do not have account? '),
                         InkWell(
                           onTap: () {
                             Get.offAll(const FlightSignUpView());
@@ -315,7 +341,7 @@ class _FlightSignInViewState extends State<FlightSignInView> {
                           child: const Text(
                             'Sign up',
                             style: TextStyle(
-                              color: AppColors.darkBlue,
+                              color: AppColors.mainColorBlue,
                               fontWeight: FontWeight.bold,
                             ),
                           ),

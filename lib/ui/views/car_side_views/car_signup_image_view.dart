@@ -26,12 +26,13 @@ class CarSignUpImageView extends StatefulWidget {
   String password;
   String CarRentalCompany;
   String mobileNumber;
-  CarSignUpImageView(
-      {super.key,
-      required this.email,
-      required this.password,
-      required this.CarRentalCompany,
-      required this.mobileNumber});
+  CarSignUpImageView({
+    super.key,
+    required this.email,
+    required this.password,
+    required this.CarRentalCompany,
+    required this.mobileNumber,
+  });
 
   @override
   _CarSignUpImageViewState createState() => _CarSignUpImageViewState();
@@ -258,11 +259,8 @@ class _CarSignUpImageViewState extends State<CarSignUpImageView> {
                             source: ImageSource.gallery);
                         setState(() {
                           _image = photo;
+                          Navigator.pop(context);
                         });
-
-                        if (photo != null) {
-                          _uploadImageToFirebase(photo!);
-                        }
                       },
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.start,
@@ -298,6 +296,7 @@ class _CarSignUpImageViewState extends State<CarSignUpImageView> {
                               source: ImageSource.camera);
                           setState(() {
                             _image = photo;
+                            Navigator.pop(context);
                           });
                         } else {
                           print("Camera permission is not granted");
@@ -661,24 +660,24 @@ class _CarSignUpImageViewState extends State<CarSignUpImageView> {
                       children: <Widget>[
                         SizedBox(height: 20),
                         InkWell(
-                          onTap: () {
-                            _uploadImageToFirebase(photo!);
-                          },
                           // onTap: () {
-                          //   if (photo != null) {
-                          //     _uploadImageToFirebase(photo!);
-                          //   } else {
-                          //     Fluttertoast.showToast(
-                          //         msg: "Please choose image",
-                          //         toastLength: Toast.LENGTH_SHORT,
-                          //         gravity: ToastGravity.BOTTOM,
-                          //         timeInSecForIosWeb: 1,
-                          //         backgroundColor:
-                          //             const Color.fromARGB(255, 158, 165, 174),
-                          //         textColor: Colors.white,
-                          //         fontSize: 16.0);
-                          //   }
+                          //   _uploadImageToFirebase(photo!);
                           // },
+                          onTap: () {
+                            if (photo != null) {
+                              _uploadImageToFirebase(photo!);
+                            } else {
+                              Fluttertoast.showToast(
+                                  msg: "Please choose image",
+                                  toastLength: Toast.LENGTH_SHORT,
+                                  gravity: ToastGravity.BOTTOM,
+                                  timeInSecForIosWeb: 1,
+                                  backgroundColor:
+                                      const Color.fromARGB(255, 158, 165, 174),
+                                  textColor: Colors.white,
+                                  fontSize: 16.0);
+                            }
+                          },
                           child: CustomButton(
                             text: 'Confirm location',
                             textColor: AppColors.backgroundgrayColor,
