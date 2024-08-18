@@ -12,5 +12,131 @@
     "ArrivalCity": "Jeddah, Saudi Arabia",
     "airport": "King Abdulaziz International Airport",
     "city": "JED"
-  }
+  },
+    {
+      "ArrivalCity": "Paris, France",
+      "airport": "Charles de Gaulle Airport",
+      "city": "CDG"
+    },
+    {
+      "ArrivalCity": "Rome, Italy",
+      "airport": "Leonardo da Vinci–Fiumicino Airport",
+      "city": "FCO"
+    },
+    {
+      "ArrivalCity": "New York City, USA",
+      "airport": "John F. Kennedy International Airport",
+      "city": "JFK"
+    },
+    {
+      "ArrivalCity": "Tokyo, Japan",
+      "airport": "Narita International Airport",
+      "city": "NRT"
+    },
+    {
+      "ArrivalCity": "Sydney, Australia",
+      "airport": "Sydney Kingsford Smith Airport",
+      "city": "SYD"
+    },
+    {
+      "ArrivalCity": "Cape Town, South Africa",
+      "airport": "Cape Town International Airport",
+      "city": "CPT"
+    },
+    {
+      "ArrivalCity": "Rio de Janeiro, Brazil",
+      "airport": "Galeão International Airport",
+      "city": "GIG"
+    },
+    {
+      "ArrivalCity": "Dubai, UAE",
+      "airport": "Dubai International Airport",
+      "city": "DXB"
+    },
+    {
+      "ArrivalCity": "Bangkok, Thailand",
+      "airport": "Suvarnabhumi Airport",
+      "city": "BKK"
+    },
+    {
+      "ArrivalCity": "Istanbul, Turkey",
+      "airport": "Istanbul Airport",
+      "city": "IST"
+    },
+    {
+      "ArrivalCity": "London, England",
+      "airport": "Heathrow Airport",
+      "city": "LHR"
+    },
+    {
+      "ArrivalCity": "Barcelona, Spain",
+      "airport": "Barcelona-El Prat Airport",
+      "city": "BCN"
+    },
+    {
+      "ArrivalCity": "Moscow, Russia",
+      "airport": "Sheremetyevo International Airport",
+      "city": "SVO"
+    },
+    {
+      "ArrivalCity": "Toronto, Canada",
+      "airport": "Toronto Pearson International Airport",
+      "city": "YYZ"
+    },
+    {
+      "ArrivalCity": "Singapore, Singapore",
+      "airport": "Changi Airport",
+      "city": "SIN"
+    },
+    {
+      "ArrivalCity": "Berlin, Germany",
+      "airport": "Berlin Brandenburg Airport",
+      "city": "BER"
+    },
+    {
+      "ArrivalCity": "Athens, Greece",
+      "airport": "Athens International Airport",
+      "city": "ATH"
+    },
+    {
+      "ArrivalCity": "Buenos Aires, Argentina",
+      "airport": "Ministro Pistarini International Airport",
+      "city": "EZE"
+    },
+    {
+      "ArrivalCity": "Mexico City, Mexico",
+      "airport": "Benito Juárez International Airport",
+      "city": "MEX"
+    },
+    {
+      "ArrivalCity": "Seoul, South Korea",
+      "airport": "Incheon International Airport",
+      "city": "ICN"
+    },
+    {
+      "ArrivalCity": "Mumbai, India",
+      "airport": "Chhatrapati Shivaji Maharaj International Airport",
+      "city": "BOM"
+    },
+    {
+      "ArrivalCity": "Lagos, Nigeria",
+      "airport": "Murtala Muhammed International Airport",
+      "city": "LOS"
+    },
+    {
+      "ArrivalCity": "Hanoi, Vietnam",
+      "airport": "Noi Bai International Airport",
+      "city": "HAN"
+    },
+    {
+      "ArrivalCity": "Lisbon, Portugal",
+      "airport": "Humberto Delgado Airport",
+      "city": "LIS"
+    },
+    {
+      "ArrivalCity": "Vienna, Austria",
+      "airport": "Vienna International Airport",
+      "city": "VIE"
+    }
+    
 ]

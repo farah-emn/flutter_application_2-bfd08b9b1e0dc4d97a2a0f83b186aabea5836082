@@ -4,5 +4,54 @@
    
   },{
        "location": "Riyadh, Saudi Arabia"
-  }
+  },
+    {
+      "location": "Paris, France"
+    },
+    {
+      "location": "Rome, Italy"
+    },
+    {
+      "location": "New York City, USA"
+    },
+    {
+      "location": "Tokyo, Japan"
+    },
+    {
+      "location": "Sydney, Australia"
+    },
+    {
+      "location": "Cape Town, South Africa"
+    },
+    {
+      "location": "Rio de Janeiro, Brazil"
+    },
+    {
+      "location": "Dubai, UAE"
+    },
+    {
+      "location": "Bangkok, Thailand"
+    },
+    {
+      "location": "Istanbul, Turkey"
+    },
+    {
+      "location": "London, England"
+    },
+    {
+      "location": "Barcelona, Spain"
+    },
+    {
+      "location": "Moscow, Russia"
+    },
+    {
+      "location": "Toronto, Canada"
+    },
+    {
+      "location": "Singapore, Singapore"
+    },
+    {
+      "location": "Berlin, Germany"
+    }
+  
 ]

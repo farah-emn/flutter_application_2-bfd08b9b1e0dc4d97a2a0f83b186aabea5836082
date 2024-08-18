@@ -225,36 +225,36 @@ class _BookingsCardState extends State<BookingsCard> {
                 ],
               ),
             ),
-            Container(
-              height: 40,
-              width: size.width,
-              padding: EdgeInsets.only(right: 15),
-              decoration: const BoxDecoration(
-                color: AppColors.Blue,
-                borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(15),
-                  bottomRight: Radius.circular(15),
-                ),
-              ),
-              child: const Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Text(
-                    'more details',
-                    style: TextStyle(
-                      color: Colors.white,
-                    ),
-                  ),
-                  SizedBox(
-                    width: 5,
-                  ),
-                  Icon(
-                    Icons.arrow_forward,
-                    color: Colors.white,
-                  ),
-                ],
-              ),
-            ),
+            // Container(
+            //   height: 40,
+            //   width: size.width,
+            //   padding: EdgeInsets.only(right: 15),
+            //   decoration: const BoxDecoration(
+            //     color: AppColors.Blue,
+            //     borderRadius: BorderRadius.only(
+            //       bottomLeft: Radius.circular(15),
+            //       bottomRight: Radius.circular(15),
+            //     ),
+            //   ),
+            //   child: const Row(
+            //     mainAxisAlignment: MainAxisAlignment.end,
+            //     children: [
+            //       Text(
+            //         'more details',
+            //         style: TextStyle(
+            //           color: Colors.white,
+            //         ),
+            //       ),
+            //       SizedBox(
+            //         width: 5,
+            //       ),
+            //       Icon(
+            //         Icons.arrow_forward,
+            //         color: Colors.white,
+            //       ),
+            //     ],
+            //   ),
+            // ),
           ],
         ),
       ),

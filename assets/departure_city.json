@@ -13,5 +13,106 @@
     "DepartureCity": "Jeddah, Saudi Arabia",
     "airport": "King Abdulaziz International Airport",
     "city": "JED"
-  }
+  },
+    {
+      "DepartureCity": "Paris, France",
+      "airport": "Charles de Gaulle Airport",
+      "city": "CDG"
+    },
+    {
+      "DepartureCity": "Rome, Italy",
+      "airport": "Leonardo da Vinci–Fiumicino Airport",
+      "city": "FCO"
+    },
+    {
+      "DepartureCity": "New York City, USA",
+      "airport": "John F. Kennedy International Airport",
+      "city": "JFK"
+    },
+    {
+      "DepartureCity": "Tokyo, Japan",
+      "airport": "Narita International Airport",
+      "city": "NRT"
+    },
+    {
+      "DepartureCity": "Sydney, Australia",
+      "airport": "Sydney Kingsford Smith Airport",
+      "city": "SYD"
+    },
+    {
+      "DepartureCity": "Cape Town, South Africa",
+      "airport": "Cape Town International Airport",
+      "city": "CPT"
+    },
+    {
+      "DepartureCity": "Rio de Janeiro, Brazil",
+      "airport": "Galeão International Airport",
+      "city": "GIG"
+    },
+    {
+      "DepartureCity": "Dubai, UAE",
+      "airport": "Dubai International Airport",
+      "city": "DXB"
+    },
+    {
+      "DepartureCity": "Bangkok, Thailand",
+      "airport": "Suvarnabhumi Airport",
+      "city": "BKK"
+    },
+    {
+      "DepartureCity": "Istanbul, Turkey",
+      "airport": "Istanbul Airport",
+      "city": "IST"
+    },
+    {
+      "DepartureCity": "London, England",
+      "airport": "Heathrow Airport",
+      "city": "LHR"
+    },
+    {
+      "DepartureCity": "Barcelona, Spain",
+      "airport": "Barcelona-El Prat Airport",
+      "city": "BCN"
+    },
+    {
+      "DepartureCity": "Moscow, Russia",
+      "airport": "Sheremetyevo International Airport",
+      "city": "SVO"
+    },
+    {
+      "DepartureCity": "Toronto, Canada",
+      "airport": "Toronto Pearson International Airport",
+      "city": "YYZ"
+    },
+    {
+      "DepartureCity": "Singapore, Singapore",
+      "airport": "Changi Airport",
+      "city": "SIN"
+    },
+    {
+      "DepartureCity": "Berlin, Germany",
+      "airport": "Berlin Brandenburg Airport",
+      "city": "BER"
+    },
+    {
+      "DepartureCity": "Athens, Greece",
+      "airport": "Athens International Airport",
+      "city": "ATH"
+    },
+    {
+      "DepartureCity": "Buenos Aires, Argentina",
+      "airport": "Ministro Pistarini International Airport",
+      "city": "EZE"
+    },
+    {
+      "DepartureCity": "Mexico City, Mexico",
+      "airport": "Benito Juárez International Airport",
+      "city": "MEX"
+    },
+    {
+      "DepartureCity": "Seoul, South Korea",
+      "airport": "Incheon International Airport",
+      "city": "ICN"
+    }
+  
 ]

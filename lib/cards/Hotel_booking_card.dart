@@ -294,16 +294,16 @@ class _HotelBookingCardState extends State<HotelBookingCard> {
                   const SizedBox(
                     height: 10,
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      CustomButton(
-                          text: 'Delete Booking',
-                          textColor: Colors.black,
-                          widthPercent: size.width - 60,
-                          backgroundColor: AppColors.LightGrayColor),
-                    ],
-                  ),
+                  // Row(
+                  //   mainAxisAlignment: MainAxisAlignment.center,
+                  //   children: [
+                  //     CustomButton(
+                  //         text: 'Delete Booking',
+                  //         textColor: Colors.black,
+                  //         widthPercent: size.width - 60,
+                  //         backgroundColor: AppColors.LightGrayColor),
+                  //   ],
+                  // ),
                 ],
               ),
             ),
