@@ -562,36 +562,36 @@ class _FlightAddViewState extends State<FlightAddView> {
                                 onChanged: (value) {},
                               ),
                             ),
-                            const SizedBox(
-                              height: 40,
-                            ),
-                            const Row(
-                              children: [
-                                SizedBox(
-                                  width: 10,
-                                ),
-                                Text(
-                                  'Plane Manufacturer',
-                                  style: TextStyle(
-                                      fontSize: 13,
-                                      color: AppColors.grayText,
-                                      fontWeight: FontWeight.w500),
-                                ),
-                              ],
-                            ),
-                            SizedBox(
-                              height: 45,
-                              width: size.width - 50,
-                              child: TextField(
-                                controller: _Manufacturer,
-                                keyboardType: TextInputType.text,
-                                decoration: textFielDecoratiom.copyWith(
-                                    fillColor: Colors.white,
-                                    prefixIcon: const Icon(
-                                        Icons.flight_takeoff_outlined)),
-                                onChanged: (value) {},
-                              ),
-                            ),
+                            // const SizedBox(
+                            //   height: 40,
+                            // ),
+                            // const Row(
+                            //   children: [
+                            //     SizedBox(
+                            //       width: 10,
+                            //     ),
+                            //     Text(
+                            //       'Plane Manufacturer',
+                            //       style: TextStyle(
+                            //           fontSize: 13,
+                            //           color: AppColors.grayText,
+                            //           fontWeight: FontWeight.w500),
+                            //     ),
+                            //   ],
+                            // ),
+                            // SizedBox(
+                            //   height: 45,
+                            //   width: size.width - 50,
+                            //   child: TextField(
+                            //     controller: _Manufacturer,
+                            //     keyboardType: TextInputType.text,
+                            //     decoration: textFielDecoratiom.copyWith(
+                            //         fillColor: Colors.white,
+                            //         prefixIcon: const Icon(
+                            //             Icons.flight_takeoff_outlined)),
+                            //     onChanged: (value) {},
+                            //   ),
+                            // ),
                             const SizedBox(
                               height: 15,
                             ),

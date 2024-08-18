@@ -413,38 +413,9 @@ Widget flightDetails(BuildContext context, FlightDetailsClass flightDetails,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               const SizedBox(
-                height: 15,
-              ),
-              const Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  SizedBox(
-                    width: 10,
-                  ),
-                  Text(
-                    'From',
-                    style: TextStyle(
-                        fontSize: 13,
-                        color: AppColors.grayText,
-                        fontWeight: FontWeight.w500),
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: 45,
-                width: size.width - 50,
-                child: TextField(
-                  readOnly: true,
-                  controller: TextEditingController(
-                      text: flightDetails.DepartureAirport),
-                  keyboardType: TextInputType.text,
-                  decoration: textFielDecoratiom.copyWith(
-                      fillColor: Colors.white,
-                      prefixIcon: const Icon(Icons.flight_takeoff_outlined)),
-                ),
+                height: 10,
               ),
 
-              const SizedBox(height: 15),
               const Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
@@ -837,118 +808,7 @@ Widget flightDetails(BuildContext context, FlightDetailsClass flightDetails,
                   )
                 ],
               ),
-              (stopDurationsForFlight.isNotEmpty)
-                  ? ListView.builder(
-                      physics: NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      itemCount: stopLocationsForFlight.length,
-                      itemBuilder: (context, index) {
-                        print(stopDurationsForFlight[index]);
-                        stopDurationscontrollers[index].text =
-                            stopDurationsForFlight[index];
-                        stopLocationscontrollers[index].text =
-                            stopLocationsForFlight[index];
-                        return Column(
-                          children: [
-                            const SizedBox(
-                              height: 40,
-                            ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Row(
-                                  children: [
-                                    SizedBox(
-                                      width: 10,
-                                    ),
-                                    Text(
-                                      ' Stop location ${index + 1}',
-                                      style: TextStyle(
-                                          fontSize: 13,
-                                          color: AppColors.grayText,
-                                          fontWeight: FontWeight.w500),
-                                    ),
-                                  ],
-                                ),
-                                SizedBox(
-                                  height: 45,
-                                  width: size.width - 50,
-                                  child: TextField(
-                                    readOnly: true,
-                                    controller: stopLocationscontrollers[index],
-                                    decoration: textFielDecoratiom.copyWith(
-                                        fillColor: Colors.white,
-                                        prefixIcon: const Icon(Icons.public)),
-                                  ),
-                                ),
-                              ],
-                            ),
-                            const SizedBox(
-                              height: 30,
-                            ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Row(
-                                  children: [
-                                    SizedBox(
-                                      width: 10,
-                                    ),
-                                    Text(
-                                      'Stop Duration ${index + 1}',
-                                      style: TextStyle(
-                                          fontSize: 13,
-                                          color: AppColors.grayText,
-                                          fontWeight: FontWeight.w500),
-                                    ),
-                                  ],
-                                ),
-                                SizedBox(
-                                  height: 45,
-                                  width: size.width - 50,
-                                  child: TextField(
-                                    readOnly: true,
-                                    controller: stopDurationscontrollers[index],
-                                    decoration: textFielDecoratiom.copyWith(
-                                        fillColor: Colors.white,
-                                        prefixIcon:
-                                            Icon(Icons.access_time_outlined)),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        );
-                      },
-                    )
-                  : Column(
-                      children: const [
-                        SizedBox(
-                          height: 20,
-                        ),
-                        Row(
-                          children: [
-                            SizedBox(
-                              width: 10,
-                            ),
-                            Icon(
-                              Icons.check,
-                              color: AppColors.mainColorBlue,
-                            ),
-                            SizedBox(
-                              width: 10,
-                            ),
-                            Text(
-                              'Direct',
-                              style: TextStyle(
-                                  fontSize: 13,
-                                  color: AppColors.grayText,
-                                  fontWeight: FontWeight.w500),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
+
               const SizedBox(
                 height: 30,
               ),

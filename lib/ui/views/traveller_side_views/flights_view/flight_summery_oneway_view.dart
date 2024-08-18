@@ -169,60 +169,60 @@ class FlightSummery extends StatelessWidget {
         const SizedBox(
           height: 15,
         ),
-        Container(
-          width: size.width,
-          padding: EdgeInsets.all(15),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(20),
-            color: Colors.white,
-          ),
-          child: Column(
-            children: [
-              Row(
-                children: [
-                  Image.asset(
-                    'assets/image/png/Wifi_icon.png',
-                  ),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  Text('Wifi is available'),
-                ],
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Row(
-                children: [
-                  Image.asset(
-                    'assets/image/png/Wifi_icon.png',
-                  ),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  Text('in seat power & USB outlets'),
-                ],
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Row(
-                children: [
-                  Image.asset(
-                    'assets/image/png/Wifi_icon.png',
-                  ),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  Text('in seat power & USB outlets'),
-                ],
-              ),
-            ],
-          ),
-        ),
-        const SizedBox(
-          height: 15,
-        ),
+        // Container(
+        //   width: size.width,
+        //   padding: EdgeInsets.all(15),
+        //   decoration: BoxDecoration(
+        //     borderRadius: BorderRadius.circular(20),
+        //     color: Colors.white,
+        //   ),
+        //   child: Column(
+        //     children: [
+        //       Row(
+        //         children: [
+        //           Image.asset(
+        //             'assets/image/png/Wifi_icon.png',
+        //           ),
+        //           SizedBox(
+        //             width: 10,
+        //           ),
+        //           Text('Wifi is available'),
+        //         ],
+        //       ),
+        //       SizedBox(
+        //         height: 10,
+        //       ),
+        //       Row(
+        //         children: [
+        //           Image.asset(
+        //             'assets/image/png/Wifi_icon.png',
+        //           ),
+        //           SizedBox(
+        //             width: 10,
+        //           ),
+        //           Text('in seat power & USB outlets'),
+        //         ],
+        //       ),
+        //       SizedBox(
+        //         height: 10,
+        //       ),
+        //       Row(
+        //         children: [
+        //           Image.asset(
+        //             'assets/image/png/Wifi_icon.png',
+        //           ),
+        //           SizedBox(
+        //             width: 10,
+        //           ),
+        //           Text('in seat power & USB outlets'),
+        //         ],
+        //       ),
+        //     ],
+        //   ),
+        // ),
+        // const SizedBox(
+        //   height: 15,
+        // ),
         Container(
           width: size.width,
           padding: EdgeInsets.all(15),
@@ -234,7 +234,7 @@ class FlightSummery extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Baggage allowance',
+                'allowance',
                 style: TextStyle(fontWeight: FontWeight.w500, fontSize: 17),
               ),
               SizedBox(
@@ -276,11 +276,28 @@ class FlightSummery extends StatelessWidget {
                   SizedBox(
                     width: 10,
                   ),
-                  Text('in seat power & USB outlets'),
+                  Text('32 KG Checked baggage'),
+                ],
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Row(
+                children: [
+                  Image.asset(
+                    'assets/image/png/Wifi_icon.png',
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Text('10 KG small bag'),
                 ],
               ),
             ],
           ),
+        ),
+        SizedBox(
+          height: 30,
         ),
       ],
     );
