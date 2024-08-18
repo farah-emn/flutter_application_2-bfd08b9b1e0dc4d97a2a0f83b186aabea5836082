@@ -6,6 +6,8 @@ import 'package:traveling/ui/shared/custom_widgets/custom_button.dart';
 import 'package:traveling/ui/shared/text_size.dart';
 import 'package:traveling/ui/views/traveller_side_views/room_view.dart';
 
+import '../classes/hotel_bookings_class1.dart';
+
 class HotelBookingCard extends StatefulWidget {
   const HotelBookingCard({
     super.key,
@@ -15,7 +17,7 @@ class HotelBookingCard extends StatefulWidget {
   });
 
   final Size size;
-  final HotelBookingsClass hotelBookingsDetails;
+  final HotelBookingsClass1 hotelBookingsDetails;
   final int itemIndex;
 
   @override
@@ -58,15 +60,18 @@ class _HotelBookingCardState extends State<HotelBookingCard> {
                   height: 200,
                   width: widget.size.width,
                   decoration: BoxDecoration(
-                    borderRadius: const BorderRadius.only(
-                      topLeft: Radius.circular(20),
-                      topRight: Radius.circular(20),
-                    ),
-                    image: DecorationImage(
-                      image: AssetImage(widget.hotelBookingsDetails.image),
-                      fit: BoxFit.fill,
-                    ),
-                  ),
+                      borderRadius: const BorderRadius.only(
+                        topLeft: Radius.circular(20),
+                        topRight: Radius.circular(20),
+                      ),
+                      image: DecorationImage(
+                        image: NetworkImage(widget.hotelBookingsDetails.image !=
+                                    null &&
+                                widget.hotelBookingsDetails.image!.isNotEmpty
+                            ? widget.hotelBookingsDetails.image
+                            : ''),
+                        fit: BoxFit.fill,
+                      )),
                 ),
               ],
             ),
@@ -278,7 +283,7 @@ class _HotelBookingCardState extends State<HotelBookingCard> {
                         width: 5,
                       ),
                       Text(
-                        widget.hotelBookingsDetails.totalPrice,
+                        widget.hotelBookingsDetails.totalPrice.toString(),
                         style: const TextStyle(
                             color: AppColors.purple,
                             fontSize: TextSize.header1,

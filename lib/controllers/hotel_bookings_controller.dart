@@ -146,38 +146,47 @@ class HotelBookingsController extends GetxController {
           print('Final rating value:');
           print(ratingValue);
           if (!addedRoomIds.contains(roomId)) {
-            bookingsDetailsUpcoming.add(HotelBookingsClass1.fromMap({
-              'checkinDate': bookingData['ArrivalDate'],
-              'checkoutDate': bookingData['DepartureDate'],
-              'hotelName': hotelData['HotelName'],
-              'roomNumber': roomData['RoomNumber'],
-              'totalPrice': bookingData['TotalPrice'],
-              'image': roomData['RoomPhoto'][1].toString(),
-              'location': hotelData['location'],
-              'bookingDate': bookingData['BookingDate'],
-              'priceNight': roomData['Price'],
-              'RoomId': roomId,
-              'RatingRoom':
-                  ratingValue // Ensure the key matches the constructor
-            }));
+            print('sssssssssssssssssssss');
+            print(hotelData);
+            hotelData.forEach((key, value) {
+              if (key == bookingData['HotelId'])
+                bookingsDetailsUpcoming.add(HotelBookingsClass1.fromMap({
+                  'checkinDate': bookingData['ArrivalDate'],
+                  'checkoutDate': bookingData['DepartureDate'],
+                  'hotelName': value['HotelName'],
+                  'roomNumber': roomData['RoomNumber'],
+                  'totalPrice': bookingData['TotalPrice'],
+                  'image': roomData['RoomPhoto'][1].toString(),
+                  'location': value['location'],
+                  'bookingDate': bookingData['BookingDate'],
+                  'priceNight': roomData['Price'],
+                  'RoomId': roomId,
+                  'RatingRoom':
+                      ratingValue // Ensure the key matches the constructor
+                }));
+            });
+
             addedRoomIds.add(roomId);
           }
         } else {
           print('No ratings found.');
           if (!addedRoomIds.contains(roomId)) {
-            bookingsDetailsUpcoming.add(HotelBookingsClass1.fromMap({
-              'checkinDate': bookingData['ArrivalDate'],
-              'checkoutDate': bookingData['DepartureDate'],
-              'hotelName': hotelData['HotelName'],
-              'roomNumber': roomData['RoomNumber'],
-              'totalPrice': bookingData['TotalPrice'],
-              'image': roomData['RoomPhoto'][1].toString(),
-              'location': hotelData['location'],
-              'bookingDate': bookingData['BookingDate'],
-              'priceNight': roomData['Price'],
-              'RoomId': roomId,
-              'RatingRoom': 0.0 // Ensure the key matches the constructor
-            }));
+            hotelData.forEach((key, value) {
+              if (key == bookingData['HotelId'])
+                bookingsDetailsUpcoming.add(HotelBookingsClass1.fromMap({
+                  'checkinDate': bookingData['ArrivalDate'],
+                  'checkoutDate': bookingData['DepartureDate'],
+                  'hotelName': value['HotelName'],
+                  'roomNumber': roomData['RoomNumber'],
+                  'totalPrice': bookingData['TotalPrice'],
+                  'image': roomData['RoomPhoto'][1].toString(),
+                  'location': value['location'],
+                  'bookingDate': bookingData['BookingDate'],
+                  'priceNight': roomData['Price'],
+                  'RoomId': roomId,
+                  'RatingRoom': 0.0 // Ensure the key matches the constructor
+                }));
+            });
             addedRoomIds.add(roomId);
           }
         }
@@ -275,39 +284,44 @@ class HotelBookingsController extends GetxController {
           print('Final rating value:');
           print(ratingValue);
           if (!addedRoomIdsFinished.contains(roomId)) {
-            print('mmmmmmmmmmmmmmmm1567890-09876543mmmmmmmmmmmm');
-            bookingsDetailsFinished.add(HotelBookingsClass1.fromMap({
-              'checkinDate': bookingData['ArrivalDate'],
-              'checkoutDate': bookingData['DepartureDate'],
-              'hotelName': hotelData['HotelName'],
-              'roomNumber': roomData['RoomNumber'],
-              'totalPrice': bookingData['TotalPrice'],
-              'image': roomData['RoomPhoto'][1].toString(),
-              'location': hotelData['location'],
-              'bookingDate': bookingData['BookingDate'],
-              'priceNight': roomData['Price'],
-              'RoomId': roomId,
-              'RatingRoom':
-                  ratingValue // Ensure the key matches the constructor
-            }));
+            hotelData.forEach((key, value) {
+              // if (key == bookingData['HotelId'])
+              bookingsDetailsFinished.add(HotelBookingsClass1.fromMap({
+                'checkinDate': bookingData['ArrivalDate'],
+                'checkoutDate': bookingData['DepartureDate'],
+                'hotelName': value['HotelName'],
+                'roomNumber': roomData['RoomNumber'],
+                'totalPrice': bookingData['TotalPrice'],
+                'image': roomData['RoomPhoto'][1].toString(),
+                'location': value['location'],
+                'bookingDate': bookingData['BookingDate'],
+                'priceNight': roomData['Price'],
+                'RoomId': roomId,
+                'RatingRoom':
+                    ratingValue // Ensure the key matches the constructor
+              }));
+            });
             addedRoomIdsFinished.add(roomId);
           }
         } else {
           print('No ratings found.');
           if (!addedRoomIdsFinished.contains(roomId)) {
-            bookingsDetailsFinished.add(HotelBookingsClass1.fromMap({
-              'checkinDate': bookingData['ArrivalDate'],
-              'checkoutDate': bookingData['DepartureDate'],
-              'hotelName': hotelData['HotelName'],
-              'roomNumber': roomData['RoomNumber'],
-              'totalPrice': bookingData['TotalPrice'],
-              'image': roomData['RoomPhoto'][1].toString(),
-              'location': hotelData['location'],
-              'bookingDate': bookingData['BookingDate'],
-              'priceNight': roomData['Price'],
-              'RoomId': roomId,
-              'RatingRoom': 0.0 // Ensure the key matches the constructor
-            }));
+            hotelData.forEach((key, value) {
+              // if (key == bookingData['HotelId'])
+              bookingsDetailsFinished.add(HotelBookingsClass1.fromMap({
+                'checkinDate': bookingData['ArrivalDate'],
+                'checkoutDate': bookingData['DepartureDate'],
+                'hotelName': value['HotelName'],
+                'roomNumber': roomData['RoomNumber'],
+                'totalPrice': bookingData['TotalPrice'],
+                'image': roomData['RoomPhoto'][1].toString(),
+                'location': value['location'],
+                'bookingDate': bookingData['BookingDate'],
+                'priceNight': roomData['Price'],
+                'RoomId': roomId,
+                'RatingRoom': 0.0 // Ensure the key matches the constructor
+              }));
+            });
             addedRoomIdsFinished.add(roomId);
           }
         }

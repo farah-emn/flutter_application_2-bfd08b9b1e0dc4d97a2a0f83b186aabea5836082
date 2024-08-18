@@ -3,13 +3,14 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
-import 'package:traveling/classes/hotel_room_details_class1.dart';
 import 'package:traveling/ui/shared/colors.dart';
 import 'package:traveling/ui/shared/text_size.dart';
 import '../classes/amenities_class.dart';
 import '../classes/hotel_room_details_class.dart';
 import '../controllers/currency_controller.dart';
+import '../controllers/hotel_rooms_controller.dart';
 import '../ui/views/traveller_side_views/hotel_room_view.dart';
 
 class HotelCard2 extends StatefulWidget {
@@ -29,6 +30,10 @@ class HotelCard2 extends StatefulWidget {
 }
 
 class _HotelCard2State extends State<HotelCard2> {
+  final HotelRoomsController hotelRoomsController =
+      Get.put(HotelRoomsController());
+  double? RoomRating = 1;
+
   final CurrencyController HotelCurrency_Controller =
       Get.put(CurrencyController());
   late User loggedinUser;
@@ -41,6 +46,9 @@ class _HotelCard2State extends State<HotelCard2> {
   @override
   void initState() {
     getData();
+    setState(() {
+      hotelRoomsController.getRoomRating(widget.room.id);
+    });
     super.initState();
   }
 
@@ -219,30 +227,30 @@ class _HotelCard2State extends State<HotelCard2> {
                     children: [
                       Row(
                         children: [
-                          Icon(
-                            Icons.star_rounded,
-                            color: AppColors.gold,
-                            size: 20,
-                          ),
-                          Icon(
-                            Icons.star_rounded,
-                            color: AppColors.gold,
-                            size: 20,
-                          ),
-                          Icon(
-                            Icons.star_rounded,
-                            color: AppColors.gold,
-                            size: 20,
-                          ),
-                          Icon(
-                            Icons.star_half_rounded,
-                            color: AppColors.gold,
-                            size: 20,
-                          ),
-                          Icon(
-                            Icons.star_border_rounded,
-                            color: AppColors.gold,
-                            size: 20,
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              RatingBarIndicator(
+                                itemSize: 20,
+                                rating: (hotelRoomsController
+                                            .averageRating.value <
+                                        1)
+                                    ? 1
+                                    : hotelRoomsController.averageRating.value,
+                                itemBuilder: (_, __) => Icon(
+                                  Icons.star_rounded,
+                                  color: AppColors.gold,
+                                  size: 20,
+                                ),
+                              ),
+                              // Text(
+                              //   '${HotelCurrency_Controller.convert(HotelCurrency_Controller.selectedCurrency.value, widget.room.Price.toDouble())} ${HotelCurrency_Controller.selectedCurrency.value}',
+                              //   style: TextStyle(
+                              //       color: AppColors.purple,
+                              //       fontSize: TextSize.header1,
+                              //       fontWeight: FontWeight.w500),
+                              // ),
+                            ],
                           ),
                         ],
                       ),

@@ -51,7 +51,7 @@ class _CarAddViewState extends State<CarAddView> {
   final _auth = FirebaseAuth.instance;
   var currentUser;
   int selectedIndex = 0;
-  DatabaseReference Car = FirebaseDatabase.instance.reference().child(' Car');
+  DatabaseReference Car = FirebaseDatabase.instance.reference().child('Car');
   List<String?> selectedValues = List.filled(0, null);
   final List<String> ChildrenAge = [
     'Under 1 year old',
@@ -135,7 +135,7 @@ class _CarAddViewState extends State<CarAddView> {
     int IdOfRoomPhoto = 0;
     int IdOfChild = 0;
     final databaseReference = FirebaseDatabase.instance.reference();
-    databaseReference.child('Car/$IdCar:').update({
+    databaseReference.child('Car/$IdCar:').set({
       "CarCompanyId": CarId,
       "RentalInDay": double.parse(_priceDay.text.replaceAll('\u{00A0}', '')),
       "RentalInWeek": double.parse(_priceDay.text.replaceAll('\u{00A0}', '')),
@@ -324,7 +324,7 @@ class _CarAddViewState extends State<CarAddView> {
                           children: [
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: const [
+                              children: [
                                 Text(
                                   'Car photos',
                                   style: TextStyle(
@@ -333,7 +333,7 @@ class _CarAddViewState extends State<CarAddView> {
                                       fontWeight: FontWeight.w500),
                                 ),
                                 InkWell(
-                                  // onTap: _pickImages,
+                                  onTap: _pickImages,
                                   child: Icon(
                                     Icons.add,
                                     color: AppColors.darkGray,
@@ -476,7 +476,7 @@ class _CarAddViewState extends State<CarAddView> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  'Overview',
+                                  'Model',
                                   style: TextStyle(
                                       fontSize: 13,
                                       color: AppColors.grayText,
@@ -522,13 +522,13 @@ class _CarAddViewState extends State<CarAddView> {
                             ToggleButtons(
                               disabledColor: AppColors.grayText,
 
-                            borderColor: AppColors.LightGrayColor,
-                            borderRadius: BorderRadius.circular(15),
-                            // focusColor: AppColors.grayText,
-                            fillColor: AppColors.lightGray,
-                            selectedColor: AppColors.blackColor,
-                            selectedBorderColor: AppColors.lightGray,
-                            color: AppColors.grayText,
+                              borderColor: AppColors.LightGrayColor,
+                              borderRadius: BorderRadius.circular(15),
+                              // focusColor: AppColors.grayText,
+                              fillColor: AppColors.lightGray,
+                              selectedColor: AppColors.blackColor,
+                              selectedBorderColor: AppColors.lightGray,
+                              color: AppColors.grayText,
 
                               isSelected: isSelected,
                               onPressed: (int index) {
@@ -714,7 +714,9 @@ class _CarAddViewState extends State<CarAddView> {
                                       autofocus: true,
                                       groupValue: sorteBy,
                                       onChanged: (value) {
-                                        sorteBy = value.toString();
+                                        setState(() {
+                                          sorteBy = value.toString();
+                                        });
                                       },
                                     ),
                                     const Text('Normal'),
@@ -727,7 +729,7 @@ class _CarAddViewState extends State<CarAddView> {
                                       value: 'Automatic',
                                       groupValue: sorteBy,
                                       onChanged: (value) {
-                                       setState(() {
+                                        setState(() {
                                           sorteBy = value.toString();
                                         });
                                       },

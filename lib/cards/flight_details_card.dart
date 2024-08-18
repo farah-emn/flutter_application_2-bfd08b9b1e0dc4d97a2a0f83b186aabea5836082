@@ -97,11 +97,11 @@ class _FlightDetailsCardState extends State<FlightDetailsCard> {
     Size size = MediaQuery.of(context).size;
     return InkWell(
       onTap: () {
-        // Get.to(FlightFlightDetailsView(
-        //     flightDetails: widget.flightsList,
-        //     ItemIndex: widget.flightsList.FlightID,
-        //     stopLocationsForFlight: stopLocationsForFlight,
-        //     stopDurationsForFlight: stopDurationsForFlight));
+        Get.to(FlightFlightDetailsView(
+            flightDetails: widget.flightsList,
+            ItemIndex: widget.flightsList.FlightID,
+            stopLocationsForFlight: stopLocationsForFlight,
+            stopDurationsForFlight: stopDurationsForFlight));
       },
       child: Container(
         margin: const EdgeInsets.only(top: 15),
@@ -130,7 +130,7 @@ class _FlightDetailsCardState extends State<FlightDetailsCard> {
                               Text(
                                 getTimePmAm(widget.flightsList.DeparureTime),
                                 style: const TextStyle(
-                                  color: AppColors.TextgrayColor,
+                                  color: AppColors.darkGray,
                                   fontSize: 12,
                                 ),
                               ),
@@ -142,14 +142,14 @@ class _FlightDetailsCardState extends State<FlightDetailsCard> {
                           Text(
                             widget.flightsList.FlightType ?? '',
                             style: const TextStyle(
-                              color: AppColors.TextgrayColor,
+                              color: AppColors.darkGray,
                               fontSize: 12,
                             ),
                           ),
                           Text(
                             widget.flightsList.Flight_Duration,
                             style: const TextStyle(
-                              color: AppColors.TextgrayColor,
+                              color: AppColors.darkGray,
                               fontSize: 12,
                             ),
                           ),
@@ -166,7 +166,7 @@ class _FlightDetailsCardState extends State<FlightDetailsCard> {
                               Text(
                                 getTimePmAm(widget.flightsList.ArrivalTime),
                                 style: const TextStyle(
-                                  color: AppColors.TextgrayColor,
+                                  color: AppColors.darkGray,
                                   fontSize: 12,
                                 ),
                               ),
@@ -194,9 +194,10 @@ class _FlightDetailsCardState extends State<FlightDetailsCard> {
                           Text(
                             widget.flightsList.deparure_from,
                             style: const TextStyle(
-                                fontWeight: FontWeight.w400,
-                                fontSize: 13,
-                                color: AppColors.TextgrayColor),
+                              fontWeight: FontWeight.w400,
+                              fontSize: 13,
+                              color: AppColors.darkGray,
+                            ),
                           ),
                           const SizedBox(
                             height: 30,
@@ -212,9 +213,10 @@ class _FlightDetailsCardState extends State<FlightDetailsCard> {
                           Text(
                             widget.flightsList.deparure_to,
                             style: const TextStyle(
-                                fontWeight: FontWeight.w400,
-                                fontSize: 13,
-                                color: AppColors.TextgrayColor),
+                              fontWeight: FontWeight.w400,
+                              fontSize: 13,
+                              color: AppColors.darkGray,
+                            ),
                           ),
                         ],
                       )

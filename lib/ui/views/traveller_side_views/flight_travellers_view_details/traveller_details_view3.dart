@@ -41,7 +41,8 @@ class _TravellerDetailsView3State extends State<TravellerDetailsView3> {
   final FlightInfoController controller_flight =
       Get.find<FlightInfoController>();
   final CurrencyController currencyController = Get.put(CurrencyController());
-
+  FlightStep3paymentController flightStep3paymentController =
+      Get.put(FlightStep3paymentController());
   void initState() {
     super.initState();
   }
@@ -139,13 +140,13 @@ class _TravellerDetailsView3State extends State<TravellerDetailsView3> {
                         decoration: textFielDecoratiom.copyWith(
                           focusedBorder: const OutlineInputBorder(
                             borderRadius: BorderRadius.all(Radius.circular(18)),
-                            borderSide:
-                                BorderSide(color: AppColors.purple, width: 1.5),
+                            borderSide: BorderSide(
+                                color: AppColors.mainColorBlue, width: 1.5),
                           ),
                           fillColor: Colors.white,
                           prefixIcon: const Icon(
                             Icons.credit_card_rounded,
-                            color: AppColors.gold,
+                            color: AppColors.mainColorBlue,
                           ),
                         ),
                       ),
@@ -179,13 +180,13 @@ class _TravellerDetailsView3State extends State<TravellerDetailsView3> {
                         decoration: textFielDecoratiom.copyWith(
                           focusedBorder: const OutlineInputBorder(
                             borderRadius: BorderRadius.all(Radius.circular(18)),
-                            borderSide:
-                                BorderSide(color: AppColors.purple, width: 1.5),
+                            borderSide: BorderSide(
+                                color: AppColors.mainColorBlue, width: 1.5),
                           ),
                           fillColor: Colors.white,
                           prefixIcon: const Icon(
                             Icons.date_range,
-                            color: AppColors.gold,
+                            color: AppColors.mainColorBlue,
                           ),
                         ),
                       ),
@@ -229,12 +230,13 @@ class _TravellerDetailsView3State extends State<TravellerDetailsView3> {
                                     borderRadius:
                                         BorderRadius.all(Radius.circular(18)),
                                     borderSide: BorderSide(
-                                        color: AppColors.purple, width: 1.5),
+                                        color: AppColors.mainColorBlue,
+                                        width: 1.5),
                                   ),
                                   fillColor: Colors.white,
                                   prefixIcon: const Icon(
                                     Icons.person_2_rounded,
-                                    color: AppColors.gold,
+                                    color: AppColors.mainColorBlue,
                                   ),
                                 ),
                               ),
@@ -275,12 +277,13 @@ class _TravellerDetailsView3State extends State<TravellerDetailsView3> {
                                     borderRadius:
                                         BorderRadius.all(Radius.circular(18)),
                                     borderSide: BorderSide(
-                                        color: AppColors.purple, width: 1.5),
+                                        color: AppColors.mainColorBlue,
+                                        width: 1.5),
                                   ),
                                   fillColor: Colors.white,
                                   prefixIcon: const Icon(
                                     Icons.person_2_rounded,
-                                    color: AppColors.gold,
+                                    color: AppColors.mainColorBlue,
                                   ),
                                 ),
                               ),
@@ -322,13 +325,13 @@ class _TravellerDetailsView3State extends State<TravellerDetailsView3> {
                                         borderRadius: BorderRadius.all(
                                             Radius.circular(18)),
                                         borderSide: BorderSide(
-                                            color: AppColors.purple,
+                                            color: AppColors.mainColorBlue,
                                             width: 1.5),
                                       ),
                                       fillColor: Colors.white,
                                       prefixIcon: const Icon(
                                         Icons.person_2_rounded,
-                                        color: AppColors.gold,
+                                        color: AppColors.mainColorBlue,
                                       ),
                                     ),
                                   ),
@@ -383,7 +386,6 @@ class _TravellerDetailsView3State extends State<TravellerDetailsView3> {
                     SizedBox(
                       height: 6,
                     ),
-                   
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
@@ -395,9 +397,27 @@ class _TravellerDetailsView3State extends State<TravellerDetailsView3> {
                         ),
                       ],
                     ),
-                    
                   ],
                 ),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Obx(
+                () => (flightStep3paymentController.isloading.value == true)
+                    ? Container(
+                        width: 20,
+                        height: 20,
+                        child: Obx(
+                          () => (flightStep3paymentController.isloading.value ==
+                                  true)
+                              ? CircularProgressIndicator(
+                                  color: AppColors.mainColorBlue,
+                                )
+                              : SizedBox(),
+                        ),
+                      )
+                    : SizedBox(),
               ),
               SizedBox(
                 height: 40,

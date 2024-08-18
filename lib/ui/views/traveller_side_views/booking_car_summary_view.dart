@@ -18,6 +18,7 @@ import 'package:traveling/ui/views/traveller_side_views/home_screen.dart';
 import '../../../controllers/car_payment.dart';
 import '../../../controllers/car_search_controller.dart';
 // import '../../../controllers/car_user_booking_controller.dart';
+import '../../../controllers/car_user_booking_controller.dart';
 import '../../../controllers/currency_controller.dart';
 import '../../../controllers/text_only_input_formatter.dart';
 import '../../shared/custom_widgets/custom_button.dart';
@@ -69,6 +70,8 @@ class _BookingCarSummaryViewState extends State<BookingCarSummaryView> {
     super.initState();
   }
 
+  final CarStep3paymentController carStep3paymentController =
+      Get.put(CarStep3paymentController());
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -128,7 +131,7 @@ class _BookingCarSummaryViewState extends State<BookingCarSummaryView> {
                         color: AppColors.darkGray,
                       ),
                       Text(
-                        'Add Room',
+                        'Add Car',
                         style: TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.w700,
@@ -194,7 +197,7 @@ class _BookingCarSummaryViewState extends State<BookingCarSummaryView> {
                               });
                           } else {
                             Fluttertoast.showToast(
-                                msg: "Please add details for Travellers",
+                                msg: "Please add details for booking",
                                 toastLength: Toast.LENGTH_SHORT,
                                 gravity: ToastGravity.BOTTOM,
                                 timeInSecForIosWeb: 1,
@@ -219,14 +222,19 @@ class _BookingCarSummaryViewState extends State<BookingCarSummaryView> {
                                       height: 450,
                                       child: Column(
                                         children: [
-                                          const Row(
+                                          Row(
                                             mainAxisAlignment:
                                                 MainAxisAlignment.end,
                                             children: [
-                                              Icon(
-                                                Icons.cancel,
-                                                color: AppColors.darkGray,
-                                                size: 30,
+                                              InkWell(
+                                                onTap: () {
+                                                  Get.back();
+                                                },
+                                                child: const Icon(
+                                                  Icons.cancel,
+                                                  color: AppColors.darkGray,
+                                                  size: 30,
+                                                ),
                                               ),
                                             ],
                                           ),
@@ -358,16 +366,18 @@ Widget step1(BuildContext context, CarClass1 carDeails) {
                 Container(
                   width: 150,
                   height: 150,
-                  decoration: const BoxDecoration(
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(20),
-                      bottomLeft: Radius.circular(20),
-                    ),
-                    image: DecorationImage(
-                      image: AssetImage('assets/image/png/car.jpg'),
-                      fit: BoxFit.fill,
-                    ),
-                  ),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(20),
+                        bottomLeft: Radius.circular(20),
+                      ),
+                      image: DecorationImage(
+                        image: NetworkImage(carDeails.image != null &&
+                                carDeails.image!.isNotEmpty
+                            ? carDeails.image!.first
+                            : ''),
+                        fit: BoxFit.fill,
+                      )),
                 ),
                 Padding(
                   padding: EdgeInsets.only(
@@ -953,6 +963,24 @@ Widget step3(BuildContext contex, CarClass1 carDeails) {
   is3 = true;
   return Column(
     children: [
+      Obx(
+        () => (carStep3paymentController.isloading.value == true)
+            ? Container(
+                width: 20,
+                height: 20,
+                child: Obx(
+                  () => (carStep3paymentController.isloading.value == true)
+                      ? CircularProgressIndicator(
+                          color: AppColors.darkGray,
+                        )
+                      : SizedBox(),
+                ),
+              )
+            : SizedBox(),
+      ),
+      SizedBox(
+        height: 10,
+      ),
       (Container(
         padding: const EdgeInsets.all(10),
         decoration: decoration.copyWith(),
@@ -1233,26 +1261,35 @@ Widget step3(BuildContext contex, CarClass1 carDeails) {
               ],
             ),
             SizedBox(
+              height: 10,
+            ),
+            SizedBox(
               height: 6,
             ),
-            Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-              Obx(() => Text(
-                    carStep3paymentController.errorTextYYexpiryDate.value,
-                    style: TextStyle(fontSize: 12, color: Colors.red),
-                  )),
-            ]),
-            Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-              Obx(() => Text(
-                    carStep3paymentController.errorTextMMexpiryDate.value,
-                    style: TextStyle(fontSize: 12, color: Colors.red),
-                  )),
-            ]),
-            Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-              Obx(() => Text(
-                    carStep3paymentController.errorTextcvv.value,
-                    style: TextStyle(fontSize: 12, color: Colors.red),
-                  )),
-            ]),
+            (carStep3paymentController.errorTextYYexpiryDate.value != '')
+                ? Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+                    Obx(() => Text(
+                          carStep3paymentController.errorTextYYexpiryDate.value,
+                          style: TextStyle(fontSize: 12, color: Colors.red),
+                        )),
+                  ])
+                : SizedBox(),
+            (carStep3paymentController.errorTextMMexpiryDate.value != '')
+                ? Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+                    Obx(() => Text(
+                          carStep3paymentController.errorTextMMexpiryDate.value,
+                          style: TextStyle(fontSize: 12, color: Colors.red),
+                        )),
+                  ])
+                : SizedBox(),
+            (carStep3paymentController.errorTextcvv.value != '')
+                ? Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+                    Obx(() => Text(
+                          carStep3paymentController.errorTextcvv.value,
+                          style: TextStyle(fontSize: 12, color: Colors.red),
+                        )),
+                  ])
+                : SizedBox(),
           ],
         ),
       )),
@@ -1309,8 +1346,8 @@ Future<void> ConfirmBooking(CarClass1 car, int id_hotel_booking, var userid,
     BuildContext context) async {
   // HotelBookingsController HotelbookingsController =
   //     Get.put(HotelBookingsController());
-  // CarBookingsController carBookingsController =
-  //     Get.put(CarBookingsController());
+  CarBookingsController carBookingsController =
+      Get.put(CarBookingsController());
   final CarCustomerController carCustomerController =
       Get.put(CarCustomerController());
   final CarStep3paymentController carStep3paymentController =
@@ -1325,6 +1362,7 @@ Future<void> ConfirmBooking(CarClass1 car, int id_hotel_booking, var userid,
     'LastName': carCustomerController.LastNameContactDetails.toString(),
     'MobileNumber': carCustomerController.MobileNumberContactDetails.toString(),
     'CarId': car.id.toString(),
+    'CompanyId': id_hotel_booking,
     'CarRentailCompany': car.companyRentailName,
     'TotalPrice': car.rentalInDay * calculateNumberOfNights(),
     'BookingDate':
@@ -1338,19 +1376,16 @@ Future<void> ConfirmBooking(CarClass1 car, int id_hotel_booking, var userid,
   carCustomerController.clearData();
   carCustomerController.clearData();
   carStep3paymentController.clearData();
-  // carBookingsController.NewbookingRoom.value = true;
+  carBookingsController.NewbookingRoom.value = true;
   int tabNumber;
   Future.delayed(Duration(seconds: 2), () {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => Home(
-          initialIndex: 2,
-          //tabNumber: 2
-        ),
+        builder: (context) => Home(initialIndex: 2, tabNumber: 2),
       ),
     );
-    // carBookingsController.NewbookingRoom.value = true;
+    carBookingsController.NewbookingRoom.value = true;
   });
 }
 

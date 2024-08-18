@@ -281,7 +281,7 @@ Widget step1(BuildContext context) {
                     ),
                   ),
                 ),
-                Padding(
+                const Padding(
                   padding: EdgeInsets.only(
                     left: 160,
                     top: 10,
@@ -289,12 +289,10 @@ Widget step1(BuildContext context) {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Container(
-                        child: Text(
-                          'Deluxe Room- 2 Twin Beds',
-                          style: TextStyle(
-                              fontWeight: FontWeight.w500, fontSize: 15),
-                        ),
+                      Text(
+                        'Deluxe Room- 2 Twin Beds',
+                        style: TextStyle(
+                            fontWeight: FontWeight.w500, fontSize: 15),
                       ),
                       SizedBox(
                         height: 15,

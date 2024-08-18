@@ -39,6 +39,7 @@ class _HotelAboutUsViewState extends State<HotelAboutUsView> {
     final userData = Map<dynamic, dynamic>.from(event.value as Map);
     _HotelNameController.text = userData['HotelName'];
     _emailController.text = userData['email'];
+    _MobileController.text = userData['mobile_number'];
     _LocationController.text =
         ' ${userData['location']} - ${userData['address']}';
     if (mounted) {
@@ -66,7 +67,7 @@ class _HotelAboutUsViewState extends State<HotelAboutUsView> {
                 children: [
                   Icon(
                     Icons.save_as,
-                    color: AppColors.lightPurple,
+                    color: Colors.transparent,
                   ),
                   Text(
                     'About Us',
@@ -236,6 +237,7 @@ class _HotelAboutUsViewState extends State<HotelAboutUsView> {
                           height: 40,
                           width: size.width,
                           child: TextField(
+                            controller: _MobileController,
                             keyboardType: TextInputType.phone,
                             decoration: textFielDecoratiom.copyWith(
                               focusedBorder: const OutlineInputBorder(

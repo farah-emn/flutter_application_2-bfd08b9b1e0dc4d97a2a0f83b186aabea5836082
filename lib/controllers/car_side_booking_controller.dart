@@ -5,19 +5,14 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-// import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
+import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 import 'package:traveling/classes/hotel1.dart';
-import 'package:traveling/classes/hotel_bookings_class1.dart';
-import 'package:traveling/controllers/hotel_rooms_controller.dart';
 
-class HotelBookingsController extends GetxController {
-  Rx<DateTime> departureDate = DateTime.now().add(const Duration(days: 1)).obs;
-  Rx<DateTime> ArrivalDate = DateTime.now().obs;
-  var selectedDate = '${DateTime.now().month}/${DateTime.now().day}'.obs;
-  final HotelRoomsController HotelRooms_Controller =
-      Get.put(HotelRoomsController());
-  var bookingsDetailsUpcoming = <HotelBookingsClass1>[].obs;
-  var bookingsDetailsFinished = <HotelBookingsClass1>[].obs;
+import '../classes/car_side_upcoming_class1.dart';
+
+class CarSideBookingsController extends GetxController {
+  var bookingsDetailsUpcoming = <carSideBookingsClass1>[].obs;
+  var bookingsDetailsFinished = <carSideBookingsClass1>[].obs;
   var NewbookingRoom = false.obs;
   var Hotels = <HotelClass1>[].obs;
   var validHotels = <HotelClass1>[].obs;
@@ -29,14 +24,16 @@ class HotelBookingsController extends GetxController {
   var HotelId = '';
   var CompanyId = '';
   var isLoading = true.obs;
-  // ItemScrollController _scrollController = ItemScrollController();
+  ItemScrollController _scrollController = ItemScrollController();
 
   @override
   void onInit() {
     super.onInit();
     ref = FirebaseDatabase.instance.ref('user');
     user = _auth.currentUser;
-    bookingsDetailsUpcoming.clear();
+    getUserBookingUpcoming();
+    getUserBookingFinished();
+    print('kkkkkkkkkkkkk');
     getCurrentUser();
     update();
   }
@@ -59,25 +56,24 @@ class HotelBookingsController extends GetxController {
   Set<String> addedRoomIds = Set<String>();
 
   void getUserBookingUpcoming() async {
-    print('qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq');
     isLoading.value = true;
     DatabaseReference ref = FirebaseDatabase.instance.reference();
-    final event = await ref.child('hotel_booking').once();
+    final event = await ref.child('CarBooking').once();
     if (event.snapshot.exists) {
       var bookingDetails =
           Map<dynamic, dynamic>.from(event.snapshot.value as Map);
       bookingDetails.forEach((bookingKey, value) async {
         Map<dynamic, dynamic> bookingData = value;
         final DateFormat formatter = DateFormat('d. M, y');
-        final String formattedCheckoutDate = value['DepartureDate'];
+        final String formattedCheckoutDate = value['PickupDate'];
         final String formattedNow = formatter.format(DateTime.now());
         DateTime checkoutDate = formatter.parse(formattedCheckoutDate);
         DateTime now = formatter.parse(formattedNow);
         if (checkoutDate.isAfter(now)) {
-          if (bookingData['userId'].toString() == loggedinUser.uid.toString()) {
-            await getBookingDetailsUpcoming(bookingData, bookingData['RoomId']);
-            print('wewewewe');
-          }
+          // if (bookingData['userId'].toString() == loggedinUser.uid.toString()) {
+          await getBookingDetailsUpcoming(bookingData, bookingData['CarId']);
+          //   print('wewewewe');
+          //  }
         } else {
           isLoading.value = false;
         }
@@ -91,19 +87,19 @@ class HotelBookingsController extends GetxController {
     DatabaseReference ref = FirebaseDatabase.instance.reference();
 
     // Fetch room details
-    final roomEvent = await ref.child('Room').child(roomId).once();
+    final roomEvent = await ref.child('Car').child(roomId).once();
     if (roomEvent.snapshot.exists) {
       Map<dynamic, dynamic> roomData =
           Map<dynamic, dynamic>.from(roomEvent.snapshot.value as Map);
 
       // Fetch hotel details
-      final hotelEvent = await ref.child('Hotel').once();
+      final hotelEvent = await ref.child('Car_Rental_Company').once();
       if (hotelEvent.snapshot.exists) {
         Map<dynamic, dynamic> hotelData =
             Map<dynamic, dynamic>.from(hotelEvent.snapshot.value as Map);
 
         // Fetch ratings
-        var ratingsHotel = await ref.child('RatingsHotel').once();
+        var ratingsHotel = await ref.child('RatingsCars').once();
         if (ratingsHotel.snapshot.exists) {
           var ratingsHotelData;
           if (ratingsHotel.snapshot.value is Map) {
@@ -127,18 +123,16 @@ class HotelBookingsController extends GetxController {
           }
 
           double ratingValue = 0.0;
-          if (ratingsHotelData is Map && ratingsHotelData['RoomId'] == roomId) {
+          if (ratingsHotelData is Map && ratingsHotelData['CarId'] == roomId) {
             ratingValue = ratingsHotelData['Rating'];
             print(ratingValue);
             print('Map of ratings:');
             print(ratingsHotelData);
           } else if (ratingsHotelData is List) {
             for (var rating in ratingsHotelData) {
-              if (rating != null && rating['RoomId'] == roomId) {
-                print(rating['Rating']);
+              if (rating != null && rating['CarId'] == roomId) {
                 ratingValue = (rating['Rating'] as num).toDouble();
-                print('Rating value:');
-                print(ratingValue);
+
                 break;
               }
             }
@@ -146,38 +140,54 @@ class HotelBookingsController extends GetxController {
           print('Final rating value:');
           print(ratingValue);
           if (!addedRoomIds.contains(roomId)) {
-            bookingsDetailsUpcoming.add(HotelBookingsClass1.fromMap({
-              'checkinDate': bookingData['ArrivalDate'],
-              'checkoutDate': bookingData['DepartureDate'],
-              'hotelName': hotelData['HotelName'],
-              'roomNumber': roomData['RoomNumber'],
-              'totalPrice': bookingData['TotalPrice'],
-              'image': roomData['RoomPhoto'][1].toString(),
-              'location': hotelData['location'],
-              'bookingDate': bookingData['BookingDate'],
-              'priceNight': roomData['Price'],
-              'RoomId': roomId,
-              'RatingRoom':
-                  ratingValue // Ensure the key matches the constructor
-            }));
+            hotelData.forEach((comanykey, value) async {
+              if (comanykey == bookingData['CompanyId']) {
+                bookingsDetailsUpcoming.add(carSideBookingsClass1.fromMap({
+                  'companyRentalName': hotelData['car_name_company'],
+                  'company': roomData['CarCompany'],
+                  'model': roomData['model'],
+                  'pickupDate': bookingData['PickupDate'],
+                  'dropoffDate': bookingData['DropOffDate'],
+                  'plateNumber': roomData['PlateNumber'],
+                  'totalPrice': bookingData['TotalPrice'],
+                  'image': roomData['CarPhoto'][1].toString(),
+                  'location': value['location'],
+                  'bookingDate': bookingData['BookingDate'],
+                  'carId': roomId,
+                  'RatingCar': ratingValue,
+                  'customerName': bookingData['FirstName'],
+                  'email': bookingData['Email'],
+                  'rentalInDay': roomData['RentalInDay'].toString()
+                }));
+              }
+            });
+            ;
             addedRoomIds.add(roomId);
           }
         } else {
           print('No ratings found.');
           if (!addedRoomIds.contains(roomId)) {
-            bookingsDetailsUpcoming.add(HotelBookingsClass1.fromMap({
-              'checkinDate': bookingData['ArrivalDate'],
-              'checkoutDate': bookingData['DepartureDate'],
-              'hotelName': hotelData['HotelName'],
-              'roomNumber': roomData['RoomNumber'],
-              'totalPrice': bookingData['TotalPrice'],
-              'image': roomData['RoomPhoto'][1].toString(),
-              'location': hotelData['location'],
-              'bookingDate': bookingData['BookingDate'],
-              'priceNight': roomData['Price'],
-              'RoomId': roomId,
-              'RatingRoom': 0.0 // Ensure the key matches the constructor
-            }));
+            hotelData.forEach((comanykey, value) async {
+              if (comanykey == bookingData['CompanyId']) {
+                bookingsDetailsUpcoming.add(carSideBookingsClass1.fromMap({
+                  'companyRentalName': hotelData['car_name_company'],
+                  'company': roomData['CarCompany'],
+                  'model': roomData['model'],
+                  'pickupDate': bookingData['PickupDate'],
+                  'dropoffDate': bookingData['DropOffDate'],
+                  'plateNumber': roomData['PlateNumber'],
+                  'totalPrice': bookingData['TotalPrice'],
+                  'image': roomData['CarPhoto'][1].toString(),
+                  'location': value['location'],
+                  'bookingDate': bookingData['BookingDate'],
+                  'carId': roomId,
+                  'RatingCar': 0.0,
+                  'customerName': bookingData['FirstName'],
+                  'email': bookingData['Email'],
+                  'rentalInDay': roomData['RentalInDay'].toString()
+                }));
+              }
+            });
             addedRoomIds.add(roomId);
           }
         }
@@ -192,21 +202,19 @@ class HotelBookingsController extends GetxController {
 
   void getUserBookingFinished() async {
     DatabaseReference ref = FirebaseDatabase.instance.reference();
-    final event = await ref.child('hotel_booking').once();
+    final event = await ref.child('CarBooking').once();
     if (event.snapshot.exists) {
       var bookingDetails =
           Map<dynamic, dynamic>.from(event.snapshot.value as Map);
       bookingDetails.forEach((bookingKey, value) async {
         Map<dynamic, dynamic> bookingData = value;
         final DateFormat formatter = DateFormat('d. M, y');
-        final String formattedCheckoutDate = value['DepartureDate'];
+        final String formattedCheckoutDate = value['PickupDate'];
         final String formattedNow = formatter.format(DateTime.now());
         DateTime checkoutDate = formatter.parse(formattedCheckoutDate);
         DateTime now = formatter.parse(formattedNow);
-        if (checkoutDate.isBefore(now)) {
-          if (bookingData['userId'].toString() == loggedinUser.uid.toString()) {
-            await getBookingDetailsFinished(bookingData, bookingData['RoomId']);
-          }
+        if (checkoutDate.isBefore(now) || checkoutDate == now) {
+          await getBookingDetailsFinished(bookingData, bookingData['CarId']);
         } else {
           isLoading.value = false;
         }
@@ -216,23 +224,20 @@ class HotelBookingsController extends GetxController {
 
   Future<void> getBookingDetailsFinished(
       Map<dynamic, dynamic> bookingData, roomId) async {
-    print('Fetching room and hotel booking details...');
     DatabaseReference ref = FirebaseDatabase.instance.reference();
 
-    // Fetch room details
-    final roomEvent = await ref.child('Room').child(roomId).once();
+    final roomEvent = await ref.child('Car').child(roomId).once();
     if (roomEvent.snapshot.exists) {
       Map<dynamic, dynamic> roomData =
           Map<dynamic, dynamic>.from(roomEvent.snapshot.value as Map);
 
-      // Fetch hotel details
-      final hotelEvent = await ref.child('Hotel').once();
+      final hotelEvent = await ref.child('Car_Rental_Company').once();
       if (hotelEvent.snapshot.exists) {
         Map<dynamic, dynamic> hotelData =
             Map<dynamic, dynamic>.from(hotelEvent.snapshot.value as Map);
 
         // Fetch ratings
-        var ratingsHotel = await ref.child('RatingsHotel').once();
+        var ratingsHotel = await ref.child('R').once();
         if (ratingsHotel.snapshot.exists) {
           var ratingsHotelData;
           if (ratingsHotel.snapshot.value is Map) {
@@ -251,19 +256,17 @@ class HotelBookingsController extends GetxController {
                 ratings.add((data['Rating'] as num).toDouble());
               }
             }
-            print('kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk');
-            print(ratings); // Output: [0.5, 2.5]
           }
 
           double ratingValue = 0.0;
-          if (ratingsHotelData is Map && ratingsHotelData['RoomId'] == roomId) {
+          if (ratingsHotelData is Map && ratingsHotelData['CarId'] == roomId) {
             ratingValue = ratingsHotelData['Rating'];
             print(ratingValue);
             print('Map of ratings:');
             print(ratingsHotelData);
           } else if (ratingsHotelData is List) {
             for (var rating in ratingsHotelData) {
-              if (rating != null && rating['RoomId'] == roomId) {
+              if (rating != null && rating['CarId'] == roomId) {
                 print(rating['Rating']);
                 ratingValue = (rating['Rating'] as num).toDouble();
                 print('Rating value:');
@@ -275,39 +278,53 @@ class HotelBookingsController extends GetxController {
           print('Final rating value:');
           print(ratingValue);
           if (!addedRoomIdsFinished.contains(roomId)) {
-            print('mmmmmmmmmmmmmmmm1567890-09876543mmmmmmmmmmmm');
-            bookingsDetailsFinished.add(HotelBookingsClass1.fromMap({
-              'checkinDate': bookingData['ArrivalDate'],
-              'checkoutDate': bookingData['DepartureDate'],
-              'hotelName': hotelData['HotelName'],
-              'roomNumber': roomData['RoomNumber'],
-              'totalPrice': bookingData['TotalPrice'],
-              'image': roomData['RoomPhoto'][1].toString(),
-              'location': hotelData['location'],
-              'bookingDate': bookingData['BookingDate'],
-              'priceNight': roomData['Price'],
-              'RoomId': roomId,
-              'RatingRoom':
-                  ratingValue // Ensure the key matches the constructor
-            }));
+            hotelData.forEach((comanykey, value) async {
+              if (comanykey == bookingData['CompanyId']) {
+                bookingsDetailsFinished.add(carSideBookingsClass1.fromMap({
+                  'companyRentalName': hotelData['car_name_company'],
+                  'company': roomData['CarCompany'],
+                  'model': roomData['model'],
+                  'pickupDate': bookingData['PickupDate'],
+                  'dropoffDate': bookingData['DropOffDate'],
+                  'plateNumber': roomData['PlateNumber'],
+                  'totalPrice': bookingData['TotalPrice'],
+                  'image': roomData['CarPhoto'][1].toString(),
+                  'location': value['location'],
+                  'bookingDate': bookingData['BookingDate'],
+                  'carId': roomId,
+                  'RatingCar': ratingValue,
+                  'customerName': bookingData['FirstName'],
+                  'email': bookingData['Email'],
+                  'rentalInDay': roomData['RentalInDay'].toString()
+                }));
+              }
+            });
             addedRoomIdsFinished.add(roomId);
           }
         } else {
           print('No ratings found.');
           if (!addedRoomIdsFinished.contains(roomId)) {
-            bookingsDetailsFinished.add(HotelBookingsClass1.fromMap({
-              'checkinDate': bookingData['ArrivalDate'],
-              'checkoutDate': bookingData['DepartureDate'],
-              'hotelName': hotelData['HotelName'],
-              'roomNumber': roomData['RoomNumber'],
-              'totalPrice': bookingData['TotalPrice'],
-              'image': roomData['RoomPhoto'][1].toString(),
-              'location': hotelData['location'],
-              'bookingDate': bookingData['BookingDate'],
-              'priceNight': roomData['Price'],
-              'RoomId': roomId,
-              'RatingRoom': 0.0 // Ensure the key matches the constructor
-            }));
+            hotelData.forEach((comanykey, value) async {
+              if (comanykey == bookingData['CompanyId']) {
+                bookingsDetailsFinished.add(carSideBookingsClass1.fromMap({
+                  'companyRentalName': hotelData['car_name_company'],
+                  'company': roomData['CarCompany'],
+                  'model': roomData['model'],
+                  'pickupDate': bookingData['PickupDate'],
+                  'dropoffDate': bookingData['DropOffDate'],
+                  'plateNumber': roomData['PlateNumber'],
+                  'totalPrice': bookingData['TotalPrice'],
+                  'image': roomData['CarPhoto'][1].toString(),
+                  'location': value['location'],
+                  'bookingDate': bookingData['BookingDate'],
+                  'carId': roomId,
+                  'RatingCar': 0.0,
+                  'customerName': bookingData['FirstName'],
+                  'email': bookingData['Email'],
+                  'rentalInDay': roomData['RentalInDay'].toString()
+                }));
+              }
+            });
             addedRoomIdsFinished.add(roomId);
           }
         }

@@ -3,7 +3,7 @@
 import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
-// import 'package:firebase_storage/firebase_storage.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
@@ -11,6 +11,8 @@ import 'package:traveling/ui/shared/text_size.dart';
 import '../../shared/colors.dart';
 import '../../shared/custom_widgets/custom_button.dart';
 import '../../shared/custom_widgets/custom_textfield2.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:path/path.dart';
 
 class HotelAddView extends StatefulWidget {
   const HotelAddView({super.key});
@@ -116,7 +118,7 @@ class _HotelAddViewState extends State<HotelAddView> {
     int IdOfRoomPhoto = 0;
     int IdOfChild = 0;
     final databaseReference = FirebaseDatabase.instance.reference();
-    databaseReference.child('Room/$IdRoom:').update({
+    databaseReference.child('Room/$IdRoom:').set({
       "HotelId": HotelId,
       "Price": double.parse(_price.text.replaceAll('\u{00A0}', '')),
       "Overview": _Overview.text,
@@ -136,19 +138,19 @@ class _HotelAddViewState extends State<HotelAddView> {
       "is_reserved": false,
     });
     //image
-    // if (images.isNotEmpty) {
-    //   for (var image in images) {
-    //     IdOfRoomPhoto += 1;
-    //     File file = File(image.path);
-    //     var imagename = basename(image.path);
-    //     var Firebase_Storage = FirebaseStorage.instance.ref(imagename);
-    //     await Firebase_Storage.putFile(file);
-    //     String url = await Firebase_Storage.getDownloadURL();
-    //     databaseReference
-    //         .child('Room/$IdRoom:/RoomPhoto')
-    //         .update({'$IdOfRoomPhoto': url});
-    //   }
-    // }
+    if (images.isNotEmpty) {
+      for (var image in images) {
+        IdOfRoomPhoto += 1;
+        File file = File(image.path);
+        var imagename = basename(image.path);
+        var Firebase_Storage = FirebaseStorage.instance.ref(imagename);
+        await Firebase_Storage.putFile(file);
+        String url = await Firebase_Storage.getDownloadURL();
+        databaseReference
+            .child('Room/$IdRoom:/RoomPhoto')
+            .update({'$IdOfRoomPhoto': url});
+      }
+    }
 
     // if (selectedValues.isNotEmpty)
     //   for (var i in selectedValues) {

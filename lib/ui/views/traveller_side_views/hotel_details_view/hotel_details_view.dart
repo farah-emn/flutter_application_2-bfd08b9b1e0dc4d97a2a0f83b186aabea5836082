@@ -106,7 +106,8 @@ class _HotelDetailsViewState extends State<HotelDetailsView>
                               '${widget.Hotel!.Name}, ${widget.Hotel!.location}, ${widget.Hotel!.address}'));
                     },
                     child: Container(
-                      padding: EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                       width: size.width / 2 + 50,
                       decoration: BoxDecoration(
                         color: AppColors.LightGrayColor,
@@ -308,27 +309,6 @@ class _HotelDetailsViewState extends State<HotelDetailsView>
               ),
             ),
             Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                  margin: const EdgeInsets.symmetric(vertical: 20),
-                  width: size.width - 50,
-                  height: 1,
-                  color: AppColors.LightGrayColor,
-                ),
-              ],
-            ),
-            const Text(
-              'Rating and review',
-              style: TextStyle(
-                fontSize: TextSize.header1,
-                fontWeight: FontWeight.w500,
-              ),
-            ),
-            const SizedBox(
-              height: 5,
-            ),
-            Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 Column(
@@ -346,7 +326,18 @@ class _HotelDetailsViewState extends State<HotelDetailsView>
                           ),
                     RatingBarIndicator(
                       itemSize: 25,
-                      rating: 4.5,
+                      rating: ((hotelRoomsController.HotelaverageRating.value
+                                          .toDouble() >
+                                      0 ||
+                                  hotelRoomsController.HotelaverageRating.value
+                                          .toDouble() ==
+                                      0.0) &&
+                              hotelRoomsController.HotelaverageRating.value
+                                      .toDouble() <
+                                  1)
+                          ? 1
+                          : hotelRoomsController.HotelaverageRating.value
+                              .toDouble(),
                       itemBuilder: (_, __) => const Icon(
                         Icons.star_rounded,
                         color: AppColors.gold,
@@ -493,7 +484,7 @@ class _HotelDetailsViewState extends State<HotelDetailsView>
                                                     .HotelaverageRating.value <
                                             1
                                         ? 1
-                                        : 0),
+                                        : 1),
                             color: AppColors.purple,
                             backgroundColor: AppColors.lightPurple,
                             borderRadius: BorderRadius.all(Radius.circular(10)),

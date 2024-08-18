@@ -1,25 +1,23 @@
 // ignore_for_file: body_might_complete_normally_nullable, prefer_typing_uninitialized_variables, non_constant_identifier_names, prefer_const_constructors, prefer_const_literals_to_create_immutables, sized_box_for_whitespace, no_leading_underscores_for_local_identifiers, unused_element
 
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:traveling/ui/shared/colors.dart';
 import 'package:traveling/controllers/search_oneway_controller.dart';
 import 'package:traveling/controllers/search_roundtrip_controller.dart';
 import 'package:traveling/ui/shared/custom_widgets/custom_button.dart';
-import 'package:traveling/ui/shared/custom_widgets/custom_textfield2.dart';
 import 'package:traveling/ui/shared/text_size.dart';
-import 'package:traveling/ui/views/traveller_side_views/car_view.dart';
-import 'package:traveling/ui/views/traveller_side_views/search_flight/DepartureDateDetails.dart';
 import 'package:traveling/ui/views/traveller_side_views/search_flight/DepartureDateReturnDateDetails.dart';
 import 'package:traveling/ui/views/traveller_side_views/search_flight/list_arrival_city_oneway.dart';
 import 'package:traveling/ui/views/traveller_side_views/search_flight/list_arrival_city_round.dart';
 import 'package:traveling/ui/views/traveller_side_views/search_flight/list_departure_city_oneway.dart';
 import 'package:traveling/ui/views/traveller_side_views/search_flight/list_departure_city_round.dart';
 import 'package:traveling/ui/views/traveller_side_views/search_hotel/search_hotel_view.dart';
-
 import '../../../controllers/car_search_controller.dart';
 import 'car_search/list_pickup_location_car.dart';
 import 'car_search/pickup_time_drop_off_time.dart';
+import 'search_flight/DepartureDateDetails.dart';
 
 class SearchView extends StatefulWidget {
   String? DepartureCityOneWay;
@@ -93,10 +91,27 @@ class _SearchViewState extends State<SearchView>
   @override
   void dispose() {
     super.dispose();
+    // searchViewRoundTripController.clearData();
   }
 
   void _searchForFlights() async {
-    controller.fetchFlights();
+    if (controller.deoarturecityone != '' &&
+        controller.Arrivalcityone != '' &&
+        controller.TypeFlight != 'Flight type') {
+      controller.fetchFlights();
+    } else if (controller.deoarturecityone != '' ||
+        controller.Arrivalcityone != '' ||
+        controller.TypeFlight != 'Flight type') {
+      controller.isloading.value = false;
+      Fluttertoast.showToast(
+          msg: "Please select all fields",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.grey,
+          textColor: Colors.white,
+          fontSize: 16.0);
+    }
   }
 
   @override
@@ -887,8 +902,23 @@ class _SearchViewState extends State<SearchView>
     final TextEditingController returnDateController = TextEditingController();
 
     void _searchForFlights() async {
-      controller.fetchFlights();
-      searchViewRoundTripController.isloading.value = true;
+      if (controller.DepartureCityRoundTrip.value != '' &&
+          controller.ArrivalCityRoundTrip.value != '' &&
+          controller.TypeFlight != 'Flight type') {
+        controller.fetchFlights();
+      } else if (controller.DepartureCityRoundTrip.value != '' ||
+          controller.ArrivalCityRoundTrip.value != '' ||
+          controller.TypeFlight != 'Flight type') {
+        controller.isloading.value = false;
+        Fluttertoast.showToast(
+            msg: "Please select all fields",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.BOTTOM,
+            timeInSecForIosWeb: 1,
+            backgroundColor: Colors.grey,
+            textColor: Colors.white,
+            fontSize: 16.0);
+      }
     }
 
     @override
@@ -906,12 +936,6 @@ class _SearchViewState extends State<SearchView>
       children: [
         Column(
           children: [
-            // Obx(
-            //   () => (searchViewRoundTripController.isloading.value == true)
-            //       ? CircularProgressIndicator()
-            //       : SizedBox(),
-            // ),
-
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
@@ -1331,6 +1355,23 @@ class _SearchViewState extends State<SearchView>
                 ),
               ],
             ),
+            Container(
+              width: 20,
+              height: 20,
+              child: Obx(
+                () => (searchViewRoundTripController.isloading.value == true &&
+                        searchViewRoundTripController.TypeFlight !=
+                            'Flight type' &&
+                        searchViewRoundTripController.DepartureCityRoundTrip !=
+                            '' &&
+                        searchViewRoundTripController.ArrivalCityRoundTrip !=
+                            '')
+                    ? CircularProgressIndicator()
+                    : (searchViewOneWayController.isloading.value == true)
+                        ? CircularProgressIndicator()
+                        : SizedBox(),
+              ),
+            ),
             Row(
               children: [
                 Radio(
@@ -1379,11 +1420,22 @@ class _SearchViewState extends State<SearchView>
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
+        //         Container(
+        //         width: 20,
+        //         height: 20,
+        //         child: Obx(
+        //           () => (
+        //               ? CircularProgressIndicator()
+        //               : (searchViewOneWayController.isloading.value == true)
+        //                   ? CircularProgressIndicator()
+        //                   : SizedBox(),
+        //         ),
+        //       ),
         const Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Text(
-              'Destonation',
+              'Pick up & Drop off location',
               style: TextStyle(
                   fontSize: 13,
                   color: AppColors.grayText,
@@ -1715,7 +1767,19 @@ class _SearchViewState extends State<SearchView>
           onTap: () {
             print('jj9j');
             // Get.to(CarView());
+            // if (widget.PickUpLocation != '') {
+            //   Fluttertoast.showToast(
+            //       msg: "Please select all fields",
+            //       toastLength: Toast.LENGTH_SHORT,
+            //       gravity: ToastGravity.BOTTOM,
+            //       timeInSecForIosWeb: 1,
+            //       backgroundColor: Colors.grey,
+            //       textColor: Colors.white,
+            //       fontSize: 16.0);
+            //   ;
+            // } else {
             _searchForCar();
+            //   }
           },
           child: CustomButton(
             text: 'Search',

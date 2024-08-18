@@ -4,6 +4,7 @@ import 'package:traveling/ui/shared/colors.dart';
 import 'package:traveling/ui/shared/text_size.dart';
 import 'package:traveling/ui/views/car_side_views/car_signup_view.dart';
 import 'package:traveling/ui/views/flight_side_views/flight_signin_view.dart';
+import 'package:traveling/ui/views/flight_side_views/flight_signup_view.dart';
 import 'package:traveling/ui/views/hotel_side_views/hotel_signup_view.dart';
 
 class CompaniesTypeView extends StatelessWidget {
@@ -88,7 +89,7 @@ class CompaniesTypeView extends StatelessWidget {
                     ),
                     InkWell(
                       onTap: () {
-                        Get.to(() => FlightSignInView());
+                        Get.to(() => FlightSignUpView());
                       },
                       child: Container(
                         width: size.width,

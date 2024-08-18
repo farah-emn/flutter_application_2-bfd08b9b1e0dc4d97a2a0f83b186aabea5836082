@@ -7,6 +7,7 @@ import 'package:traveling/classes/flight_booking_class.dart';
 import 'package:traveling/ui/shared/custom_widgets/white_container.dart';
 import 'package:traveling/ui/shared/text_size.dart';
 import 'package:traveling/ui/views/traveller_side_views/flight_booking_details_view.dart';
+import '../classes/flight_booking_class1.dart';
 import '../ui/shared/colors.dart';
 
 class FlightFinishedBookingCard extends StatefulWidget {
@@ -43,14 +44,19 @@ class _FlightFinishedBookingCardState extends State<FlightFinishedBookingCard> {
                       width: 35,
                       margin: const EdgeInsets.only(right: 10),
                       decoration: BoxDecoration(
-                        borderRadius: const BorderRadius.all(
-                          Radius.circular(20),
-                        ),
-                        image: DecorationImage(
-                          image: AssetImage(widget.flightBookingModel.image),
-                          fit: BoxFit.fill,
-                        ),
-                      ),
+                          borderRadius: const BorderRadius.all(
+                            Radius.circular(20),
+                          ),
+                          image: DecorationImage(
+                            image: AssetImage(widget.flightBookingModel.image),
+                            // NetworkImage(
+                            //     widget.flightBookingModel.CompanyLogo != null &&
+                            //             widget.flightBookingModel.CompanyLogo!
+                            //                 .isNotEmpty
+                            //         ? widget.flightBookingModel.CompanyLogo
+                            //         : ''),
+                            fit: BoxFit.fill,
+                          )),
                     ),
                     const Text(
                       'Flynas',

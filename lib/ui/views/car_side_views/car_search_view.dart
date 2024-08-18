@@ -2,12 +2,9 @@
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:traveling/cards/car_card.dart';
-import 'package:traveling/classes/hotel_room_details_class1.dart';
 import 'package:traveling/controllers/currency_controller.dart';
 import '../../../classes/car_class1.dart';
 import '../../shared/colors.dart';
@@ -32,6 +29,7 @@ class _CarSearchViewState extends State<CarSearchView> {
   late final User? user;
   var Companylogo;
   var CarId = '';
+  var isloading = false.obs;
   String sorteBy = '';
   String CompanyName = '';
   late DatabaseReference ref;
@@ -92,6 +90,8 @@ class _CarSearchViewState extends State<CarSearchView> {
         .once()
         .then((DatabaseEvent event) {
       if (event.snapshot.exists) {
+        isloading.value = true;
+
         var RoomData = Map<dynamic, dynamic>.from(event.snapshot.value as Map);
         RoomData.forEach((Roomkey, value) {
           print('fgggggg');
@@ -113,10 +113,14 @@ class _CarSearchViewState extends State<CarSearchView> {
             'companyRentailName': CompanyName
           }));
         });
+      } else {
+        isloading.value = false;
       }
     });
     if (mounted) {
       setState(() {
+        isloading.value = false;
+
         HotelRooms.value = rooms;
         originalHotelRooms = List.from(HotelRooms.value);
         print('[]]');
@@ -164,7 +168,7 @@ class _CarSearchViewState extends State<CarSearchView> {
             HotelRoomPrice.reduce(
                 (value, element) => value > element ? value : element));
       }
-      RangeValues _currentRangeValues = RangeValues(100, 1000);
+      RangeValues _currentRangeValues = RangeValues(MinPrice, MaxPrice);
       // Future<void> _Confirm() async {
       //   List<CarClass1> filteredRooms = [];
       //   for (var Room in originalHotelRooms) {
@@ -197,6 +201,7 @@ class _CarSearchViewState extends State<CarSearchView> {
       // }
       Future<void> _Confirm() async {
         List<CarClass1> filteredRooms = [];
+
         for (var Room in originalHotelRooms) {
           // Use originalHotelRooms for filtering
           var HotelRoomPrice = convert(
@@ -208,49 +213,28 @@ class _CarSearchViewState extends State<CarSearchView> {
           bool Color = Room.color == getColorName(selectedColor.value) ||
               selectedColor == '';
           bool ger = (Room.ger == sorteBy) || (sorteBy == '');
-          bool Seats = true;
-          bool s2 = false;
-          bool s4 = false;
-          bool s6 = false;
+          bool matchesPriceRange =
+              (HotelRoomPrice >= _currentRangeValues.start.round() &&
+                  HotelRoomPrice <= _currentRangeValues.end.round());
 
-          for (int i = 0; i < isSelected.length; i++) {
-            setState(() {
-              if (isSelected[0] == true) {
-                s2 = true;
-              }
-              if (isSelected[1] == true) {
-                s4 = true;
-              }
-              if (isSelected[2] == true) {
-                s6 = true;
-              }
-            });
+          if (company && Color & ger & matchesPriceRange) {
+            filteredRooms.add(Room);
           }
-
-          print(s2);
-          print(s4);
-          print(s6);
-          if (company && Color) {
-            if (s2) {
-              print('33');
-              if (Room.seats == 2) filteredRooms.add(Room);
-            }
-            if (s4) {
-              print('44');
-              filteredRooms.add(Room);
-            }
-            if (s6) {
-              print('66');
-              if (Room.seats == 6) filteredRooms.add(Room);
-            }
-          }
+          //   if (isSelected[0] == true && Room.seats == 2) {
+          //     filteredRooms.add(Room);
+          //   } else if (isSelected[1] == true && Room.seats == 4) {
+          //     filteredRooms.add(Room);
+          //   } else if (isSelected[2] == true && Room.seats == 6) {
+          //     filteredRooms.add(Room);
+          //   }
+          // }
         }
 
         setState(() {
           HotelRooms.value = filteredRooms;
           NumberOfResultFilteredHotelRooms = filteredRooms.length;
         });
-        if (filteredRooms.isEmpty) {}
+
         Navigator.pop(context);
       }
 
@@ -423,54 +407,6 @@ class _CarSearchViewState extends State<CarSearchView> {
                                 width: size.width - 30,
                                 color: AppColors.gray,
                               ),
-                              ToggleButtons(
-                                disabledColor: AppColors.grayText,
-
-                                borderColor: AppColors.LightGrayColor,
-                                borderRadius: BorderRadius.circular(15),
-                                // focusColor: AppColors.grayText,
-                                fillColor: AppColors.lightGray,
-                                selectedColor: AppColors.blackColor,
-                                selectedBorderColor: AppColors.lightGray,
-                                color: AppColors.grayText,
-
-                                isSelected: isSelected,
-                                onPressed: (int index) {
-                                  setModalState(() {
-                                    for (int i = 0;
-                                        i < isSelected.length;
-                                        i++) {
-                                      isSelected[i] = i == index;
-                                      print(isSelected[i]);
-                                    }
-                                  });
-                                },
-                                constraints: BoxConstraints(
-                                  minWidth: size.width / 3 - 21.5,
-                                  minHeight: 40.0,
-                                ),
-                                children: const <Widget>[
-                                  Padding(
-                                    padding: EdgeInsets.all(0.0),
-                                    child: Text('2 Seats'),
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsets.all(0.0),
-                                    child: Text('4 Seats'),
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsets.all(0.0),
-                                    child: Text('6 Seats'),
-                                  ),
-                                ],
-                              ),
-                              Container(
-                                margin:
-                                    const EdgeInsets.symmetric(vertical: 15),
-                                height: 1,
-                                width: size.width - 30,
-                                color: AppColors.gray,
-                              ),
                               const Row(
                                 children: [
                                   Text(
@@ -546,10 +482,8 @@ class _CarSearchViewState extends State<CarSearchView> {
                                       values: _currentRangeValues,
                                       activeColor: AppColors.darkGray,
                                       inactiveColor: AppColors.gray,
-                                      // min: MinPrice,
-                                      // max: MaxPrice,
-                                      min: 100,
-                                      max: 1000,
+                                      min: MinPrice,
+                                      max: MaxPrice,
                                       divisions: 100,
                                       labels: RangeLabels(
                                         _currentRangeValues.start
@@ -596,27 +530,27 @@ class _CarSearchViewState extends State<CarSearchView> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(
-                                  'Show 138 of 210 Rooms',
+                                  'Show',
 
-                                  // dropdownValue2 == 'Toyota' && sorteBy == ''
-                                  //     // selectedColor.value == ''
+                                  // (dropdownValue2 == 'Toyota' &&
+                                  //         sorteBy == '' &&
+                                  //         selectedColor.value == '')
                                   //     ? 'Show ${originalHotelRooms.length} of ${originalHotelRooms.length} Rooms'
-                                  //     : 'Show $NumberOfResultFilteredHotelRooms of ${originalHotelRooms.length} Rooms',
+                                  //     : 'Show $NumberOfResultFilteredHotelRooms of ${HotelRooms.value.length} Rooms',
+                                  //
                                   style: const TextStyle(
                                       color: Colors.white,
                                       fontWeight: FontWeight.w500),
                                 ),
-
-                                // (dropdownValue2 == 'Toyota'
-                                //     // _currentRangeValues.start
-                                //     //         .round()
-                                //     //         .toString() ==
-                                //     //     MinPrice &&
-                                //     // _currentRangeValues.end
-                                //     //         .round()
-                                //     //         .toString() ==
-                                //     //     MaxPrice
-                                //     )
+                                // (dropdownValue2 == 'Toyota' &&
+                                //         _currentRangeValues.start
+                                //                 .round()
+                                //                 .toString() ==
+                                //             MinPrice &&
+                                //         _currentRangeValues.end
+                                //                 .round()
+                                //                 .toString() ==
+                                //             MaxPrice)
                                 //     ? Text(
                                 //         'Show ${HotelRooms.value.length} of ${originalHotelRooms.length} Rooms',
                                 //         style: const TextStyle(
@@ -656,20 +590,35 @@ class _CarSearchViewState extends State<CarSearchView> {
         //     ],
         //   ),
         // ),
-        body: Stack(children: [
-          Padding(
-            padding: EdgeInsets.only(left: 15, right: 15, top: 35),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  'Search',
-                  style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.w700,
-                      color: AppColors.backgroundgrayColor),
+        body: SafeArea(
+          child: Stack(children: [
+            const Padding(
+              padding: EdgeInsets.only(left: 15, right: 15, top: 10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    'Search',
+                    style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w700,
+                        color: AppColors.backgroundgrayColor),
+                  ),
+                  SizedBox(),
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(
+                top: 50,
+              ),
+              child: Container(
+                decoration: const BoxDecoration(
+                  image: DecorationImage(
+                      image: AssetImage('assets/image/png/background1.png'),
+                      fit: BoxFit.fill),
                 ),
-                Padding(
+                child: Padding(
                   padding: const EdgeInsets.only(top: 15, right: 15, left: 15),
                   child: Column(
                     children: [
@@ -711,7 +660,6 @@ class _CarSearchViewState extends State<CarSearchView> {
                               color: AppColors.grayText,
                             ),
                           ),
-                        
                         ),
                       ),
                       const SizedBox(
@@ -722,27 +670,41 @@ class _CarSearchViewState extends State<CarSearchView> {
                       //     : (HotelRooms.value.isNotEmpty)
                       //         ? Expanded(
                       // child:
-                      Expanded(
-                        child: ListView.builder(
-                          scrollDirection: Axis.vertical,
-                          shrinkWrap: true,
-                          itemCount: HotelRooms.value.length,
-                          itemBuilder: (context, index) => CarCard(
-                            size: size,
-                            itemIndex: index,
-                            carDetails: HotelRooms.value[index],
-                          ),
-                        ),
-                      ),
-               ] ),
-                    // )
-                    // : SizedBox(),
-                )
-                ]
+                      // Expanded(
+                      //   child: ListView.builder(
+                      //     scrollDirection: Axis.vertical,
+                      //     shrinkWrap: true,
+                      //     itemCount: HotelRooms.value.length,
+                      //     itemBuilder: (context, index) => CarCard(
+                      //       size: size,
+                      //       itemIndex: index,
+                      //       carDetails: HotelRooms.value[index],
+                      //     ),
+                      //   ),
+                      // ),
+                      Obx(() => isloading.value
+                          ? const Center(child: CircularProgressIndicator())
+                          : Expanded(
+                              child: ListView.builder(
+                                scrollDirection: Axis.vertical,
+                                shrinkWrap: true,
+                                itemCount: HotelRooms.value.length,
+                                itemBuilder: (context, index) => CarCard(
+                                  size: size,
+                                  itemIndex: index,
+                                  carDetails: HotelRooms.value[index],
+                                ),
+                              ),
+                            ))
+                      // )
+                      // : SizedBox(),
+                    ],
+                  ),
+                ),
               ),
-            )],
-          ),
-        );
+            ),
+          ]),
+        ));
   }
 
   void _SearchCarController(String value) {

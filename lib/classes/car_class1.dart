@@ -17,6 +17,8 @@ class CarClass1 {
   String is_reserved;
   // String companyRentlId;
   String pickupLocation;
+  String email;
+  String mobileNumber;
 
   CarClass1(
       {required this.id,
@@ -33,7 +35,9 @@ class CarClass1 {
       required this.model,
       required this.is_reserved,
       required this.companyRentailName,
-      required this.pickupLocation});
+      required this.pickupLocation,
+      required this.email,
+      required this.mobileNumber});
   factory CarClass1.fromMap(Map<dynamic, dynamic> map) {
     return CarClass1(
       id: map['id'] is String ? map['id'] : '',
@@ -58,6 +62,8 @@ class CarClass1 {
           map['companyRentailName'] is String ? map['companyRentailName'] : '',
       pickupLocation:
           map['pickupLocation'] is String ? map['pickupLocation'] : '',
+      email: map['email'] is String ? map['email'] : '',
+      mobileNumber: map['mobileNumber'] is String ? map['mobileNumber'] : '',
     );
   }
 }

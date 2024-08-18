@@ -1,21 +1,11 @@
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_database/firebase_database.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:traveling/cards/car_side_upcoming_card.dart';
-
 import 'package:traveling/cards/car_side_finished_card.dart';
-import 'package:traveling/cards/hotel_side_upcoming_card.dart';
 import 'package:traveling/classes/car_side_finished_class.dart';
 import 'package:traveling/classes/car_side_upcoming_class.dart';
-import 'package:traveling/classes/hotel_side_finished_class.dart';
-import 'package:traveling/classes/hotel_side_upcoming_class.dart';
-import 'package:traveling/ui/shared/custom_widgets/white_container.dart';
-import 'package:traveling/ui/shared/text_size.dart';
+import '../../../controllers/car_side_booking_controller.dart';
 import '../../shared/colors.dart';
-import '../../shared/custom_widgets/custom_button.dart';
-import '../../shared/custom_widgets/custom_textfield2.dart';
 
 class CarBookingView extends StatefulWidget {
   const CarBookingView({super.key});
@@ -26,9 +16,8 @@ class CarBookingView extends StatefulWidget {
 class _CarBookingViewState extends State<CarBookingView>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
-  String? _flightSorteBy = 'Upcoming';
-  String? _hotelSorteBy = 'Upcoming';
-
+  CarSideBookingsController carSideBookingsController =
+      Get.put(CarSideBookingsController());
   @override
   void initState() {
     super.initState();
@@ -92,7 +81,7 @@ class _CarBookingViewState extends State<CarBookingView>
                         indicatorSize: TabBarIndicatorSize.tab,
                         dividerColor: AppColors.LightGrayColor,
                         indicatorColor: AppColors.darkGray,
-                        labelColor: AppColors.darkGray,
+                        labelColor: AppColors.lightGray,
                         unselectedLabelColor: AppColors.lightGray,
                         tabs: const [
                           Tab(
@@ -124,41 +113,70 @@ class _CarBookingViewState extends State<CarBookingView>
   }
 
   Widget upcoming(BuildContext context) {
+    // carSideBookingsController.getUserBookingUpcoming();
+    // carSideBookingsController.getUserBookingFinished();
+    print(carSideBookingsController.bookingsDetailsFinished.length);
     Size size = MediaQuery.of(context).size;
     return Column(
       children: [
         const SizedBox(
           height: 20,
         ),
-        Expanded(
-          child: ListView.builder(
-            shrinkWrap: true,
-            itemCount: CarBookingsDetails.length,
-            itemBuilder: (context, index) => CarSideUpcomingCard(
-              size: size,
-              itemIndex: index,
-              carBookingsDetails: CarBookingsDetails[index],
-            ),
-          ),
-        )
+        Obx(() {
+          if (carSideBookingsController.isLoading.value) {
+            return const CircularProgressIndicator(); // Show progress bar while loading
+          } else if (carSideBookingsController
+              .bookingsDetailsUpcoming.isEmpty) {
+            return SizedBox.shrink(); // Show nothing if the list is empty
+          } else {
+            return Expanded(
+              child: ListView.builder(
+                shrinkWrap: true,
+                itemCount:
+                    carSideBookingsController.bookingsDetailsUpcoming.length,
+                itemBuilder: (context, index) => CarSideUpcomingCard(
+                  size: size,
+                  itemIndex: index,
+                  carBookingsDetails: carSideBookingsController
+                      .bookingsDetailsUpcoming.value[index],
+                ),
+              ),
+            );
+          }
+        }),
       ],
     );
   }
 
   Widget finished(BuildContext context) {
+    carSideBookingsController.getUserBookingUpcoming();
+    carSideBookingsController.getUserBookingFinished();
     Size size = MediaQuery.of(context).size;
     return Column(
       children: [
         Expanded(
-          child: ListView.builder(
-            shrinkWrap: true,
-            itemCount: carFinishedDetails.length,
-            itemBuilder: (context, index) => CarSideFinishedCard(
-              size: size,
-              itemIndex: index,
-              carBookingsDetails: carFinishedDetails[index],
-            ),
-          ),
+          child: Obx(() {
+            if (carSideBookingsController.isLoading.value) {
+              return const CircularProgressIndicator(); // Show progress bar while loading
+            } else if (carSideBookingsController
+                .bookingsDetailsFinished.isEmpty) {
+              return SizedBox.shrink(); // Show nothing if the list is empty
+            } else {
+              return Expanded(
+                child: ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: carSideBookingsController
+                      .bookingsDetailsFinished.value.length,
+                  itemBuilder: (context, index) => CarSideFinishedCard(
+                    size: size,
+                    itemIndex: index,
+                    carBookingsDetails: carSideBookingsController
+                        .bookingsDetailsFinished.value[index],
+                  ),
+                ),
+              );
+            }
+          }),
         )
       ],
     );

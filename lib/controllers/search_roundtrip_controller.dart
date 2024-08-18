@@ -35,7 +35,7 @@ class SearchViewRoundTripController extends GetxController {
   double totalflightprice = 0;
   var DepartureCityRoundTrip = ''.obs;
   var ArrivalCityRoundTrip = ''.obs;
-
+  var lastFlightKey = ''.obs;
   var isloading = false.obs;
   @override
   void onInit() {
@@ -96,86 +96,104 @@ class SearchViewRoundTripController extends GetxController {
   }
 
   Future<void> searchForFlights() async {
-    String formattedDepartureDate = getFormattedDepartureDate();
-    String formattedReturnDate = getFormattedReturnDate();
-    DatabaseReference ref = FirebaseDatabase.instance.reference();
+    print(_flightType.value);
+    print('hhhhhhhhhhhhhhhhhhhhhhhhhhhvvvvv');
+    if (_flightType.value != 'Flight type' ||
+        ArrivalCityRoundTrip.value != '' ||
+        DepartureCityRoundTrip.value != '') {
+      String formattedDepartureDate = getFormattedDepartureDate();
+      String formattedReturnDate = getFormattedReturnDate();
+      DatabaseReference ref = FirebaseDatabase.instance.reference();
 
-    ref.child('flights').once().then((DatabaseEvent event) {
-      if (event.snapshot.exists) {
-        var flightsData =
-            Map<dynamic, dynamic>.from(event.snapshot.value as Map);
-        Map<dynamic, dynamic> filteredDepartureFlightsData = {};
-        Map<dynamic, dynamic> filteredArrivalFlightsData = {};
+      ref.child('flights').once().then((DatabaseEvent event) {
+        if (event.snapshot.exists) {
+          var flightsData =
+              Map<dynamic, dynamic>.from(event.snapshot.value as Map);
+          Map<dynamic, dynamic> filteredDepartureFlightsData = {};
+          Map<dynamic, dynamic> filteredArrivalFlightsData = {};
 
-        flightsData.forEach((key, value) {
-          var flightData = Map<dynamic, dynamic>.from(value);
-          //
-          bool seatPassengersAdultCondition =
-              flightData['Available_seat_passengers_Adult'] >= Adultcounter;
-          bool seatPassengersChildrenCondition = Childcounter == 0 ||
-              flightData['Available_seat_passengers_children'] >= Childcounter;
-          //
-          bool dateAndCityConditions =
-              flightData['DeparureDate'] == formattedDepartureDate &&
-                  flightData['ArrivalCity'] == ArrivalCityRoundTrip.value &&
-                  flightData['DeparureCity'] == DepartureCityRoundTrip.value;
-          //
+          flightsData.forEach((key, value) {
+            // lastFlightKey = flightsData.keys.last;
 
-          if (seatPassengersAdultCondition &&
-              seatPassengersChildrenCondition &&
-              dateAndCityConditions) {
-            flightsData.forEach((key1, value1) {
-              var returnFlightData = Map<dynamic, dynamic>.from(value1);
-              bool dateAndCityConditionsReturn =
-                  returnFlightData['DeparureDate'] == formattedReturnDate &&
-                      returnFlightData['ArrivalCity'] ==
-                          DepartureCityRoundTrip.value &&
-                      returnFlightData['DeparureCity'] ==
-                          ArrivalCityRoundTrip.value;
-              //
-              bool seatPassengersAdultCondition =
-                  flightData['Available_seat_passengers_Adult'] >= Adultcounter;
-              //
-              bool seatPassengersChildrenCondition = Childcounter == 0 ||
-                  flightData['Available_seat_passengers_children'] >=
-                      Childcounter;
+            var flightData = Map<dynamic, dynamic>.from(value);
+            //
+            bool seatPassengersAdultCondition =
+                flightData['Available_seat_passengers_Adult'] >= Adultcounter;
+            bool seatPassengersChildrenCondition = Childcounter == 0 ||
+                flightData['Available_seat_passengers_children'] >=
+                    Childcounter;
+            //
+            bool dateAndCityConditions =
+                flightData['DeparureDate'] == formattedDepartureDate &&
+                    flightData['ArrivalCity'] == ArrivalCityRoundTrip.value &&
+                    flightData['DeparureCity'] == DepartureCityRoundTrip.value;
+            //
 
-              if (dateAndCityConditionsReturn &&
-                  flightData['DeparureCity'] ==
-                      returnFlightData['ArrivalCity'] &&
-                  flightData['ArrivalCity'] ==
-                      returnFlightData['DeparureCity'] &&
-                  seatPassengersAdultCondition &&
-                  seatPassengersChildrenCondition) {
-                if (filteredDepartureFlightsData[key] ==
-                    filteredArrivalFlightsData[key1]) {
-                  filteredDepartureFlightsData[key] = flightData;
-                  filteredArrivalFlightsData[key1] = returnFlightData;
-                  totalflightprice = flightData['ticket_price'] +
-                      returnFlightData['ticket_price'];
+            if (seatPassengersAdultCondition &&
+                seatPassengersChildrenCondition &&
+                dateAndCityConditions) {
+              flightsData.forEach((key1, value1) {
+                var returnFlightData = Map<dynamic, dynamic>.from(value1);
+                bool dateAndCityConditionsReturn =
+                    returnFlightData['DeparureDate'] == formattedReturnDate &&
+                        returnFlightData['ArrivalCity'] ==
+                            DepartureCityRoundTrip.value &&
+                        returnFlightData['DeparureCity'] ==
+                            ArrivalCityRoundTrip.value;
+                //
+                bool seatPassengersAdultCondition =
+                    flightData['Available_seat_passengers_Adult'] >=
+                        Adultcounter;
+                //
+                bool seatPassengersChildrenCondition = Childcounter == 0 ||
+                    flightData['Available_seat_passengers_children'] >=
+                        Childcounter;
+
+                if (dateAndCityConditionsReturn &&
+                    flightData['DeparureCity'] ==
+                        returnFlightData['ArrivalCity'] &&
+                    flightData['ArrivalCity'] ==
+                        returnFlightData['DeparureCity'] &&
+                    seatPassengersAdultCondition &&
+                    seatPassengersChildrenCondition) {
+                  if (filteredDepartureFlightsData[key] ==
+                      filteredArrivalFlightsData[key1]) {
+                    filteredDepartureFlightsData[key] = flightData;
+                    filteredArrivalFlightsData[key1] = returnFlightData;
+                    totalflightprice = flightData['ticket_price'] +
+                        returnFlightData['ticket_price'];
+                  }
                 }
-              }
-            });
-          }
-        });
+              });
+            }
+          });
 
-        if (filteredDepartureFlightsData.isNotEmpty &&
-            filteredArrivalFlightsData.isNotEmpty) {
-          // Get.to(() => FlightsViewRound(
-          //     DepartureflightData: filteredDepartureFlightsData,
-          //     ReturnflightData: filteredArrivalFlightsData));
-        } else {
-          Fluttertoast.showToast(
-              msg: "No flights found",
-              toastLength: Toast.LENGTH_SHORT,
-              gravity: ToastGravity.BOTTOM,
-              timeInSecForIosWeb: 1,
-              backgroundColor: Colors.grey,
-              textColor: Colors.white,
-              fontSize: 16.0);
+          if (lastFlightKey.isNotEmpty) {
+            // Get.to(() => FlightsViewRound(
+            //     DepartureflightData: filteredDepartureFlightsData,
+            //     ReturnflightData: filteredArrivalFlightsData));
+          } else {
+            Fluttertoast.showToast(
+                msg: "No flights found",
+                toastLength: Toast.LENGTH_SHORT,
+                gravity: ToastGravity.BOTTOM,
+                timeInSecForIosWeb: 1,
+                backgroundColor: Colors.grey,
+                textColor: Colors.white,
+                fontSize: 16.0);
+          }
         }
-      }
-    });
+      });
+    } else {
+      Fluttertoast.showToast(
+          msg: "Please select all fields",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.grey,
+          textColor: Colors.white,
+          fontSize: 16.0);
+    }
   }
 
   Future<void> fetchFlights() async {
@@ -201,11 +219,18 @@ class SearchViewRoundTripController extends GetxController {
     var keysToModify = [];
     String formattedDepartureDate = getFormattedDepartureDate();
     String formattedReturnDate = getFormattedReturnDate();
+    print(_flightType.value);
+    print('hhhhhhhhhhhhhhhhhhhhhhhhhhhvvvvv');
+
+    isloading.value = true;
+
     var event =
         await FirebaseDatabase.instance.reference().child('Flight').once();
     if (event.snapshot.exists) {
       var flightsData = Map<dynamic, dynamic>.from(event.snapshot.value as Map);
       for (var key in flightsData.keys) {
+        lastFlightKey.value = flightsData.keys.last;
+
         var flightData = Map<dynamic, dynamic>.from(flightsData[key]);
         for (var key1 in flightsData.keys) {
           var ReturnflightData = Map<dynamic, dynamic>.from(flightsData[key1]);
@@ -357,6 +382,25 @@ class SearchViewRoundTripController extends GetxController {
         }
       }
     }
+    if (returnFlightsList.value.isNotEmpty && lastFlightKey.value != '') {
+      print('fffffffffffffffffff');
+      print(returnFlightsList.value.length);
+      isloading.value = false;
+      Get.to(() => FlightsViewRound());
+    }
+    // }
+    else {
+      isloading.value = false;
+      Fluttertoast.showToast(
+          msg: "No flights found",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.grey,
+          textColor: Colors.white,
+          fontSize: 16.0);
+      // isloading.value = false;
+    }
   }
 
   var stopDurationsForDepartureFlight = [];
@@ -498,12 +542,24 @@ class SearchViewRoundTripController extends GetxController {
         });
       }).toList();
       stopCountReturnFlight = 0;
-
-      if (returnFlightsList.value.isNotEmpty) {
-        Get.to(() => FlightsViewRound());
-      }
-      isloading.value = false;
     }
+    // if (returnFlightsList.value.isNotEmpty &&
+    //     departureFlightsList.value.isNotEmpty) {
+    //   print('Return Flights: ${returnFlightsList.value.length}');
+    //   print('Departure Flights: ${departureFlightsList.value.length}');
+    //   Get.to(() => FlightsViewRound());
+    // } else {
+    //   Fluttertoast.showToast(
+    //     msg: "No flights found",
+    //     toastLength: Toast.LENGTH_SHORT,
+    //     gravity: ToastGravity.BOTTOM,
+    //     timeInSecForIosWeb: 1,
+    //     backgroundColor: Colors.grey,
+    //     textColor: Colors.white,
+    //     fontSize: 16.0,
+    //   );
+    // }
+
     // if (returnFlightsList.value.isEmpty && departureFlightsList.value.isEmpty) {
     //   Fluttertoast.showToast(
     //       msg: "No flights found",
@@ -552,6 +608,8 @@ class SearchViewRoundTripController extends GetxController {
   }
 
   void clearData() {
+    ArrivalCityRoundTrip.value = '';
+    DepartureCityRoundTrip.value = '';
     departureDate.value = DateTime.now();
     ReturnDate.value = DateTime.now();
     selectedDate.value = '${DateTime.now().month}/${DateTime.now().day}';

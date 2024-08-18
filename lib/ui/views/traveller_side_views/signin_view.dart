@@ -26,6 +26,7 @@ class _SignInViewState extends State<SignInView> {
   late String errorText = '';
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
+  var isloading = false.obs;
   @override
   void dispose() {
     _emailController.dispose();
@@ -45,7 +46,7 @@ class _SignInViewState extends State<SignInView> {
         children: [
           Column(
             children: [
-               const Padding(
+              const Padding(
                 padding: EdgeInsets.all(15.0),
                 child: Column(
                   children: [
@@ -119,13 +120,12 @@ class _SignInViewState extends State<SignInView> {
               ),
               Container(
                 height: 50,
-                decoration:  BoxDecoration(
-                  color: Colors.black
+                decoration: BoxDecoration(color: Colors.black
 
-                  // image: DecorationImage(
-                  //     image: AssetImage('assets/image/png/background1.png'),
-                  //     fit: BoxFit.fill),
-                ),
+                    // image: DecorationImage(
+                    //     image: AssetImage('assets/image/png/background1.png'),
+                    //     fit: BoxFit.fill),
+                    ),
               ),
             ],
           ),
@@ -151,11 +151,45 @@ class _SignInViewState extends State<SignInView> {
                     const SizedBox(
                       height: 350,
                     ),
-                    const Text(
-                      'Sign in ',
-                      style: TextStyle(
-                          fontSize: TextSize.header1,
-                          fontWeight: FontWeight.w700),
+                    // const Text(
+                    //   'Sign in ',
+                    //   style: TextStyle(
+                    //       fontSize: TextSize.header1,
+                    //       fontWeight: FontWeight.w700),
+                    // ),
+
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Text(
+                          'Sign in ',
+                          style: TextStyle(
+                              fontSize: TextSize.header1,
+                              fontWeight: FontWeight.w700),
+                        ),
+                        Obx(
+                          () => (isloading.value == true)
+                              ? Container(
+                                  width: 20,
+                                  height: 20,
+                                  child: Obx(
+                                    () => (isloading.value == true)
+                                        ? CircularProgressIndicator(
+                                            color: AppColors.mainColorBlue,
+                                          )
+                                        : SizedBox(),
+                                  ),
+                                )
+                              : SizedBox(),
+                        ),
+                        const Text(
+                          'Sign in ',
+                          style: TextStyle(
+                              color: Colors.transparent,
+                              fontSize: TextSize.header1,
+                              fontWeight: FontWeight.w700),
+                        ),
+                      ],
                     ),
                     const SizedBox(
                       height: 30,
@@ -241,9 +275,13 @@ class _SignInViewState extends State<SignInView> {
                           if (_emailController.value.text.isEmpty ||
                               _passwordController.value.text.isEmpty) {
                             setState(() {
+                              isloading.value = false;
+
                               errorText = "Please enter all fields";
                             });
                           } else if (!_emailController.value.text.isEmail) {
+                            isloading.value = false;
+
                             setState(() {
                               errorText = "Please enter valid email";
                             });
@@ -251,17 +289,23 @@ class _SignInViewState extends State<SignInView> {
                             setState(() {
                               errorText =
                                   "Password can't be less than 6 charecters";
+                              isloading.value = false;
                             });
+                            isloading.value = false;
                           } else {
                             try {
+                              isloading.value = true;
                               final user =
                                   await _auth.signInWithEmailAndPassword(
                                       email: email, password: password);
                               if (user != null) {
                                 Get.offAll(Home());
+                                isloading.value = true;
                               }
                             } catch (e) {
                               if (e is FirebaseAuthException) {
+                                isloading.value = false;
+
                                 if (e.code == 'user-not-found') {
                                   setState(() {
                                     errorText = 'No user found for that email.';

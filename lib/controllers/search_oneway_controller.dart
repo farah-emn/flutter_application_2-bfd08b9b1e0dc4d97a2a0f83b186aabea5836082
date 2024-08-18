@@ -1,4 +1,4 @@
-// ignore_for_file: unnecessary_brace_in_string_interps, non_constant_identifier_names, prefer_final_fields, avoid_print, deprecated_member_use, unnecessary_overrides
+// ignore_for_file: unnecessary_brace_in_string_interps, non_constant_identifier_names, prefer_final_fields, avoid_print, deprecated_member_use, unnecessary_overrides, curly_braces_in_flow_control_structures
 
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
@@ -14,6 +14,7 @@ class SearchViewOneWayController extends GetxController {
   Rx<DateTime> ReturnDate = DateTime.now().obs;
   var selectedDate = '${DateTime.now().month}/${DateTime.now().day}'.obs;
   var isLoadingOneWay = false;
+  var lastFlightKey = ''.obs;
   var _flightType = ''.obs;
   get TypeFlight => _flightType;
   int _Adultcounter = 1;
@@ -29,6 +30,7 @@ class SearchViewOneWayController extends GetxController {
       ValueNotifier<List<FlightDetailsClass>>([]);
   var deoarturecityone = ''.obs;
   var Arrivalcityone = ''.obs;
+  var isloading = false.obs;
 
   @override
   void onInit() {
@@ -69,15 +71,15 @@ class SearchViewOneWayController extends GetxController {
   }
 
   void setFlightType(String value) {
-    if (value == 'F') {
-      _flightType.value = 'FirstClass';
-    } else if (value == 'E') {
-      _flightType.value = 'Economy';
-    } else {
-      _flightType.value = 'Flight type';
-    }
-
-    update();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (value == 'F') {
+        _flightType.value = 'FirstClass';
+      } else if (value == 'E') {
+        _flightType.value = 'Economy';
+      } else {
+        _flightType.value = 'Flight type';
+      }
+    });
   }
 
   String getFormattedDepartureDate() {
@@ -96,52 +98,62 @@ class SearchViewOneWayController extends GetxController {
   //   _DepartureCity.value = city;
   // }
 
-  Future<void> searchForFlights() async {
-    String formattedDepartureDate = getFormattedDepartureDate();
-    DatabaseReference ref = FirebaseDatabase.instance.reference();
-    ref.child('flights').once().then((DatabaseEvent event) {
-      if (event.snapshot.exists) {
-        var flightsData =
-            Map<dynamic, dynamic>.from(event.snapshot.value as Map);
-        Map<dynamic, dynamic> filteredFlightsData = {};
-        flightsData.forEach((key, value) {
-          var FlightData = Map<dynamic, dynamic>.from(value);
-          //
-          bool seat_passengers_Adult_Condition =
-              FlightData['Available_seat_passengers_Adult'] >= Adultcounter;
-          //
-          bool seat_passengers_Children_Condition = Childcounter == 0 ||
-              FlightData['Available_seat_passengers_children'] >= Childcounter;
-          //
-          bool DateAndCityConditions =
-              FlightData['DeparureDate'] == formattedDepartureDate &&
-                  FlightData['ArrivalCity'] == Arrivalcityone.value &&
-                  FlightData['DeparureCity'] == deoarturecityone.value;
-          //
-          if (seat_passengers_Adult_Condition &&
-              seat_passengers_Children_Condition &&
-              DateAndCityConditions) {
-            filteredFlightsData[key] = FlightData;
-            totalpriceflight = FlightData['ticket_price'];
-          }
-        });
-        if (filteredFlightsData.isNotEmpty) {
-          Get.to(() => FlightsView());
-        } else {
-          Fluttertoast.showToast(
-              msg: "No flights found",
-              toastLength: Toast.LENGTH_SHORT,
-              gravity: ToastGravity.BOTTOM,
-              timeInSecForIosWeb: 1,
-              backgroundColor: Colors.grey,
-              textColor: Colors.white,
-              fontSize: 16.0);
-        }
-      }
-    });
-  }
+  // Future<void> searchForFlights() async {
+  //   String formattedDepartureDate = getFormattedDepartureDate();
+  //   DatabaseReference ref = FirebaseDatabase.instance.reference();
+  //   ref.child('flights').once().then((DatabaseEvent event) {
+  //     if (event.snapshot.exists) {
+  //       var flightsData =
+  //           Map<dynamic, dynamic>.from(event.snapshot.value as Map);
+
+  //       Map<dynamic, dynamic> filteredFlightsData = {};
+  //       flightsData.forEach((key, value) {
+  //         var FlightData = Map<dynamic, dynamic>.from(value);
+  //         //
+  //         bool seat_passengers_Adult_Condition =
+  //             FlightData['Available_seat_passengers_Adult'] >= Adultcounter;
+  //         //
+  //         bool seat_passengers_Children_Condition = Childcounter == 0 ||
+  //             FlightData['Available_seat_passengers_children'] >= Childcounter;
+  //         //
+  //         bool DateAndCityConditions =
+  //             FlightData['DeparureDate'] == formattedDepartureDate &&
+  //                 FlightData['ArrivalCity'] == Arrivalcityone.value &&
+  //                 FlightData['DeparureCity'] == deoarturecityone.value;
+  //         //
+  //         if (seat_passengers_Adult_Condition &&
+  //             seat_passengers_Children_Condition &&
+  //             DateAndCityConditions) {
+  //           filteredFlightsData[key] = FlightData;
+  //           totalpriceflight = FlightData['ticket_price'];
+  //         }
+  //       });
+  //       // if (filteredFlightsData.isNotEmpty) {
+  //       //   Get.to(() => FlightsView());
+  //       // } else {
+  //       //   Fluttertoast.showToast(
+  //       //       msg: "No flights found",
+  //       //       toastLength: Toast.LENGTH_SHORT,
+  //       //       gravity: ToastGravity.BOTTOM,
+  //       //       timeInSecForIosWeb: 1,
+  //       //       backgroundColor: Colors.grey,
+  //       //       textColor: Colors.white,
+  //       //       fontSize: 16.0);
+  //       // }
+  //     }
+  //   });
+  //   if (filteredFlightsData.value.isNotEmpty && lastFlightKey.value != '') {
+  //     print('fffffffffffffffffff');
+  //     isloading.value = false;
+  //     Get.to(() => FlightsView());
+  //   }
+  // }
 
   Future<void> fetchFlights() async {
+    // if (Arrivalcityone.value != '' ||
+    //     deoarturecityone.value != '' ||
+    //     FlightType != 'Flight type') {
+    //   flightsList.value.clear();
     bool airportConditionDeparture = false;
     bool airportConditionArrival = false;
     String DepartureAirport = '';
@@ -152,35 +164,19 @@ class SearchViewOneWayController extends GetxController {
     String ArrivalCountry = '';
     var keysToModify = [];
     String formattedDepartureDate = getFormattedDepartureDate();
+
+    isloading.value = true;
+
     var event =
         await FirebaseDatabase.instance.reference().child('Flight').once();
     if (event.snapshot.exists) {
       var flightsData = Map<dynamic, dynamic>.from(event.snapshot.value as Map);
       for (var key in flightsData.keys) {
         var flightData = Map<dynamic, dynamic>.from(flightsData[key]);
-        var stopLocationEvent = await FirebaseDatabase.instance
-            .reference()
-            .child('Stop_location')
-            .once();
-        var stopLocationData =
-            Map<String, dynamic>.from(stopLocationEvent.snapshot.value as Map);
-        int stopCount = 0;
-
-        stopLocationData.forEach((stopKey, value) {
-          if (value['FlightID'] == key) {
-            stopCount++;
-          }
-        });
-
         var airportEvent =
             await FirebaseDatabase.instance.reference().child('Airport').once();
         var airportData =
             Map<dynamic, dynamic>.from(airportEvent.snapshot.value as Map);
-
-        var planeEvent =
-            await FirebaseDatabase.instance.reference().child('Plane').once();
-        var planeData =
-            Map<dynamic, dynamic>.from(planeEvent.snapshot.value as Map);
 
         bool seatPassengersAdultCondition =
             int.parse(flightsData[key]['NumberOfEconomySeats'].toString()) >=
@@ -226,36 +222,26 @@ class SearchViewOneWayController extends GetxController {
             dateAndCityConditions) {
           fetchStoplocationsFlights(DepartureAirport, ArrivalAirport,
               DepartureCountry, ArrivalCountry, DepartureCity, ArrivalCity);
+          print('trrrrrrrrrrrrrrrrr');
 
-          keysToModify.add(key);
+          // keysToModify.add(key);
           filteredFlightsData[key] = flightData;
-          filteredFlightsData[key]['FlightType'] =
-              stopCount > 0 ? "$stopCount Stop" : "Direct";
-
-          planeData.forEach((planeDataKey, planeDataValue) {
-            if (planeDataKey == flightsData[key]['PlaneId']) {
-              planeDataValue.forEach((planeCode, planeDataDetails) {
-                filteredFlightsData[key]['PlaneID'] = planeCode;
-                filteredFlightsData[key]['PlaneManufacturer'] =
-                    planeDataDetails['Manufacturer'];
-                filteredFlightsData[key]['PlaneModel'] =
-                    planeDataDetails['Model'];
-              });
-            }
-          });
-        }
-        if (filteredFlightsData.value.length == 0) {
-          Fluttertoast.showToast(
-              msg: "No flights found",
-              toastLength: Toast.LENGTH_SHORT,
-              gravity: ToastGravity.BOTTOM,
-              timeInSecForIosWeb: 1,
-              backgroundColor: Colors.grey,
-              textColor: Colors.white,
-              fontSize: 16.0);
+          // filteredFlightsData[key]['FlightType'] =
+          //     stopCount > 0 ? "$stopCount Stop" : "Direct";
         }
       }
     }
+
+    // } else {
+    //   Fluttertoast.showToast(
+    //       msg: "Please select all fields",
+    //       toastLength: Toast.LENGTH_SHORT,
+    //       gravity: ToastGravity.BOTTOM,
+    //       timeInSecForIosWeb: 1,
+    //       backgroundColor: Colors.grey,
+    //       textColor: Colors.white,
+    //       fontSize: 16.0);
+    // }
   }
 
   var stopDurationsForFlight = [];
@@ -274,81 +260,71 @@ class SearchViewOneWayController extends GetxController {
         .reference()
         .child('Airline_company')
         .once();
-    var event = await FirebaseDatabase.instance
-        .reference()
-        .child('Stop_location')
-        .once();
-    if (event.snapshot.exists) {
-      var stopLocationData =
-          Map<dynamic, dynamic>.from(event.snapshot.value as Map);
-      stopLocationData.forEach((stopKey, value) {
-        filteredFlightsData.entries.forEach((entry) {
-          print(entry.key);
-          print('bbbbbbbbbbb');
 
-          if (value['FlighID'] == entry.key) {
-            print('ertyuj');
-            stopCount++;
-            stopDurationsForFlight.add(value['StopDuration']);
-            stopLocationsForFlight.add(value['StopLocation']);
-          }
-        });
+    flightsList.value = filteredFlightsData.entries.map((entry) {
+      var flightCompanyDetails =
+          Map<dynamic, dynamic>.from(flightCompany.snapshot.value as Map);
+      print(entry.value);
+      return FlightDetailsClass.fromMap({
+        "FlightID": entry.key,
+        'DeparureDate': entry.value['DepartureDate'],
+        'ArrivalDate': entry.value['ArrivalDate'],
+        'DeparureTime': entry.value['DepartureTime'].toString(),
+        'ArrivalTime': entry.value['ArrivalTime'].toString(),
+        "Flight_Duration": entry.value['FlightDuration'],
+        'DepartureAirport': departureAirport,
+        'ArrivalAirport': arrivalAirport,
+        "TicketAdultEconomyPrice":
+            entry.value['TicketAdultEconomyPrice'].toDouble(),
+        "departure_from": entry.value['DepartureLocation'],
+        "departure_to": entry.value['ArrivalLocation'],
+        "NumberOfEconomySeats": entry.value['NumberOfEconomySeats'],
+        "NumberOfFirstClassSeats": entry.value["NumberOfFirstClassSeats"],
+        "TicketAdultFirstClassPrice":
+            entry.value["TicketAdultFirstClassPrice"].toDouble(),
+        "TicketChildEconomyPrice":
+            entry.value["TicketChildEconomyPrice"].toDouble(),
+        "TicketChildFirstClassPrice":
+            entry.value["TicketChildFirstClassPrice"].toDouble(),
+        "PlaneId": entry.value["PlaneID"],
+        "PlaneManufacturer": entry.value["PlaneManufacturer"],
+        "PlaneModel": entry.value["PlaneModel"],
+        "FlightType": stopCount > 0 ? '${stopCount} Stop' : 'Direct',
+        "DepartureCity": departureCity,
+        "ArrivalCity": arrivalCity,
+        "FlightCompanyName": flightCompanyDetails[entry.value['AirlinId']]
+            ['AirlineCompanyName'],
+        "FlightCompanyLogo": flightCompanyDetails[entry.value['AirlinId']]
+            ['logo']
       });
-
-      flightsList.value = filteredFlightsData.entries.map((entry) {
-        var flightCompanyDetails =
-            Map<dynamic, dynamic>.from(flightCompany.snapshot.value as Map);
-        print(entry.value);
-        return FlightDetailsClass.fromMap({
-          "FlightID": entry.key,
-          'DeparureDate': entry.value['DepartureDate'],
-          'ArrivalDate': entry.value['ArrivalDate'],
-          'DeparureTime': entry.value['DepartureTime'].toString(),
-          'ArrivalTime': entry.value['ArrivalTime'].toString(),
-          "Flight_Duration": entry.value['FlightDuration'],
-          'DepartureAirport': departureAirport,
-          'ArrivalAirport': arrivalAirport,
-          "TicketAdultEconomyPrice":
-              entry.value['TicketAdultEconomyPrice'].toDouble(),
-          "departure_from": entry.value['DepartureLocation'],
-          "departure_to": entry.value['ArrivalLocation'],
-          "NumberOfEconomySeats": entry.value['NumberOfEconomySeats'],
-          "NumberOfFirstClassSeats": entry.value["NumberOfFirstClassSeats"],
-          "TicketAdultFirstClassPrice":
-              entry.value["TicketAdultFirstClassPrice"].toDouble(),
-          "TicketChildEconomyPrice":
-              entry.value["TicketChildEconomyPrice"].toDouble(),
-          "TicketChildFirstClassPrice":
-              entry.value["TicketChildFirstClassPrice"].toDouble(),
-          "PlaneId": entry.value["PlaneID"],
-          "PlaneManufacturer": entry.value["PlaneManufacturer"],
-          "PlaneModel": entry.value["PlaneModel"],
-          "FlightType": stopCount > 0 ? '${stopCount} Stop' : 'Direct',
-          "DepartureCity": departureCity,
-          "ArrivalCity": arrivalCity,
-          "FlightCompanyName": flightCompanyDetails[entry.value['AirlinId']]
-              ['AirlineCompanyName'],
-          "FlightCompanyLogo": flightCompanyDetails[entry.value['AirlinId']]
-              ['logo']
-        });
-      }).toList();
-
-      print(flightsList.value[0].DepartureAirport);
-      print('lllllllllllllllllllllll');
-
-      if (filteredFlightsData.isNotEmpty) {
-        Get.to(() => FlightsView());
-      } else {
-        Fluttertoast.showToast(
-            msg: "No flights found",
-            toastLength: Toast.LENGTH_SHORT,
-            gravity: ToastGravity.BOTTOM,
-            timeInSecForIosWeb: 1,
-            backgroundColor: Colors.grey,
-            textColor: Colors.white,
-            fontSize: 16.0);
-      }
+    }).toList();
+    if (filteredFlightsData.isNotEmpty) {
+      isloading.value = false;
+      Get.to(() => FlightsView());
+    } else {
+      isloading.value = false;
+      Fluttertoast.showToast(
+          msg: "No flights found",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.grey,
+          textColor: Colors.white,
+          fontSize: 16.0);
     }
+
+    // if (filteredFlightsData.isNotEmpty) {
+    //   Get.to(() => FlightsView());
+    // } else {
+    //   Fluttertoast.showToast(
+    //       msg: "No flights found",
+    //       toastLength: Toast.LENGTH_SHORT,
+    //       gravity: ToastGravity.BOTTOM,
+    //       timeInSecForIosWeb: 1,
+    //       backgroundColor: Colors.grey,
+    //       textColor: Colors.white,
+    //       fontSize: 16.0);
+    // }
   }
 
   void updateFlightsList() {

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 // import 'package:flutter_ocr_sdk/mrz_result.dart';
 import 'package:get/get.dart';
+import 'package:http/http.dart';
 import 'package:traveling/cards/hotel_details_card.dart';
 import 'package:traveling/classes/hotel.dart';
 import 'package:traveling/classes/hotel1.dart';
@@ -76,7 +77,8 @@ class AllHotelViewState extends State<AllHotelView> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-
+    HotelFilterSearchController hotelFilterSearchController =
+        Get.put(HotelFilterSearchController());
     void _showSortByBottomShest() {
       final HotelFilterSearchController HotelFilterSearch_Controller =
           Get.put(HotelFilterSearchController());
@@ -161,7 +163,6 @@ class AllHotelViewState extends State<AllHotelView> {
                                       activeColor: AppColors.purple,
                                       value: 'Highest price',
                                       groupValue: sorteBy,
-                                      autofocus: true,
                                       onChanged: (value) {
                                         setModalState(
                                           () {
@@ -183,7 +184,6 @@ class AllHotelViewState extends State<AllHotelView> {
                                     Radio(
                                       activeColor: AppColors.purple,
                                       value: 'Lowest price',
-                                      autofocus: false,
                                       groupValue: sorteBy,
                                       onChanged: (value) {
                                         setModalState(
@@ -206,7 +206,6 @@ class AllHotelViewState extends State<AllHotelView> {
                                     Radio(
                                       activeColor: AppColors.purple,
                                       value: 'Highest Rated',
-                                      autofocus: false,
                                       groupValue: sorteBy,
                                       onChanged: (value) {
                                         setModalState(
@@ -304,6 +303,9 @@ class AllHotelViewState extends State<AllHotelView> {
                                         setModalState(
                                           () {
                                             sorteBy = value.toString();
+                                            hotelFilterSearchController
+                                                .sortByForHotels(sorteBy);
+                                            Navigator.pop(context);
                                           },
                                         );
                                       },
@@ -319,11 +321,13 @@ class AllHotelViewState extends State<AllHotelView> {
                                       activeColor: AppColors.purple,
                                       value: '4 Stars',
                                       groupValue: sorteBy,
-                                      autofocus: false,
                                       onChanged: (value) {
                                         setModalState(
                                           () {
                                             sorteBy = value.toString();
+                                            hotelFilterSearchController
+                                                .sortByForHotels(sorteBy);
+                                            Navigator.pop(context);
                                           },
                                         );
                                       },
@@ -338,12 +342,14 @@ class AllHotelViewState extends State<AllHotelView> {
                                     Radio(
                                       activeColor: AppColors.purple,
                                       value: '3 Stars',
-                                      autofocus: false,
                                       groupValue: sorteBy,
                                       onChanged: (value) {
                                         setModalState(
                                           () {
                                             sorteBy = value.toString();
+                                            hotelFilterSearchController
+                                                .sortByForHotels(sorteBy);
+                                            Navigator.pop(context);
                                           },
                                         );
                                       },
@@ -364,6 +370,9 @@ class AllHotelViewState extends State<AllHotelView> {
                                         setModalState(
                                           () {
                                             sorteBy = value.toString();
+                                            hotelFilterSearchController
+                                                .sortByForHotels(sorteBy);
+                                            Navigator.pop(context);
                                           },
                                         );
                                       },
@@ -384,6 +393,9 @@ class AllHotelViewState extends State<AllHotelView> {
                                         setModalState(
                                           () {
                                             sorteBy = value.toString();
+                                            hotelFilterSearchController
+                                                .sortByForHotels(sorteBy);
+                                            Navigator.pop(context);
                                           },
                                         );
                                       },
@@ -453,12 +465,12 @@ class AllHotelViewState extends State<AllHotelView> {
                             width: 50,
                             height: 5,
                           ),
-                          const SizedBox(
-                            height: 15,
-                          ),
-                          const SizedBox(
-                            height: 20,
-                          ),
+                          // const SizedBox(
+                          //   height: 15,
+                          // ),
+                          // const SizedBox(
+                          //   height: 20,
+                          // ),
                           Container(
                             padding: const EdgeInsets.all(15),
                             decoration: BoxDecoration(
@@ -641,7 +653,7 @@ class AllHotelViewState extends State<AllHotelView> {
                                                     isCheckedFreeWifi =
                                                         newValue!;
                                                     HotelFilterSearch_Controller
-                                                        .FiterPropertyAmentyForHotel(
+                                                        .ConfirmFiterPropertyAmentyForHotel(
                                                             isCheckedFreeWifi,
                                                             isCheckedPrivatePool,
                                                             isCheckedCleaningServices,
@@ -666,7 +678,7 @@ class AllHotelViewState extends State<AllHotelView> {
                                                     isCheckedFoodDrink =
                                                         newValue!;
                                                     HotelFilterSearch_Controller
-                                                        .FiterPropertyAmentyForHotel(
+                                                        .ConfirmFiterPropertyAmentyForHotel(
                                                             isCheckedFreeWifi,
                                                             isCheckedPrivatePool,
                                                             isCheckedCleaningServices,
@@ -697,7 +709,7 @@ class AllHotelViewState extends State<AllHotelView> {
                                                     isCheckedPrivatePool =
                                                         newValue!;
                                                     HotelFilterSearch_Controller
-                                                        .FiterPropertyAmentyForHotel(
+                                                        .ConfirmFiterPropertyAmentyForHotel(
                                                             isCheckedFreeWifi,
                                                             isCheckedPrivatePool,
                                                             isCheckedCleaningServices,
@@ -721,7 +733,7 @@ class AllHotelViewState extends State<AllHotelView> {
                                                     isCheckedCleaningServices =
                                                         newValue!;
                                                     HotelFilterSearch_Controller
-                                                        .FiterPropertyAmentyForHotel(
+                                                        .ConfirmFiterPropertyAmentyForHotel(
                                                             isCheckedFreeWifi,
                                                             isCheckedPrivatePool,
                                                             isCheckedCleaningServices,
@@ -748,7 +760,7 @@ class AllHotelViewState extends State<AllHotelView> {
                                           () {
                                             isCheckedPrivateParking = newValue!;
                                             HotelFilterSearch_Controller
-                                                .FiterPropertyAmentyForHotel(
+                                                .ConfirmFiterPropertyAmentyForHotel(
                                                     isCheckedFreeWifi,
                                                     isCheckedPrivatePool,
                                                     isCheckedCleaningServices,
@@ -799,7 +811,7 @@ class AllHotelViewState extends State<AllHotelView> {
                                       setModalState(() {
                                         _currentRangeValues = values;
                                         HotelFilterSearch_Controller
-                                            .FiterPropertyAmentyForHotel(
+                                            .ConfirmFiterPropertyAmentyForHotel(
                                                 isCheckedFreeWifi,
                                                 isCheckedPrivatePool,
                                                 isCheckedCleaningServices,
@@ -846,23 +858,23 @@ class AllHotelViewState extends State<AllHotelView> {
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  (isCheckedCleaningServices == false &&
-                                          isCheckedFoodDrink == false &&
-                                          isCheckedFreeWifi == false &&
-                                          isCheckedPrivateParking == false &&
-                                          isCheckedPrivatePool == false)
-                                      ? Text(
-                                          'Show ${controller.validHotels.length} of ${controller.validHotels.length} Roobbdems',
-                                          style: TextStyle(
-                                              color: Colors.white,
-                                              fontWeight: FontWeight.w500),
-                                        )
-                                      : Text(
-                                          'Show ${HotelFilterSearch_Controller.FiltersHotels.length} of ${controller.NumberOfHotels} Roobbms',
-                                          style: TextStyle(
-                                              color: Colors.white,
-                                              fontWeight: FontWeight.w500),
-                                        )
+                                  Obx(() => Text(
+                                        (isCheckedCleaningServices == false &&
+                                                isCheckedFoodDrink == false &&
+                                                isCheckedFreeWifi == false &&
+                                                isCheckedPrivateParking ==
+                                                    false &&
+                                                isCheckedPrivatePool == false &&
+                                                _currentRangeValues.start ==
+                                                    MinPrice &&
+                                                _currentRangeValues.end ==
+                                                    MaxPrice)
+                                            ? 'Show ${controller.validHotels.length} of ${controller.validHotels.length} Hotel'
+                                            : 'Show ${HotelFilterSearch_Controller.NumHotel} of ${controller.NumberOfHotels} Hotel',
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.w500),
+                                      ))
                                 ],
                               ),
                             ),
@@ -881,230 +893,250 @@ class AllHotelViewState extends State<AllHotelView> {
       length: 2,
       child: Scaffold(
         backgroundColor: AppColors.lightPurple,
-        body: Stack(children: [
-          Padding(
-            padding: const EdgeInsets.only(
-              top: 70,
-            ),
-            child: Container(
-              decoration: const BoxDecoration(
-                image: DecorationImage(
-                    image: AssetImage('assets/image/png/background1.png'),
-                    fit: BoxFit.fill),
+        body: SafeArea(
+          child: Stack(children: [
+            Padding(
+              padding: const EdgeInsets.only(
+                top: 60,
+              ),
+              child: Container(
+                decoration: const BoxDecoration(
+                  image: DecorationImage(
+                      image: AssetImage('assets/image/png/background1.png'),
+                      fit: BoxFit.fill),
+                ),
               ),
             ),
-          ),
-          Stack(
-            children: [
-              Column(
-                children: [
-                  SizedBox(
-                    height: 35,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: const [
-                      Text(
-                        'Explore',
-                        style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.w700,
-                            color: AppColors.purple),
-                      )
-                    ],
-                  ),
-                  SizedBox(
-                    height: 40,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 15),
-                    child: Container(
-                      width: size.width,
-                      padding: EdgeInsets.all(10),
-                      decoration: decoration.copyWith(),
+            Stack(
+              children: [
+                Column(
+                  children: [
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: const [
+                        Text(
+                          'Explore',
+                          style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.w700,
+                              color: AppColors.purple),
+                        )
+                      ],
+                    ),
+                    SizedBox(
+                      height: 40,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 15),
+                      child: Container(
+                        width: size.width,
+                        padding: EdgeInsets.all(10),
+                        decoration: decoration.copyWith(),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    SizedBox(
+                                      width: 10,
+                                    ),
+                                    Text(
+                                      'Selected Date',
+                                      style: TextStyle(
+                                        fontSize: 13,
+                                        color: AppColors.grayText,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(
+                                  height: 5,
+                                ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    SizedBox(
+                                      width: 10,
+                                    ),
+                                    Text(
+                                      '${controller.getFormattedArrivalDate()}  - ${controller.getFormattedDepartureDate()}',
+                                      style: TextStyle(
+                                          fontSize: TextSize.header2,
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.w500),
+                                    )
+                                  ],
+                                ),
+                              ],
+                            ),
+                            Container(
+                              width: 1,
+                              height: 30,
+                              color: AppColors.grayText,
+                            ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    SizedBox(
+                                      width: 10,
+                                    ),
+                                    Text(
+                                      'Number of Rooms',
+                                      style: TextStyle(
+                                        fontSize: 13,
+                                        color: AppColors.grayText,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(
+                                  height: 5,
+                                ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    // SizedBox(
+                                    //   width: 10,
+                                    // ),
+                                    Text(
+                                      '${controller.Roomscounter} Rooms, ${controller.Adultcounter} Adults, ${controller.Childcounter} Children',
+                                      style: TextStyle(
+                                          fontSize: TextSize.header2,
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.w500),
+                                    )
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 15),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    'Selected Date',
-                                    style: TextStyle(
-                                      fontSize: TextSize.header2,
-                                      color: AppColors.grayText,
-                                    ),
+                          InkWell(
+                            onTap: _showSortByBottomShest,
+                            child: Container(
+                              width: size.width / 3 - 15,
+                              decoration: decoration.copyWith(),
+                              padding: EdgeInsets.all(10),
+                              child: Row(
+                                children: const [
+                                  Icon(
+                                    Icons.sort,
+                                    color: AppColors.gold,
                                   ),
+                                  SizedBox(
+                                    width: 5,
+                                  ),
+                                  Text('Sort By'),
                                 ],
                               ),
-                              SizedBox(
-                                height: 5,
-                              ),
-                              Container(
-                                width: size.width / 2 - 29,
-                                child: Text(
-                                  '${controller.getFormattedArrivalDate()}  - ${controller.getFormattedDepartureDate()}',
-                                  style: TextStyle(
-                                      fontSize: TextSize.header2,
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.w500),
-                                ),
-                              ),
-                            ],
+                            ),
                           ),
-                          SizedBox(
-                            width: 10,
-                          ),
-                          Container(
-                            width: 1,
-                            height: 30,
-                            color: AppColors.grayText,
-                          ),
-                          SizedBox(
-                            width: 10,
-                          ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    'Number of Rooms',
-                                    style: TextStyle(
-                                      fontSize: TextSize.header2,
-                                      color: AppColors.grayText,
-                                    ),
+                          InkWell(
+                            onTap: _showRatingsBottomShest,
+                            child: Container(
+                              width: size.width / 3 - 15,
+                              decoration: decoration.copyWith(),
+                              padding: EdgeInsets.all(10),
+                              child: Row(
+                                children: const [
+                                  Icon(
+                                    Icons.star_rounded,
+                                    color: AppColors.gold,
                                   ),
+                                  SizedBox(
+                                    width: 5,
+                                  ),
+                                  Text('Ratings'),
                                 ],
                               ),
-                              SizedBox(
-                                height: 5,
+                            ),
+                          ),
+                          InkWell(
+                            onTap: _showFilttersBottomShest,
+                            child: Container(
+                              width: size.width / 3 - 15,
+                              decoration: decoration.copyWith(),
+                              padding: EdgeInsets.all(10),
+                              child: Row(
+                                children: const [
+                                  Icon(
+                                    Icons.filter_alt_rounded,
+                                    color: AppColors.gold,
+                                  ),
+                                  SizedBox(
+                                    width: 5,
+                                  ),
+                                  Text('Filtters'),
+                                ],
                               ),
-                              Container(
-                                width: size.width / 2 - 42,
-                                child: Text(
-                                  '${controller.Roomscounter} Rooms, ${controller.Adultcounter} Adults, ${controller.Childcounter} Children',
-                                  style: TextStyle(
-                                      fontSize: TextSize.header2,
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.w500),
-                                ),
-                              ),
-                            ],
+                            ),
                           ),
                         ],
                       ),
                     ),
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 15),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        InkWell(
-                          onTap: _showSortByBottomShest,
-                          child: Container(
-                            width: size.width / 3 - 15,
-                            decoration: decoration.copyWith(),
-                            padding: EdgeInsets.all(10),
-                            child: Row(
-                              children: const [
-                                Icon(
-                                  Icons.sort,
-                                  color: AppColors.gold,
-                                ),
-                                SizedBox(
-                                  width: 5,
-                                ),
-                                Text('Sort By'),
-                              ],
-                            ),
-                          ),
-                        ),
-                        InkWell(
-                          onTap: _showRatingsBottomShest,
-                          child: Container(
-                            width: size.width / 3 - 15,
-                            decoration: decoration.copyWith(),
-                            padding: EdgeInsets.all(10),
-                            child: Row(
-                              children: const [
-                                Icon(
-                                  Icons.star_rounded,
-                                  color: AppColors.gold,
-                                ),
-                                SizedBox(
-                                  width: 5,
-                                ),
-                                Text('Ratings'),
-                              ],
-                            ),
-                          ),
-                        ),
-                        InkWell(
-                          onTap: _showFilttersBottomShest,
-                          child: Container(
-                            width: size.width / 3 - 15,
-                            decoration: decoration.copyWith(),
-                            padding: EdgeInsets.all(10),
-                            child: Row(
-                              children: const [
-                                Icon(
-                                  Icons.filter_alt_rounded,
-                                  color: AppColors.gold,
-                                ),
-                                SizedBox(
-                                  width: 5,
-                                ),
-                                Text('Filtters'),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ],
+                    Container(
+                      width: 20,
+                      height: 20,
+                      child: Obx(() =>
+                          (hotelFilterSearchController.isloadingSort.value ==
+                                  true)
+                              ? CircularProgressIndicator()
+                              : SizedBox()),
                     ),
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Obx(() {
-                    return (controller.Hotels.isEmpty)
-                        ? const CircularProgressIndicator()
-                        : Expanded(
-                            child: Padding(
-                              padding: const EdgeInsets.only(left: 15),
-                              child: ListView.builder(
-                                scrollDirection: Axis.vertical,
-                                shrinkWrap: true,
-                                itemCount: controller.Hotels.length,
-                                itemBuilder: (context, index) =>
-                                    GestureDetector(
-                                  onTap: () {
-                                    Hotel_Controller.setSelectedIndex(index);
-                                  },
-                                  child: HotelDetailsCard(
-                                    size: size,
-                                    itemIndex: index,
-                                    hotelDetails: controller.Hotels[index],
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Obx(() {
+                      return (controller.Hotels.isEmpty)
+                          ? const CircularProgressIndicator()
+                          : Expanded(
+                              child: Padding(
+                                padding: const EdgeInsets.only(left: 15),
+                                child: ListView.builder(
+                                  scrollDirection: Axis.vertical,
+                                  shrinkWrap: true,
+                                  itemCount: controller.Hotels.length,
+                                  itemBuilder: (context, index) =>
+                                      GestureDetector(
+                                    onTap: () {
+                                      Hotel_Controller.setSelectedIndex(index);
+                                    },
+                                    child: HotelDetailsCard(
+                                      size: size,
+                                      itemIndex: index,
+                                      hotelDetails: controller.Hotels[index],
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
-                          );
-                  }),
-                ],
-              ),
-            ],
-          ),
-        ]),
+                            );
+                    }),
+                  ],
+                ),
+              ],
+            ),
+          ]),
+        ),
       ),
     );
   }

@@ -21,7 +21,7 @@ class _BookingsCardState extends State<BookingsCard> {
     Size size = MediaQuery.of(context).size;
     return InkWell(
       onTap: () {
-        Get.to(const FlightBookingDetails());
+        // Get.to( FlightBookingDetails());
       },
       child: Container(
         margin: const EdgeInsets.only(top: 15, right: 15, left: 15),

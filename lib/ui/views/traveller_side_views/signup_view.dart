@@ -27,7 +27,7 @@ class _SignUpViewState extends State<SignUpView> {
   late String confermPassword;
   late String errorText = '';
   final _formKey = GlobalKey<FormState>();
-
+  var isloading = false.obs;
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
@@ -154,11 +154,38 @@ class _SignUpViewState extends State<SignUpView> {
                     const SizedBox(
                       height: 350,
                     ),
-                    const Text(
-                      'Sign up ',
-                      style: TextStyle(
-                          fontSize: TextSize.header1,
-                          fontWeight: FontWeight.w700),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Text(
+                          'Sign up ',
+                          style: TextStyle(
+                              fontSize: TextSize.header1,
+                              fontWeight: FontWeight.w700),
+                        ),
+                        Obx(
+                          () => (isloading.value == true)
+                              ? Container(
+                                  width: 20,
+                                  height: 20,
+                                  child: Obx(
+                                    () => (isloading.value == true)
+                                        ? CircularProgressIndicator(
+                                            color: AppColors.mainColorBlue,
+                                          )
+                                        : SizedBox(),
+                                  ),
+                                )
+                              : SizedBox(),
+                        ),
+                        const Text(
+                          'Sign up ',
+                          style: TextStyle(
+                              color: Colors.transparent,
+                              fontSize: TextSize.header1,
+                              fontWeight: FontWeight.w700),
+                        ),
+                      ],
                     ),
                     const SizedBox(
                       height: 35,
@@ -274,11 +301,14 @@ class _SignUpViewState extends State<SignUpView> {
                               });
                             } else {
                               try {
+                                isloading.value = true;
                                 final newUser =
                                     await _auth.createUserWithEmailAndPassword(
                                         email: email, password: password);
                                 User? user = _auth.currentUser;
                                 if (newUser != null) {
+                                  isloading.value = false;
+
                                   Get.offAll(Home());
                                   ref.child(user!.uid.toString()).set({
                                     'email': email,
@@ -295,6 +325,8 @@ class _SignUpViewState extends State<SignUpView> {
                                 }
                               } catch (e) {
                                 if (e is FirebaseAuthException) {
+                                  isloading.value = false;
+
                                   switch (e.code) {
                                     case 'weak-password':
                                       setState(() {
@@ -326,8 +358,6 @@ class _SignUpViewState extends State<SignUpView> {
                     const SizedBox(
                       height: 20,
                     ),
-                  
-                  
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [

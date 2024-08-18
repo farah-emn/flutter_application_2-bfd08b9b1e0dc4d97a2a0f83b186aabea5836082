@@ -1,5 +1,7 @@
 // ignore_for_file: non_constant_identifier_names, invalid_use_of_protected_member, prefer_final_fields, unused_local_variable
 
+import 'dart:ffi';
+
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/src/material/slider_theme.dart';
 import 'package:get/get.dart';
@@ -25,9 +27,14 @@ class HotelFilterSearchController extends GetxController {
   int get Adultcounter => _Adultcounter;
   int get Roomscounter => _Roomscounter;
   int get Childcounter => _Childcounter;
+  var isloadingSort = false.obs;
+  var isloadingRatings = false.obs;
+  var isloadingFilter = false.obs;
+
   var FiltersHotels = <String>[].obs;
   var HotelaverageRating = 1.1.obs;
   double totalflightprice = 0;
+  var NumHotel = 0.obs;
   var _minPricePerHotel = Map<String, double>().obs;
   var Hotels = <HotelClass1>[].obs;
   var validHotels = <HotelClass1>[].obs;
@@ -81,12 +88,12 @@ class HotelFilterSearchController extends GetxController {
 
   void sortByForHotels(String? sortBy) async {
     double lowPrice =
-        convert('USD', HotelCurrency_Controller.selectedCurrency.value, 100);
+        convert('USD', HotelCurrency_Controller.selectedCurrency.value, 220);
     var validHotels = SearchHotel_Controller.validHotels.value;
 
     // Create a list to store the updated hotels with ratings
     List<HotelClass1> updatedHotels = [];
-
+    isloadingSort.value = true;
     for (var hotel in validHotels) {
       await getAllRoomRatings(hotel.Id); // Wait for the ratings to be computed
 
@@ -113,6 +120,7 @@ class HotelFilterSearchController extends GetxController {
           "image": hotel.Image,
           "StartPrice": hotel.StartPrice,
         }));
+        isloadingSort.value = false;
       }
     }
 
@@ -178,53 +186,47 @@ class HotelFilterSearchController extends GetxController {
     }
   }
 
-  void FiterPropertyAmentyForHotel(
-      bool? isCheckedFreeWifi,
-      bool? isCheckedPrivatePool,
-      bool? isCheckedCleaningServices,
-      bool? isCheckedFoodDrink,
-      bool? isCheckedPrivateParking,
-      RangeValues currentRangeValues) {
-    int numberOfHotels = 0;
-    bool hotelMatches = false;
-    FiltersHotels.clear();
+  // void filterPropertyAmenityForHotel(
+  //     bool? isCheckedFreeWifi,
+  //     bool? isCheckedPrivatePool,
+  //     bool? isCheckedCleaningServices,
+  //     bool? isCheckedFoodDrink,
+  //     bool? isCheckedPrivateParking,
+  //     RangeValues currentRangeValues) {
+  //   FiltersHotels.clear();
 
-    for (var room in HotelRooms_Controller.hotelsRooms) {
-      var HotelRoomPrice = convert(
-          'USD',
-          HotelCurrency_Controller.selectedCurrency.value,
-          double.parse(room.Price.toString()));
-      bool matchesFreeWifi =
-          (room.isCheckedFreeWifi == true && isCheckedFreeWifi == true) ||
-              (isCheckedFreeWifi == false);
-      bool matchesPrivatePool =
-          (room.isCheckedPrivatePool == true && isCheckedPrivatePool == true) ||
-              (isCheckedPrivatePool == false);
-      bool matchesCleaningServices = (room.isCheckedCleaningServices == true &&
-              isCheckedCleaningServices == true) ||
-          (isCheckedCleaningServices == false);
-      bool matchesFoodDrink =
-          (room.isCheckedFoodAnddrink == true && isCheckedFoodDrink == true) ||
-              (isCheckedFoodDrink == false);
-      bool matchesPrivateParking = (room.isCheckedPrivateParking == true &&
-              isCheckedPrivateParking == true) ||
-          (isCheckedPrivateParking == false);
-      bool matchesPriceRange =
-          (HotelRoomPrice >= currentRangeValues.start.round() &&
-              HotelRoomPrice <= currentRangeValues.end.round());
-      if (matchesPrivateParking &&
-          matchesCleaningServices &&
-          matchesFoodDrink &&
-          matchesPrivatePool &&
-          matchesPriceRange &&
-          matchesFreeWifi) {
-        if (!FiltersHotels.contains(room.HotelId)) {
-          FiltersHotels.add(room.HotelId);
-          hotelMatches = true;
-        }
-      }
-    }
-  }
+  //   for (var room in HotelRooms_Controller.hotelsRooms) {
+  //     var hotelRoomPrice = convert(
+  //         'USD',
+  //         HotelCurrency_Controller.selectedCurrency.value,
+  //         double.parse(room.Price.toString()));
+
+  //     bool matchesFreeWifi = isCheckedFreeWifi == null ||
+  //         room.isCheckedFreeWifi == isCheckedFreeWifi;
+  //     bool matchesPrivatePool = isCheckedPrivatePool == null ||
+  //         room.isCheckedPrivatePool == isCheckedPrivatePool;
+  //     bool matchesCleaningServices = isCheckedCleaningServices == null ||
+  //         room.isCheckedCleaningServices == isCheckedCleaningServices;
+  //     bool matchesFoodDrink = isCheckedFoodDrink == null ||
+  //         room.isCheckedFoodAnddrink == isCheckedFoodDrink;
+  //     bool matchesPrivateParking = isCheckedPrivateParking == null ||
+  //         room.isCheckedPrivateParking == isCheckedPrivateParking;
+  //     bool matchesPriceRange =
+  //         hotelRoomPrice >= currentRangeValues.start.round() &&
+  //             hotelRoomPrice <= currentRangeValues.end.round();
+
+  //     if (matchesFreeWifi &&
+  //         matchesPrivatePool &&
+  //         matchesCleaningServices &&
+  //         matchesFoodDrink &&
+  //         matchesPrivateParking &&
+  //         matchesPriceRange) {
+  //       if (!FiltersHotels.contains(room.HotelId)) {
+  //         FiltersHotels.add(room.HotelId);
+  //       }
+  //     }
+  //   }
+  // }
 
   void ConfirmFiterPropertyAmentyForHotel(
       bool? isCheckedFreeWifi,
@@ -236,6 +238,8 @@ class HotelFilterSearchController extends GetxController {
     FiltersHotels.clear();
 
     for (var room in HotelRooms_Controller.hotelsRooms) {
+      isloadingFilter.value = true;
+      print(HotelRooms_Controller.hotelRooms.length);
       var HotelRoomPrice = convert(
           'USD',
           HotelCurrency_Controller.selectedCurrency.value,
@@ -268,8 +272,12 @@ class HotelFilterSearchController extends GetxController {
         if (!FiltersHotels.contains(room.HotelId)) {
           FiltersHotels.add(room.HotelId);
         }
+        if (FiltersHotels.value.isNotEmpty) {
+          isloadingFilter.value = false;
+        }
       }
     }
+    NumHotel.value = SearchHotel_Controller.Hotels.value.length;
 
     SearchHotel_Controller.Hotels.value =
         SearchHotel_Controller.validHotels.value.where((hotel) {
@@ -281,6 +289,9 @@ class HotelFilterSearchController extends GetxController {
         'location': entry.location,
         "image": entry.Image,
         "StartPrice": entry.StartPrice,
+        "email": entry.email,
+        "address": entry.address,
+        "mobilenumber": entry.mobilenumber
       });
     }).toList();
   }

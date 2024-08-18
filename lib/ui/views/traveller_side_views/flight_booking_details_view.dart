@@ -198,8 +198,7 @@ class _FlightBookingDetailsViewState extends State<FlightBookingDetailsView> {
                                         color: AppColors.grayText),
                                   ),
                                   Row(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.end,
+                                    crossAxisAlignment: CrossAxisAlignment.end,
                                     children: [
                                       Text(
                                         '09:00',
@@ -260,8 +259,7 @@ class _FlightBookingDetailsViewState extends State<FlightBookingDetailsView> {
                                         color: AppColors.grayText),
                                   ),
                                   Row(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.end,
+                                    crossAxisAlignment: CrossAxisAlignment.end,
                                     children: [
                                       Text(
                                         '01:00',
@@ -317,18 +315,18 @@ class _FlightBookingDetailsViewState extends State<FlightBookingDetailsView> {
                     const SizedBox(
                       height: 15,
                     ),
-                    Expanded(
-                      child: ListView.builder(
-                        scrollDirection: Axis.vertical,
-                        shrinkWrap: true,
-                        itemCount: travellarsDetails.length,
-                        itemBuilder: (context, index) => TravellarDetailsCard(
-                          itemIndex: index,
-                          // size : size,
-                          travellarsModel: travellarsDetails[index],
-                        ),
-                      ),
-                    ),
+                    // Expanded(
+                    //   child: ListView.builder(
+                    //     scrollDirection: Axis.vertical,
+                    //     shrinkWrap: true,
+                    //     itemCount: travellarsDetails.length,
+                    //     itemBuilder: (context, index) => TravellarDetailsCard(
+                    //       itemIndex: index,
+                    //       // size : size,
+                    //       travellarsModel: travellarsDetails[index],
+                    //     ),
+                    //   ),
+                    // ),
                   ],
                 ),
               ),
