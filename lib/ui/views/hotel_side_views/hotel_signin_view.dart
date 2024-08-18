@@ -180,8 +180,8 @@ class _HotelSignInViewState extends State<HotelSignInView> {
                     SizedBox(
                       height: 40,
                       child: TextFormField(
-                        controller: _emailController,
                         keyboardType: TextInputType.emailAddress,
+                        controller: _emailController,
                         decoration: textFielDecoratiom.copyWith(
                           focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.all(Radius.circular(18)),
@@ -197,9 +197,6 @@ class _HotelSignInViewState extends State<HotelSignInView> {
                           email = value;
                         },
                       ),
-                    ),
-                    SizedBox(
-                      height: 10,
                     ),
                     (errorTextEmail.isNotEmpty)
                         ? Padding(
@@ -227,9 +224,8 @@ class _HotelSignInViewState extends State<HotelSignInView> {
                     SizedBox(
                       height: 40,
                       child: TextFormField(
-                        controller: _passwordController,
                         keyboardType: TextInputType.visiblePassword,
-                         decoration: textFielDecoratiom.copyWith(
+                        decoration: textFielDecoratiom.copyWith(
                           focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.all(Radius.circular(18)),
                             borderSide:
@@ -240,6 +236,7 @@ class _HotelSignInViewState extends State<HotelSignInView> {
                             color: AppColors.purple,
                           ),
                         ),
+                        controller: _passwordController,
                         onChanged: (value) {
                           password = value;
                         },

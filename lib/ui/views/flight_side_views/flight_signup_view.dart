@@ -1,20 +1,17 @@
+// ignore_for_file: unnecessary_new, non_constant_identifier_names, deprecated_member_use, prefer_const_constructors
+
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:traveling/ui/shared/colors.dart';
 import 'package:traveling/ui/shared/custom_widgets/custom_button.dart';
-import 'package:traveling/ui/shared/custom_widgets/custom_image.dart';
 import 'package:traveling/ui/shared/custom_widgets/custom_textgray.dart';
-import 'package:traveling/ui/shared/text_size.dart';
-import 'package:traveling/ui/shared/utils.dart';
-import 'package:traveling/ui/views/flight_side_views/flight_home_view.dart';
+import 'package:traveling/ui/views/flight_side_views/flight_image_signup_view.dart';
 import 'package:traveling/ui/views/flight_side_views/flight_signin_view.dart';
 import 'package:traveling/ui/views/traveller_side_views/signin_view.dart';
 import '../../shared/custom_widgets/custom_textfield2.dart';
-import '../traveller_side_views/home_screen.dart';
+import '../../shared/text_size.dart';
 import 'flight_home_screen.dart';
 
 class FlightSignUpView extends StatefulWidget {
@@ -28,16 +25,35 @@ class _FlightSignUpViewState extends State<FlightSignUpView> {
   late String email;
   late String password;
   late String confermPassword;
+  late String AirelineCode;
+  late String CompanyName;
   late String errorText = '';
-  final _formKey = GlobalKey<FormState>();
-
+  late String errorTextEmail = '';
+  late String errorTextAirlineCode = '';
+  late String errorTextPassword = '';
+  late String errorTextCompanyName = '';
+  late String errorTextConfirmPassword = '';
   final _emailController = TextEditingController();
+  // int IdAirline = 0;
+
+  final _AirelineCodeController = TextEditingController();
   final _passwordController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
+  final _CompanyNameController = TextEditingController();
+  @override
+  void initState() {
+    final databaseReference = FirebaseDatabase.instance.reference();
+    DatabaseReference idRefAirline = databaseReference.child('Airline_company');
+    super.initState();
+  }
+
   @override
   void dispose() {
     _emailController.dispose();
     _passwordController.dispose();
+    _AirelineCodeController.dispose();
+    _CompanyNameController.dispose();
+    _confirmPasswordController.dispose();
     super.dispose();
   }
 
@@ -45,7 +61,8 @@ class _FlightSignUpViewState extends State<FlightSignUpView> {
   Widget build(BuildContext context) {
     final _auth = FirebaseAuth.instance;
     final size = MediaQuery.of(context).size;
-    final DatabaseReference ref = FirebaseDatabase.instance.ref("user");
+    final DatabaseReference ref =
+        FirebaseDatabase.instance.ref("Airline_company");
 
     return Scaffold(
       resizeToAvoidBottomInset: false,

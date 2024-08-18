@@ -26,12 +26,13 @@ class CarSignUpImageView extends StatefulWidget {
   String password;
   String CarRentalCompany;
   String mobileNumber;
-  CarSignUpImageView(
-      {super.key,
-      required this.email,
-      required this.password,
-      required this.CarRentalCompany,
-      required this.mobileNumber});
+  CarSignUpImageView({
+    super.key,
+    required this.email,
+    required this.password,
+    required this.CarRentalCompany,
+    required this.mobileNumber,
+  });
 
   @override
   _CarSignUpImageViewState createState() => _CarSignUpImageViewState();
@@ -258,11 +259,8 @@ class _CarSignUpImageViewState extends State<CarSignUpImageView> {
                             source: ImageSource.gallery);
                         setState(() {
                           _image = photo;
+                          Navigator.pop(context);
                         });
-
-                        if (photo != null) {
-                          _uploadImageToFirebase(photo!);
-                        }
                       },
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.start,
@@ -298,6 +296,7 @@ class _CarSignUpImageViewState extends State<CarSignUpImageView> {
                               source: ImageSource.camera);
                           setState(() {
                             _image = photo;
+                            Navigator.pop(context);
                           });
                         } else {
                           print("Camera permission is not granted");
@@ -437,14 +436,14 @@ class _CarSignUpImageViewState extends State<CarSignUpImageView> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.only(top: 330),
+                padding: const EdgeInsets.only( top: 330),
                 child: SingleChildScrollView(
                   reverse: true,
                   child: Padding(
-                      padding: EdgeInsets.only(
-                          left: 15,
-                          right: 15,
-                          bottom: MediaQuery.of(context).viewInsets.bottom),
+                       padding: EdgeInsets.only(
+                            left: 15,
+                            right: 15,
+                            bottom: MediaQuery.of(context).viewInsets.bottom),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -669,7 +668,19 @@ class _CarSignUpImageViewState extends State<CarSignUpImageView> {
                             SizedBox(height: 20),
                             InkWell(
                               onTap: () {
-                                _uploadImageToFirebase(photo!);
+                                 if (photo != null) {
+                              _uploadImageToFirebase(photo!);
+                            } else {
+                              Fluttertoast.showToast(
+                                  msg: "Please choose image",
+                                  toastLength: Toast.LENGTH_SHORT,
+                                  gravity: ToastGravity.BOTTOM,
+                                  timeInSecForIosWeb: 1,
+                                  backgroundColor:
+                                      const Color.fromARGB(255, 158, 165, 174),
+                                  textColor: Colors.white,
+                                  fontSize: 16.0);
+                            }
                               },
                               // onTap: () {
                               //   if (photo != null) {

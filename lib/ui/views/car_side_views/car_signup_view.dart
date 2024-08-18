@@ -9,7 +9,6 @@ import 'package:traveling/ui/shared/custom_widgets/custom_button.dart';
 import 'package:traveling/ui/shared/text_size.dart';
 import 'package:traveling/ui/views/car_side_views/car_signin_view.dart';
 import 'package:traveling/ui/views/car_side_views/car_signup_image_view.dart';
-import 'package:traveling/ui/views/hotel_side_views/hotel_signup_image_view.dart';
 import '../../shared/custom_widgets/custom_textfield2.dart';
 
 class CarSignUpView extends StatefulWidget {
@@ -31,11 +30,14 @@ class _CarSignUpViewState extends State<CarSignUpView> {
   late String errorTextPassword = '';
   late String errorTextCompanyName = '';
   late String errorTextConfirmPassword = '';
+
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
   final _CarNameController = TextEditingController();
   final _mobileNumber = TextEditingController();
+  final TextEditingController _controller = TextEditingController();
+  String _selectedCountryCode = '+963'; // Default
   @override
   void initState() {
     final databaseReference = FirebaseDatabase.instance.reference();
@@ -51,6 +53,8 @@ class _CarSignUpViewState extends State<CarSignUpView> {
     _confirmPasswordController.dispose();
     super.dispose();
   }
+
+  late String errorMobilenumber = '';
 
   @override
   Widget build(BuildContext context) {
@@ -165,14 +169,16 @@ class _CarSignUpViewState extends State<CarSignUpView> {
                 child: SingleChildScrollView(
                   reverse: true,
                   child: Padding(
-                      padding: EdgeInsets.only(
-                          left: 15,
-                          right: 15,
-                          bottom: MediaQuery.of(context).viewInsets.bottom),
+                    padding: EdgeInsets.only(
+                        left: 15,
+                        right: 15,
+                        bottom: MediaQuery.of(context).viewInsets.bottom),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                      
+                        const SizedBox(
+                          height: 310,
+                        ),
                         Text(
                           'Sign up ',
                           style: TextStyle(
@@ -200,7 +206,8 @@ class _CarSignUpViewState extends State<CarSignUpView> {
                             controller: _emailController,
                             decoration: textFielDecoratiom.copyWith(
                               focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.all(Radius.circular(18)),
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(18)),
                                 borderSide: BorderSide(
                                     color: AppColors.darkGray, width: 1.5),
                               ),
@@ -220,13 +227,14 @@ class _CarSignUpViewState extends State<CarSignUpView> {
                                     start: 6, top: 5, bottom: 15),
                                 child: Text(
                                   errorTextEmail,
-                                  style: TextStyle(fontSize: 11, color: Colors.red),
+                                  style: TextStyle(
+                                      fontSize: 11, color: Colors.red),
                                 ),
                               )
                             : SizedBox(
                                 height: 20,
                               ),
-                    
+
                         const Row(
                           children: [
                             Text(
@@ -245,7 +253,8 @@ class _CarSignUpViewState extends State<CarSignUpView> {
                             controller: _CarNameController,
                             decoration: textFielDecoratiom.copyWith(
                               focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.all(Radius.circular(18)),
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(18)),
                                 borderSide: BorderSide(
                                     color: AppColors.darkGray, width: 1.5),
                               ),
@@ -265,7 +274,8 @@ class _CarSignUpViewState extends State<CarSignUpView> {
                                     start: 6, top: 5, bottom: 15),
                                 child: Text(
                                   errorTextEmail,
-                                  style: TextStyle(fontSize: 11, color: Colors.red),
+                                  style: TextStyle(
+                                      fontSize: 11, color: Colors.red),
                                 ),
                               )
                             : SizedBox(
@@ -288,7 +298,8 @@ class _CarSignUpViewState extends State<CarSignUpView> {
                             keyboardType: TextInputType.visiblePassword,
                             decoration: textFielDecoratiom.copyWith(
                               focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.all(Radius.circular(18)),
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(18)),
                                 borderSide: BorderSide(
                                     color: AppColors.darkGray, width: 1.5),
                               ),
@@ -323,7 +334,8 @@ class _CarSignUpViewState extends State<CarSignUpView> {
                             keyboardType: TextInputType.visiblePassword,
                             decoration: textFielDecoratiom.copyWith(
                               focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.all(Radius.circular(18)),
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(18)),
                                 borderSide: BorderSide(
                                     color: AppColors.darkGray, width: 1.5),
                               ),
@@ -338,20 +350,21 @@ class _CarSignUpViewState extends State<CarSignUpView> {
                             },
                           ),
                         ),
-                    
+
                         (errorTextPassword != '')
                             ? Padding(
                                 padding: EdgeInsetsDirectional.only(
                                     start: 6, top: 5, bottom: 15),
                                 child: Text(
                                   errorTextPassword,
-                                  style: TextStyle(fontSize: 11, color: Colors.red),
+                                  style: TextStyle(
+                                      fontSize: 11, color: Colors.red),
                                 ),
                               )
                             : SizedBox(
                                 height: 20,
                               ),
-                    
+
                         const Row(
                           children: [
                             Text(
@@ -369,7 +382,8 @@ class _CarSignUpViewState extends State<CarSignUpView> {
                             controller: _confirmPasswordController,
                             decoration: textFielDecoratiom.copyWith(
                               focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.all(Radius.circular(18)),
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(18)),
                                 borderSide: BorderSide(
                                     color: AppColors.darkGray, width: 1.5),
                               ),
@@ -389,13 +403,14 @@ class _CarSignUpViewState extends State<CarSignUpView> {
                                     start: 6, top: 5, bottom: 15),
                                 child: Text(
                                   errorTextConfirmPassword,
-                                  style: TextStyle(fontSize: 11, color: Colors.red),
+                                  style: TextStyle(
+                                      fontSize: 11, color: Colors.red),
                                 ),
                               )
                             : SizedBox(
                                 height: 20,
                               ),
-                    
+
                         Text(
                           errorText,
                           style: const TextStyle(color: Colors.red),
@@ -406,7 +421,7 @@ class _CarSignUpViewState extends State<CarSignUpView> {
                         InkWell(
                             onTap: () async {
                               // Get.offAll(HotelSignUpImageView());
-                    
+
                               try {
                                 if (_emailController.value.text.isEmpty ||
                                     !_emailController.value.text.isEmail) {
@@ -423,7 +438,8 @@ class _CarSignUpViewState extends State<CarSignUpView> {
                                     errorTextPassword =
                                         "Please enter a valid password";
                                   });
-                                } else if (_passwordController.value.text.length <
+                                } else if (_passwordController
+                                            .value.text.length <
                                         7 &&
                                     _passwordController.value.text.isNotEmpty) {
                                   setState(() {
@@ -435,7 +451,7 @@ class _CarSignUpViewState extends State<CarSignUpView> {
                                     errorTextPassword = '';
                                   });
                                 }
-                    
+
                                 if (_passwordController.value.text !=
                                     _confirmPasswordController.value.text) {
                                   setState(() {
@@ -469,7 +485,7 @@ class _CarSignUpViewState extends State<CarSignUpView> {
                                 //         await auth.createUserWithEmailAndPassword(
                                 //             email: email, password: password);
                                 //     User? AirelineCompany = auth.currentUser;
-                    
+
                                 //     if (AirelineCompany != null) {
                                 //       Get.offAll(HotelSignUpImageView());
                                 //       ref
@@ -495,7 +511,7 @@ class _CarSignUpViewState extends State<CarSignUpView> {
                                 //             errorText =
                                 //                 'Email is already registered.';
                                 //           });
-                    
+
                                 //           break;
                                 //         // Add more cases as needed
                                 //         default:

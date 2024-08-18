@@ -21,7 +21,14 @@ import 'package:traveling/ui/views/hotel_side_views/hotel_home_screen.dart';
 import 'package:traveling/ui/views/hotel_side_views/map_view.dart';
 
 class HotelSignUpImageView extends StatefulWidget {
-  const HotelSignUpImageView({super.key});
+  String? email;
+  String? password;
+  String? CompanyName;
+  HotelSignUpImageView(
+      {super.key,
+      required this.email,
+      required this.CompanyName,
+      required this.password});
 
   @override
   _HotelSignUpImageViewState createState() => _HotelSignUpImageViewState();
