@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:traveling/ui/shared/colors.dart';
 import 'package:traveling/ui/shared/custom_widgets/custom_button.dart';
@@ -52,7 +53,10 @@ class _SignUpViewState extends State<SignUpView> {
           Column(
             children: [
               const Padding(
-                padding: EdgeInsets.all(15.0),
+                padding: EdgeInsets.only(
+                  left: 15,
+                  right: 15,
+                ),
                 child: Column(
                   children: [
                     SizedBox(
@@ -147,23 +151,28 @@ class _SignUpViewState extends State<SignUpView> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 15),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const SizedBox(
-                      height: 350,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                padding: const EdgeInsets.only(top: 350),
+                child: SingleChildScrollView(
+                  reverse: true,
+                  child: Padding(
+                    padding: EdgeInsets.only(
+                        left: 15,
+                        right: 15,
+                        bottom: MediaQuery.of(context).viewInsets.bottom),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text(
-                          'Sign up ',
-                          style: TextStyle(
-                              fontSize: TextSize.header1,
-                              fontWeight: FontWeight.w700),
-                        ),
-                        Obx(
+                        
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            const Text(
+                              'Sign up ',
+                              style: TextStyle(
+                                  fontSize: TextSize.header1,
+                                  fontWeight: FontWeight.w700),
+                            ),
+                             Obx(
                           () => (isloading.value == true)
                               ? Container(
                                   width: 20,
@@ -178,210 +187,201 @@ class _SignUpViewState extends State<SignUpView> {
                                 )
                               : SizedBox(),
                         ),
-                        const Text(
-                          'Sign up ',
-                          style: TextStyle(
-                              color: Colors.transparent,
-                              fontSize: TextSize.header1,
-                              fontWeight: FontWeight.w700),
+                          ],
                         ),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 35,
-                    ),
-                    const Row(
-                      children: [
-                        Text(
-                          'Email',
-                          style: TextStyle(
-                              fontSize: 13,
-                              color: AppColors.grayText,
-                              fontWeight: FontWeight.w500),
+                        const SizedBox(
+                          height: 35,
                         ),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 45,
-                      child: TextFormField(
-                        keyboardType: TextInputType.emailAddress,
-                        controller: _emailController,
-                        decoration: textFielDecoratiom.copyWith(
-                          prefixIcon: Icon(Icons.email_rounded),
+                        const Row(
+                          children: [
+                            Text(
+                              'Email',
+                              style: TextStyle(
+                                  fontSize: 13,
+                                  color: AppColors.grayText,
+                                  fontWeight: FontWeight.w500),
+                            ),
+                          ],
                         ),
-                        onChanged: (value) {
-                          email = value;
-                        },
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    const Row(
-                      children: [
-                        Text(
-                          'Password',
-                          style: TextStyle(
-                              fontSize: 13,
-                              color: AppColors.grayText,
-                              fontWeight: FontWeight.w500),
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 45,
-                      child: TextFormField(
-                        keyboardType: TextInputType.visiblePassword,
-                        decoration: textFielDecoratiom.copyWith(
-                          prefixIcon: Icon(Icons.lock_rounded),
-                        ),
-                        controller: _passwordController,
-                        onChanged: (value) {
-                          password = value;
-                        },
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    const Row(
-                      children: [
-                        Text(
-                          'Conferm Password',
-                          style: TextStyle(
-                              fontSize: 13,
-                              color: AppColors.grayText,
-                              fontWeight: FontWeight.w500),
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 45,
-                      child: TextFormField(
-                        controller: _confirmPasswordController,
-                        decoration: textFielDecoratiom.copyWith(
-                          prefixIcon: Icon(Icons.lock_rounded),
-                        ),
-                        onChanged: (value) {
-                          confermPassword = value;
-                        },
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 15,
-                    ),
-                    Text(
-                      errorText,
-                      style: const TextStyle(color: Colors.red),
-                    ),
-                    const SizedBox(
-                      height: 15,
-                    ),
-                    InkWell(
-                        onTap: () async {
-                          try {
-                            if (_emailController.value.text.isEmpty ||
-                                _passwordController.value.text.isEmpty) {
-                              setState(() {
-                                errorText = "Please enter all fields";
-                              });
-                            } else if (!_emailController.value.text.isEmail) {
-                              setState(() {
-                                errorText = "Please enter valid email";
-                              });
-                            } else if (password.length < 7) {
-                              setState(() {
-                                errorText =
-                                    "Password can't be less than 6 charecters";
-                              });
-                            } else if (password != confermPassword) {
-                              setState(() {
-                                errorText =
-                                    "Password and verification do not match";
-                              });
-                            } else {
-                              try {
-                                isloading.value = true;
-                                final newUser =
-                                    await _auth.createUserWithEmailAndPassword(
-                                        email: email, password: password);
-                                User? user = _auth.currentUser;
-                                if (newUser != null) {
-                                  isloading.value = false;
-
-                                  Get.offAll(Home());
-                                  ref.child(user!.uid.toString()).set({
-                                    'email': email,
-                                    'password': password,
-                                    'first_name': '',
-                                    'last_name': '',
-                                    'nationality': '',
-                                    'gender': '',
-                                    'mobile_number': '',
-                                    'day': '',
-                                    'month': '',
-                                    'year': '',
-                                  });
-                                }
-                              } catch (e) {
-                                if (e is FirebaseAuthException) {
-                                  isloading.value = false;
-
-                                  switch (e.code) {
-                                    case 'weak-password':
-                                      setState(() {
-                                        errorText = 'Password is too weak.';
-                                      });
-                                      break;
-                                    case 'email-already-in-use':
-                                      setState(() {
-                                        errorText =
-                                            'Email is already registered.';
-                                      });
-
-                                      break;
-                                    // Add more cases as needed
-                                    default:
-                                    // Use the default error message
-                                  }
-                                }
-                              }
-                            }
-                          } catch (e) {}
-                        },
-                        child: CustomButton(
-                          backgroundColor: AppColors.darkBlue,
-                          text: 'Sign up',
-                          textColor: AppColors.backgroundgrayColor,
-                          widthPercent: size.width,
-                        )),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const Text(
-                          'You already have account?  ',
-                          style: TextStyle(
-                            color: AppColors.grayText,
+                        SizedBox(
+                          height: 45,
+                          child: TextFormField(
+                            keyboardType: TextInputType.emailAddress,
+                            controller: _emailController,
+                            decoration: textFielDecoratiom.copyWith(
+                              prefixIcon: Icon(Icons.email_rounded),
+                            ),
+                            onChanged: (value) {
+                              email = value;
+                            },
                           ),
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        const Row(
+                          children: [
+                            Text(
+                              'Password',
+                              style: TextStyle(
+                                  fontSize: 13,
+                                  color: AppColors.grayText,
+                                  fontWeight: FontWeight.w500),
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 45,
+                          child: TextFormField(
+                            keyboardType: TextInputType.visiblePassword,
+                            decoration: textFielDecoratiom.copyWith(
+                              prefixIcon: Icon(Icons.lock_rounded),
+                            ),
+                            controller: _passwordController,
+                            onChanged: (value) {
+                              password = value;
+                            },
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        const Row(
+                          children: [
+                            Text(
+                              'Conferm Password',
+                              style: TextStyle(
+                                  fontSize: 13,
+                                  color: AppColors.grayText,
+                                  fontWeight: FontWeight.w500),
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 45,
+                          child: TextFormField(
+                            controller: _confirmPasswordController,
+                            decoration: textFielDecoratiom.copyWith(
+                              prefixIcon: Icon(Icons.lock_rounded),
+                            ),
+                            onChanged: (value) {
+                              confermPassword = value;
+                            },
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 15,
+                        ),
+                        Text(
+                          errorText,
+                          style: const TextStyle(color: Colors.red),
+                        ),
+                        const SizedBox(
+                          height: 15,
                         ),
                         InkWell(
-                          onTap: () {
-                            Get.off(const SignInView());
-                          },
-                          child: const Text(
-                            'Sign in',
-                            style: TextStyle(
-                              color: AppColors.darkBlue,
-                              fontWeight: FontWeight.bold,
+                            onTap: () async {
+                              try {
+                                if (_emailController.value.text.isEmpty ||
+                                    _passwordController.value.text.isEmpty) {
+                                  setState(() {
+                                    errorText = "Please enter all fields";
+                                  });
+                                } else if (!_emailController
+                                    .value.text.isEmail) {
+                                  setState(() {
+                                    errorText = "Please enter valid email";
+                                  });
+                                } else if (password.length < 7) {
+                                  setState(() {
+                                    errorText =
+                                        "Password can't be less than 6 charecters";
+                                  });
+                                } else if (password != confermPassword) {
+                                  setState(() {
+                                    errorText =
+                                        "Password and verification do not match";
+                                  });
+                                } else {
+                                  try {
+                                    final newUser = await _auth
+                                        .createUserWithEmailAndPassword(
+                                            email: email, password: password);
+                                    User? user = _auth.currentUser;
+                                    if (newUser != null) {
+                                      Get.offAll(Home());
+                                      ref.child(user!.uid.toString()).set({
+                                        'email': email,
+                                        'password': password,
+                                        'first_name': '',
+                                        'last_name': '',
+                                        'nationality': '',
+                                        'gender': '',
+                                        'mobile_number': '',
+                                        'day': '',
+                                        'month': '',
+                                        'year': '',
+                                      });
+                                    }
+                                  } catch (e) {
+                                    if (e is FirebaseAuthException) {
+                                      switch (e.code) {
+                                        case 'weak-password':
+                                          setState(() {
+                                            errorText = 'Password is too weak.';
+                                          });
+                                          break;
+                                        case 'email-already-in-use':
+                                          setState(() {
+                                            errorText =
+                                                'Email is already registered.';
+                                          });
+
+                                          break;
+                                        // Add more cases as needed
+                                        default:
+                                        // Use the default error message
+                                      }
+                                    }
+                                  }
+                                }
+                              } catch (e) {}
+                            },
+                            child: CustomButton(
+                              backgroundColor: AppColors.darkBlue,
+                              text: 'Sign up',
+                              textColor: AppColors.backgroundgrayColor,
+                              widthPercent: size.width,
+                            )),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const Text(
+                              'You already have account?  ',
+                              style: TextStyle(
+                                color: AppColors.grayText,
+                              ),
                             ),
-                          ),
+                            InkWell(
+                              onTap: () {
+                                Get.off(const SignInView());
+                              },
+                              child: const Text(
+                                'Sign in',
+                                style: TextStyle(
+                                  color: AppColors.darkBlue,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            )
+                          ],
                         )
                       ],
-                    )
-                  ],
+                    ),
+                  ),
                 ),
               ),
             ],

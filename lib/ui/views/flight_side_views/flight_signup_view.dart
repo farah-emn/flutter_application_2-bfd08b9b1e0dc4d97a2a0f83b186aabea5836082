@@ -7,7 +7,6 @@ import 'package:get/get.dart';
 import 'package:traveling/ui/shared/colors.dart';
 import 'package:traveling/ui/shared/custom_widgets/custom_button.dart';
 import 'package:traveling/ui/shared/custom_widgets/custom_textgray.dart';
-import 'package:traveling/ui/views/flight_side_views/flight_image_signup_view.dart';
 import 'package:traveling/ui/views/flight_side_views/flight_signin_view.dart';
 import 'package:traveling/ui/views/traveller_side_views/signin_view.dart';
 import '../../shared/custom_widgets/custom_textfield2.dart';
@@ -167,253 +166,173 @@ class _FlightSignUpViewState extends State<FlightSignUpView> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 15),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const SizedBox(
-                      height: 350,
-                    ),
-                    const Text(
-                      'Sign up ',
-                      style: TextStyle(
-                          fontSize: TextSize.header1,
-                          fontWeight: FontWeight.w700),
-                    ),
-                    const SizedBox(
-                      height: 35,
-                    ),
-                    const Row(
+                padding: const EdgeInsets.only(top: 350),
+                child: SingleChildScrollView(
+                  reverse: true,
+                  child: Padding(
+                    padding: EdgeInsets.only(
+                        left: 15,
+                        right: 15,
+                        bottom: MediaQuery.of(context).viewInsets.bottom),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          'Email',
+                        const Text(
+                          'Sign up ',
                           style: TextStyle(
-                              fontSize: 13,
-                              color: AppColors.grayText,
-                              fontWeight: FontWeight.w500),
+                              fontSize: TextSize.header1,
+                              fontWeight: FontWeight.w700),
                         ),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 45,
-                      child: TextFormField(
-                        keyboardType: TextInputType.emailAddress,
-                        controller: _emailController,
-                        decoration: textFielDecoratiom.copyWith(
-                          prefixIcon: Icon(Icons.email_rounded),
+                        const SizedBox(
+                          height: 35,
                         ),
-                        onChanged: (value) {
-                          email = value;
-                        },
-                      ),
-                    ),
-                    SizedBox(
-                      height: 5,
-                    ),
-                    (errorTextEmail.isNotEmpty)
-                        ? Padding(
-                            padding: EdgeInsetsDirectional.only(
-                                start: 6, top: 5, bottom: 15),
-                            child: Text(
-                              errorTextEmail,
-                              style: TextStyle(fontSize: 11, color: Colors.red),
+                        const Row(
+                          children: [
+                            Text(
+                              'Email',
+                              style: TextStyle(
+                                  fontSize: 13,
+                                  color: AppColors.grayText,
+                                  fontWeight: FontWeight.w500),
                             ),
-                          )
-                        : SizedBox(
-                            height: 20,
-                          ),
-                    const Row(
-                      children: [
-                        Text(
-                          'Company name',
-                          style: TextStyle(
-                              fontSize: 13,
-                              color: AppColors.grayText,
-                              fontWeight: FontWeight.w500),
+                          ],
                         ),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 45,
-                      child: TextFormField(
-                        keyboardType: TextInputType.text,
-                        controller: _CompanyNameController,
-                        decoration: textFielDecoratiom.copyWith(
-                          prefixIcon: Icon(Icons.email_rounded),
-                        ),
-                        onChanged: (value) {
-                          CompanyName = value;
-                        },
-                      ),
-                    ),
-                    SizedBox(
-                      height: 5,
-                    ),
-                    (errorTextCompanyName.isNotEmpty)
-                        ? Padding(
-                            padding: EdgeInsetsDirectional.only(
-                                start: 6, top: 5, bottom: 15),
-                            child: Text(
-                              errorTextCompanyName,
-                              style: TextStyle(fontSize: 11, color: Colors.red),
+                        SizedBox(
+                          height: 45,
+                          child: TextFormField(
+                            keyboardType: TextInputType.emailAddress,
+                            controller: _emailController,
+                            decoration: textFielDecoratiom.copyWith(
+                              prefixIcon: Icon(Icons.email_rounded),
                             ),
-                          )
-                        : SizedBox(
-                            height: 20,
+                            onChanged: (value) {
+                              email = value;
+                            },
                           ),
-                    const Row(
-                      children: [
-                        Text(
-                          'Password',
-                          style: TextStyle(
-                              fontSize: 13,
-                              color: AppColors.grayText,
-                              fontWeight: FontWeight.w500),
                         ),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 45,
-                      child: TextFormField(
-                        keyboardType: TextInputType.visiblePassword,
-                        decoration: textFielDecoratiom.copyWith(
-                          prefixIcon: Icon(Icons.lock_rounded),
+                        const SizedBox(
+                          height: 20,
                         ),
-                        controller: _passwordController,
-                        onChanged: (value) {
-                          password = value;
-                        },
-                      ),
-                    ),
-                    SizedBox(
-                      height: 5,
-                    ),
-                    (errorTextPassword.isNotEmpty)
-                        ? Padding(
-                            padding: EdgeInsetsDirectional.only(
-                                start: 6, top: 5, bottom: 15),
-                            child: Text(
-                              errorTextPassword,
-                              style: TextStyle(fontSize: 11, color: Colors.red),
+                        const Row(
+                          children: [
+                            Text(
+                              'Password',
+                              style: TextStyle(
+                                  fontSize: 13,
+                                  color: AppColors.grayText,
+                                  fontWeight: FontWeight.w500),
                             ),
-                          )
-                        : SizedBox(
-                            height: 20,
+                          ],
+                        ),
+                        SizedBox(
+                          height: 45,
+                          child: TextFormField(
+                            keyboardType: TextInputType.visiblePassword,
+                            decoration: textFielDecoratiom.copyWith(
+                              prefixIcon: Icon(Icons.lock_rounded),
+                            ),
+                            controller: _passwordController,
+                            onChanged: (value) {
+                              password = value;
+                            },
                           ),
-                    const Row(
-                      children: [
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        const Row(
+                          children: [
+                            Text(
+                              'Conferm Password',
+                              style: TextStyle(
+                                  fontSize: 13,
+                                  color: AppColors.grayText,
+                                  fontWeight: FontWeight.w500),
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 45,
+                          child: TextFormField(
+                            controller: _confirmPasswordController,
+                            decoration: textFielDecoratiom.copyWith(
+                              prefixIcon: Icon(Icons.lock_rounded),
+                            ),
+                            onChanged: (value) {
+                              confermPassword = value;
+                            },
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 15,
+                        ),
                         Text(
-                          'Conferm Password',
-                          style: TextStyle(
-                              fontSize: 13,
-                              color: AppColors.grayText,
-                              fontWeight: FontWeight.w500),
+                          errorText,
+                          style: const TextStyle(color: Colors.red),
                         ),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 45,
-                      child: TextFormField(
-                        controller: _confirmPasswordController,
-                        decoration: textFielDecoratiom.copyWith(
-                          prefixIcon: Icon(Icons.lock_rounded),
+                        const SizedBox(
+                          height: 15,
                         ),
-                        onChanged: (value) {
-                          confermPassword = value;
-                        },
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 15,
-                    ),
-                    Text(
-                      errorText,
-                      style: const TextStyle(color: Colors.red),
-                    ),
-                    const SizedBox(
-                      height: 15,
-                    ),
-                    InkWell(
-                        onTap: () async {
-                          try {
-                            setState(() {
-                              errorText = "";
-                              errorTextEmail = "";
-                              errorTextPassword = "";
-                              errorTextConfirmPassword = "";
-                              errorTextCompanyName = "";
-                              // errorMobilenumber = "";
-                              if (_emailController.value.text.isEmpty &&
-                                      _CompanyNameController
-                                          .value.text.isEmpty &&
-                                      _passwordController.value.text.isEmpty
-                                  // _controller.text.isEmpty
-                                  ) {
-                                errorText = "Please enter all fields";
-                              } else {
-                                if (_emailController.value.text.isEmpty ||
-                                    !_emailController.value.text
-                                        .contains('@')) {
-                                  errorTextEmail = "Please enter a valid email";
-                                }
-
-                                if (_passwordController.value.text.isEmpty) {
-                                  errorTextPassword =
-                                      "Please enter a valid password";
-                                } else if (_passwordController
-                                        .value.text.length <
-                                    7) {
-                                  errorTextPassword =
-                                      "Password can't be less than 6 characters";
-                                }
-
-                                if (_passwordController.value.text !=
-                                    _confirmPasswordController.value.text) {
-                                  errorTextConfirmPassword =
-                                      "Password and verification do not match";
-                                }
-                              }
-                            });
-                            if (errorTextAirlineCode.isEmpty &&
-                                errorTextEmail.isEmpty &&
-                                errorTextPassword.isEmpty &&
-                                errorTextConfirmPassword.isEmpty) {
-                              Get.offAll(FlightImageSignUpView(
-                                  email: email,
-                                  password: password,
-                                  comapnyname: _CompanyNameController.text));
-                            }
-                          } catch (e) {}
-                        },
-                        child: CustomButton(
-                          text: 'Sign up',
-                          textColor: AppColors.backgroundgrayColor,
-                          widthPercent: size.width,
-                          backgroundColor: AppColors.mainColorBlue,
-                        )),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const CustomTextGray(
-                            mainText: 'You already have account? '),
                         InkWell(
-                          onTap: () {
-                            Get.offAll(const FlightSignInView());
-                          },
-                          child: const Text(
-                            'Sign in',
-                            style: TextStyle(
-                              color: AppColors.mainColorBlue,
-                              fontWeight: FontWeight.bold,
+                            onTap: () {
+                              Get.to(
+                                () => const FlightHome(),
+                              );
+                            },
+                            child: CustomButton(
+                              backgroundColor: AppColors.darkBlue,
+                              text: 'Sign up',
+                              textColor: AppColors.backgroundgrayColor,
+                              widthPercent: size.width,
+                            )),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        // const Center(
+                        //   child: CustomTextGray(
+                        //     mainText: 'or sign in with ',
+                        //   ),
+                        // ),
+                        // const SizedBox(
+                        //   height: 20,
+                        // ),
+                        // const Row(
+                        //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        //   children: [
+                        //     CustomImage(imagename: 'facebook_icon'),
+                        //     CustomImage(imagename: 'google_icon'),
+                        //     CustomImage(imagename: 'twitter_icon'),
+                        //   ],
+                        // ),
+                        // SizedBox(
+                        //   height: screenHeight(20),
+                        // ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const Text(
+                              'You already have account?  ',
+                              style: TextStyle(
+                                color: AppColors.grayText,
+                              ),
                             ),
-                          ),
+                            InkWell(
+                              onTap: () {
+                                Get.offAll(const FlightSignInView());
+                              },
+                              child: const Text(
+                                'Sign in',
+                                style: TextStyle(
+                                  color: AppColors.darkBlue,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            )
+                          ],
                         )
                       ],
-                    )
-                  ],
+                    ),
+                  ),
                 ),
               ),
             ],

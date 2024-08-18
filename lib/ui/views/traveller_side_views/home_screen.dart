@@ -105,7 +105,7 @@ class _HomeState extends State<Home> {
                 Icons.person_2_rounded,
                 color: AppColors.Blue,
               ),
-              label: 'Menu',
+              label: 'Profile',
             ),
           ],
         ),

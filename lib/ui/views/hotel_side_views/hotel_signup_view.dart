@@ -154,7 +154,7 @@ class _HoteltSignUpViewState extends State<HoteltSignUpView> {
             children: [
               Padding(
                 padding: const EdgeInsets.only(
-                  top: 280,
+                  top: 300,
                 ),
                 child: Container(
                   decoration: const BoxDecoration(
@@ -165,153 +165,135 @@ class _HoteltSignUpViewState extends State<HoteltSignUpView> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 15),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const SizedBox(
-                      height: 310,
-                    ),
-                    Text(
-                      'Sign up ',
-                      style: TextStyle(
-                          fontSize: TextSize.header1,
-                          fontWeight: FontWeight.w700),
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    const Row(
+                padding: const EdgeInsets.only(top: 350),
+                child: SingleChildScrollView(
+                  reverse: true,
+                  child: Padding(
+                    padding: EdgeInsets.only(
+                        left: 15,
+                        right: 15,
+                        bottom: MediaQuery.of(context).viewInsets.bottom),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Email',
+                          'Sign up ',
                           style: TextStyle(
-                              fontSize: 13,
-                              color: AppColors.grayText,
-                              fontWeight: FontWeight.w500),
+                              fontSize: TextSize.header1,
+                              fontWeight: FontWeight.w700),
                         ),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 40,
-                      child: TextFormField(
-                        keyboardType: TextInputType.emailAddress,
-                        controller: _emailController,
-                        decoration: textFielDecoratiom.copyWith(
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(18)),
-                            borderSide:
-                                BorderSide(color: AppColors.purple, width: 1.5),
-                          ),
-                          prefixIcon: const Icon(
-                            Icons.email_rounded,
-                            color: AppColors.purple,
-                          ),
+                        const SizedBox(
+                          height: 20,
                         ),
-                        onChanged: (value) {
-                          email = value;
-                        },
-                      ),
-                    ),
-                    (errorTextEmail.isNotEmpty)
-                        ? Padding(
-                            padding: EdgeInsetsDirectional.only(
-                                start: 6, top: 5, bottom: 15),
-                            child: Text(
-                              errorTextEmail,
-                              style: TextStyle(fontSize: 11, color: Colors.red),
+                        const Row(
+                          children: [
+                            Text(
+                              'Email',
+                              style: TextStyle(
+                                  fontSize: 13,
+                                  color: AppColors.grayText,
+                                  fontWeight: FontWeight.w500),
                             ),
-                          )
-                        : SizedBox(
-                            height: 20,
-                          ),
-                    const Row(
-                      children: [
-                        Text(
-                          'Hotel name',
-                          style: TextStyle(
-                              fontSize: 13,
-                              color: AppColors.grayText,
-                              fontWeight: FontWeight.w500),
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 40,
-                      child: TextFormField(
-                        keyboardType: TextInputType.text,
-                        controller: _HotelNameController,
-                        decoration: textFielDecoratiom.copyWith(
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(18)),
-                            borderSide:
-                                BorderSide(color: AppColors.purple, width: 1.5),
-                          ),
-                          prefixIcon: const Icon(
-                            Icons.location_city_rounded,
-                            color: AppColors.purple,
-                          ),
-                        ),
-                        onChanged: (value) {
-                          CompanyName = value;
-                        },
-                      ),
-                    ),
-                    (errorTextCompanyName != '')
-                        ? Padding(
-                            padding: EdgeInsetsDirectional.only(
-                                start: 6, top: 5, bottom: 15),
-                            child: Text(
-                              errorTextEmail,
-                              style: TextStyle(fontSize: 11, color: Colors.red),
-                            ),
-                          )
-                        : SizedBox(
-                            height: 20,
-                          ),
-                    const Row(
-                      children: [
-                        Text(
-                          'Mobile Number',
-                          style: TextStyle(
-                              fontSize: 13,
-                              color: AppColors.grayText,
-                              fontWeight: FontWeight.w500),
-                        ),
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        DropdownButton<String>(
-                          value: _selectedCountryCode,
-                          items: <String>[
-                            '+1',
-                            '+91',
-                            '+44',
-                            '+81',
-                            '+61',
-                            '+966',
-                            '+965',
-                            '+963'
-                          ].map((String value) {
-                            return DropdownMenuItem<String>(
-                              value: value,
-                              child: Text(value),
-                            );
-                          }).toList(),
-                          onChanged: (String? newValue) {
-                            setState(() {
-                              _selectedCountryCode = newValue!;
-                            });
-                          },
+                          ],
                         ),
                         SizedBox(
-                          width: 10,
-                        ),
-                        Expanded(
-                            child: SizedBox(
                           height: 40,
-                          child: TextField(
+                          child: TextFormField(
+                            keyboardType: TextInputType.emailAddress,
+                            controller: _emailController,
+                            decoration: textFielDecoratiom.copyWith(
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(18)),
+                                borderSide: BorderSide(
+                                    color: AppColors.purple, width: 1.5),
+                              ),
+                              prefixIcon: const Icon(
+                                Icons.email_rounded,
+                                color: AppColors.purple,
+                              ),
+                            ),
+                            onChanged: (value) {
+                              email = value;
+                            },
+                          ),
+                        ),
+                        (errorTextEmail.isNotEmpty)
+                            ? Padding(
+                                padding: EdgeInsetsDirectional.only(
+                                    start: 6, top: 5, bottom: 15),
+                                child: Text(
+                                  errorTextEmail,
+                                  style: TextStyle(
+                                      fontSize: 11, color: Colors.red),
+                                ),
+                              )
+                            : SizedBox(
+                                height: 20,
+                              ),
+
+                        const Row(
+                          children: [
+                            Text(
+                              'Hotel name',
+                              style: TextStyle(
+                                  fontSize: 13,
+                                  color: AppColors.grayText,
+                                  fontWeight: FontWeight.w500),
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 40,
+                          child: TextFormField(
+                            keyboardType: TextInputType.text,
+                            controller: _HotelNameController,
+                            decoration: textFielDecoratiom.copyWith(
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(18)),
+                                borderSide: BorderSide(
+                                    color: AppColors.purple, width: 1.5),
+                              ),
+                              prefixIcon: const Icon(
+                                Icons.location_city_rounded,
+                                color: AppColors.purple,
+                              ),
+                            ),
+                            onChanged: (value) {
+                              CompanyName = value;
+                            },
+                          ),
+                        ),
+                        (errorTextCompanyName.isNotEmpty)
+                            ? Padding(
+                                padding: EdgeInsetsDirectional.only(
+                                    start: 6, top: 5, bottom: 15),
+                                child: Text(
+                                  errorTextEmail,
+                                  style: TextStyle(
+                                      fontSize: 11, color: Colors.red),
+                                ),
+                              )
+                            : SizedBox(
+                                height: 20,
+                              ),
+
+                        const Row(
+                          children: [
+                            Text(
+                              'Password',
+                              style: TextStyle(
+                                  fontSize: 13,
+                                  color: AppColors.grayText,
+                                  fontWeight: FontWeight.w500),
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 40,
+                          child: TextFormField(
+                            keyboardType: TextInputType.visiblePassword,
                             decoration: textFielDecoratiom.copyWith(
                               focusedBorder: OutlineInputBorder(
                                 borderRadius:
@@ -321,212 +303,238 @@ class _HoteltSignUpViewState extends State<HoteltSignUpView> {
                               ),
                               prefixIcon: const Icon(
                                 Icons.lock,
-                                color: Colors.transparent,
+                                color: AppColors.purple,
                               ),
                             ),
-                            controller: _controller,
-                            keyboardType: TextInputType.phone,
+                            controller: _passwordController,
+                            onChanged: (value) {
+                              password = value;
+                            },
                           ),
-                        )),
-                      ],
-                    ),
-                    (errorMobilenumber != '')
-                        ? Padding(
-                            padding: EdgeInsetsDirectional.only(
-                                start: 6, top: 5, bottom: 15),
-                            child: Text(
-                              errorMobilenumber,
-                              style: TextStyle(fontSize: 11, color: Colors.red),
+                        ),
+
+                        (errorTextPassword != null)
+                            ? Padding(
+                                padding: EdgeInsetsDirectional.only(
+                                    start: 6, top: 5, bottom: 15),
+                                child: Text(
+                                  errorTextPassword,
+                                  style: TextStyle(
+                                      fontSize: 11, color: Colors.red),
+                                ),
+                              )
+                            : SizedBox(
+                                height: 20,
+                              ),
+
+                        const Row(
+                          children: [
+                            Text(
+                              'Conferm Password',
+                              style: TextStyle(
+                                  fontSize: 13,
+                                  color: AppColors.grayText,
+                                  fontWeight: FontWeight.w500),
                             ),
-                          )
-                        : SizedBox(
-                            height: 20,
+                          ],
+                        ),
+                        SizedBox(
+                          height: 40,
+                          child: TextFormField(
+                            controller: _confirmPasswordController,
+                            decoration: textFielDecoratiom.copyWith(
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(18)),
+                                borderSide: BorderSide(
+                                    color: AppColors.purple, width: 1.5),
+                              ),
+                              prefixIcon: const Icon(
+                                Icons.lock,
+                                color: AppColors.purple,
+                              ),
+                            ),
+                            onChanged: (value) {
+                              confermPassword = value;
+                            },
                           ),
-                    const Row(
-                      children: [
+                        ),
+                        (errorTextConfirmPassword != null)
+                            ? Padding(
+                                padding: EdgeInsetsDirectional.only(
+                                    start: 6, top: 5, bottom: 15),
+                                child: Text(
+                                  errorTextConfirmPassword,
+                                  style: TextStyle(
+                                      fontSize: 11, color: Colors.red),
+                                ),
+                              )
+                            : SizedBox(
+                                height: 20,
+                              ),
+
                         Text(
-                          'Password',
-                          style: TextStyle(
-                              fontSize: 13,
-                              color: AppColors.grayText,
-                              fontWeight: FontWeight.w500),
+                          errorText,
+                          style: const TextStyle(color: Colors.red),
                         ),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 40,
-                      child: TextFormField(
-                        keyboardType: TextInputType.visiblePassword,
-                        decoration: textFielDecoratiom.copyWith(
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(18)),
-                            borderSide:
-                                BorderSide(color: AppColors.purple, width: 1.5),
-                          ),
-                          prefixIcon: const Icon(
-                            Icons.lock,
-                            color: AppColors.purple,
-                          ),
-                        ),
-                        controller: _passwordController,
-                        onChanged: (value) {
-                          password = value;
-                        },
-                      ),
-                    ),
-                    (errorTextPassword != '')
-                        ? Padding(
-                            padding: EdgeInsetsDirectional.only(
-                                start: 6, top: 5, bottom: 15),
-                            child: Text(
-                              errorTextPassword,
-                              style: TextStyle(fontSize: 11, color: Colors.red),
-                            ),
-                          )
-                        : SizedBox(
-                            height: 20,
-                          ),
-                    const Row(
-                      children: [
-                        Text(
-                          'Conferm Password',
-                          style: TextStyle(
-                              fontSize: 13,
-                              color: AppColors.grayText,
-                              fontWeight: FontWeight.w500),
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 40,
-                      child: TextFormField(
-                        controller: _confirmPasswordController,
-                        decoration: textFielDecoratiom.copyWith(
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(18)),
-                            borderSide:
-                                BorderSide(color: AppColors.purple, width: 1.5),
-                          ),
-                          prefixIcon: const Icon(
-                            Icons.lock,
-                            color: AppColors.purple,
-                          ),
-                        ),
-                        onChanged: (value) {
-                          confermPassword = value;
-                        },
-                      ),
-                    ),
-                    (errorTextConfirmPassword != null)
-                        ? Padding(
-                            padding: EdgeInsetsDirectional.only(
-                                start: 6, top: 5, bottom: 15),
-                            child: Text(
-                              errorTextConfirmPassword,
-                              style: TextStyle(fontSize: 11, color: Colors.red),
-                            ),
-                          )
-                        : SizedBox(
-                            height: 15,
-                          ),
-                    Text(
-                      errorText,
-                      style: const TextStyle(color: Colors.red),
-                    ),
-                    const SizedBox(
-                      height: 5,
-                    ),
-                    InkWell(
-                        onTap: () async {
-                          try {
-                            setState(() {
-                              errorText = "";
-                              errorTextEmail = "";
-                              errorTextPassword = "";
-                              errorTextConfirmPassword = "";
-                              errorTextCompanyName = "";
-                              errorMobilenumber = "";
-                              if (_emailController.value.text.isEmpty &&
-                                  _HotelNameController.value.text.isEmpty &&
-                                  _passwordController.value.text.isEmpty &&
-                                  _controller.text.isEmpty) {
-                                errorText = "Please enter all fields";
-                              } else {
+                        // const SizedBox(
+                        //   height: 15,
+                        // ),
+                        InkWell(
+                            onTap: () async {
+                              // Get.offAll(HotelSignUpImageView());
+
+                              try {
                                 if (_emailController.value.text.isEmpty ||
-                                    !_emailController.value.text
-                                        .contains('@')) {
-                                  errorTextEmail = "Please enter a valid email";
-                                }
-                                if (_controller.value.text.length < 9) {
-                                  errorMobilenumber =
-                                      "Please enter a valid Mobile number";
+                                    !_emailController.value.text.isEmail) {
+                                  setState(() {
+                                    errorTextEmail = "Please enter valid email";
+                                  });
+                                } else {
+                                  setState(() {
+                                    errorTextEmail = '';
+                                  });
                                 }
                                 if (_passwordController.value.text.isEmpty) {
-                                  errorTextPassword =
-                                      "Please enter a valid password";
+                                  setState(() {
+                                    errorTextPassword =
+                                        "Please enter a valid password";
+                                  });
                                 } else if (_passwordController
-                                        .value.text.length <
-                                    7) {
-                                  errorTextPassword =
-                                      "Password can't be less than 6 characters";
+                                            .value.text.length <
+                                        7 &&
+                                    _passwordController.value.text.isNotEmpty) {
+                                  setState(() {
+                                    errorTextPassword =
+                                        "Password can't be less than 6 charecters";
+                                  });
+                                } else {
+                                  setState(() {
+                                    errorTextPassword = '';
+                                  });
                                 }
 
                                 if (_passwordController.value.text !=
                                     _confirmPasswordController.value.text) {
-                                  errorTextConfirmPassword =
-                                      "Password and verification do not match";
+                                  setState(() {
+                                    errorTextConfirmPassword =
+                                        "Password and verification do not match";
+                                  });
+                                } else {
+                                  errorTextConfirmPassword = '';
                                 }
-
                                 if (_HotelNameController.value.text.isEmpty) {
-                                  errorTextCompanyName =
-                                      "Please enter a valid Hotel name";
+                                  setState(() {
+                                    errorTextCompanyName =
+                                        "Please enter a valid Hotel name";
+                                  });
+                                } else {
+                                  errorTextCompanyName = '';
                                 }
-                              }
-                            });
-                            if (errorTextAirlineCode.isEmpty &&
-                                errorTextEmail.isEmpty &&
-                                errorTextPassword.isEmpty &&
-                                errorTextConfirmPassword.isEmpty) {
-                              Get.offAll(HotelSignUpImageView(
-                                  email: email,
-                                  password: password,
-                                  CompanyName: _HotelNameController.text));
-                            }
-                          } catch (e) {}
-                        },
-                        child: CustomButton(
-                          backgroundColor: AppColors.purple,
-                          text: 'Sign up',
-                          textColor: AppColors.backgroundgrayColor,
-                          widthPercent: size.width,
-                        )),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const Text(
-                          'You already have account? ',
-                          style: TextStyle(
-                            color: AppColors.grayText,
-                          ),
+                                if (errorTextAirlineCode.isEmpty &&
+                                    errorTextEmail.isEmpty &&
+                                    errorTextPassword.isEmpty &&
+                                    errorTextConfirmPassword.isEmpty) {
+                                  try {
+                                    final newAirelineCompany = await auth
+                                        .createUserWithEmailAndPassword(
+                                            email: email, password: password);
+                                    User? AirelineCompany = auth.currentUser;
+
+                                    if (AirelineCompany != null) {
+                                      Get.offAll(HotelSignUpImageView(
+                                        email: email,
+                                        password: password,
+                                        CompanyName: CompanyName,
+                                      ));
+                                      ref
+                                          .child(AirelineCompany.uid.toString())
+                                          .set({
+                                        'email': email,
+                                        'password': password,
+                                        'mobile_number': '',
+                                        'HotelName': _HotelNameController.text,
+                                        "location": ''
+                                      });
+                                    }
+                                  } catch (e) {
+                                    if (e is FirebaseAuthException) {
+                                      switch (e.code) {
+                                        case 'weak-password':
+                                          setState(() {
+                                            errorText = 'Password is too weak.';
+                                          });
+                                          break;
+                                        case 'email-already-in-use':
+                                          setState(() {
+                                            errorText =
+                                                'Email is already registered.';
+                                          });
+
+                                          break;
+                                        // Add more cases as needed
+                                        default:
+                                        // Use the default error message
+                                      }
+                                    }
+                                  }
+                                }
+                              } catch (e) {}
+                            },
+                            child: CustomButton(
+                              backgroundColor: AppColors.purple,
+                              text: 'Sign up',
+                              textColor: AppColors.backgroundgrayColor,
+                              widthPercent: size.width,
+                            )),
+                        const SizedBox(
+                          height: 10,
                         ),
-                        InkWell(
-                          onTap: () {
-                            Get.off(const HotelSignInView());
-                          },
-                          child: const Text(
-                            'Sign in',
-                            style: TextStyle(
-                              color: AppColors.purple,
-                              fontWeight: FontWeight.bold,
+                        // const Center(
+                        //   child: CustomTextGray(
+                        //     mainText: 'or sign in with ',
+                        //   ),
+                        // ),
+                        // const SizedBox(
+                        //   height: 20,
+                        // ),
+                        // const Row(
+                        //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        //   children: [
+                        //     CustomImage(imagename: 'facebook_icon'),
+                        //     CustomImage(imagename: 'google_icon'),
+                        //     CustomImage(imagename: 'twitter_icon'),
+                        //   ],
+                        // ),
+                        // SizedBox(
+                        //   height: screenHeight(20),
+                        // ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const Text(
+                              'You already have account? ',
+                              style: TextStyle(
+                                color: AppColors.grayText,
+                              ),
                             ),
-                          ),
+                            InkWell(
+                              onTap: () {
+                                Get.off(const HotelSignInView());
+                              },
+                              child: const Text(
+                                'Sign in',
+                                style: TextStyle(
+                                  color: AppColors.purple,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            )
+                          ],
                         )
                       ],
-                    )
-                  ],
+                    ),
+                  ),
                 ),
               ),
             ],

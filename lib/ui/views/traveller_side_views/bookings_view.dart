@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 import 'package:traveling/cards/Hotel_booking_card.dart';
 import 'package:traveling/cards/car_booking_card.dart';
 import 'package:traveling/cards/car_finished_booking_card.dart';
@@ -23,7 +24,6 @@ import '../../../controllers/hotel_bookings_controller.dart';
 import '../../shared/colors.dart';
 import '../../shared/custom_widgets/custom_button.dart';
 import '../../shared/custom_widgets/custom_textfield2.dart';
-import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
 late User loggedinUser;
 
@@ -98,8 +98,8 @@ class _BookingsViewState extends State<BookingsView>
   void dispose() {
     _tabController.dispose();
     hotelbookingscontroller.NewbookingRoom.value = false;
-    // _scrollController = ItemScrollController();
-    // flightbookingscontroller.NewbookingFlight.value = false;
+    _scrollController = ItemScrollController();
+    flightbookingscontroller.NewbookingFlight.value = false;
     super.dispose();
   }
 

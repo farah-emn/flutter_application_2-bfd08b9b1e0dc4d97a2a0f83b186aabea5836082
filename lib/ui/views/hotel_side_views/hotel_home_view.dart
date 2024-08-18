@@ -136,22 +136,6 @@ class _HotelHomeViewState extends State<HotelHomeView> {
                             AssetImage('assets/image/png/girlUser1.png')),
                 accountName: Text('Company name'),
                 accountEmail: Text('$CompanyName')),
-            // ListTile(
-            //   leading: const Icon(
-            //     Icons.add,
-            //     color: AppColors.purple,
-            //   ),
-            //   title: const Text(
-            //     'Add Room',
-            //     style: TextStyle(
-            //       fontSize: TextSize.header2,
-            //       fontWeight: FontWeight.w500,
-            //     ),
-            //   ),
-            //   onTap: () {
-            //     Navigator.pop(context);
-            //   },
-            // ),
             ListTile(
               leading: const Icon(
                 Icons.bookmark_outlined,

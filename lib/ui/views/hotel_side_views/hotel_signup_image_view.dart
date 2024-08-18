@@ -314,126 +314,169 @@ class _HotelSignUpImageViewState extends State<HotelSignUpImageView> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.only(left: 15, right: 15, top: 330),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Center(
-                      child: _image == null
-                          ? InkWell(
-                              onTap: _showModalSheet,
-                              child: Container(
-                                height: 120,
-                                width: 120,
-                                margin: const EdgeInsets.only(right: 10),
-                                decoration: BoxDecoration(
-                                  color: AppColors.gray,
-                                  borderRadius: const BorderRadius.all(
-                                    Radius.circular(120),
+                padding: const EdgeInsets.only(top: 330),
+                child: SingleChildScrollView(
+                  reverse: true,
+                  child: Padding(
+                    padding: EdgeInsets.only(
+                        left: 15,
+                        right: 15,
+                        bottom: MediaQuery.of(context).viewInsets.bottom),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Center(
+                          child: _image == null
+                              ? InkWell(
+                                  onTap: _showModalSheet,
+                                  child: Container(
+                                    height: 120,
+                                    width: 120,
+                                    margin: const EdgeInsets.only(right: 10),
+                                    decoration: BoxDecoration(
+                                      color: AppColors.gray,
+                                      borderRadius: const BorderRadius.all(
+                                        Radius.circular(120),
+                                      ),
+                                    ),
+                                    child: Icon(
+                                      Icons.add_a_photo,
+                                      color: AppColors.purple,
+                                    ),
                                   ),
-                                ),
-                                child: Icon(
-                                  Icons.add_a_photo,
-                                  color: AppColors.purple,
-                                ),
-                              ),
-                            )
-                          : InkWell(
-                              onTap: _showModalSheet,
-                              child: SizedBox(
-                                width: 120,
-                                height: 120,
-                                child: _image != null
-                                    ? ClipRRect(
-                                        borderRadius:
-                                            BorderRadius.circular(100),
-                                        child: Image.file(
-                                          File(_image!.path),
-                                          fit: BoxFit.cover,
-                                        ),
-                                      )
-                                    : InkWell(
-                                        onTap: _showModalSheet,
-                                        child: Container(
-                                          height: 120,
-                                          width: 120,
-                                          margin:
-                                              const EdgeInsets.only(right: 10),
-                                          decoration: BoxDecoration(
-                                            color: AppColors.grayText,
+                                )
+                              : InkWell(
+                                  onTap: _showModalSheet,
+                                  child: SizedBox(
+                                    width: 120,
+                                    height: 120,
+                                    child: _image != null
+                                        ? ClipRRect(
                                             borderRadius:
-                                                const BorderRadius.all(
-                                              Radius.circular(20),
+                                                BorderRadius.circular(100),
+                                            child: Image.file(
+                                              File(_image!.path),
+                                              fit: BoxFit.cover,
+                                            ),
+                                          )
+                                        : InkWell(
+                                            onTap: _showModalSheet,
+                                            child: Container(
+                                              height: 120,
+                                              width: 120,
+                                              margin: const EdgeInsets.only(
+                                                  right: 10),
+                                              decoration: BoxDecoration(
+                                                color: AppColors.grayText,
+                                                borderRadius:
+                                                    const BorderRadius.all(
+                                                  Radius.circular(20),
+                                                ),
+                                              ),
+                                              child: Icon(
+                                                Icons.add_a_photo,
+                                                color: AppColors.purple,
+                                              ),
                                             ),
                                           ),
-                                          child: Icon(
-                                            Icons.add_a_photo,
-                                            color: AppColors.purple,
-                                          ),
-                                        ),
-                                      ),
-                              ),
-                            ),
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    Column(
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  ),
+                                ),
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Column(
                           children: [
-                            Text(
-                              'Location',
-                              style: TextStyle(
-                                  fontSize: TextSize.header1,
-                                  fontWeight: FontWeight.w700),
-                            ),
-                            SizedBox(
-                              width: 30,
-                            ),
-                            InkWell(
-                              onTap: () {
-                                Get.to(
-                                  MapView(
-                                    onLocationSelected:
-                                        (newLocality, newStreet, newCountry) {
-                                      setState(() {
-                                        _City.text = newLocality;
-                                        _Address.text = newStreet;
-                                        _Country.text = newCountry;
-                                      });
-                                    },
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  'Location',
+                                  style: TextStyle(
+                                      fontSize: TextSize.header1,
+                                      fontWeight: FontWeight.w700),
+                                ),
+                                SizedBox(
+                                  width: 30,
+                                ),
+                                InkWell(
+                                  onTap: () {
+                                    Get.to(
+                                      MapView(
+                                        onLocationSelected: (newLocality,
+                                            newStreet, newCountry) {
+                                          setState(() {
+                                            _City.text = newLocality;
+                                            _Address.text = newStreet;
+                                            _Country.text = newCountry;
+                                          });
+                                        },
+                                      ),
+                                    );
+                                  },
+                                  child: const Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: [
+                                      Text(
+                                        'Show on map',
+                                        style: TextStyle(
+                                            fontSize: TextSize.header2,
+                                            color: AppColors.grayText,
+                                            fontWeight: FontWeight.w500),
+                                      ),
+                                    ],
                                   ),
-                                );
-                              },
-                              child: const Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: [
-                                  Text(
-                                    'Show on map',
-                                    style: TextStyle(
-                                        fontSize: TextSize.header2,
-                                        color: AppColors.grayText,
-                                        fontWeight: FontWeight.w500),
-                                  ),
-                                ],
-                              ),
+                                ),
+                              ],
                             ),
                           ],
                         ),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    Column(
-                      children: [
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Column(
+                          children: [
+                            const Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Country',
+                                  style: TextStyle(
+                                      fontSize: 13,
+                                      color: AppColors.grayText,
+                                      fontWeight: FontWeight.w500),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 40,
+                          width: size.width,
+                          child: TextField(
+                            controller: _Country,
+                            decoration: textFielDecoratiom.copyWith(
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(18)),
+                                borderSide: BorderSide(
+                                    color: AppColors.purple, width: 1.5),
+                              ),
+                              prefixIcon: const Icon(
+                                Icons.location_on_rounded,
+                                color: AppColors.purple,
+                              ),
+                            ),
+                            onChanged: (value) {},
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
                         const Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             Text(
-                              'Country',
+                              'City',
                               style: TextStyle(
                                   fontSize: 13,
                                   color: AppColors.grayText,
@@ -441,128 +484,97 @@ class _HotelSignUpImageViewState extends State<HotelSignUpImageView> {
                             ),
                           ],
                         ),
+                        SizedBox(
+                          height: 40,
+                          width: size.width,
+                          child: TextField(
+                            controller: _City,
+                            keyboardType: TextInputType.number,
+                            decoration: textFielDecoratiom.copyWith(
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(18)),
+                                borderSide: BorderSide(
+                                    color: AppColors.purple, width: 1.5),
+                              ),
+                              prefixIcon: const Icon(
+                                Icons.location_on_rounded,
+                                color: AppColors.purple,
+                              ),
+                            ),
+                            onChanged: (value) {},
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        const Row(
+                          children: [
+                            Text(
+                              'Address',
+                              style: TextStyle(
+                                  fontSize: 13,
+                                  color: AppColors.grayText,
+                                  fontWeight: FontWeight.w500),
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 40,
+                          width: size.width,
+                          child: TextField(
+                            controller: _Address,
+                            keyboardType: TextInputType.number,
+                            decoration: textFielDecoratiom.copyWith(
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(18)),
+                                borderSide: BorderSide(
+                                    color: AppColors.purple, width: 1.5),
+                              ),
+                              prefixIcon: const Icon(
+                                Icons.location_on_rounded,
+                                color: AppColors.purple,
+                              ),
+                            ),
+                            onChanged: (value) {},
+                          ),
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            SizedBox(height: 20),
+                            InkWell(
+                              onTap: () {
+                                if (photo != null) {
+                                  _uploadImageToFirebase(photo!);
+                                } else {
+                                  Fluttertoast.showToast(
+                                      msg: "Please choose image",
+                                      toastLength: Toast.LENGTH_SHORT,
+                                      gravity: ToastGravity.BOTTOM,
+                                      timeInSecForIosWeb: 1,
+                                      backgroundColor: const Color.fromARGB(
+                                          255, 158, 165, 174),
+                                      textColor: Colors.white,
+                                      fontSize: 16.0);
+                                }
+                              },
+                              child: CustomButton(
+                                text: 'Confirm location',
+                                textColor: AppColors.backgroundgrayColor,
+                                backgroundColor: AppColors.purple,
+                                widthPercent: size.width,
+                              ),
+                            ),
+                          ],
+                        )
                       ],
                     ),
-                    SizedBox(
-                      height: 40,
-                      width: size.width,
-                      child: TextField(
-                        controller: _Country,
-                        decoration: textFielDecoratiom.copyWith(
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(18)),
-                            borderSide:
-                                BorderSide(color: AppColors.purple, width: 1.5),
-                          ),
-                          prefixIcon: const Icon(
-                            Icons.location_on_rounded,
-                            color: AppColors.purple,
-                          ),
-                        ),
-                        onChanged: (value) {},
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    const Row(
-                      children: [
-                        Text(
-                          'City',
-                          style: TextStyle(
-                              fontSize: 13,
-                              color: AppColors.grayText,
-                              fontWeight: FontWeight.w500),
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 40,
-                      width: size.width,
-                      child: TextField(
-                        controller: _City,
-                        keyboardType: TextInputType.number,
-                        decoration: textFielDecoratiom.copyWith(
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(18)),
-                            borderSide:
-                                BorderSide(color: AppColors.purple, width: 1.5),
-                          ),
-                          prefixIcon: const Icon(
-                            Icons.location_on_rounded,
-                            color: AppColors.purple,
-                          ),
-                        ),
-                        onChanged: (value) {},
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    const Row(
-                      children: [
-                        Text(
-                          'Address',
-                          style: TextStyle(
-                              fontSize: 13,
-                              color: AppColors.grayText,
-                              fontWeight: FontWeight.w500),
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 40,
-                      width: size.width,
-                      child: TextField(
-                        controller: _Address,
-                        keyboardType: TextInputType.number,
-                        decoration: textFielDecoratiom.copyWith(
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(18)),
-                            borderSide:
-                                BorderSide(color: AppColors.purple, width: 1.5),
-                          ),
-                          prefixIcon: const Icon(
-                            Icons.location_on_rounded,
-                            color: AppColors.purple,
-                          ),
-                        ),
-                        onChanged: (value) {},
-                      ),
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        SizedBox(height: 20),
-                        InkWell(
-                          onTap: () {
-                            if (photo != null) {
-                              _uploadImageToFirebase(photo!);
-                            } else {
-                              Fluttertoast.showToast(
-                                  msg: "Please choose image",
-                                  toastLength: Toast.LENGTH_SHORT,
-                                  gravity: ToastGravity.BOTTOM,
-                                  timeInSecForIosWeb: 1,
-                                  backgroundColor:
-                                      const Color.fromARGB(255, 158, 165, 174),
-                                  textColor: Colors.white,
-                                  fontSize: 16.0);
-                            }
-                          },
-                          child: CustomButton(
-                            text: 'Confirm location',
-                            textColor: AppColors.backgroundgrayColor,
-                            backgroundColor: AppColors.purple,
-                            widthPercent: size.width,
-                          ),
-                        ),
-                      ],
-                    )
-                  ],
+                  ),
                 ),
               ),
             ],

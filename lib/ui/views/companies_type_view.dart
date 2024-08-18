@@ -76,7 +76,7 @@ class CompaniesTypeView extends StatelessWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Row(
+                     Row(
                       children: [
                         Text(
                           'What yourcompany type?',

@@ -22,423 +22,410 @@ class FlightSummeryRoundTrip extends StatelessWidget {
     // controller.updateFlightInfo(flightdata);
 
     Size size = MediaQuery.of(context).size;
-    return Column(
-      children: [
-        Container(
-          width: size.width,
-          padding: EdgeInsets.all(15),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(20),
-            color: Colors.white,
-          ),
-          child: Column(
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
-                    children: [
-                      Container(
-                        child: CircleAvatar(
-                            backgroundImage:
-                                NetworkImage(flightdata.FlightCompanyLogo)),
-                        width: 26,
-                        height: 26,
-                      ),
-                      SizedBox(width: 6),
-                      Text(
-                        flightdata.FlightCompanyName,
-                        style: TextStyle(
-                            fontWeight: FontWeight.w500, fontSize: 18),
-                      )
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      Text(
-                        flightdata.DeparureDate,
-                        style: TextStyle(color: AppColors.TextgrayColor),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-              const SizedBox(
-                height: 30,
-              ),
-              Row(
-                children: [
-                  Column(
-                    children: [
-                      Row(
-                        children: [
-                          Text(
-                            getTime(flightdata.DeparureTime),
-                            style: TextStyle(
-                                fontWeight: FontWeight.w500, fontSize: 16),
-                          ),
-                          Text(
-                            getTimePmAm(flightdata.DeparureTime),
-                            style: TextStyle(
-                              color: AppColors.TextgrayColor,
-                              fontSize: 12,
-                            ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(
-                        height: 30,
-                      ),
-                      Text(
-                        flightdata.FlightType ?? '',
-                        style: TextStyle(
-                          color: AppColors.TextgrayColor,
-                          fontSize: 12,
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 10),
+      child: Column(
+        children: [
+          Container(
+            width: size.width,
+            padding: EdgeInsets.all(15),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(20),
+              color: Colors.white,
+            ),
+            child: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      children: [
+                        Container(
+                          child: CircleAvatar(
+                              backgroundImage:
+                                  NetworkImage(flightdata.FlightCompanyLogo)),
+                          width: 26,
+                          height: 26,
                         ),
-                      ),
-                      Text(
-                        flightdata.Flight_Duration,
-                        style: TextStyle(
-                          color: AppColors.TextgrayColor,
-                          fontSize: 12,
-                        ),
-                      ),
-                      SizedBox(
-                        height: 30,
-                      ),
-                      Row(
-                        children: [
-                          Text(
-                            getTime(flightdata.ArrivalTime),
-                            style: TextStyle(
-                                fontWeight: FontWeight.w500, fontSize: 16),
-                          ),
-                          Text(
-                            getTimePmAm(flightdata.ArrivalTime),
-                            style: TextStyle(
-                              color: AppColors.TextgrayColor,
-                              fontSize: 12,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                  Container(
-                    margin: EdgeInsets.symmetric(horizontal: 15),
-                    color: const Color.fromARGB(255, 206, 206, 206),
-                    width: 1,
-                    height: 130,
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                        width: size.width / 2 + 30,
-                        child: Text(
-                          flightdata.DepartureAirport,
+                        SizedBox(width: 6),
+                        Text(
+                          flightdata.FlightCompanyName,
                           style: TextStyle(
-                              fontWeight: FontWeight.w400, fontSize: 15),
+                              fontWeight: FontWeight.w500, fontSize: 18),
+                        )
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        Text(
+                          flightdata.DeparureDate,
+                          style: TextStyle(color: AppColors.TextgrayColor),
                         ),
-                      ),
-                      Text(
-                        flightdata.DepartureCity,
-                        style: TextStyle(
-                            fontWeight: FontWeight.w400,
-                            fontSize: 13,
-                            color: AppColors.TextgrayColor),
-                      ),
-                      SizedBox(
-                        height: 30,
-                      ),
-                      Container(
-                        width: size.width / 2 + 30,
-                        child: Text(
-                          flightdata.ArrivalAirport,
-                          style: TextStyle(
-                              fontWeight: FontWeight.w400, fontSize: 15),
-                        ),
-                      ),
-                      Text(
-                        flightdata.ArrivalCity,
-                        style: TextStyle(
-                            fontWeight: FontWeight.w400,
-                            fontSize: 13,
-                            color: AppColors.TextgrayColor),
-                      ),
-                    ],
-                  )
-                ],
-              ),
-            ],
-          ),
-        ),
-        Container(
-          width: size.width,
-          padding: EdgeInsets.all(15),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(20),
-            color: Colors.white,
-          ),
-          child: Column(
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
-                    children: [
-                      Container(
-                        child: CircleAvatar(
-                            backgroundImage: NetworkImage(
-                                ReturnFlightData!.FlightCompanyLogo)),
-                        width: 26,
-                        height: 26,
-                      ),
-                      SizedBox(width: 6),
-                      Text(
-                        ReturnFlightData!.FlightCompanyName,
-                        style: TextStyle(
-                            fontWeight: FontWeight.w500, fontSize: 18),
-                      )
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      Text(
-                        ReturnFlightData?.DeparureDate ?? '',
-                        style: TextStyle(color: AppColors.TextgrayColor),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-              const SizedBox(
-                height: 30,
-              ),
-              Row(
-                children: [
-                  Column(
-                    children: [
-                      Row(
-                        children: [
-                          Text(
-                            getTime(ReturnFlightData!.DeparureTime) ?? '',
-                            style: TextStyle(
-                                fontWeight: FontWeight.w500, fontSize: 16),
-                          ),
-                          Text(
-                            getTimePmAm(ReturnFlightData!.DeparureTime),
-                            style: TextStyle(
-                              color: AppColors.TextgrayColor,
-                              fontSize: 12,
+                      ],
+                    ),
+                  ],
+                ),
+                const SizedBox(
+                  height: 30,
+                ),
+                Row(
+                  children: [
+                    Column(
+                      children: [
+                        Row(
+                          children: [
+                            Text(
+                              getTime(flightdata.DeparureTime),
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w500, fontSize: 16),
                             ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(
-                        height: 30,
-                      ),
-                      Text(
-                        ReturnFlightData?.FlightType ?? '',
-                        style: TextStyle(
-                          color: AppColors.TextgrayColor,
-                          fontSize: 12,
-                        ),
-                      ),
-                      Text(
-                        ReturnFlightData?.Flight_Duration ?? '',
-                        style: TextStyle(
-                          color: AppColors.TextgrayColor,
-                          fontSize: 12,
-                        ),
-                      ),
-                      SizedBox(
-                        height: 30,
-                      ),
-                      Row(
-                        children: [
-                          Text(
-                            getTime(ReturnFlightData!.ArrivalTime) ?? '',
-                            style: TextStyle(
-                                fontWeight: FontWeight.w500, fontSize: 16),
-                          ),
-                          Text(
-                            getTimePmAm(ReturnFlightData!.ArrivalTime),
-                            style: TextStyle(
-                              color: AppColors.TextgrayColor,
-                              fontSize: 12,
+                            Text(
+                              getTimePmAm(flightdata.DeparureTime),
+                              style: TextStyle(
+                                color: AppColors.TextgrayColor,
+                                fontSize: 12,
+                              ),
                             ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 30,
+                        ),
+                        Text(
+                          flightdata.FlightType ?? '',
+                          style: TextStyle(
+                            color: AppColors.TextgrayColor,
+                            fontSize: 12,
                           ),
-                        ],
-                      ),
-                    ],
-                  ),
-                  Container(
-                    margin: EdgeInsets.symmetric(horizontal: 15),
-                    color: const Color.fromARGB(255, 206, 206, 206),
-                    width: 1,
-                    height: 130,
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                        width: size.width / 2 + 30,
-                        child: Text(
-                          ReturnFlightData?.DepartureAirport ?? '',
-                          style: TextStyle(
-                              fontWeight: FontWeight.w400, fontSize: 15),
                         ),
-                      ),
-                      Text(
-                        ReturnFlightData?.DepartureCity ?? '',
-                        style: TextStyle(
-                            fontWeight: FontWeight.w400,
-                            fontSize: 13,
-                            color: AppColors.TextgrayColor),
-                      ),
-                      SizedBox(
-                        height: 30,
-                      ),
-                      Container(
-                        width: size.width / 2 + 30,
-                        child: Text(
-                          ReturnFlightData?.ArrivalAirport ?? '',
+                        Text(
+                          flightdata.Flight_Duration,
                           style: TextStyle(
-                              fontWeight: FontWeight.w400, fontSize: 15),
+                            color: AppColors.TextgrayColor,
+                            fontSize: 12,
+                          ),
                         ),
-                      ),
-                      Text(
-                        ReturnFlightData?.ArrivalCity ?? '',
-                        style: TextStyle(
-                            fontWeight: FontWeight.w400,
-                            fontSize: 13,
-                            color: AppColors.TextgrayColor),
-                      ),
-                    ],
-                  )
-                ],
-              ),
-            ],
+                        SizedBox(
+                          height: 30,
+                        ),
+                        Row(
+                          children: [
+                            Text(
+                              getTime(flightdata.ArrivalTime),
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w500, fontSize: 16),
+                            ),
+                            Text(
+                              getTimePmAm(flightdata.ArrivalTime),
+                              style: TextStyle(
+                                color: AppColors.TextgrayColor,
+                                fontSize: 12,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                    Container(
+                      margin: EdgeInsets.symmetric(horizontal: 15),
+                      color: const Color.fromARGB(255, 206, 206, 206),
+                      width: 1,
+                      height: 130,
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          width: size.width / 2 + 30,
+                          child: Text(
+                            flightdata.DepartureAirport,
+                            style: TextStyle(
+                                fontWeight: FontWeight.w400, fontSize: 15),
+                          ),
+                        ),
+                        Text(
+                          flightdata.DepartureCity,
+                          style: TextStyle(
+                              fontWeight: FontWeight.w400,
+                              fontSize: 13,
+                              color: AppColors.TextgrayColor),
+                        ),
+                        SizedBox(
+                          height: 30,
+                        ),
+                        Container(
+                          width: size.width / 2 + 30,
+                          child: Text(
+                            flightdata.ArrivalAirport,
+                            style: TextStyle(
+                                fontWeight: FontWeight.w400, fontSize: 15),
+                          ),
+                        ),
+                        Text(
+                          flightdata.ArrivalCity,
+                          style: TextStyle(
+                              fontWeight: FontWeight.w400,
+                              fontSize: 13,
+                              color: AppColors.TextgrayColor),
+                        ),
+                      ],
+                    )
+                  ],
+                ),
+              ],
+            ),
           ),
-        ),
-        const SizedBox(
-          height: 15,
-        ),
-        Container(
-          width: size.width,
-          padding: EdgeInsets.all(15),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(20),
-            color: Colors.white,
+          Container(
+            width: size.width,
+            padding: EdgeInsets.all(15),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(20),
+              color: Colors.white,
+            ),
+            child: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                 
+                    Row(
+                      children: [
+                        Text(
+                          ReturnFlightData?.DeparureDate ?? '',
+                          style: TextStyle(color: AppColors.TextgrayColor),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+                const SizedBox(
+                  height: 30,
+                ),
+                Row(
+                  children: [
+                    Column(
+                      children: [
+                        Row(
+                          children: [
+                            Text(
+                              getTime(ReturnFlightData!.DeparureTime) ?? '',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w500, fontSize: 16),
+                            ),
+                            Text(
+                              getTimePmAm(ReturnFlightData!.DeparureTime),
+                              style: TextStyle(
+                                color: AppColors.TextgrayColor,
+                                fontSize: 12,
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 30,
+                        ),
+                        Text(
+                          ReturnFlightData?.FlightType ?? '',
+                          style: TextStyle(
+                            color: AppColors.TextgrayColor,
+                            fontSize: 12,
+                          ),
+                        ),
+                        Text(
+                          ReturnFlightData?.Flight_Duration ?? '',
+                          style: TextStyle(
+                            color: AppColors.TextgrayColor,
+                            fontSize: 12,
+                          ),
+                        ),
+                        SizedBox(
+                          height: 30,
+                        ),
+                        Row(
+                          children: [
+                            Text(
+                              getTime(ReturnFlightData!.ArrivalTime) ?? '',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w500, fontSize: 16),
+                            ),
+                            Text(
+                              getTimePmAm(ReturnFlightData!.ArrivalTime),
+                              style: TextStyle(
+                                color: AppColors.TextgrayColor,
+                                fontSize: 12,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                    Container(
+                      margin: EdgeInsets.symmetric(horizontal: 15),
+                      color: const Color.fromARGB(255, 206, 206, 206),
+                      width: 1,
+                      height: 130,
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          width: size.width / 2 + 30,
+                          child: Text(
+                            ReturnFlightData?.DepartureAirport ?? '',
+                            style: TextStyle(
+                                fontWeight: FontWeight.w400, fontSize: 15),
+                          ),
+                        ),
+                        Text(
+                          ReturnFlightData?.DepartureCity ?? '',
+                          style: TextStyle(
+                              fontWeight: FontWeight.w400,
+                              fontSize: 13,
+                              color: AppColors.TextgrayColor),
+                        ),
+                        SizedBox(
+                          height: 30,
+                        ),
+                        Container(
+                          width: size.width / 2 + 30,
+                          child: Text(
+                            ReturnFlightData?.ArrivalAirport ?? '',
+                            style: TextStyle(
+                                fontWeight: FontWeight.w400, fontSize: 15),
+                          ),
+                        ),
+                        Text(
+                          ReturnFlightData?.ArrivalCity ?? '',
+                          style: TextStyle(
+                              fontWeight: FontWeight.w400,
+                              fontSize: 13,
+                              color: AppColors.TextgrayColor),
+                        ),
+                      ],
+                    )
+                  ],
+                ),
+              ],
+            ),
           ),
-          child: Column(
-            children: [
-              Row(
-                children: [
-                  Image.asset(
-                    'assets/image/png/Wifi_icon.png',
-                  ),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  Text('Wifi is available'),
-                ],
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Row(
-                children: [
-                  Image.asset(
-                    'assets/image/png/Wifi_icon.png',
-                  ),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  Text('in seat power & USB outlets'),
-                ],
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Row(
-                children: [
-                  Image.asset(
-                    'assets/image/png/Wifi_icon.png',
-                  ),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  Text('in seat power & USB outlets'),
-                ],
-              ),
-            ],
+          const SizedBox(
+            height: 15,
           ),
-        ),
-        const SizedBox(
-          height: 15,
-        ),
-        Container(
-          width: size.width,
-          padding: EdgeInsets.all(15),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(20),
-            color: Colors.white,
+          Container(
+            width: size.width,
+            padding: EdgeInsets.all(15),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(20),
+              color: Colors.white,
+            ),
+            child: Column(
+              children: [
+                Row(
+                  children: [
+                    Image.asset(
+                      'assets/image/png/Wifi_icon.png',
+                    ),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Text('Wifi is available'),
+                  ],
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Row(
+                  children: [
+                    Image.asset(
+                      'assets/image/png/Wifi_icon.png',
+                    ),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Text('in seat power & USB outlets'),
+                  ],
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Row(
+                  children: [
+                    Image.asset(
+                      'assets/image/png/Wifi_icon.png',
+                    ),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Text('in seat power & USB outlets'),
+                  ],
+                ),
+              ],
+            ),
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'Baggage allowance',
-                style: TextStyle(fontWeight: FontWeight.w500, fontSize: 17),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Row(
-                children: [
-                  Image.asset(
-                    'assets/image/png/Wifi_icon.png',
-                  ),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  Text('Wifi is available'),
-                ],
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Row(
-                children: [
-                  Image.asset(
-                    'assets/image/png/Wifi_icon.png',
-                  ),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  Text('in seat power & USB outlets'),
-                ],
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Row(
-                children: [
-                  Image.asset(
-                    'assets/image/png/Wifi_icon.png',
-                  ),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  Text('in seat power & USB outlets '),
-                ],
-              ),
-            ],
+          const SizedBox(
+            height: 15,
           ),
-        ),
-      ],
+          Container(
+            width: size.width,
+            padding: EdgeInsets.all(15),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(20),
+              color: Colors.white,
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Baggage allowance',
+                  style: TextStyle(fontWeight: FontWeight.w500, fontSize: 17),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Row(
+                  children: [
+                    Image.asset(
+                      'assets/image/png/Wifi_icon.png',
+                    ),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Text('Wifi is available'),
+                  ],
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Row(
+                  children: [
+                    Image.asset(
+                      'assets/image/png/Wifi_icon.png',
+                    ),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Text('in seat power & USB outlets'),
+                  ],
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Row(
+                  children: [
+                    Image.asset(
+                      'assets/image/png/Wifi_icon.png',
+                    ),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Text('in seat power & USB outlets '),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 

@@ -14,6 +14,8 @@ import 'package:traveling/ui/shared/utils.dart';
 import 'package:traveling/ui/views/first_view.dart';
 import 'package:traveling/ui/views/car_splash_view.dart';
 import 'package:traveling/ui/views/hotel_splash_view.dart';
+import 'package:traveling/ui/views/traveller_side_views/contact_us_view.dart';
+import 'package:traveling/ui/views/traveller_side_views/flight_travellers_view_details/traveller_details_view2.dart';
 
 import '../../../cards/car_card_home.dart';
 import '../../../classes/hotel_info_class.dart';
@@ -71,51 +73,6 @@ class _HomeViewState extends State<HomeView> {
                 ),
                 accountName: Text('data'),
                 accountEmail: Text('data@gmail.com')),
-            ListTile(
-              leading: const Icon(
-                Icons.date_range_rounded,
-                color: AppColors.Blue,
-              ),
-              title: const Text(
-                'Bookings',
-                style: TextStyle(
-                  color: AppColors.BlueText,
-                ),
-              ),
-              onTap: () {
-                Navigator.pop(context);
-              },
-            ),
-            ListTile(
-              leading: const Icon(
-                Icons.people,
-                color: AppColors.Blue,
-              ),
-              title: const Text(
-                'Travellers',
-                style: TextStyle(
-                  color: AppColors.BlueText,
-                ),
-              ),
-              onTap: () {
-                Navigator.pop(context);
-              },
-            ),
-            ListTile(
-              leading: const Icon(
-                Icons.settings,
-                color: AppColors.Blue,
-              ),
-              title: const Text(
-                'Settings',
-                style: TextStyle(
-                  color: AppColors.BlueText,
-                ),
-              ),
-              onTap: () {
-                Navigator.pop(context);
-              },
-            ),
             Container(
               margin: EdgeInsets.symmetric(horizontal: 15),
               height: 0.2,
@@ -133,7 +90,7 @@ class _HomeViewState extends State<HomeView> {
                 ),
               ),
               onTap: () {
-                Navigator.pop(context);
+                Get.to(ContactUsView());
               },
             ),
             ListTile(

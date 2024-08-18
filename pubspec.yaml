@@ -72,6 +72,8 @@ dependencies:
     git:
       url:
         https://github.com/yushulx/flutter_camera_windows.git
+  cloud_firestore: ^4.17.5
+  scrollable_positioned_list: ^0.3.8
 
 
 
