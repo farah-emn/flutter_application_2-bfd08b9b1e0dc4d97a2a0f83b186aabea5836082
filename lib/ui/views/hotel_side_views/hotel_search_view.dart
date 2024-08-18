@@ -23,6 +23,7 @@ class _HotelSearchViewState extends State<HotelSearchView> {
       ValueNotifier<List<RoomDetailsClass>>([]);
   final _SearchController = TextEditingController();
   Map<dynamic, dynamic> HotelRoom = {};
+  var isloading = false.obs;
   bool? isChecked = false;
   late User loggedinUser;
   final _auth = FirebaseAuth.instance;
@@ -68,6 +69,7 @@ class _HotelSearchViewState extends State<HotelSearchView> {
         .once()
         .then((DatabaseEvent event) {
       if (event.snapshot.exists) {
+        isloading.value = true;
         var RoomData = Map<dynamic, dynamic>.from(event.snapshot.value as Map);
         RoomData.forEach((Roomkey, value) {
           rooms.add(RoomDetailsClass.fromMap({
@@ -89,11 +91,14 @@ class _HotelSearchViewState extends State<HotelSearchView> {
             "is_reserved": value['is_reserved']
           }));
         });
+      } else {
+        isloading.value = false;
       }
     });
     if (mounted) {
       setState(() {
         HotelRooms.value = rooms;
+        isloading.value = false;
       });
     }
   }
@@ -587,25 +592,25 @@ class _HotelSearchViewState extends State<HotelSearchView> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Text(
-                                  'Show ${'100'} of ${'316'} Rooms',
-                                  style: const TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.w500),
-                                )
-                                // (NumberOfResultFilteredHotelRooms == 0)
-                                //     ? Text(
-                                //         'Show ${NumberOfResultFilteredHotelRooms} of ${HotelRooms.value.length} Rooms',
-                                //         style: const TextStyle(
-                                //             color: Colors.white,
-                                //             fontWeight: FontWeight.w500),
-                                //       )
-                                //     : Text(
-                                //         'Show $NumberOfResultFilteredHotelRooms of ${HotelRooms.value.length} Rooms',
-                                //         style: const TextStyle(
-                                //             color: Colors.white,
-                                //             fontWeight: FontWeight.w500),
-                                //       ),
+                                // Text(
+                                //   'Show ${'100'} of ${'316'} Rooms',
+                                //   style: const TextStyle(
+                                //       color: Colors.white,
+                                //       fontWeight: FontWeight.w500),
+                                // )
+                                (NumberOfResultFilteredHotelRooms == 0)
+                                    ? Text(
+                                        'Show ${HotelRooms.value.length} of ${HotelRooms.value.length} Rooms',
+                                        style: const TextStyle(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.w500),
+                                      )
+                                    : Text(
+                                        'Show $NumberOfResultFilteredHotelRooms of ${HotelRooms.value.length} Rooms',
+                                        style: const TextStyle(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.w500),
+                                      ),
                               ],
                             ),
                           ),
@@ -671,12 +676,6 @@ class _HotelSearchViewState extends State<HotelSearchView> {
                         height: 45,
                         width: size.width - 30,
                         child: TextField(
-                          // onSubmitted: _SearchRoomController,
-                          // onChanged: (value) {
-                          //   setState(() {
-                          //     _SearchController.text = value;
-                          //     // _SearchRoomController(value);
-                          //   });
                           onChanged: (value) {
                             _SearchRoomController(value);
                           },
@@ -707,23 +706,20 @@ class _HotelSearchViewState extends State<HotelSearchView> {
                       const SizedBox(
                         height: 15,
                       ),
-                      (HotelRooms.value.isEmpty)
-                          ? const CircularProgressIndicator()
-                          : (HotelRooms.value.isNotEmpty)
-                              ? Expanded(
-                                  child: ListView.builder(
-                                    scrollDirection: Axis.vertical,
-                                    shrinkWrap: true,
-                                    itemCount: HotelRooms.value.length,
-                                    itemBuilder: (context, index) =>
-                                        RoomCardHotel(
-                                      size: size,
-                                      itemIndex: index,
-                                      room: HotelRooms.value[index],
-                                    ),
-                                  ),
-                                )
-                              : SizedBox(),
+                      Obx(() => isloading.value
+                          ? const Center(child: CircularProgressIndicator())
+                          : Expanded(
+                              child: ListView.builder(
+                                scrollDirection: Axis.vertical,
+                                shrinkWrap: true,
+                                itemCount: HotelRooms.value.length,
+                                itemBuilder: (context, index) => RoomCardHotel(
+                                  size: size,
+                                  itemIndex: index,
+                                  room: HotelRooms.value[index],
+                                ),
+                              ),
+                            ))
                     ],
                   ),
                 ),
@@ -734,30 +730,38 @@ class _HotelSearchViewState extends State<HotelSearchView> {
   }
 
   void _SearchRoomController(String value) {
+    print('p[p[]]');
     setState(() {
-      HotelRooms.value = HotelRoom.entries.where((Room) {
-        bool HotelRoom = (_SearchController.text.isEmpty) ||
-            (Room.value['Overview']
-                .toLowerCase()
-                .contains(_SearchController.text.toLowerCase()));
-        return HotelRoom;
-      }).map((entry) {
-        return RoomDetailsClass.fromMap({
-          "id": entry.key,
-          'Adults': entry.value['Adults'],
-          "Children": entry.value['Children'],
-          "Overview": entry.value['Overview'],
-          "Price": entry.value['Price'],
-          "NumberOfBedrooms": entry.value['NumberOfBedrooms'],
-          "NumberOfBeds": entry.value['NumberOfBeds'],
-          "RoomPhoto": entry.value['RoomPhoto'],
-          "isChecked24-hourFrontDesk": entry.value['isChecked24-hourFrontDesk'],
-          "isCheckedCleaningServices": entry.value['isCheckedCleaningServices'],
-          "isCheckedFoodAnddrink": entry.value['isCheckedFoodAnddrink'],
-          "isCheckedFreeWifi": entry.value['isCheckedFreeWifi'],
-          "isCheckedPrivatePool": entry.value['isCheckedPrivatePool'],
-        });
-      }).toList();
+      HotelRooms.value = HotelRoom.entries
+          .where((entry) {
+            final overview = entry.value['Overview'].toLowerCase();
+            final searchText = _SearchController.text.toLowerCase();
+            print(entry.value);
+            print(overview);
+            print(searchText);
+            final matchesSearch =
+                searchText.isEmpty || overview.contains(searchText);
+            print(matchesSearch);
+            return matchesSearch;
+          })
+          .map((entry) => RoomDetailsClass.fromMap({
+                "id": entry.key,
+                'Adults': entry.value['Adults'],
+                "Children": entry.value['Children'],
+                "Overview": entry.value['Overview'],
+                "Price": entry.value['Price'],
+                "NumberOfBedrooms": entry.value['NumberOfBedrooms'],
+                "NumberOfBeds": entry.value['NumberOfBeds'],
+                "RoomPhoto": entry.value['RoomPhoto'],
+                "isChecked24-hourFrontDesk":
+                    entry.value['isChecked24-hourFrontDesk'],
+                "isCheckedCleaningServices":
+                    entry.value['isCheckedCleaningServices'],
+                "isCheckedFoodAnddrink": entry.value['isCheckedFoodAnddrink'],
+                "isCheckedFreeWifi": entry.value['isCheckedFreeWifi'],
+                "isCheckedPrivatePool": entry.value['isCheckedPrivatePool'],
+              }))
+          .toList();
     });
   }
 }

@@ -1,13 +1,30 @@
-import 'package:flutter/material.dart';
-import 'package:traveling/ui/shared/custom_widgets/tab_item.dart';
+// ignore_for_file: prefer_const_constructors, non_constant_identifier_names, unnecessary_null_comparison, must_be_immutable, prefer_typing_uninitialized_variables, unused_local_variable, deprecated_member_use, avoid_function_literals_in_foreach_calls, prefer_is_empty, unnecessary_string_interpolations
 
-import '../../../cards/bookings_card.dart';
-import '../../../classes/Bookings_class.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:traveling/cards/flight_side_bookings_card.dart';
+import 'package:traveling/classes/contact_details_passenger_class.dart';
+import 'package:traveling/classes/flight_details_class.dart';
+import 'package:traveling/classes/flight_info_class.dart';
+import 'package:traveling/controllers/currency_controller.dart';
+import 'package:traveling/ui/shared/custom_widgets/tab_item.dart';
 import '../../shared/colors.dart';
 import '../../shared/custom_widgets/custom_textfield2.dart';
 
 class FlightFlightDetailsView extends StatefulWidget {
-  const FlightFlightDetailsView({super.key});
+  FlightDetailsClass flightDetails;
+  var ItemIndex;
+  List stopLocationsForFlight;
+  List stopDurationsForFlight;
+
+  FlightFlightDetailsView(
+      {super.key,
+      required this.flightDetails,
+      required this.ItemIndex,
+      required this.stopLocationsForFlight,
+      required this.stopDurationsForFlight});
 
   @override
   State<FlightFlightDetailsView> createState() =>
@@ -15,9 +32,132 @@ class FlightFlightDetailsView extends StatefulWidget {
 }
 
 class _FlightFlightDetailsViewState extends State<FlightFlightDetailsView> {
+  final CurrencyController FlightCurrency_Controller =
+      Get.put(CurrencyController());
+  bool? isChecked = false;
+  String? sorteBy;
+  User? AirelineCompany;
+  final _auth = FirebaseAuth.instance;
+  var uid;
+  var currentUser;
+  var AirelineCompanyId = '';
+  var AirelineCompanyName = '';
+  Map<dynamic, dynamic> PassengerAdultData = {};
+  List<FlightInfoClass> flightsList = [];
+  List<FlightInfoClass> filteredFlights = [];
+  List<ContactDetailsClass> ContactDetails = [];
+
+  @override
+  void initState() {
+    super.initState();
+    currentUser = _auth.currentUser;
+    uid = currentUser?.uid;
+    setState(() {
+      getData();
+      AirelineCompany = _auth.currentUser;
+      AirelineCompanyId = AirelineCompany?.uid.toString() ?? '';
+    });
+  }
+
+  void getData() async {
+    final event =
+        await FirebaseDatabase.instance.ref('Airline_company').child(uid).get();
+    final AirelineCompanyData = Map<dynamic, dynamic>.from(event.value as Map);
+    AirelineCompanyName = AirelineCompanyData['AirlineCompanyName'];
+    fetchFlights(widget.flightDetails.FlightID).then((fetchedFlights) {
+      if (mounted) {
+        setState(() {
+          PassengerAdultData = fetchedFlights;
+          flightsList = fetchedFlights.entries.map((entry) {
+            var stringKeyedMap = Map<dynamic, dynamic>.from(entry.value);
+            return FlightInfoClass.fromMap(stringKeyedMap);
+          }).toList();
+        });
+      }
+      // fetchStoplocationsFlights();
+    });
+  }
+
+  Map<dynamic, dynamic> filteredFlightsData = {};
+  Future<Map> fetchFlights(String specificFlightId) async {
+    PassengerAdultData.clear();
+    ContactDetails.clear();
+
+    await FirebaseDatabase.instance
+        .reference()
+        .child('contact_details_passenger')
+        .once()
+        .then((DatabaseEvent event) {
+      if (event.snapshot.exists) {
+        var contact_details_data =
+            Map<dynamic, dynamic>.from(event.snapshot.value as Map);
+        contact_details_data.forEach((keyy, value) {
+          var FlightData = Map<dynamic, dynamic>.from(value);
+          FirebaseDatabase.instance
+              .reference()
+              .child('booking')
+              .once()
+              .then((DatabaseEvent eventt) {
+            if (eventt.snapshot.exists) {
+              var flightsData =
+                  Map<dynamic, dynamic>.from(eventt.snapshot.value as Map);
+              flightsData.forEach((key, value) {
+                if (contact_details_data[keyy]['bookingId'] == key) {
+                  FirebaseDatabase.instance
+                      .reference()
+                      .child('Flight')
+                      .once()
+                      .then((DatabaseEvent eventt) {
+                    if (eventt.snapshot.exists) {
+                      var flightsDataFlight = Map<dynamic, dynamic>.from(
+                          eventt.snapshot.value as Map);
+                      flightsDataFlight.forEach((Flightkey, value) {
+                        if (Flightkey == specificFlightId &&
+                            flightsData[key]['flightId'] == specificFlightId) {
+                          if (mounted) {
+                            setState(() {
+                              PassengerAdultData[keyy] =
+                                  contact_details_data[keyy];
+                            });
+                            ContactDetails.clear();
+                            ContactDetails =
+                                PassengerAdultData.entries.map((entry) {
+                              int index = int.tryParse(key) ?? 0;
+                              return ContactDetailsClass.fromMap({
+                                'firstname':
+                                    '${entry.value['firstname'].toString()}',
+                                'Email': entry.value['Email'],
+                                'mobilenumber':
+                                    entry.value['mobilenumber'].toString(),
+                                'bookingId':
+                                    entry.value['bookingId'].toString(),
+                                'lastname': entry.value['lastname'],
+                              });
+                            }).toList();
+                          }
+                        }
+                      });
+                    }
+                  });
+                }
+              });
+            }
+          });
+        });
+      }
+    });
+    return PassengerAdultData;
+  }
+
   @override
   Widget build(BuildContext context) {
+    final CurrencyController FlightCurrency_Controller =
+        Get.put(CurrencyController());
     Size size = MediaQuery.of(context).size;
+    print(widget.flightDetails.FlightID);
+    print('.........,,,,,');
+    print('mmmmmmmmmmmmmmmm');
+    print(widget.ItemIndex);
     return DefaultTabController(
         length: 2,
         child: Scaffold(
@@ -84,17 +224,26 @@ class _FlightFlightDetailsViewState extends State<FlightFlightDetailsView> {
                     ),
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 170),
-                  child: Expanded(
-                    child: TabBarView(
-                      children: [
-                        flightDetails(context),
-                        bookings(context),
-                      ],
-                    ),
-                  ),
-                ),
+                (widget.stopLocationsForFlight != null &&
+                        widget.flightDetails != null)
+                    ? Padding(
+                        padding: const EdgeInsets.only(top: 170),
+                        child: Expanded(
+                          child: TabBarView(
+                            children: [
+                              flightDetails(
+                                  context,
+                                  widget.flightDetails,
+                                  widget.stopDurationsForFlight,
+                                  widget.stopLocationsForFlight,
+                                  widget.ItemIndex),
+                              bookingsContact(context, ContactDetails),
+                              // bookings(context),
+                            ],
+                          ),
+                        ),
+                      )
+                    : CircularProgressIndicator()
               ],
             ),
           ),
@@ -102,10 +251,39 @@ class _FlightFlightDetailsViewState extends State<FlightFlightDetailsView> {
   }
 }
 
-Widget flightDetails(BuildContext context) {
+Widget flightDetails(BuildContext context, FlightDetailsClass flightDetails,
+    List stopDurationsForFlight, List stopLocationsForFlight, var ItemIndex) {
+  print('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx');
+  print(ItemIndex);
+  final CurrencyController FlightCurrency_Controller =
+      Get.put(CurrencyController());
+  String getCity(String input) {
+    List<String> parts = input.split(',');
+    return parts[0].trim();
+  }
+
+  String getCountry(String input) {
+    List<String> parts = input.split(',');
+    if (parts.length > 1) {
+      return parts[1].trim();
+    } else {
+      return 'Country not found';
+    }
+  }
+
+  List<TextEditingController> stopDurationscontrollers = [];
+  List<TextEditingController> stopLocationscontrollers = [];
+
+  stopDurationsForFlight.forEach((_) {
+    stopDurationscontrollers.add(TextEditingController());
+  });
+  stopLocationsForFlight.forEach((_) {
+    stopLocationscontrollers.add(TextEditingController());
+  });
+
   Size size = MediaQuery.of(context).size;
   return Padding(
-    padding: const EdgeInsets.only(top: 20, left: 15, right: 15),
+    padding: const EdgeInsets.only(left: 15, right: 15),
     child: ListView(
       children: [
         const SizedBox(
@@ -146,15 +324,16 @@ Widget flightDetails(BuildContext context) {
                 height: 45,
                 width: size.width - 50,
                 child: TextField(
-                  keyboardType: TextInputType.phone,
+                  readOnly: true,
+                  controller:
+                      TextEditingController(text: flightDetails.PlaneId),
                   decoration: textFielDecoratiom.copyWith(
                       fillColor: Colors.white,
                       prefixIcon: const Icon(Icons.flight_takeoff_outlined)),
-                  onChanged: (value) {},
                 ),
               ),
               const SizedBox(
-                height: 40,
+                height: 30,
               ),
               const Row(
                 children: [
@@ -162,7 +341,7 @@ Widget flightDetails(BuildContext context) {
                     width: 10,
                   ),
                   Text(
-                    'Plane Features',
+                    'Plane Model',
                     style: TextStyle(
                         fontSize: 13,
                         color: AppColors.grayText,
@@ -174,11 +353,41 @@ Widget flightDetails(BuildContext context) {
                 height: 45,
                 width: size.width - 50,
                 child: TextField(
-                  keyboardType: TextInputType.phone,
+                  readOnly: true,
+                  controller:
+                      TextEditingController(text: flightDetails.PlaneModel),
                   decoration: textFielDecoratiom.copyWith(
                       fillColor: Colors.white,
                       prefixIcon: const Icon(Icons.flight_takeoff_outlined)),
-                  onChanged: (value) {},
+                ),
+              ),
+              const SizedBox(
+                height: 30,
+              ),
+              const Row(
+                children: [
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Text(
+                    'Plane Manufacturer',
+                    style: TextStyle(
+                        fontSize: 13,
+                        color: AppColors.grayText,
+                        fontWeight: FontWeight.w500),
+                  ),
+                ],
+              ),
+              SizedBox(
+                height: 45,
+                width: size.width - 50,
+                child: TextField(
+                  readOnly: true,
+                  controller: TextEditingController(
+                      text: flightDetails.PlaneManufacturer),
+                  decoration: textFielDecoratiom.copyWith(
+                      fillColor: Colors.white,
+                      prefixIcon: const Icon(Icons.flight_takeoff_outlined)),
                 ),
               ),
               const SizedBox(
@@ -225,23 +434,60 @@ Widget flightDetails(BuildContext context) {
                 height: 45,
                 width: size.width - 50,
                 child: TextField(
-                  keyboardType: TextInputType.phone,
+                  readOnly: true,
+                  controller: TextEditingController(
+                      text: flightDetails.DepartureAirport),
+                  keyboardType: TextInputType.text,
                   decoration: textFielDecoratiom.copyWith(
                       fillColor: Colors.white,
                       prefixIcon: const Icon(Icons.flight_takeoff_outlined)),
-                  onChanged: (value) {},
                 ),
               ),
-              const SizedBox(
-                height: 40,
-              ),
+
+              const SizedBox(height: 15),
               const Row(
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   SizedBox(
                     width: 10,
                   ),
                   Text(
-                    'To',
+                    'Departure Airport',
+                    style: TextStyle(
+                        fontSize: 13,
+                        color: AppColors.grayText,
+                        fontWeight: FontWeight.w500),
+                  ),
+                  SizedBox(
+                    height: 40,
+                  ),
+                ],
+              ),
+              SizedBox(
+                height: 45,
+                width: size.width - 50,
+                child: TextField(
+                  readOnly: true,
+                  controller: TextEditingController(
+                      text: flightDetails.DepartureAirport),
+                  keyboardType: TextInputType.text,
+                  decoration: textFielDecoratiom.copyWith(
+                      fillColor: Colors.white,
+                      prefixIcon: const Icon(Icons.flight_takeoff_outlined)),
+                ),
+              ),
+              SizedBox(
+                height: 40,
+              ),
+
+              const Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Text(
+                    'Arrival Airport',
                     style: TextStyle(
                         fontSize: 13,
                         color: AppColors.grayText,
@@ -253,13 +499,201 @@ Widget flightDetails(BuildContext context) {
                 height: 45,
                 width: size.width - 50,
                 child: TextField(
-                  keyboardType: TextInputType.phone,
+                  readOnly: true,
+                  controller:
+                      TextEditingController(text: flightDetails.ArrivalAirport),
+                  keyboardType: TextInputType.text,
                   decoration: textFielDecoratiom.copyWith(
                       fillColor: Colors.white,
                       prefixIcon: const Icon(Icons.flight_land)),
-                  onChanged: (value) {},
                 ),
               ),
+              const SizedBox(
+                height: 40,
+              ),
+              Row(
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Row(
+                        children: [
+                          SizedBox(
+                            width: 15,
+                          ),
+                          Text(
+                            'Depature City',
+                            style: TextStyle(
+                                fontSize: 13,
+                                color: AppColors.grayText,
+                                fontWeight: FontWeight.w500),
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 45,
+                        width: size.width / 2 - 15,
+                        child: TextField(
+                          readOnly: true,
+                          controller: TextEditingController(
+                              text: getCity(flightDetails.deparure_from)),
+                          keyboardType: TextInputType.text,
+                          decoration: textFielDecoratiom.copyWith(
+                              fillColor: Colors.white,
+                              prefixIcon: const Icon(Icons.public)),
+                        ),
+                      ),
+                    ],
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Row(
+                        children: [
+                          SizedBox(
+                            width: 10,
+                          ),
+                          Text(
+                            'Departure country',
+                            style: TextStyle(
+                                fontSize: 13,
+                                color: AppColors.grayText,
+                                fontWeight: FontWeight.w500),
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 45,
+                        width: size.width / 2 - 15,
+                        child: TextField(
+                          controller: TextEditingController(
+                              text: getCountry(flightDetails.deparure_from)),
+                          keyboardType: TextInputType.text,
+                          decoration: textFielDecoratiom.copyWith(
+                              fillColor: Colors.white,
+                              prefixIcon: const Icon(Icons.public)),
+                          onChanged: (value) {},
+                        ),
+                      ),
+                    ],
+                  )
+                ],
+              ),
+              const SizedBox(
+                height: 40,
+              ),
+              Row(
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Row(
+                        children: [
+                          SizedBox(
+                            width: 15,
+                          ),
+                          Text(
+                            'Arrival City',
+                            style: TextStyle(
+                                fontSize: 13,
+                                color: AppColors.grayText,
+                                fontWeight: FontWeight.w500),
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 45,
+                        width: size.width / 2 - 15,
+                        child: TextField(
+                          readOnly: true,
+                          controller: TextEditingController(
+                              text: getCity(flightDetails.deparure_to)),
+                          keyboardType: TextInputType.text,
+                          decoration: textFielDecoratiom.copyWith(
+                              fillColor: Colors.white,
+                              prefixIcon: const Icon(Icons.public)),
+                        ),
+                      ),
+                    ],
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Row(
+                        children: [
+                          SizedBox(
+                            width: 10,
+                          ),
+                          Text(
+                            'Arrival country',
+                            style: TextStyle(
+                                fontSize: 13,
+                                color: AppColors.grayText,
+                                fontWeight: FontWeight.w500),
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 45,
+                        width: size.width / 2 - 15,
+                        child: TextField(
+                          readOnly: true,
+                          controller: TextEditingController(
+                              text: getCountry(flightDetails.deparure_to)),
+                          keyboardType: TextInputType.text,
+                          decoration: textFielDecoratiom.copyWith(
+                              fillColor: Colors.white,
+                              prefixIcon: const Icon(Icons.public)),
+                        ),
+                      ),
+                    ],
+                  )
+                ],
+              ),
+              // SizedBox(
+              //   height: 45,
+              //   width: size.width - 50,
+              //   child: TextField(
+              //     readOnly: true, // This makes the TextField read-only
+              //     controller:
+              //         TextEditingController(text: flightDetails.airport_from),
+              //     keyboardType: TextInputType.phone,
+              //     decoration: textFielDecoratiom.copyWith(
+              //         fillColor: Colors.white,
+              //         prefixIcon: const Icon(Icons.flight_takeoff_outlined)),
+              //     onChanged: (value) {},
+              //   ),
+              // ),
+              // const SizedBox(
+              //   height: 40,
+              // ),
+              // const Row(
+              //   children: [
+              //     SizedBox(
+              //       width: 10,
+              //     ),
+              //     Text(
+              //       'To',
+              //       style: TextStyle(
+              //           fontSize: 13,
+              //           color: AppColors.grayText,
+              //           fontWeight: FontWeight.w500),
+              //     ),
+              //   ],
+              // ),
+              // SizedBox(
+              //   height: 45,
+              //   width: size.width - 50,
+              //   child: TextField(
+              //     readOnly: true,
+              //     controller:
+              //         TextEditingController(text: flightDetails.airport_to),
+              //     decoration: textFielDecoratiom.copyWith(
+              //         fillColor: Colors.white,
+              //         prefixIcon: const Icon(Icons.flight_land)),
+              //     onChanged: (value) {},
+              //   ),
+              // ),
               const SizedBox(
                 height: 40,
               ),
@@ -286,7 +720,9 @@ Widget flightDetails(BuildContext context) {
                         height: 45,
                         width: size.width / 2 - 15,
                         child: TextField(
-                          keyboardType: TextInputType.phone,
+                          readOnly: true,
+                          controller: TextEditingController(
+                              text: flightDetails.DeparureTime),
                           decoration: textFielDecoratiom.copyWith(
                               fillColor: Colors.white,
                               prefixIcon: const Icon(Icons.access_time)),
@@ -304,7 +740,7 @@ Widget flightDetails(BuildContext context) {
                             width: 10,
                           ),
                           Text(
-                            'Return Time',
+                            'Arrival Time',
                             style: TextStyle(
                                 fontSize: 13,
                                 color: AppColors.grayText,
@@ -316,7 +752,9 @@ Widget flightDetails(BuildContext context) {
                         height: 45,
                         width: size.width / 2 - 15,
                         child: TextField(
-                          keyboardType: TextInputType.phone,
+                          readOnly: true,
+                          controller: TextEditingController(
+                              text: flightDetails.ArrivalTime),
                           decoration: textFielDecoratiom.copyWith(
                               fillColor: Colors.white,
                               prefixIcon:
@@ -354,7 +792,9 @@ Widget flightDetails(BuildContext context) {
                         height: 45,
                         width: size.width / 2 - 15,
                         child: TextField(
-                          keyboardType: TextInputType.phone,
+                          readOnly: true,
+                          controller: TextEditingController(
+                              text: flightDetails.DeparureDate),
                           decoration: textFielDecoratiom.copyWith(
                               fillColor: Colors.white,
                               prefixIcon: const Icon(Icons.date_range_rounded)),
@@ -384,7 +824,9 @@ Widget flightDetails(BuildContext context) {
                         height: 45,
                         width: size.width / 2 - 15,
                         child: TextField(
-                          keyboardType: TextInputType.phone,
+                          readOnly: true,
+                          controller: TextEditingController(
+                              text: flightDetails.ArrivalDate),
                           decoration: textFielDecoratiom.copyWith(
                               fillColor: Colors.white,
                               prefixIcon: const Icon(Icons.date_range_rounded)),
@@ -395,6 +837,118 @@ Widget flightDetails(BuildContext context) {
                   )
                 ],
               ),
+              (stopDurationsForFlight.isNotEmpty)
+                  ? ListView.builder(
+                      physics: NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      itemCount: stopLocationsForFlight.length,
+                      itemBuilder: (context, index) {
+                        print(stopDurationsForFlight[index]);
+                        stopDurationscontrollers[index].text =
+                            stopDurationsForFlight[index];
+                        stopLocationscontrollers[index].text =
+                            stopLocationsForFlight[index];
+                        return Column(
+                          children: [
+                            const SizedBox(
+                              height: 40,
+                            ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
+                                  children: [
+                                    SizedBox(
+                                      width: 10,
+                                    ),
+                                    Text(
+                                      ' Stop location ${index + 1}',
+                                      style: TextStyle(
+                                          fontSize: 13,
+                                          color: AppColors.grayText,
+                                          fontWeight: FontWeight.w500),
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(
+                                  height: 45,
+                                  width: size.width - 50,
+                                  child: TextField(
+                                    readOnly: true,
+                                    controller: stopLocationscontrollers[index],
+                                    decoration: textFielDecoratiom.copyWith(
+                                        fillColor: Colors.white,
+                                        prefixIcon: const Icon(Icons.public)),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(
+                              height: 30,
+                            ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
+                                  children: [
+                                    SizedBox(
+                                      width: 10,
+                                    ),
+                                    Text(
+                                      'Stop Duration ${index + 1}',
+                                      style: TextStyle(
+                                          fontSize: 13,
+                                          color: AppColors.grayText,
+                                          fontWeight: FontWeight.w500),
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(
+                                  height: 45,
+                                  width: size.width - 50,
+                                  child: TextField(
+                                    readOnly: true,
+                                    controller: stopDurationscontrollers[index],
+                                    decoration: textFielDecoratiom.copyWith(
+                                        fillColor: Colors.white,
+                                        prefixIcon:
+                                            Icon(Icons.access_time_outlined)),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        );
+                      },
+                    )
+                  : Column(
+                      children: const [
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Row(
+                          children: [
+                            SizedBox(
+                              width: 10,
+                            ),
+                            Icon(
+                              Icons.check,
+                              color: AppColors.mainColorBlue,
+                            ),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            Text(
+                              'Direct',
+                              style: TextStyle(
+                                  fontSize: 13,
+                                  color: AppColors.grayText,
+                                  fontWeight: FontWeight.w500),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
               const SizedBox(
                 height: 30,
               ),
@@ -443,7 +997,10 @@ Widget flightDetails(BuildContext context) {
                         height: 45,
                         width: size.width / 2 - 15,
                         child: TextField(
-                          keyboardType: TextInputType.phone,
+                          readOnly: true,
+                          controller: TextEditingController(
+                              text: flightDetails.NumberOfEconomySeats
+                                  .toString()),
                           decoration: textFielDecoratiom.copyWith(
                               fillColor: Colors.white,
                               prefixIcon: const Icon(
@@ -456,7 +1013,7 @@ Widget flightDetails(BuildContext context) {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Row(
+                      Row(
                         children: [
                           SizedBox(
                             width: 10,
@@ -474,7 +1031,11 @@ Widget flightDetails(BuildContext context) {
                         height: 45,
                         width: size.width / 2 - 15,
                         child: TextField(
-                          keyboardType: TextInputType.phone,
+                          readOnly: true,
+                          controller: TextEditingController(
+                            text:
+                                '${FlightCurrency_Controller.convert(FlightCurrency_Controller.selectedCurrency.value, flightDetails.TicketAdultEconomyPrice.toDouble())} ${FlightCurrency_Controller.selectedCurrency.value}',
+                          ),
                           decoration: textFielDecoratiom.copyWith(
                               fillColor: Colors.white,
                               prefixIcon:
@@ -512,6 +1073,10 @@ Widget flightDetails(BuildContext context) {
                         height: 45,
                         width: size.width / 2 - 15,
                         child: TextField(
+                          readOnly: true,
+                          controller: TextEditingController(
+                              text: flightDetails.NumberOfFirstClassSeats
+                                  .toString()),
                           keyboardType: TextInputType.phone,
                           decoration: textFielDecoratiom.copyWith(
                               fillColor: Colors.white,
@@ -543,7 +1108,12 @@ Widget flightDetails(BuildContext context) {
                         height: 45,
                         width: size.width / 2 - 15,
                         child: TextField(
+                          readOnly: true,
                           keyboardType: TextInputType.phone,
+                          controller: TextEditingController(
+                            text:
+                                '${FlightCurrency_Controller.convert(FlightCurrency_Controller.selectedCurrency.value, flightDetails.TicketAdultFirstClassPrice.toDouble())} ${FlightCurrency_Controller.selectedCurrency.value}',
+                          ),
                           decoration: textFielDecoratiom.copyWith(
                               fillColor: Colors.white,
                               prefixIcon:
@@ -581,6 +1151,11 @@ Widget flightDetails(BuildContext context) {
                         height: 45,
                         width: size.width / 2 - 15,
                         child: TextField(
+                          readOnly: true,
+                          controller: TextEditingController(
+                            text:
+                                '${FlightCurrency_Controller.convert(FlightCurrency_Controller.selectedCurrency.value, flightDetails.TicketChildEconomyPrice!.toDouble())} ${FlightCurrency_Controller.selectedCurrency.value}',
+                          ),
                           keyboardType: TextInputType.phone,
                           decoration: textFielDecoratiom.copyWith(
                               fillColor: Colors.white,
@@ -611,6 +1186,11 @@ Widget flightDetails(BuildContext context) {
                         height: 45,
                         width: size.width / 2 - 15,
                         child: TextField(
+                          readOnly: true,
+                          controller: TextEditingController(
+                            text:
+                                '${FlightCurrency_Controller.convert(FlightCurrency_Controller.selectedCurrency.value, flightDetails.TicketChildFirstClassPrice!.toDouble())} ${FlightCurrency_Controller.selectedCurrency.value}',
+                          ),
                           keyboardType: TextInputType.phone,
                           decoration: textFielDecoratiom.copyWith(
                               fillColor: Colors.white,
@@ -636,16 +1216,21 @@ Widget flightDetails(BuildContext context) {
   );
 }
 
-Widget bookings(BuildContext context) {
-  return Expanded(
-    child: ListView.builder(
-      scrollDirection: Axis.vertical,
-      shrinkWrap: true,
-      itemCount: bookingsDetails.length,
-      itemBuilder: (context, index) => BookingsCard(
-        itemIndex: index,
-        bookingsModel: bookingsDetails[index],
-      ),
-    ),
-  );
+Widget bookingsContact(
+    BuildContext context, List<ContactDetailsClass> ContactPassengerDetails) {
+  return (ContactPassengerDetails != null)
+      ? Expanded(
+          child: ListView.builder(
+            scrollDirection: Axis.vertical,
+            shrinkWrap: true,
+            itemCount: ContactPassengerDetails.length,
+            itemBuilder: (context, index) {
+              return BookingsCard(
+                itemIndex: index,
+                ContactDetailsPassengerData: ContactPassengerDetails[index],
+              );
+            },
+          ),
+        )
+      : CircularProgressIndicator();
 }

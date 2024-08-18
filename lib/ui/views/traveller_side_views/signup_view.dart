@@ -28,7 +28,7 @@ class _SignUpViewState extends State<SignUpView> {
   late String confermPassword;
   late String errorText = '';
   final _formKey = GlobalKey<FormState>();
-
+  var isloading = false.obs;
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
@@ -162,11 +162,32 @@ class _SignUpViewState extends State<SignUpView> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text(
-                          'Sign up ',
-                          style: TextStyle(
-                              fontSize: TextSize.header1,
-                              fontWeight: FontWeight.w700),
+                        
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            const Text(
+                              'Sign up ',
+                              style: TextStyle(
+                                  fontSize: TextSize.header1,
+                                  fontWeight: FontWeight.w700),
+                            ),
+                             Obx(
+                          () => (isloading.value == true)
+                              ? Container(
+                                  width: 20,
+                                  height: 20,
+                                  child: Obx(
+                                    () => (isloading.value == true)
+                                        ? CircularProgressIndicator(
+                                            color: AppColors.mainColorBlue,
+                                          )
+                                        : SizedBox(),
+                                  ),
+                                )
+                              : SizedBox(),
+                        ),
+                          ],
                         ),
                         const SizedBox(
                           height: 35,
@@ -307,8 +328,7 @@ class _SignUpViewState extends State<SignUpView> {
                                       switch (e.code) {
                                         case 'weak-password':
                                           setState(() {
-                                            errorText =
-                                                'Password is too weak.';
+                                            errorText = 'Password is too weak.';
                                           });
                                           break;
                                         case 'email-already-in-use':
@@ -316,7 +336,7 @@ class _SignUpViewState extends State<SignUpView> {
                                             errorText =
                                                 'Email is already registered.';
                                           });
-              
+
                                           break;
                                         // Add more cases as needed
                                         default:

@@ -1,25 +1,142 @@
+// ignore_for_file: non_constant_identifier_names, prefer_typing_uninitialized_variables, deprecated_member_use, must_be_immutable, prefer_const_literals_to_create_immutables, prefer_const_constructors, unused_local_variable
+
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
+import 'package:traveling/classes/contact_details_passenger_class.dart';
+import 'package:traveling/classes/travellars_class.dart';
 import '../../../cards/travellar_datails_card.dart';
-import '../../../classes/travellars_class.dart';
 import '../../shared/colors.dart';
-import '../../shared/custom_widgets/custom_button.dart';
-import '../../shared/custom_widgets/custom_textfield2.dart';
 
 class FlightBookingDetails extends StatefulWidget {
-  const FlightBookingDetails({super.key});
+  ContactDetailsClass ContactDetails;
+  int NumberOfAdult;
+  int NumberOfChild;
+
+  FlightBookingDetails(
+      {super.key,
+      required this.ContactDetails,
+      required this.NumberOfAdult,
+      required this.NumberOfChild});
   @override
   State<FlightBookingDetails> createState() => _FlightBookingDetailsState();
 }
 
 class _FlightBookingDetailsState extends State<FlightBookingDetails> {
   bool? isChecked = false;
+  List<TravellarsClass> TravellerDetails = [];
+  List<ContactDetailsClass> ContactPassengerDetails = [];
+  Map<dynamic, dynamic> TravellerData = {};
+
+  String? sorteBy;
+  User? AirelineCompany;
+  final _auth = FirebaseAuth.instance;
+  var AirelineCompanyId = '';
+  var AirelineCompanyName = '';
+  var uid;
+  var currentUser;
+  double TotalPrice = 0.0;
+  String BookingDate = '';
+  String BookingNumber = '';
+  int Adult = 1;
+  int Child = 0;
+
+  @override
+  void initState() {
+    super.initState();
+
+    currentUser = _auth.currentUser;
+    uid = currentUser?.uid;
+    setState(() {
+      getData();
+      AirelineCompany = _auth.currentUser;
+      AirelineCompanyId = AirelineCompany?.uid.toString() ?? '';
+    });
+    fetchFlights();
+  }
+
+  void getData() async {
+    final event =
+        await FirebaseDatabase.instance.ref('Airline_company').child(uid).get();
+    final AirelineCompanyData = Map<dynamic, dynamic>.from(event.value as Map);
+    AirelineCompanyName = AirelineCompanyData['AirlineCompanyName'];
+  }
+
+  String Booking_Number(String bookingnumber) {
+    List<String> parts = bookingnumber.split(':');
+    return bookingnumber = parts[0];
+  }
+
+  Future<void> fetchFlights() async {
+    print('gggggggggggggggggggggg');
+    await FirebaseDatabase.instance
+        .reference()
+        .child('booking')
+        .once()
+        .then((DatabaseEvent event) {
+      if (event.snapshot.exists) {
+        var bookingData =
+            Map<dynamic, dynamic>.from(event.snapshot.value as Map);
+        bookingData.forEach((key, value) {
+          if (key == '-O4_Kl51_IDydAh6VdvW') {
+            print('heeeeeeeeeeee');
+          }
+          print(key);
+          print(widget.ContactDetails.bookingId);
+          if (key == widget.ContactDetails.bookingId) {
+            print(key);
+            print('dddddd');
+            setState(() {
+              BookingDate = bookingData[key]['bookingdate'];
+              BookingNumber = Booking_Number(widget.ContactDetails.bookingId);
+            });
+            Adult = bookingData[key]['passengerIds'].length;
+            for (var adult in bookingData[key]['passengerIds']) {
+              FirebaseDatabase.instance
+                  .reference()
+                  .child('passenger')
+                  .child(adult)
+                  .once()
+                  .then((DatabaseEvent event) {
+                if (event.snapshot.exists) {
+                  print('oooooooooooooooooooooooooooooooogggggg');
+                  // Initialize the map outside the loop
+
+// Inside the loop
+                  var Travellerdetails =
+                      Map<dynamic, dynamic>.from(event.snapshot.value as Map);
+                  if (mounted) {
+                    setState(() {
+                      TravellerData[adult] =
+                          Travellerdetails; // Use the passenger id (adult) as the key
+                    });
+                  }
+                }
+              });
+            }
+          }
+        });
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    setState(() {
+      TravellerDetails = TravellerData.entries.map((entry) {
+        return TravellarsClass.fromMap({
+          'Firstname': entry.value['Firstname'],
+          'Lastname': entry.value['Lastname'],
+          'birthDate': entry.value['birthDate'],
+          'Nationality': entry.value['Nationality'],
+          'bookingid': entry.value['bookingid'],
+          'issuingCountryPassport': entry.value['issuingCountryPassport'],
+          'PassportNumber': entry.value['PassportNumber'],
+          'Gender': entry.value['Gender'],
+          'ExpirationDatePassport': entry.value['ExpirationDatePassport']
+        });
+      }).toList();
+    });
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -65,7 +182,7 @@ class _FlightBookingDetailsState extends State<FlightBookingDetails> {
                         decoration: BoxDecoration(
                             color: Colors.white,
                             borderRadius: BorderRadius.circular(20)),
-                        child: const Column(
+                        child: Column(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Row(
@@ -88,7 +205,7 @@ class _FlightBookingDetailsState extends State<FlightBookingDetails> {
                                       width: 5,
                                     ),
                                     Text(
-                                      '5',
+                                      widget.NumberOfAdult.toString(),
                                       style: TextStyle(
                                         color: AppColors.TextBlackColor,
                                         fontSize: 14,
@@ -113,13 +230,75 @@ class _FlightBookingDetailsState extends State<FlightBookingDetails> {
                                       width: 5,
                                     ),
                                     Text(
-                                      '3',
+                                      widget.NumberOfChild.toString(),
                                       style: TextStyle(
                                         color: AppColors.TextBlackColor,
                                         fontSize: 14,
                                       ),
                                     ),
                                   ],
+                                ),
+                              ],
+                            ),
+                            SizedBox(
+                              height: 15,
+                            ),
+                            Row(
+                              children: [
+                                Icon(
+                                  Icons.credit_card,
+                                  color: AppColors.darkBlue,
+                                ),
+                                SizedBox(
+                                  width: 5,
+                                ),
+                                Text(
+                                  'Booking Number',
+                                  style: TextStyle(
+                                      color: AppColors.TextBlackColor,
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w500),
+                                ),
+                                SizedBox(
+                                  width: 5,
+                                ),
+                                Text(
+                                  BookingNumber,
+                                  style: TextStyle(
+                                    color: AppColors.TextBlackColor,
+                                    fontSize: 14,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            SizedBox(
+                              height: 15,
+                            ),
+                            Row(
+                              children: [
+                                Icon(
+                                  Icons.calendar_month,
+                                  color: AppColors.darkBlue,
+                                ),
+                                SizedBox(
+                                  width: 5,
+                                ),
+                                Text(
+                                  'Booking Date',
+                                  style: TextStyle(
+                                      color: AppColors.TextBlackColor,
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w500),
+                                ),
+                                SizedBox(
+                                  width: 5,
+                                ),
+                                Text(
+                                  BookingDate,
+                                  style: TextStyle(
+                                    color: AppColors.TextBlackColor,
+                                    fontSize: 14,
+                                  ),
                                 ),
                               ],
                             ),
@@ -143,7 +322,7 @@ class _FlightBookingDetailsState extends State<FlightBookingDetails> {
                                   width: 5,
                                 ),
                                 Text(
-                                  '5000',
+                                  TotalPrice.toString(),
                                   style: TextStyle(
                                     color: AppColors.TextBlackColor,
                                     fontSize: 14,
@@ -178,7 +357,7 @@ class _FlightBookingDetailsState extends State<FlightBookingDetails> {
                         decoration: BoxDecoration(
                             color: Colors.white,
                             borderRadius: BorderRadius.circular(20)),
-                        child: const Column(
+                        child: Column(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Row(
@@ -196,7 +375,7 @@ class _FlightBookingDetailsState extends State<FlightBookingDetails> {
                                   width: 10,
                                 ),
                                 Text(
-                                  'farah',
+                                  '${widget.ContactDetails.firstname} ${widget.ContactDetails.lastname}',
                                   style: TextStyle(
                                       fontWeight: FontWeight.w500,
                                       fontSize: 16),
@@ -226,7 +405,7 @@ class _FlightBookingDetailsState extends State<FlightBookingDetails> {
                                   width: 5,
                                 ),
                                 Text(
-                                  'FarahEmad@gmail.com',
+                                  widget.ContactDetails.Email,
                                   style: TextStyle(
                                     color: AppColors.BlueText,
                                     fontStyle: FontStyle.italic,
@@ -258,7 +437,7 @@ class _FlightBookingDetailsState extends State<FlightBookingDetails> {
                                   width: 5,
                                 ),
                                 Text(
-                                  '0996896662',
+                                  widget.ContactDetails.mobilenumber,
                                   style: TextStyle(
                                     color: AppColors.BlueText,
                                     fontStyle: FontStyle.italic,
@@ -316,15 +495,14 @@ class _FlightBookingDetailsState extends State<FlightBookingDetails> {
                       const SizedBox(
                         height: 15,
                       ),
-                    
                       Expanded(
                         child: ListView.builder(
                           scrollDirection: Axis.vertical,
                           shrinkWrap: true,
-                          itemCount: travellarsDetails.length,
+                          itemCount: TravellerDetails.length,
                           itemBuilder: (context, index) => TravellarDetailsCard(
                             itemIndex: index,
-                            travellarsModel: travellarsDetails[index],
+                            travellarsModel: TravellerDetails[index],
                           ),
                         ),
                       ),

@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors, must_be_immutable, prefer_typing_uninitialized_variables, non_constant_identifier_names, use_key_in_widget_constructors, use_build_context_synchronously, library_private_types_in_public_api, unnecessary_null_comparison, sized_box_for_whitespace, body_might_complete_normally_nullable, curly_braces_in_flow_control_structures, prefer_is_empty, prefer_conditional_assignment
 
 import 'package:flutter/material.dart';
-import 'package:flutter_ocr_sdk/mrz_result.dart';
+// import 'package:flutter_ocr_sdk/mrz_result.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:traveling/controllers/flight_info_controller.dart';
@@ -9,14 +9,13 @@ import 'package:traveling/controllers/traveller_details_view1_controller.dart';
 import 'package:traveling/controllers/traveller_details_view2_controller.dart';
 import 'package:traveling/ui/shared/colors.dart';
 import 'package:traveling/ui/shared/custom_widgets/custom_textfield2.dart';
-import 'package:traveling/ui/shared/custom_widgets/custom_textfiled.dart';
 import 'package:traveling/ui/shared/text_size.dart';
 import 'package:traveling/ui/shared/utils.dart';
-import 'package:traveling/ui/views/traveller_side_views/flight_travellers_view_details/scan_traveller_id/traveller_scan_id_view.dart';
+import '../../../../controllers/flight_Step3payment_controller.dart';
 import 'scan_traveller_id/global.dart';
 
 class TravellerDetailsView4 extends StatefulWidget {
-  MrzResult? change_data;
+  Map<String, dynamic>? change_data;
   final TextEditingController? firstname_con;
   final TextEditingController? lastname_con;
   final TextEditingController? nationality_con;
@@ -76,13 +75,17 @@ class _TravellerDetailsView4State extends State<TravellerDetailsView4> {
   String? errorLastName = '';
   String? errorPassport = '';
   String? generalErrorMessage = '';
-
+  FlightStep3paymentController flightStep3paymentController =
+      Get.put(FlightStep3paymentController());
   var selectedgender;
-  MrzResult? TravellerData;
+  Map<String, dynamic>? TravellerData;
   Gender? selectedOption;
   String? selectedValueIssuingCountry;
   String? selectedValueNationality;
-  final List<String> items_Nationality = ['Syrian - SYR', 'Algeria - DZA'];
+  final List<String> items_Nationality = [
+    'Syrian - SYR',
+    'Algeria - DZA',
+  ];
   final List<String> items_issuingCountry = ['SYR - Syrian', 'DZA - Algeria'];
   final List<String> genderItems = [
     'Male',
@@ -132,18 +135,18 @@ class _TravellerDetailsView4State extends State<TravellerDetailsView4> {
       });
     } else if (widget.change_data != null) {
       setState(() {
-        firstname_con.text = widget.change_data!.givenName!;
-        lastname_con.text = widget.change_data!.surname!;
-        passportnumber_con.text = widget.change_data!.passportNumber!;
-        issuingcountry_con.text = widget.change_data!.issuingCountry!;
+        firstname_con.text = widget.change_data!['givenName'] ?? '';
+        lastname_con.text = widget.change_data!['surname'] ?? '';
+        passportnumber_con.text = widget.change_data!['passportNumber'] ?? '';
+        issuingcountry_con.text = widget.change_data!['issuingCountry'] ?? '';
         controller_TravellerDetailsView2
-            .setgender(widget.change_data?.gender ?? '');
+            .setgender(widget.change_data?['gender'] ?? '');
         controller_TravellerDetailsView2
-            .setNationality(widget.change_data?.nationality ?? '');
-        controller_TravellerDetailsView2
-            .setissuingcountry(widget.change_data?.issuingCountry ?? '');
-        String? birthDate = widget.change_data?.birthDate;
-        String? expiration = widget.change_data?.expiration;
+            .setNationality(widget.change_data?['nationality'] ?? '');
+        controller_TravellerDetailsview2
+            .setissuingcountry(widget.change_data?['issuingCountry'] ?? '');
+        String? birthDate = widget.change_data?['birthDate'];
+        String? expiration = widget.change_data?['expiration'];
         List<String> BirthDate = birthDate!.split('/');
         List<String> expirationDate = expiration!.split('/');
         int yearBirthDate = int.parse(BirthDate[0]);
@@ -183,49 +186,47 @@ class _TravellerDetailsView4State extends State<TravellerDetailsView4> {
     super.dispose();
   }
 
-  void _confirm() async {
-    setState(() {
-      if (firstname_con.text.isEmpty &&
-          lastname_con.text.isEmpty &&
-          passportnumber_con.text.isEmpty &&
-          !isBirthDateDaySelected &&
-          !isBirthDateMonthSelected &&
-          !isBirthDateYearSelected &&
-          !isExpireDateMonthSelected &&
-          !isExpireDateYearSelected &&
-          !isExpireDaySelected &&
-          !isGenderSelected &&
-          !isNationalitySelected &&
-          !isissuingcountrySelected) {
-        generalErrorMessage = 'Please enter all fields';
-      } else {
-        errorFirstName = (firstname_con.text.length < 2)
-            ? 'Please Enter a First name more than two characters'
-            : null;
-        errorLastName = (lastname_con.text.length < 2)
-            ? 'Please Enter a last name more than two characters'
-            : null;
-        errorPassport = (passportnumber_con.text.length == 0)
-            ? 'Please Enter a valid Passport number'
-            : null;
-        errorMessageNationality =
-            isNationalitySelected ? null : 'Please choose your Nationality';
-        errorMessageissuingcountry =
-            isissuingcountrySelected ? null : 'Please choose issuing country';
-        errorMessageGender =
-            isGenderSelected ? null : 'Please choose your Gender';
-        errorMessageExpireDate = (isExpireDaySelected &&
-                isExpireDateMonthSelected &&
-                isExpireDateYearSelected)
-            ? null
-            : 'Please choose your Expire date';
-        errorMessageBirthDate = (isBirthDateDaySelected &&
-                isBirthDateMonthSelected &&
-                isBirthDateYearSelected)
-            ? null
-            : 'Please choose your Birth date';
-      }
-    });
+  void _confirm() {
+    if (firstname_con.text.isEmpty &&
+        lastname_con.text.isEmpty &&
+        passportnumber_con.text.isEmpty &&
+        !isBirthDateDaySelected &&
+        !isBirthDateMonthSelected &&
+        !isBirthDateYearSelected &&
+        !isExpireDateMonthSelected &&
+        !isExpireDateYearSelected &&
+        !isExpireDaySelected &&
+        !isGenderSelected &&
+        !isNationalitySelected &&
+        !isissuingcountrySelected) {
+      generalErrorMessage = 'Please enter all fields';
+    } else {
+      errorFirstName = (firstname_con.text.length < 2)
+          ? 'Please Enter a First name more than two characters'
+          : null;
+      errorLastName = (lastname_con.text.length < 2)
+          ? 'Please Enter a last name more than two characters'
+          : null;
+      errorPassport = (passportnumber_con.text.length == 0)
+          ? 'Please Enter a valid Passport number'
+          : null;
+      errorMessageNationality =
+          isNationalitySelected ? null : 'Please choose your Nationality';
+      errorMessageissuingcountry =
+          isissuingcountrySelected ? null : 'Please choose issuing country';
+      errorMessageGender =
+          isGenderSelected ? null : 'Please choose your Gender';
+      errorMessageExpireDate = (isExpireDaySelected &&
+              isExpireDateMonthSelected &&
+              isExpireDateYearSelected)
+          ? null
+          : 'Please choose your Expire date';
+      errorMessageBirthDate = (isBirthDateDaySelected &&
+              isBirthDateMonthSelected &&
+              isBirthDateYearSelected)
+          ? null
+          : 'Please choose your Birth date';
+    }
     if (isBirthDateDaySelected &&
         isBirthDateMonthSelected &&
         isBirthDateYearSelected &&
@@ -235,95 +236,95 @@ class _TravellerDetailsView4State extends State<TravellerDetailsView4> {
         isGenderSelected &&
         isNationalitySelected &&
         isissuingcountrySelected) {
-      setState(() {
-        if (TravellerData == null) {
-          TravellerData = MrzResult();
-        }
-        TravellerData?.givenName = firstname_con.text;
-        TravellerData?.surname = lastname_con.text;
-        TravellerData?.gender = controller_TravellerDetailsView2.gender.value;
-        TravellerData?.passportNumber = passportnumber_con.text;
-        TravellerData?.birthDate =
-            '${selectedBirthDateYear ?? controller_TravellerDetailsView2.birthdateYear.value}/${selectedBirthDateMonth ?? controller_TravellerDetailsView2.birthdateMonth.value}/${selectedBirthDateDay ?? controller_TravellerDetailsView2.birthdateDay.value}';
-        TravellerData?.nationality =
-            controller_TravellerDetailsView2.Nationality.value;
-        TravellerData?.expiration =
-            '${(selectedExpireDateYear != null) ? selectedExpireDateYear.toString() : controller_TravellerDetailsView2.expiredateYear.value}/${(selectedExpireDateMonth != null) ? selectedExpireDateMonth.toString() : controller_TravellerDetailsView2.expiredateMonth.value}/${(selectedExpireDateDay != null) ? selectedExpireDateDay.toString() : controller_TravellerDetailsView2.expiredateDay.value}';
-        TravellerData?.issuingCountry =
-            controller_TravellerDetailsView2.issuingcountry.value;
+      // print('ppprrr');
+      // void updateTravellerData() {
+      TravellerData = {
+        'givenName': firstname_con.text,
+        'surname': lastname_con.text,
+        'gender': controller_TravellerDetailsView2.gender.value,
+        'passportNumber': passportnumber_con.text,
+        'birthDate':
+            '${selectedBirthDateYear ?? controller_TravellerDetailsview2.birthdateYear.value}/${selectedBirthDateMonth ?? controller_TravellerDetailsview2.birthdateMonth.value}/${selectedBirthDateDay ?? controller_TravellerDetailsview2.birthdateDay.value}',
+        'nationality': controller_TravellerDetailsview2.Nationality.value,
+        'expiration':
+            '${(selectedExpireDateYear != null) ? selectedExpireDateYear.toString() : controller_TravellerDetailsview2.expiredateYear.value}/${(selectedExpireDateMonth != null) ? selectedExpireDateMonth.toString() : controller_TravellerDetailsview2.expiredateMonth.value}/${(selectedExpireDateDay != null) ? selectedExpireDateDay.toString() : controller_TravellerDetailsview2.expiredateDay.value}',
+        'issuingCountry': controller_TravellerDetailsview2.issuingcountry.value,
+      };
 
-        if (controller_TravellerDetailsview1.AdultList.isEmpty) {
-          Navigator.pop(context, TravellerData);
-        } else if (controller_TravellerDetailsview1.AdultList.isNotEmpty &&
-            controller_TravellerDetailsview1.ChildList.isEmpty) {
-          if (widget.change_data != null) {
-            bool isTravellerAdded =
-                controller_TravellerDetailsview1.AdultList.any((element) =>
-                    element.passportNumber == passportnumber_con.text &&
-                    widget.change_data?.passportNumber !=
-                        passportnumber_con.text);
+      if (controller_TravellerDetailsview1.AdultList.isEmpty) {
+        Navigator.pop(context, TravellerData);
+      } else if (controller_TravellerDetailsview1.AdultList.isNotEmpty &&
+          controller_TravellerDetailsview1.ChildList.isEmpty) {
+        if (widget.change_data != null) {
+          bool isTravellerAdded =
+              controller_TravellerDetailsview1.AdultList.any(
+            (element) =>
+                element['passportNumber'] == passportnumber_con.text &&
+                widget.change_data?['passportNumber'] !=
+                    passportnumber_con.text,
+          );
 
-            if (!isTravellerAdded) {
-              setState(() {
-                widget.change_data?.givenName = firstname_con.text;
-                widget.change_data?.surname = lastname_con.text;
-                widget.change_data?.gender =
-                    controller_TravellerDetailsView2.gender.value;
-                widget.change_data?.nationality =
-                    controller_TravellerDetailsView2.Nationality.value;
-                widget.change_data?.passportNumber = passportnumber_con.text;
-                widget.change_data?.issuingCountry =
-                    controller_TravellerDetailsView2.issuingcountry.value;
-                widget.change_data?.birthDate =
-                    '${selectedBirthDateYear ?? controller_TravellerDetailsView2.birthdateYear.value}/${selectedBirthDateMonth ?? controller_TravellerDetailsView2.birthdateMonth.value}/${selectedBirthDateDay ?? controller_TravellerDetailsView2.birthdateDay.value}';
-                widget.change_data?.expiration =
-                    '${(selectedExpireDateYear != null) ? selectedExpireDateYear.toString() : controller_TravellerDetailsView2.expiredateYear.value}/${(selectedExpireDateMonth != null) ? selectedExpireDateMonth.toString() : controller_TravellerDetailsView2.expiredateMonth.value}/${(selectedExpireDateDay != null) ? selectedExpireDateDay.toString() : controller_TravellerDetailsView2.expiredateDay.value}';
-                Navigator.pop(context, widget.change_data);
-              });
-            } else {
-              Fluttertoast.showToast(
-                  msg: 'The traveler is already aded',
-                  toastLength: Toast.LENGTH_SHORT,
-                  gravity: ToastGravity.BOTTOM,
-                  timeInSecForIosWeb: 1,
-                  backgroundColor: Colors.grey,
-                  textColor: Colors.white,
-                  fontSize: 16.0);
-            }
+          if (!isTravellerAdded) {
+            setState(() {
+              widget.change_data?['givenName'] = firstname_con.text;
+              widget.change_data?['surname'] = lastname_con.text;
+              widget.change_data?['gender'] =
+                  controller_TravellerDetailsview2.gender.value;
+              widget.change_data?['nationality'] =
+                  controller_TravellerDetailsview2.Nationality.value;
+              widget.change_data?['passportNumber'] = passportnumber_con.text;
+              widget.change_data?['issuingCountry'] =
+                  controller_TravellerDetailsview2.issuingcountry.value;
+              widget.change_data?['birthDate'] =
+                  '${selectedBirthDateYear ?? controller_TravellerDetailsview2.birthdateYear.value}/${selectedBirthDateMonth ?? controller_TravellerDetailsview2.birthdateMonth.value}/${selectedBirthDateDay ?? controller_TravellerDetailsview2.birthdateDay.value}';
+              widget.change_data?['expiration'] =
+                  '${(selectedExpireDateYear != null) ? selectedExpireDateYear.toString() : controller_TravellerDetailsview2.expiredateYear.value}/${(selectedExpireDateMonth != null) ? selectedExpireDateMonth.toString() : controller_TravellerDetailsview2.expiredateMonth.value}/${(selectedExpireDateDay != null) ? selectedExpireDateDay.toString() : controller_TravellerDetailsview2.expiredateDay.value}';
+              Navigator.pop(context, widget.change_data);
+            });
           } else {
-            bool isTravellerAdded = false;
-            for (var AdultTraveller
-                in controller_TravellerDetailsview1.AdultList) {
-              for (var ChildTraveller
-                  in controller_TravellerDetailsview1.ChildList) {
-                if (AdultTraveller.passportNumber ==
-                    ChildTraveller.passportNumber) {
-                  isTravellerAdded = true;
-                }
-                if (ChildTraveller.passportNumber == passportnumber_con.text) {
-                  isTravellerAdded = true;
-                }
-                if (AdultTraveller.passportNumber == passportnumber_con.text) {
-                  isTravellerAdded = true;
-                }
+            Fluttertoast.showToast(
+                msg: 'The traveler is already added',
+                toastLength: Toast.LENGTH_SHORT,
+                gravity: ToastGravity.BOTTOM,
+                timeInSecForIosWeb: 1,
+                backgroundColor: Colors.grey,
+                textColor: Colors.white,
+                fontSize: 16.0);
+          }
+        } else {
+          bool isTravellerAdded = false;
+          for (var AdultTraveller
+              in controller_TravellerDetailsview1.AdultList) {
+            for (var ChildTraveller
+                in controller_TravellerDetailsview1.ChildList) {
+              if (AdultTraveller.passportNumber ==
+                  ChildTraveller.passportNumber) {
+                isTravellerAdded = true;
+              }
+              if (ChildTraveller.passportNumber == passportnumber_con.text) {
+                isTravellerAdded = true;
+              }
+              if (AdultTraveller.passportNumber == passportnumber_con.text) {
+                isTravellerAdded = true;
               }
             }
-            if (isTravellerAdded == true) {
-              Fluttertoast.showToast(
-                  msg: 'The traveler is already added',
-                  toastLength: Toast.LENGTH_SHORT,
-                  gravity: ToastGravity.BOTTOM,
-                  timeInSecForIosWeb: 1,
-                  backgroundColor: Colors.grey,
-                  textColor: Colors.white,
-                  fontSize: 16.0);
-            } else {
-              Navigator.pop(context, TravellerData);
-            }
+          }
+          if (isTravellerAdded == true) {
+            Fluttertoast.showToast(
+                msg: 'The traveler is already added',
+                toastLength: Toast.LENGTH_SHORT,
+                gravity: ToastGravity.BOTTOM,
+                timeInSecForIosWeb: 1,
+                backgroundColor: Colors.grey,
+                textColor: Colors.white,
+                fontSize: 16.0);
+          } else {
+            Navigator.pop(context, TravellerData);
           }
         }
-      });
+      }
     }
+    //s }
   }
 
   @override
@@ -362,147 +363,148 @@ class _TravellerDetailsView4State extends State<TravellerDetailsView4> {
                 padding: const EdgeInsets.only(top: 15, right: 15, left: 15),
                 child: InkWell(
                   onTap: () async {
-                    int data = await loadData();
-                    if (data != null) {
-                      TravellerData = await Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => ScanId(
-                              firstname_con: firstname_con,
-                              lastname_con: lastname_con,
-                              dateofbirth_con: dateofbirth_con,
-                              passportnumber_con: passportnumber_con,
-                              issuingcountry_con: issuingcountry_con,
-                              expiredate_con: expiredate_con,
-                              nationality_con: nationality_con,
-                              gender: TravellerData?.gender),
-                        ),
-                      );
-                      if (TravellerData != null) {
-                        setState(() {
-                          controller_TravellerDetailsview2
-                              .setgender(TravellerData?.gender ?? '');
-                          controller_TravellerDetailsview2.setissuingcountry(
-                              TravellerData?.issuingCountry ?? '');
-                          controller_TravellerDetailsView2
-                              .setNationality(TravellerData?.nationality ?? '');
-                          controller_TravellerDetailsview2.setbirthdateDay(
-                              controller_TravellerDetailsview2
-                                  .getFormattedDateDay(
-                                      TravellerData?.birthDate ?? ''));
-                          controller_TravellerDetailsview2.setbirthdateMonth(
-                              controller_TravellerDetailsview2
-                                  .getFormattedDateMonth(
-                                      TravellerData?.birthDate ?? ''));
-                          controller_TravellerDetailsview2.setbirthdateYear(
-                              controller_TravellerDetailsview2
-                                  .getFormattedDateYear(
-                                      TravellerData?.birthDate ?? ''));
-                          controller_TravellerDetailsview2.setexpiredateDay(
-                              controller_TravellerDetailsview2
-                                  .getFormattedDateDay(
-                                      TravellerData?.expiration ?? ''));
-                          controller_TravellerDetailsview2.setexpiredateMonth(
-                              controller_TravellerDetailsview2
-                                  .getFormattedDateMonth(
-                                      TravellerData?.expiration ?? ''));
-                          controller_TravellerDetailsview2.setexpiredateYear(
-                              controller_TravellerDetailsview2
-                                  .getFormattedDateYear(
-                                      TravellerData?.expiration ?? ''));
-                        });
-                      }
-                      if (TravellerData == null) {
-                        if (widget.change_data != null) {
-                          setState(() {
-                            controller_TravellerDetailsview2.gender.value =
-                                widget.change_data?.gender;
-                            controller_TravellerDetailsview2.Nationality.value =
-                                widget.change_data?.nationality;
-                            controller_TravellerDetailsview2.issuingcountry
-                                .value = widget.change_data?.issuingCountry;
-                            controller_TravellerDetailsview2
-                                    .birthdateDay.value =
-                                (widget.change_data?.birthDate != null)
-                                    ? controller_TravellerDetailsview2
-                                        .getFormattedDateDay(
-                                            widget.change_data?.birthDate ?? '')
-                                    : controller_TravellerDetailsview2
-                                        .birthdateDay.value;
-                            controller_TravellerDetailsview2
-                                    .birthdateMonth.value =
-                                (widget.change_data?.birthDate != null)
-                                    ? controller_TravellerDetailsview2
-                                        .getFormattedDateMonth(
-                                            widget.change_data?.birthDate ?? '')
-                                    : controller_TravellerDetailsview2
-                                        .birthdateMonth.value;
+                    // int data = await loadData();
+                    // if (data != null) {
+                    //   TravellerData = await Navigator.push(
+                    //     context,
+                    //     MaterialPageRoute(
+                    //       builder: (context) => ScanId(
+                    //           firstname_con: firstname_con,
+                    //           lastname_con: lastname_con,
+                    //           dateofbirth_con: dateofbirth_con,
+                    //           passportnumber_con: passportnumber_con,
+                    //           issuingcountry_con: issuingcountry_con,
+                    //           expiredate_con: expiredate_con,
+                    //           nationality_con: nationality_con,
+                    //           gender: TravellerData?.gender),
+                    //     ),
+                    //   );
+                    //   if (TravellerData != null) {
+                    //     setState(() {
+                    //       controller_TravellerDetailsview2
+                    //           .setgender(TravellerData?.gender ?? '');
+                    //       controller_TravellerDetailsview2.setissuingcountry(
+                    //           TravellerData?.issuingCountry ?? '');
+                    //       controller_TravellerDetailsView2
+                    //           .setNationality(TravellerData?.nationality ?? '');
+                    //       controller_TravellerDetailsview2.setbirthdateDay(
+                    //           controller_TravellerDetailsview2
+                    //               .getFormattedDateDay(
+                    //                   TravellerData?.birthDate ?? ''));
+                    //       controller_TravellerDetailsview2.setbirthdateMonth(
+                    //           controller_TravellerDetailsview2
+                    //               .getFormattedDateMonth(
+                    //                   TravellerData?.birthDate ?? ''));
+                    //       controller_TravellerDetailsview2.setbirthdateYear(
+                    //           controller_TravellerDetailsview2
+                    //               .getFormattedDateYear(
+                    //                   TravellerData?.birthDate ?? ''));
+                    //       controller_TravellerDetailsview2.setexpiredateDay(
+                    //           controller_TravellerDetailsview2
+                    //               .getFormattedDateDay(
+                    //                   TravellerData?.expiration ?? ''));
+                    //       controller_TravellerDetailsview2.setexpiredateMonth(
+                    //           controller_TravellerDetailsview2
+                    //               .getFormattedDateMonth(
+                    //                   TravellerData?.expiration ?? ''));
+                    //       controller_TravellerDetailsview2.setexpiredateYear(
+                    //           controller_TravellerDetailsview2
+                    //               .getFormattedDateYear(
+                    //                   TravellerData?.expiration ?? ''));
+                    //     });
+                    //   }
+                    //   if (TravellerData == null) {
+                    //     if (widget.change_data != null) {
+                    //       setState(() {
+                    //         controller_TravellerDetailsview2.gender.value =
+                    //             widget.change_data?.gender;
+                    //         controller_TravellerDetailsview2.Nationality.value =
+                    //             widget.change_data?.nationality;
+                    //         controller_TravellerDetailsview2.issuingcountry
+                    //             .value = widget.change_data?.issuingCountry;
+                    //         controller_TravellerDetailsview2
+                    //                 .birthdateDay.value =
+                    //             (widget.change_data?.birthDate != null)
+                    //                 ? controller_TravellerDetailsview2
+                    //                     .getFormattedDateDay(
+                    //                         widget.change_data?.birthDate ?? '')
+                    //                 : controller_TravellerDetailsview2
+                    //                     .birthdateDay.value;
+                    //         controller_TravellerDetailsview2
+                    //                 .birthdateMonth.value =
+                    //             (widget.change_data?.birthDate != null)
+                    //                 ? controller_TravellerDetailsview2
+                    //                     .getFormattedDateMonth(
+                    //                         widget.change_data?.birthDate ?? '')
+                    //                 : controller_TravellerDetailsview2
+                    //                     .birthdateMonth.value;
 
-                            controller_TravellerDetailsview2
-                                    .birthdateYear.value =
-                                (widget.change_data?.birthDate != null)
-                                    ? controller_TravellerDetailsview2
-                                        .getFormattedDateYear(
-                                            widget.change_data?.birthDate ?? '')
-                                    : controller_TravellerDetailsview2
-                                        .birthdateYear.value;
+                    //         controller_TravellerDetailsview2
+                    //                 .birthdateYear.value =
+                    //             (widget.change_data?.birthDate != null)
+                    //                 ? controller_TravellerDetailsview2
+                    //                     .getFormattedDateYear(
+                    //                         widget.change_data?.birthDate ?? '')
+                    //                 : controller_TravellerDetailsview2
+                    //                     .birthdateYear.value;
 
-                            controller_TravellerDetailsview2.expiredateDay
-                                .value = (widget.change_data?.expiration !=
-                                    null)
-                                ? controller_TravellerDetailsview2
-                                    .getFormattedDateDay(
-                                        widget.change_data?.expiration ?? '')
-                                : controller_TravellerDetailsview2
-                                    .expiredateDay.value;
+                    //         controller_TravellerDetailsview2.expiredateDay
+                    //             .value = (widget.change_data?.expiration !=
+                    //                 null)
+                    //             ? controller_TravellerDetailsview2
+                    //                 .getFormattedDateDay(
+                    //                     widget.change_data?.expiration ?? '')
+                    //             : controller_TravellerDetailsview2
+                    //                 .expiredateDay.value;
 
-                            controller_TravellerDetailsview2.expiredateMonth
-                                .value = (widget.change_data?.expiration !=
-                                    null)
-                                ? controller_TravellerDetailsview2
-                                    .getFormattedDateMonth(
-                                        widget.change_data?.expiration ?? '')
-                                : controller_TravellerDetailsview2
-                                    .expiredateMonth.value;
-                            controller_TravellerDetailsview2.expiredateYear
-                                .value = (widget.change_data?.expiration !=
-                                    null)
-                                ? controller_TravellerDetailsview2
-                                    .getFormattedDateYear(
-                                        widget.change_data?.expiration ?? '')
-                                : controller_TravellerDetailsview2
-                                    .expiredateYear.value;
-                          });
-                        }
-                      }
-                      if (TravellerData != null)
-                        setState(() {
-                          isBirthDateSelected = true;
-                          isNationalitySelected = true;
-                          isGenderSelected = true;
-                          isBirthDateDaySelected = true;
-                          isBirthDateMonthSelected = true;
-                          isBirthDateYearSelected = true;
-                          isExpireDaySelected = true;
-                          isExpireDateMonthSelected = true;
-                          isExpireDateYearSelected = true;
-                          isissuingcountrySelected = true;
-                        });
-                      if (widget.change_data != null) {
-                        setState(() {
-                          widget.change_data?.birthDate =
-                              TravellerData?.birthDate;
-                          widget.change_data?.expiration =
-                              TravellerData?.expiration;
-                        });
-                      }
-                    }
+                    //         controller_TravellerDetailsview2.expiredateMonth
+                    //             .value = (widget.change_data?.expiration !=
+                    //                 null)
+                    //             ? controller_TravellerDetailsview2
+                    //                 .getFormattedDateMonth(
+                    //                     widget.change_data?.expiration ?? '')
+                    //             : controller_TravellerDetailsview2
+                    //                 .expiredateMonth.value;
+                    //         controller_TravellerDetailsview2.expiredateYear
+                    //             .value = (widget.change_data?.expiration !=
+                    //                 null)
+                    //             ? controller_TravellerDetailsview2
+                    //                 .getFormattedDateYear(
+                    //                     widget.change_data?.expiration ?? '')
+                    //             : controller_TravellerDetailsview2
+                    //                 .expiredateYear.value;
+                    //       });
+                    //     }
+                    //   }
+                    //   if (TravellerData != null)
+                    //     setState(() {
+                    //       isBirthDateSelected = true;
+                    //       isNationalitySelected = true;
+                    //       isGenderSelected = true;
+                    //       isBirthDateDaySelected = true;
+                    //       isBirthDateMonthSelected = true;
+                    //       isBirthDateYearSelected = true;
+                    //       isExpireDaySelected = true;
+                    //       isExpireDateMonthSelected = true;
+                    //       isExpireDateYearSelected = true;
+                    //       isissuingcountrySelected = true;
+                    //     });
+                    //   if (widget.change_data != null) {
+                    //     setState(() {
+                    //       widget.change_data?.birthDate =
+                    //           TravellerData?.birthDate;
+                    //       widget.change_data?.expiration =
+                    //           TravellerData?.expiration;
+                    //     });
+                    //   }
+                    // }
                   },
                   child: Column(
                     children: [
                       SizedBox(
                         height: 20,
                       ),
+
                       Expanded(
                         child: ListView(
                           scrollDirection: Axis.vertical,

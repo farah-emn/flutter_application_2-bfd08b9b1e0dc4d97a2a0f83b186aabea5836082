@@ -17,26 +17,90 @@ import 'package:traveling/classes/flight_booking_class.dart';
 import 'package:traveling/classes/hotel_bookings_class.dart';
 import 'package:traveling/ui/shared/custom_widgets/white_container.dart';
 import 'package:traveling/ui/shared/text_size.dart';
+import '../../../controllers/car_user_booking_controller.dart';
+import '../../../controllers/flight_booking_controller.dart';
+import '../../../controllers/hotel_bookings_controller.dart';
 import '../../shared/colors.dart';
 import '../../shared/custom_widgets/custom_button.dart';
 import '../../shared/custom_widgets/custom_textfield2.dart';
+import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
+
+late User loggedinUser;
 
 class BookingsView extends StatefulWidget {
-  const BookingsView({super.key});
+  int? tabNumber;
+
+  BookingsView({super.key, required this.tabNumber});
   @override
   State<BookingsView> createState() => _BookingsViewState();
 }
 
 class _BookingsViewState extends State<BookingsView>
     with SingleTickerProviderStateMixin {
+  HotelBookingsController hotelbookingscontroller =
+      Get.put(HotelBookingsController());
+  FlightBookingsController flightbookingscontroller =
+      Get.put(FlightBookingsController());
+  ItemScrollController _scrollController = ItemScrollController();
   late TabController _tabController;
   String? _flightSorteBy = 'Upcoming';
   String? _hotelSorteBy = 'Upcoming';
+  bool NewRoomBooking = false;
+  bool NewRoomFlight = false;
+  bool NewFlightBooking = false;
 
+  // bool NewRoomBooking = false;
+  bool NewCarBooking = false;
+  CarBookingsController carBookingsController =
+      Get.put(CarBookingsController());
   @override
   void initState() {
     super.initState();
     _tabController = TabController(length: 3, vsync: this);
+    setState(() {
+      NewRoomBooking = hotelbookingscontroller.NewbookingRoom.value;
+    });
+    setState(() {
+      NewCarBooking = carBookingsController.NewbookingRoom.value;
+    });
+    setState(() {
+      NewFlightBooking = carBookingsController.NewbookingRoom.value;
+    });
+    if (widget.tabNumber != null)
+      _tabController.animateTo(widget.tabNumber ?? 1);
+    getCurrentUser();
+  }
+
+  void _scrollToIndex(int index) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _scrollController.scrollTo(
+        index: index,
+        duration: Duration(milliseconds: 5),
+        curve: Curves.easeInOut,
+      );
+    });
+    // setState(() {
+    //   widget.newRoomBooking =d false;
+    // });
+  }
+
+  final _auth = FirebaseAuth.instance;
+  User? user;
+  void getCurrentUser() async {
+    try {
+      user = await _auth.currentUser;
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  @override
+  void dispose() {
+    _tabController.dispose();
+    hotelbookingscontroller.NewbookingRoom.value = false;
+    // _scrollController = ItemScrollController();
+    // flightbookingscontroller.NewbookingFlight.value = false;
+    super.dispose();
   }
 
   @override
@@ -135,16 +199,21 @@ class _BookingsViewState extends State<BookingsView>
 
   Widget HotelBookings(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    // flightbookingscontroller.bookingsDetailsUpcoming.clear();
+    hotelbookingscontroller.getUserBookingUpcoming();
+    hotelbookingscontroller.getUserBookingFinished();
+
+    flightbookingscontroller.getUserBookingUpcoming();
+    flightbookingscontroller.getUserBookingFinished();
     return Column(
       children: [
         Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             Row(
               children: [
                 Radio(
-                  activeColor: AppColors.lightPurple,
+                  activeColor: AppColors.purple,
                   autofocus: true,
                   value: 'Upcoming',
                   groupValue: _hotelSorteBy,
@@ -164,7 +233,7 @@ class _BookingsViewState extends State<BookingsView>
             Row(
               children: [
                 Radio(
-                  activeColor: AppColors.lightPurple,
+                  activeColor: AppColors.purple,
                   value: 'Finished',
                   groupValue: _hotelSorteBy,
                   onChanged: (value) {
@@ -183,37 +252,82 @@ class _BookingsViewState extends State<BookingsView>
           ],
         ),
         const SizedBox(
-          height: 10,
+          height: 20,
         ),
         _hotelSorteBy == 'Upcoming'
-            ? Expanded(
-                child: ListView.builder(
-                  // shrinkWrap: true,
-                  itemCount: HotelbookingsDetails.length,
-                  itemBuilder: (context, index) => HotelBookingCard(
-                    size: size,
-                    itemIndex: index,
-                    hotelBookingsDetails: HotelbookingsDetails[index],
-                  ),
-                ),
-              )
-            : Expanded(
-                child: ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: HotelbookingsDetails.length,
-                  itemBuilder: (context, index) => HotelFinishedBookingCard(
-                    size: size,
-                    itemIndex: index,
-                    hotelBookingsDetails: HotelbookingsDetails[index],
-                  ),
-                ),
-              )
+            ? Obx(() {
+                if (hotelbookingscontroller.isLoading.value) {
+                  return const CircularProgressIndicator(); // Show progress bar while loading
+                } else if (hotelbookingscontroller
+                    .bookingsDetailsUpcoming.isEmpty) {
+                  return SizedBox.shrink(); // Show nothing if the list is empty
+                } else if (NewRoomBooking == true &&
+                    hotelbookingscontroller
+                        .bookingsDetailsUpcoming.isNotEmpty) {
+                  WidgetsBinding.instance.addPostFrameCallback((_) {
+                    _scrollToIndex(
+                        hotelbookingscontroller.bookingsDetailsUpcoming.length);
+                  });
+
+                  return Expanded(
+                    child: ScrollablePositionedList.builder(
+                      itemScrollController: _scrollController,
+                      itemCount: hotelbookingscontroller
+                          .bookingsDetailsUpcoming.length,
+                      itemBuilder: (context, index) => HotelBookingCard(
+                        size: size,
+                        itemIndex: index,
+                        hotelBookingsDetails: hotelbookingscontroller
+                            .bookingsDetailsUpcoming[index],
+                      ),
+                    ),
+                  );
+                } else {
+                  return Expanded(
+                    child: ScrollablePositionedList.builder(
+                      itemScrollController: _scrollController,
+                      itemCount: hotelbookingscontroller
+                          .bookingsDetailsUpcoming.length,
+                      itemBuilder: (context, index) => HotelBookingCard(
+                        size: size,
+                        itemIndex: index,
+                        hotelBookingsDetails: hotelbookingscontroller
+                            .bookingsDetailsUpcoming[index],
+                      ),
+                    ),
+                  );
+                }
+              })
+            : Obx(() {
+                NewRoomBooking = false;
+                if (hotelbookingscontroller.isLoading.value) {
+                  return const CircularProgressIndicator(); // Show progress bar while loading
+                } else if (hotelbookingscontroller
+                    .bookingsDetailsFinished.isEmpty) {
+                  return SizedBox.shrink(); // Show nothing if the list is empty
+                } else {
+                  return Expanded(
+                    child: ScrollablePositionedList.builder(
+                      itemCount: hotelbookingscontroller
+                          .bookingsDetailsFinished.length,
+                      itemBuilder: (context, index) => HotelFinishedBookingCard(
+                        size: size,
+                        itemIndex: index,
+                        hotelBookingsDetails: hotelbookingscontroller
+                            .bookingsDetailsFinished[index],
+                      ),
+                    ),
+                  );
+                }
+              }),
       ],
     );
   }
 
   Widget FlightBookings(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    flightbookingscontroller.getUserBookingUpcoming();
+    flightbookingscontroller.getUserBookingFinished();
     return Column(
       children: [
         Row(
@@ -227,16 +341,12 @@ class _BookingsViewState extends State<BookingsView>
                   value: 'Upcoming',
                   groupValue: _flightSorteBy,
                   onChanged: (value) {
-                    setState(
-                      () {
-                        _flightSorteBy = value.toString();
-                      },
-                    );
+                    setState(() {
+                      _flightSorteBy = value.toString();
+                    });
                   },
                 ),
-                const Text(
-                  'Upcoming',
-                ),
+                const Text('Upcoming'),
               ],
             ),
             Row(
@@ -246,49 +356,60 @@ class _BookingsViewState extends State<BookingsView>
                   value: 'Finished',
                   groupValue: _flightSorteBy,
                   onChanged: (value) {
-                    setState(
-                      () {
-                        _flightSorteBy = value.toString();
-                      },
-                    );
+                    setState(() {
+                      _flightSorteBy = value.toString();
+                    });
                   },
                 ),
-                const Text(
-                  'Finished',
-                ),
+                const Text('Finished'),
               ],
             ),
           ],
         ),
-        const SizedBox(
-          height: 10,
-        ),
+        const SizedBox(height: 10),
         _flightSorteBy == 'Upcoming'
-            ? Expanded(
-                child: ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: flightbookingsDetails.length,
-                  itemBuilder: (context, index) => FlightBookingCard(
-                    itemIndex: index,
-                    flightBookingModel: flightbookingsDetails[index],
-                  ),
-                ),
-              )
-            : Expanded(
-                child: ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: flightbookingsDetails.length,
-                  itemBuilder: (context, index) => FlightFinishedBookingCard(
-                    itemIndex: index,
-                    flightBookingModel: flightbookingsDetails[index],
-                  ),
-                ),
-              )
+            ? (user?.uid.toString() == 'ANVXIztrfYatlwxF9P8LcgXPihQ2' ||
+                    flightbookingscontroller.NewbookingFlight.value == true)
+                ? Expanded(
+                    child: ScrollablePositionedList.builder(
+                      itemCount: 2,
+                      itemBuilder: (context, index) => FlightBookingCard(
+                        flightBookingModel: flightbookingsDetails[index],
+                      ),
+                    ),
+                  )
+                : Expanded(
+                    child: ScrollablePositionedList.builder(
+                      itemCount: flightbookingscontroller
+                          .bookingsDetailsUpcoming.length,
+                      itemBuilder: (context, index) => FlightBookingCard(
+                        flightBookingModel: flightbookingsDetails[index],
+                      ),
+                    ),
+                  )
+            : (user?.uid.toString() == 'ANVXIztrfYatlwxF9P8LcgXPihQ2')
+                ? Expanded(
+                    child: ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: flightbookingscontroller
+                          .bookingsDetailsFinished.length,
+                      itemBuilder: (context, index) =>
+                          FlightFinishedBookingCard(
+                        itemIndex: index,
+                        flightBookingModel: flightbookingsDetails[index],
+                      ),
+                    ),
+                  )
+                : SizedBox(),
       ],
     );
   }
 
   Widget CarBookings(BuildContext context) {
+    CarBookingsController carBookingsController =
+        Get.put(CarBookingsController());
+    carBookingsController.getUserBookingUpcoming();
+    carBookingsController.getUserBookingFinished();
     Size size = MediaQuery.of(context).size;
     return Column(
       children: [
@@ -298,7 +419,7 @@ class _BookingsViewState extends State<BookingsView>
             Row(
               children: [
                 Radio(
-                  activeColor: AppColors.lightGray,
+                  activeColor: AppColors.lightOrange,
                   autofocus: true,
                   value: 'Upcoming',
                   groupValue: _hotelSorteBy,
@@ -318,7 +439,7 @@ class _BookingsViewState extends State<BookingsView>
             Row(
               children: [
                 Radio(
-                  activeColor: AppColors.lightGray,
+                  activeColor: AppColors.lightOrange,
                   value: 'Finished',
                   groupValue: _hotelSorteBy,
                   onChanged: (value) {
@@ -337,31 +458,104 @@ class _BookingsViewState extends State<BookingsView>
           ],
         ),
         const SizedBox(
-          height: 10,
+          height: 20,
         ),
         _hotelSorteBy == 'Upcoming'
-            ? Expanded(
-                child: ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: carBookingsDetails.length,
-                  itemBuilder: (context, index) => CarBookingCard(
-                    size: size,
-                    // itemIndex: index,
-                    carBookingsDetails: carBookingsDetails[index],
-                  ),
-                ),
-              )
-            : Expanded(
-                child: ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: carBookingsDetails.length,
-                  itemBuilder: (context, index) => CarFinishedBookingCard(
-                    size: size,
-                    itemIndex: index,
-                    carBookingsDetails: carBookingsDetails[index],
-                  ),
-                ),
-              )
+            ? Obx(() {
+                if (carBookingsController.isLoading.value) {
+                  return const CircularProgressIndicator(); // Show progress bar while loading
+                } else if (carBookingsController
+                    .bookingsDetailsUpcoming.isEmpty) {
+                  return SizedBox.shrink(); // Show nothing if the list is empty
+                } else if (NewCarBooking == true &&
+                    carBookingsController.bookingsDetailsUpcoming.isNotEmpty) {
+                  WidgetsBinding.instance.addPostFrameCallback((_) {
+                    _scrollToIndex(
+                        carBookingsController.bookingsDetailsUpcoming.length);
+                  });
+
+                  return Expanded(
+                    child: ScrollablePositionedList.builder(
+                      itemScrollController: _scrollController,
+                      itemCount:
+                          carBookingsController.bookingsDetailsUpcoming.length,
+                      itemBuilder: (context, index) => CarBookingCard(
+                        size: size,
+                        carBookingsDetails: carBookingsController
+                            .bookingsDetailsUpcoming.value[index],
+                      ),
+                    ),
+                  );
+                } else {
+                  return Expanded(
+                    child: ScrollablePositionedList.builder(
+                      itemScrollController: _scrollController,
+                      itemCount:
+                          carBookingsController.bookingsDetailsUpcoming.length,
+                      itemBuilder: (context, index) => CarBookingCard(
+                        size: size,
+                        carBookingsDetails: carBookingsController
+                            .bookingsDetailsUpcoming.value[index],
+                      ),
+                    ),
+                  );
+                }
+              })
+            : Obx(() {
+                NewCarBooking = false;
+                if (carBookingsController.isLoading.value) {
+                  return const CircularProgressIndicator(); // Show progress bar while loading
+                } else if (carBookingsController
+                    .bookingsDetailsFinished.isEmpty) {
+                  return SizedBox.shrink(); // Show nothing if the list is empty
+                } else {
+                  return Expanded(
+                    child: ScrollablePositionedList.builder(
+                      itemCount:
+                          carBookingsController.bookingsDetailsFinished.length,
+                      itemBuilder: (context, index) => CarFinishedBookingCard(
+                        size: size,
+                        itemIndex: index,
+                        carBookingsDetails: carBookingsController
+                            .bookingsDetailsFinished[index],
+                      ),
+                    ),
+                  );
+                }
+              }),
+        // Expanded(
+        //     child: ListView.builder(
+        //       shrinkWrap: true,
+        //       itemCount: HotelbookingsDetails.length,
+        //       itemBuilder: (context, index) => CarFinishedBookingCard(
+        //         size: size,
+        //         itemIndex: index,
+        //         carBookingsDetails: carBookingsDetails[index],
+        //       ),
+        //     ),
+        //   )
+        // ? Expanded(
+        //     child: ListView.builder(
+        //       shrinkWrap: true,
+        //       itemCount: carBookingsDetails.length,
+        //       itemBuilder: (context, index) => CarBookingCard(
+        //         size: size,
+        //         // itemIndex: index,
+        //         carBookingsDetails: carBookingsDetails[index],
+        //       ),
+        //     ),
+        //   )
+        // : Expanded(
+        //     child: ListView.builder(
+        //       shrinkWrap: true,
+        //       itemCount: carBookingsDetails.length,
+        //       itemBuilder: (context, index) => CarFinishedBookingCard(
+        //         size: size,
+        //         itemIndex: index,
+        //         carBookingsDetails: carBookingsDetails[index],
+        //       ),
+        //     ),
+        //   )
       ],
     );
   }

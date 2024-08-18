@@ -123,7 +123,7 @@ class _BookingSummaryViewState extends State<BookingSummaryView> {
                         color: AppColors.purple,
                       ),
                       Text(
-                        'Booking Summery',
+                        'Add Room',
                         style: TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.w700,
@@ -174,19 +174,21 @@ class _BookingSummaryViewState extends State<BookingSummaryView> {
                             });
                           } else if (activeStepIndex == 1) {
                             if (await Guest_Controller.validateGuest()) {
-                              // (Guest_Controller.EmailContactDetails != '' &&
-                              //     Guest_Controller.MobileNumberContactDetails !=
-                              //         '' &&
-                              //     Guest_Controller.FirstNameContactDetails !=
-                              //         '' &&
-                              //     Guest_Controller.LastNameContactDetails != '') {
-                              setState(() {
-                                activeStepIndex += 1;
-                              });
+                              if (Guest_Controller.EmailContactDetails != '' &&
+                                  Guest_Controller.MobileNumberContactDetails !=
+                                      '' &&
+                                  Guest_Controller.FirstNameContactDetails !=
+                                      '' &&
+                                  Guest_Controller.LastNameContactDetails !=
+                                      '') {
+                                setState(() {
+                                  activeStepIndex += 1;
+                                });
+                              }
                             }
                           } else {
                             Fluttertoast.showToast(
-                                msg: "Please add details for Travellers",
+                                msg: "Please add details for booking",
                                 toastLength: Toast.LENGTH_SHORT,
                                 gravity: ToastGravity.BOTTOM,
                                 timeInSecForIosWeb: 1,
@@ -197,6 +199,7 @@ class _BookingSummaryViewState extends State<BookingSummaryView> {
                         } else if (isLastStep) {
                           if (await HotelSummary_Controller.validateCreditCard(
                               widget.Room.Price)) {
+                            HotelSummary_Controller.isLoading.value = true;
                             showDialog(
                                 context: context,
                                 builder: (BuildContext context) {
@@ -419,14 +422,11 @@ Widget step1(BuildContext context, String HotelId, RoomDetailsClass room) {
                           SizedBox(
                             width: 5,
                           ),
-                          Container(
-                            width: size.width / 2 + 115,
-                            child: Text(
-                              hotelscontroller
-                                  .Hotels[Hotel_Controller.selectedIndex.value]
-                                  .location,
-                              style: TextStyle(color: AppColors.grayText),
-                            ),
+                          Text(
+                            hotelscontroller
+                                .Hotels[Hotel_Controller.selectedIndex.value]
+                                .location,
+                            style: TextStyle(color: AppColors.grayText),
                           )
                         ],
                       ),
@@ -756,6 +756,7 @@ Widget step2(
       // const SizedBox(
       //   height: 20,
       // ),
+
       const Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
@@ -1056,19 +1057,31 @@ Widget step3(BuildContext contex, RoomDetailsClass room) {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
+            Container(
+              width: 20,
+              height: 20,
+              child: Obx(
+                () => (HotelSummary_Controller.isLoading.value == true)
+                    ? CircularProgressIndicator()
+                    : SizedBox(),
+              ),
+            ),
             const Row(
               children: [
+                SizedBox(
+                  width: 10,
+                ),
                 Text(
                   'Name of card holder',
                   style: TextStyle(
-                    fontSize: TextSize.header2,
-                    color: AppColors.grayText,
-                  ),
+                      fontSize: 13,
+                      color: AppColors.grayText,
+                      fontWeight: FontWeight.w500),
                 ),
               ],
             ),
             SizedBox(
-              height: 40,
+              height: 45,
               child: TextField(
                 controller: HotelSummary_Controller.cardHolderController,
                 onChanged: (value) {},
@@ -1094,19 +1107,25 @@ Widget step3(BuildContext contex, RoomDetailsClass room) {
                     style: TextStyle(fontSize: 12, color: Colors.red),
                   )),
             ]),
+            const SizedBox(
+              height: 20,
+            ),
             const Row(
               children: [
+                SizedBox(
+                  width: 10,
+                ),
                 Text(
                   'Card Number',
                   style: TextStyle(
-                    fontSize: TextSize.header2,
-                    color: AppColors.grayText,
-                  ),
+                      fontSize: 13,
+                      color: AppColors.grayText,
+                      fontWeight: FontWeight.w500),
                 ),
               ],
             ),
             SizedBox(
-              height: 40,
+              height: 45,
               child: TextFormField(
                 keyboardType: TextInputType.number,
                 controller: HotelSummary_Controller.cardNumberController,
@@ -1133,24 +1152,29 @@ Widget step3(BuildContext contex, RoomDetailsClass room) {
                     style: TextStyle(fontSize: 12, color: Colors.red),
                   )),
             ]),
+            const SizedBox(
+              height: 20,
+            ),
             Row(
               children: [
                 Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const Row(
                       children: [
+                        SizedBox(
+                          width: 10,
+                        ),
                         Text(
-                          'Expiry (MM)',
+                          'Expiry Date (MM)',
                           style: TextStyle(
-                            fontSize: TextSize.header2,
-                            color: AppColors.grayText,
-                          ),
+                              fontSize: 13,
+                              color: AppColors.grayText,
+                              fontWeight: FontWeight.w500),
                         ),
                       ],
                     ),
                     SizedBox(
-                      height: 40,
+                      height: 45,
                       width: 100,
                       child: TextFormField(
                         inputFormatters: [
@@ -1181,21 +1205,23 @@ Widget step3(BuildContext contex, RoomDetailsClass room) {
                   width: 10,
                 ),
                 Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const Row(
                       children: [
+                        SizedBox(
+                          width: 10,
+                        ),
                         Text(
-                          'Expiry (yy)',
+                          'Expiry Date (yy)',
                           style: TextStyle(
-                            fontSize: TextSize.header2,
-                            color: AppColors.grayText,
-                          ),
+                              fontSize: 13,
+                              color: AppColors.grayText,
+                              fontWeight: FontWeight.w500),
                         ),
                       ],
                     ),
                     SizedBox(
-                      height: 40,
+                      height: 45,
                       width: 100,
                       child: TextFormField(
                         controller:
@@ -1226,21 +1252,23 @@ Widget step3(BuildContext contex, RoomDetailsClass room) {
                   width: 10,
                 ),
                 Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const Row(
                       children: [
+                        SizedBox(
+                          width: 10,
+                        ),
                         Text(
                           'CVV',
                           style: TextStyle(
-                            fontSize: TextSize.header2,
-                            color: AppColors.grayText,
-                          ),
+                              fontSize: 13,
+                              color: AppColors.grayText,
+                              fontWeight: FontWeight.w500),
                         ),
                       ],
                     ),
                     SizedBox(
-                      height: 40,
+                      height: 45,
                       width: 100,
                       child: TextField(
                         inputFormatters: [
@@ -1264,7 +1292,9 @@ Widget step3(BuildContext contex, RoomDetailsClass room) {
                     ),
                   ],
                 ),
-
+                // SizedBox(
+                //   height: 50,
+                // ),
                 // GetBuilder<HotelSummaryController>(
                 //   init: HotelSummary_Controller,
                 //   builder: (Step3Controller) => Container(
@@ -1307,19 +1337,33 @@ Widget step3(BuildContext contex, RoomDetailsClass room) {
                 // )
               ],
             ),
-            SizedBox(
-              height: 6,
-            ),
-            Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-              Obx(() => Text(
-                    HotelSummary_Controller.errorTextYYexpiryDate.value +
-                        ' - ' +
-                        HotelSummary_Controller.errorTextcvv.value +
-                        ' - ' +
-                        HotelSummary_Controller.errorTextMMexpiryDate.value,
-                    style: TextStyle(fontSize: 12, color: Colors.red),
-                  )),
-            ]),
+            // SizedBox(
+            //   height: 6,
+            // ),
+            (HotelSummary_Controller.errorTextYYexpiryDate.value != '')
+                ? Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+                    Obx(() => Text(
+                          HotelSummary_Controller.errorTextYYexpiryDate.value,
+                          style: TextStyle(fontSize: 12, color: Colors.red),
+                        )),
+                  ])
+                : SizedBox(),
+            (HotelSummary_Controller.errorTextYYexpiryDate.value != '')
+                ? Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+                    Obx(() => Text(
+                          HotelSummary_Controller.errorTextMMexpiryDate.value,
+                          style: TextStyle(fontSize: 12, color: Colors.red),
+                        )),
+                  ])
+                : SizedBox(),
+            (HotelSummary_Controller.errorTextcvv.value != '')
+                ? Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+                    Obx(() => Text(
+                          HotelSummary_Controller.errorTextcvv.value,
+                          style: TextStyle(fontSize: 12, color: Colors.red),
+                        )),
+                  ])
+                : SizedBox(),
           ],
         ),
       )),
@@ -1382,6 +1426,7 @@ Future<void> ConfirmBooking(RoomDetailsClass room, String HotelId,
   DatabaseReference ref = FirebaseDatabase.instance.reference();
   ref.child('hotel_booking/$id_hotel_booking:').set({
     'Email': Guest_Controller.EmailContactDetails.toString(),
+    'HotelId': room.HotelId,
     'FirstName': Guest_Controller.FirstNameContactDetails.toString(),
     'LastName': Guest_Controller.LastNameContactDetails.toString(),
     'MobileNumber': Guest_Controller.MobileNumberContactDetails.toString(),
@@ -1405,9 +1450,7 @@ Future<void> ConfirmBooking(RoomDetailsClass room, String HotelId,
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => Home(
-          initialIndex: 2,
-        ),
+        builder: (context) => Home(initialIndex: 2, tabNumber: 0),
       ),
     );
     HotelbookingsController.NewbookingRoom.value = true;

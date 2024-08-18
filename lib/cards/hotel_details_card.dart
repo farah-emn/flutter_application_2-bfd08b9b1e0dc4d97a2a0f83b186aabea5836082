@@ -1,13 +1,13 @@
 // ignore_for_file: prefer_const_constructors_in_immutables, prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
 import 'package:traveling/classes/hotel1.dart';
 import 'package:traveling/controllers/currency_controller.dart';
 import 'package:traveling/controllers/hotel_rooms_controller.dart';
 import 'package:traveling/ui/shared/colors.dart';
 import 'package:traveling/ui/shared/text_size.dart';
-
 import '../ui/views/traveller_side_views/hotel_details_view/hotel_details_view.dart';
 
 class HotelDetailsCard extends StatefulWidget {
@@ -29,6 +29,8 @@ class HotelDetailsCard extends StatefulWidget {
 class _HotelDetailsCardState extends State<HotelDetailsCard> {
   final HotelRoomsController controller = Get.put(HotelRoomsController());
   CurrencyController currencyController = Get.put(CurrencyController());
+  final HotelRoomsController hotelRoomsController =
+      Get.put(HotelRoomsController());
   @override
   void initState() {
     super.initState();
@@ -36,22 +38,14 @@ class _HotelDetailsCardState extends State<HotelDetailsCard> {
 
   @override
   Widget build(BuildContext context) {
+    hotelRoomsController.getAllRoomRatings(widget.hotelDetails.Id ?? '');
+    print(hotelRoomsController.HotelaverageRating.value.toDouble());
     return InkWell(
       onTap: () {
-        Get.to(
-          FutureBuilder(
-            future: controller.SpecificHotelRooms(widget.hotelDetails.Id),
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return const Center(child: CircularProgressIndicator());
-              } else {
-                return HotelDetailsView(
-                  Hotel: widget.hotelDetails,
-                );
-              }
-            },
-          ),
-        );
+        controller.SpecificHotelRooms(widget.hotelDetails.Id);
+        Get.to(HotelDetailsView(
+          Hotel: widget.hotelDetails,
+        ));
       },
       child: Container(
         margin: const EdgeInsets.only(bottom: 20, right: 15),
@@ -129,32 +123,31 @@ class _HotelDetailsCardState extends State<HotelDetailsCard> {
                           ),
                         ],
                       ),
-                      const Row(
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          Icon(
-                            Icons.star_rounded,
-                            color: AppColors.gold,
-                            size: 20,
-                          ),
-                          Icon(
-                            Icons.star_rounded,
-                            color: AppColors.gold,
-                            size: 20,
-                          ),
-                          Icon(
-                            Icons.star_rounded,
-                            color: AppColors.gold,
-                            size: 20,
-                          ),
-                          Icon(
-                            Icons.star_half_rounded,
-                            color: AppColors.gold,
-                            size: 20,
-                          ),
-                          Icon(
-                            Icons.star_border_rounded,
-                            color: AppColors.gold,
-                            size: 20,
+                          RatingBarIndicator(
+                            itemSize: 25,
+                            rating: ((hotelRoomsController
+                                                .HotelaverageRating.value
+                                                .toDouble() >
+                                            0 ||
+                                        hotelRoomsController
+                                                .HotelaverageRating.value
+                                                .toDouble() ==
+                                            0.0) &&
+                                    hotelRoomsController
+                                            .HotelaverageRating.value
+                                            .toDouble() <
+                                        1)
+                                ? 1
+                                : hotelRoomsController.HotelaverageRating.value
+                                    .toDouble(),
+                            itemBuilder: (_, __) => const Icon(
+                              Icons.star_rounded,
+                              color: AppColors.gold,
+                              size: 20,
+                            ),
                           ),
                         ],
                       ),

@@ -1,4 +1,4 @@
-// ignore_for_file: non_constant_identifier_names, prefer_const_constructors, no_leading_underscores_for_local_identifiers, unused_local_variable, sized_box_for_whitespace, avoid_print, avoid_unnecessary_containers, unnecessary_brace_in_string_interps, unnecessary_string_escapes, use_build_context_synchronously, deprecated_member_use, unused_label, empty_statements, must_be_immutable, overridden_fields, use_key_in_widget_constructors, annotate_overrides, unused_field
+// ignore_for_file: non_constant_identifier_names, prefer_const_constructors, no_leading_underscores_for_local_identifiers, unused_local_variable, sized_box_for_whitespace, avoid_print, avoid_unnecessary_containers, unnecessary_brace_in_string_interps, unnecessary_string_escapes, use_build_context_synchronously, deprecated_member_use, unused_label, empty_statements, must_be_immutable, overridden_fields, use_key_in_widget_constructors, annotate_overrides, unused_field, prefer_is_empty, curly_braces_in_flow_control_structures
 
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
@@ -21,6 +21,7 @@ import 'package:traveling/ui/views/traveller_side_views/flight_travellers_view_d
 import 'package:traveling/ui/views/traveller_side_views/flight_travellers_view_details/traveller_details_view3.dart';
 
 import '../../../controllers/flight_Step3payment_controller.dart';
+import '../../../controllers/flight_booking_controller.dart';
 
 class BookingFlightSummaryView extends StatefulWidget {
   final FlightDetailsClass flightdata;
@@ -41,7 +42,8 @@ class _BookingFlightSummaryViewState extends State<BookingFlightSummaryView> {
   final FlightStep3paymentController controller =
       Get.put(FlightStep3paymentController());
   final dataController = Get.put(TravellerDetailsView1Controller());
-
+  FlightStep3paymentController flightStep3paymentController =
+      Get.put(FlightStep3paymentController());
   ValueNotifier<bool> isFormValid = ValueNotifier<bool>(false);
 
   @override
@@ -212,146 +214,157 @@ class _BookingFlightSummaryViewState extends State<BookingFlightSummaryView> {
                     onStepContinue: () async {
                       final isLastStep =
                           activeStepIndex == StepsList().length - 1;
-                      if (isLastStep) {
-                        print(isLastStep);
-                        //   print('ggggg');
-                        //   if (detailsView1Controller.AdultList.isNotEmpty) {
-                        //     if (widget.type == 'oneway') {
-                        //       _activeStepIndex += 1;
-
-                        //       // if (FormController_OneWay.validateForm()) {
-                        //       //   setState(() {
-                        //       //     _activeStepIndex += 1;
-                        //       //     FormController_OneWay.resetForm();
-                        //       //     FormController_OneWay.formKey.currentState
-                        //       //         ?.reset();
-                        //       //   });
-                        //       // } else {
-                        //       //   print('Form is not valid');
-                        //       // }
-                        //     }
-                        //     if (widget.type == 'RoundTrip') {
-                        //       _activeStepIndex += 1;
-
-                        //       // if (FormController_RoundTrip.validateForm()) {
-                        //       // setState(() {
-                        //       //   _activeStepIndex += 1;
-                        //       //   FormController_RoundTrip.resetForm();
-                        //       //   FormController_RoundTrip.formKey.currentState
-                        //       //       ?.reset();
-                        //       // });
-                        //     } else {
-                        //       //   print('Form is not valid');
-                        //       // }
-                        //     }
-                        //   } else {
-                        //     Fluttertoast.showToast(
-                        //         msg: "Please add details for Travellers",
-                        //         toastLength: Toast.LENGTH_SHORT,
-                        //         gravity: ToastGravity.BOTTOM,
-                        //         timeInSecForIosWeb: 1,
-                        //         backgroundColor: Colors.grey,
-                        //         textColor: Colors.white,
-                        //         fontSize: 16.0);
-                        //   }
-                        // }
-                        // } else if (_activeStepIndex == StepsList().length - 1) {
-                        // if (await controller.validateCreditCard()) {
-                        showDialog(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return Dialog(
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(20.0),
-                                ),
-                                backgroundColor: AppColors.backgroundgrayColor,
-                                child: Container(
-                                  padding: const EdgeInsets.all(10),
-                                  width: size.width,
-                                  height: 450,
-                                  child: Column(
-                                    children: [
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.end,
-                                        children: [
-                                          InkWell(
-                                            onTap: () {
-                                              Get.back();
-                                            },
-                                            child: const Icon(
-                                              Icons.cancel,
-                                              color: AppColors.Blue,
-                                              size: 30,
+                      if (activeStepIndex < StepsList().length - 1) {
+                        if (activeStepIndex == 0) {
+                          setState(() {
+                            activeStepIndex += 1;
+                          });
+                        } else if (activeStepIndex == 1) {
+                          if (TravellerDetailsView1_Controller
+                                  .AdultList.length !=
+                              0) {
+                            if (TravellerDetailsView1_Controller
+                                        .EmailContactDetails !=
+                                    '' &&
+                                TravellerDetailsView1_Controller
+                                        .MobileNumberContactDetails !=
+                                    '' &&
+                                TravellerDetailsView1_Controller
+                                        .FirstNameContactDetails !=
+                                    '' &&
+                                TravellerDetailsView1_Controller
+                                        .LastNameContactDetails !=
+                                    '')
+                              setState(() {
+                                activeStepIndex += 1;
+                              });
+                          } else {
+                            Fluttertoast.showToast(
+                                msg: "Please add details for adult traveller",
+                                toastLength: Toast.LENGTH_SHORT,
+                                gravity: ToastGravity.BOTTOM,
+                                timeInSecForIosWeb: 1,
+                                backgroundColor: Colors.grey,
+                                textColor: Colors.white,
+                                fontSize: 16.0);
+                          }
+                        } else {
+                          Fluttertoast.showToast(
+                              msg: "Please add details for contact details",
+                              toastLength: Toast.LENGTH_SHORT,
+                              gravity: ToastGravity.BOTTOM,
+                              timeInSecForIosWeb: 1,
+                              backgroundColor: Colors.grey,
+                              textColor: Colors.white,
+                              fontSize: 16.0);
+                        }
+                      } else if (isLastStep) {
+                        print('fffffffffff');
+                        if (await controller.validateCreditCard(
+                            widget.flightdata.TicketAdultEconomyPrice)) {
+                          showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return Dialog(
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(20.0),
+                                  ),
+                                  backgroundColor: Colors.white,
+                                  child: Container(
+                                    padding: const EdgeInsets.all(10),
+                                    width: size.width,
+                                    height: 450,
+                                    child: Column(
+                                      children: [
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.end,
+                                          children: [
+                                            InkWell(
+                                              onTap: () {
+                                                Get.back();
+                                              },
+                                              child: const Icon(
+                                                Icons.cancel,
+                                                color: AppColors.mainColorBlue,
+                                                size: 30,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        const SizedBox(
+                                          height: 20,
+                                        ),
+                                        const Icon(
+                                          Icons.check_circle_outlined,
+                                          color: AppColors.mainColorBlue,
+                                          size: 100,
+                                        ),
+                                        const SizedBox(
+                                          height: 20,
+                                        ),
+                                        const Text(
+                                          'SUCCESS!',
+                                          style: TextStyle(
+                                              color: AppColors.darkGray,
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 25),
+                                        ),
+                                        const SizedBox(
+                                          height: 20,
+                                        ),
+                                        const Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Text(
+                                              'Your car has been\n\ booked successfully.',
+                                              style: TextStyle(
+                                                  fontSize: TextSize.header2,
+                                                  color: Color.fromARGB(
+                                                      255, 112, 110, 110)),
+                                            ),
+                                          ],
+                                        ),
+                                        const SizedBox(
+                                          height: 50,
+                                        ),
+                                        InkWell(
+                                          onTap: () {
+                                            ConfirmBooking(widget.flightdata,
+                                                widget.ReturnFlightData);
+                                          },
+                                          child: Padding(
+                                            padding: const EdgeInsets.only(
+                                              left: 15,
+                                              right: 15,
+                                              bottom: 15,
+                                            ),
+                                            child: CustomButton(
+                                              backgroundColor:
+                                                  AppColors.mainColorBlue,
+                                              text: 'Confirm',
+                                              textColor:
+                                                  AppColors.backgroundgrayColor,
+                                              widthPercent: size.width,
                                             ),
                                           ),
-                                        ],
-                                      ),
-                                      SizedBox(
-                                        height: 20,
-                                      ),
-                                      const Icon(
-                                        Icons.check_circle_outlined,
-                                        color: AppColors.Blue,
-                                        size: 100,
-                                      ),
-                                      SizedBox(
-                                        height: 20,
-                                      ),
-                                      Text(
-                                        'SUCCESS!',
-                                        style: TextStyle(
-                                            color: AppColors.darkBlue,
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 25),
-                                      ),
-                                      SizedBox(
-                                        height: 20,
-                                      ),
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: const [
-                                          Text(
-                                            'Your flight has been\n\ booked successfully.',
-                                            style: TextStyle(
-                                                fontSize: TextSize.header2,
-                                                color: Color.fromARGB(
-                                                    255, 112, 110, 110)),
-                                          ),
-                                        ],
-                                      ),
-                                      const SizedBox(
-                                        height: 50,
-                                      ),
-                                      InkWell(
-                                        onTap: () {
-                                          ConfirmBooking();
-                                        },
-                                        child: Padding(
-                                          padding: const EdgeInsets.only(
-                                            left: 15,
-                                            right: 15,
-                                            bottom: 15,
-                                          ),
-                                          child: CustomButton(
-                                            backgroundColor: AppColors.Blue,
-                                            text: 'Confirm',
-                                            textColor:
-                                                AppColors.backgroundgrayColor,
-                                            widthPercent: size.width,
-                                          ),
                                         ),
-                                      ),
-                                    ],
+                                      ],
+                                    ),
                                   ),
-                                ),
-                              );
-                            });
-                      } else {
-                        setState(() {
-                          activeStepIndex += 1;
-                        });
+                                );
+                              });
+                        } else {
+                          Fluttertoast.showToast(
+                              msg: "Please add valid details for credit card",
+                              toastLength: Toast.LENGTH_SHORT,
+                              gravity: ToastGravity.BOTTOM,
+                              timeInSecForIosWeb: 1,
+                              backgroundColor: Colors.grey,
+                              textColor: Colors.white,
+                              fontSize: 16.0);
+                        }
                       }
                     },
                     // Fluttertoast.showToast(
@@ -371,92 +384,102 @@ class _BookingFlightSummaryViewState extends State<BookingFlightSummaryView> {
                             });
                     }),
               ),
-            )
+            ),
           ],
         ));
   }
 
-  Future<void> ConfirmBooking() async {
-    // DatabaseReference ref = FirebaseDatabase.instance.reference();
-    // List<String?> passengerIds = [];
-    // final dataController = Get.find<TravellerDetailsView1Controller>();
-    // // final FlightInfoController controller_flight =
-    // //     Get.find<FlightInfoController>();
-    // final SearchViewOneWayController SearchViewOneWay_controller =
-    //     Get.find<SearchViewOneWayController>();
+  Future<void> ConfirmBooking(FlightDetailsClass flightdata,
+      FlightDetailsClass? returnFlightData) async {
+    DatabaseReference ref = FirebaseDatabase.instance.reference();
+    List<String?> passengerIds = [];
+    final dataController = Get.find<TravellerDetailsView1Controller>();
+    double totalPriceTicketFlight = 0.0;
+    totalPriceTicketFlight = (widget.flightdata!.TicketAdultFirstClassPrice +
+            detailsView1Controller.AdultList.length) +
+        (widget.flightdata!.TicketAdultFirstClassPrice +
+            detailsView1Controller.ChildList.length);
+    // final FlightInfoController controller_flight =
+    //     Get.find<FlightInfoController>();
+    final SearchViewOneWayController SearchViewOneWay_controller =
+        Get.find<SearchViewOneWayController>();
     // final Step3controller = Get.find<Step3Controller>();
-    // // double totalPriceTicketFlight =
-    // //     controller_flight.flightInfo.value.Flight_price;
+    // double totalPriceTicketFlight =
+    //     controller_flight.flightInfo.value.Flight_price;
 
-    // ref.child('flights').onChildAdded.listen((event) {
-    //   // late String DeparureDate =
-    //   //     controller_flight.flightInfo.value.DeparureDate;
-    //   // late String ReturnDate = controller_flight.flightInfo.value.ArrivalDate;
-    //   // late String DeparureCity =
-    //   //     controller_flight.flightInfo.value.DeparureCity;
-    //   // late String ArrivalCity = controller_flight.flightInfo.value.ArrivalCity;
+    ref.child('Flight').onChildAdded.listen((event) {
+      print('rrrrrrrrrrrrrrrr');
+      bool seat_passengers_Adult_Condition =
+          (event.snapshot.child('NumberOfEconomySeats').value as int) >=
+              dataController.AdultList.length;
+      print(seat_passengers_Adult_Condition);
 
-    //   bool seat_passengers_Adult_Condition = (event.snapshot
-    //           .child('Available_seat_passengers_Adult')
-    //           .value as int) >=
-    //       dataController.AdultList.length;
-    //   print(seat_passengers_Adult_Condition);
+      bool seat_passengers_Child_Condition =
+          (event.snapshot.child('NumberOfEconomySeats').value as int) >=
+              dataController.ChildList.length;
 
-    //   bool seat_passengers_Child_Condition = (event.snapshot
-    //           .child('Available_seat_passengers_children')
-    //           .value as int) >=
-    //       dataController.ChildList.length;
+      for (int index = 0; index < dataController.AdultList.length; index++) {
+        DatabaseReference ref1 = FirebaseDatabase.instance.reference();
 
-    //   for (int index = 0; index < dataController.AdultList.length; index++) {
-    //     print(dataController.AdultList[index].givenName);
-    //     DatabaseReference ref1 = FirebaseDatabase.instance.reference();
+        ref1.child('passenger').push().set({
+          "Firstname": dataController.AdultList[index]['givenName'],
+          "Lastname": dataController.AdultList[index]['surname'],
+          "Nationality": dataController.AdultList[index]['nationality'],
+          "birthDate": dataController.AdultList[index]['birthDate'],
+          "PassportNumber": dataController.AdultList[index]['passportNumber'],
+          "Gender": dataController.AdultList[index]['gender'],
+          "issuingCountryPassport": dataController.AdultList[index]
+              ['issuingCountry'],
+          "ExpirationDatePassport": dataController.AdultList[index]
+              ['expiration'],
+          "FlightId": event.snapshot.key
+        });
+        passengerIds.add(
+            'p${index + 1}-${dataController.AdultList[index]['givenName']}');
+        int bookingid = 1;
+        print('finnnnnnnnnnn');
+        var bookingRef = ref.child('booking').push();
+        bookingRef.set({
+          'bookingdate':
+              '${DateTime.now().year / DateTime.now().month / DateTime.now().day}',
+          'passengerIds': passengerIds,
+          'flightId': event.snapshot.key,
+          'TotalTicketPrice': totalPriceTicketFlight,
+        });
 
-    //     ref1.child('passenger').push().set({
-    //       "Firstname": dataController.AdultList[index].givenName,
-    //       "Lastname": dataController.AdultList[index].surname,
-    //       "Nationality": dataController.AdultList[index].nationality,
-    //       "birthDate": dataController.AdultList[index].birthDate,
-    //       "PassportNumber": dataController.AdultList[index].passportNumber,
-    //       "Gender": dataController.AdultList[index].gender,
-    //       "issuingCountryPassport":
-    //           dataController.AdultList[index].issuingCountry,
-    //       "ExpirationDatePassport": dataController.AdultList[index].expiration,
-    //       "FlightId": event.snapshot.key
-    //     });
-    //     passengerIds
-    //         .add('p${index + 1}-${dataController.AdultList[index].givenName}');
-    //     int bookingid = 1;
+        var bookingId = bookingRef.key;
+        FirebaseDatabase.instance
+            .reference()
+            .child('ContactPassenger')
+            .push()
+            .set({
+          'Email': TravellerDetailsView1_Controller.EmailContactDetails,
+          'MobileNumber':
+              TravellerDetailsView1_Controller.MobileNumberContactDetails,
+          'FirstName': TravellerDetailsView1_Controller.FirstNameContactDetails,
+          'LastName': TravellerDetailsView1_Controller.LastNameContactDetails,
+          'bookingId': bookingId
+        });
+        final SearchViewRoundTripController SearchViewround_Controller =
+            Get.find<SearchViewRoundTripController>();
 
-    //     var bookingRef = ref.child('booking').push();
-    //     bookingRef.set({
-    //       'passengerIds': passengerIds,
-    //       'flightId': event.snapshot.key,
-    //       'TotalTicketPrice': Step3controller.totalPriceTicketFlight
-    //     });
-
-    //     var bookingId = bookingRef.key;
-    //     FirebaseDatabase.instance
-    //         .reference()
-    //         .child('ContactPassenger')
-    //         .push()
-    //         .set({
-    //       'Email': TravellerDetailsView1_Controller.EmailContactDetails,
-    //       'MobileNumber':
-    //           TravellerDetailsView1_Controller.MobileNumberContactDetails,
-    //       'FirstName': TravellerDetailsView1_Controller.FirstNameContactDetails,
-    //       'LastName': TravellerDetailsView1_Controller.LastNameContactDetails,
-    //       'bookingId': bookingId
-    //     });
-    //     final SearchViewRoundTripController SearchViewround_Controller =
-    //         Get.find<SearchViewRoundTripController>();
-
-    //     SearchViewOneWay_Controller.clearData();
-    //     // SearchViewround_Controller.clearData();
-    //     detailsView1Controller.clearData();
-    //     Step3controller.clearData();
-    //   }
-    //   // }
-    // });
+        SearchViewOneWay_Controller.clearData();
+        // SearchViewround_Controller.clearData();
+        detailsView1Controller.clearData();
+      }
+      // }
+    });
+    FlightBookingsController flightBookingsController =
+        Get.put(FlightBookingsController());
     Get.to(Home());
+    // flightBookingsController.NewbookingFlight.value = true;
+
+    // flightBookingsController.NewbookingFlight.value = true;
+    // Navigator.push(
+    //   context,
+    //   MaterialPageRoute(
+    //     builder: (context) => Home(initialIndex: 1, tabNumber: 1),
+    //   ),
+    // );
   }
 }

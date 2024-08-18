@@ -1,7 +1,13 @@
+// ignore_for_file: prefer_const_constructors
+
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
 import 'package:traveling/classes/hotel_bookings_class.dart';
+import 'package:traveling/classes/hotel_bookings_class1.dart';
+import 'package:traveling/controllers/currency_controller.dart';
 import 'package:traveling/ui/shared/colors.dart';
 import 'package:traveling/ui/shared/custom_widgets/white_container.dart';
 import 'package:traveling/ui/shared/text_size.dart';
@@ -16,7 +22,7 @@ class HotelFinishedBookingCard extends StatefulWidget {
   });
 
   final Size size;
-  final HotelBookingsClass hotelBookingsDetails;
+  final HotelBookingsClass1 hotelBookingsDetails;
   final int itemIndex;
 
   @override
@@ -25,10 +31,42 @@ class HotelFinishedBookingCard extends StatefulWidget {
 }
 
 class _HotelFinishedBookingCardState extends State<HotelFinishedBookingCard> {
+  final CurrencyController currencyController = Get.put(CurrencyController());
+
   double? _ratingValue;
+  int? IdRatings_hotel;
+  User? user;
+  final _auth = FirebaseAuth.instance;
+  var uid;
+  var currentUser;
+  var userid;
+  @override
+  void initState() {
+    currentUser = _auth.currentUser;
+    uid = currentUser?.uid;
+    userid = _auth.currentUser;
+
+    final databaseReference = FirebaseDatabase.instance.reference();
+
+    DatabaseReference idRatings_hotel = databaseReference.child('RatingsHotel');
+
+    idRatings_hotel.once().then((DatabaseEvent event) {
+      DataSnapshot snapshot = event.snapshot;
+      print(event.snapshot.children.length);
+      if (mounted) {
+        setState(() {
+          IdRatings_hotel = event.snapshot.children.length + 1;
+        });
+      }
+    });
+
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
+    print('\\\\\\\\\\\\\\\\\\\\\\\\\\\\');
+    print(widget.hotelBookingsDetails.RatingRoom);
     Size size = MediaQuery.of(context).size;
     return InkWell(
       onTap: () {
@@ -50,15 +88,18 @@ class _HotelFinishedBookingCardState extends State<HotelFinishedBookingCard> {
                   height: 200,
                   width: widget.size.width,
                   decoration: BoxDecoration(
-                    borderRadius: const BorderRadius.only(
-                      topLeft: Radius.circular(20),
-                      topRight: Radius.circular(20),
-                    ),
-                    image: DecorationImage(
-                      image: AssetImage(widget.hotelBookingsDetails.image),
-                      fit: BoxFit.fill,
-                    ),
-                  ),
+                      borderRadius: const BorderRadius.only(
+                        topLeft: Radius.circular(20),
+                        topRight: Radius.circular(20),
+                      ),
+                      image: DecorationImage(
+                        image: NetworkImage(widget.hotelBookingsDetails.image !=
+                                    null &&
+                                widget.hotelBookingsDetails.image!.isNotEmpty
+                            ? widget.hotelBookingsDetails.image
+                            : ''),
+                        fit: BoxFit.fill,
+                      )),
                 ),
               ],
             ),
@@ -137,7 +178,7 @@ class _HotelFinishedBookingCardState extends State<HotelFinishedBookingCard> {
                         ],
                       ),
                       const Spacer(),
-                      const Column(
+                      Column(
                         children: [
                           Text(
                             'Per night',
@@ -146,9 +187,9 @@ class _HotelFinishedBookingCardState extends State<HotelFinishedBookingCard> {
                             ),
                           ),
                           Text(
-                            '100\$',
+                            '${widget.hotelBookingsDetails.priceNight}\ ${currencyController.getCurrencySymbol(currencyController.selectedCurrency.value)}',
                             style: TextStyle(
-                                color: AppColors.purple,
+                                color: AppColors.darkBlue,
                                 fontSize: TextSize.header1,
                                 fontWeight: FontWeight.w600),
                           ),
@@ -270,9 +311,9 @@ class _HotelFinishedBookingCardState extends State<HotelFinishedBookingCard> {
                         width: 5,
                       ),
                       Text(
-                        widget.hotelBookingsDetails.totalPrice,
+                        widget.hotelBookingsDetails.totalPrice.toString(),
                         style: const TextStyle(
-                            color: AppColors.purple,
+                            color: AppColors.darkBlue,
                             fontSize: TextSize.header1,
                             fontWeight: FontWeight.w500),
                       ),
@@ -291,7 +332,8 @@ class _HotelFinishedBookingCardState extends State<HotelFinishedBookingCard> {
                       ),
                       Spacer(),
                       RatingBar(
-                          initialRating: 1,
+                          initialRating:
+                              widget.hotelBookingsDetails.RatingRoom ?? 1,
                           direction: Axis.horizontal,
                           allowHalfRating: true,
                           itemCount: 5,
@@ -312,6 +354,10 @@ class _HotelFinishedBookingCardState extends State<HotelFinishedBookingCard> {
                           onRatingUpdate: (value) {
                             setState(() {
                               _ratingValue = value;
+                              saveRating(
+                                  value,
+                                  widget.hotelBookingsDetails
+                                      .RoomId); // Call the method to save the rating
                             });
                           }),
                       const SizedBox(
@@ -329,5 +375,81 @@ class _HotelFinishedBookingCardState extends State<HotelFinishedBookingCard> {
         ),
       ),
     );
+  }
+
+  void saveRating(double rating, String roomId) async {
+    DatabaseReference ref = FirebaseDatabase.instance.reference();
+    final hotelEvent = await ref.child('RatingsHotel').once();
+
+    if (hotelEvent.snapshot.value != null) {
+      if (hotelEvent.snapshot.value is Map) {
+        Map<dynamic, dynamic> RatingRoom =
+            Map<dynamic, dynamic>.from(hotelEvent.snapshot.value as Map);
+
+        bool ratingUpdated = false;
+
+        for (var bookingKey in RatingRoom.keys) {
+          var value = RatingRoom[bookingKey];
+          if (value != null &&
+              value['RoomId'] != null &&
+              value['UserId'] != null &&
+              value['RoomId'] == roomId &&
+              uid.toString() == value['UserId']) {
+            await ref.child('RatingsHotel/$bookingKey').update(
+                {"UserId": uid.toString(), "RoomId": roomId, "Rating": rating});
+            ratingUpdated = true;
+            break;
+          }
+        }
+
+        if (!ratingUpdated) {
+          await ref.child('RatingsHotel/$IdRatings_hotel').set(
+              {"UserId": uid.toString(), "RoomId": roomId, "Rating": rating});
+          setState(() {
+            IdRatings_hotel = (IdRatings_hotel ?? 0) + 1;
+          });
+        }
+      } else if (hotelEvent.snapshot.value is List) {
+        List<dynamic> RatingRoom =
+            List<dynamic>.from(hotelEvent.snapshot.value as List);
+
+        bool ratingUpdated = false;
+
+        for (int i = 0; i < RatingRoom.length; i++) {
+          var value = RatingRoom[i];
+          if (value != null &&
+              value['RoomId'] != null &&
+              value['UserId'] != null &&
+              value['RoomId'] == roomId &&
+              uid.toString() == value['UserId']) {
+            await ref.child('RatingsHotel/$i').update(
+                {"UserId": uid.toString(), "RoomId": roomId, "Rating": rating});
+            ratingUpdated = true;
+            break;
+          }
+        }
+
+        if (!ratingUpdated) {
+          await ref.child('RatingsHotel/$IdRatings_hotel').set(
+              {"UserId": uid.toString(), "RoomId": roomId, "Rating": rating});
+          setState(() {
+            IdRatings_hotel = (IdRatings_hotel ?? 0) + 1;
+          });
+        }
+      }
+    } else {
+      await ref
+          .child('RatingsHotel/$IdRatings_hotel')
+          .set({"UserId": uid.toString(), "RoomId": roomId, "Rating": rating});
+      setState(() {
+        IdRatings_hotel = (IdRatings_hotel ?? 0) + 1;
+      });
+    }
+  }
+
+  void rateTwoCards(
+      double rating1, String roomId1, double rating2, String roomId2) async {
+    saveRating(rating1, roomId1);
+    saveRating(rating2, roomId2);
   }
 }

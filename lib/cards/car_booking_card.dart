@@ -8,6 +8,7 @@ import 'package:traveling/ui/shared/text_size.dart';
 import 'package:traveling/ui/views/car_side_views/car_details_view.dart';
 import 'package:traveling/ui/views/traveller_side_views/room_view.dart';
 
+import '../classes/car_side_upcoming_class1.dart';
 import '../controllers/currency_controller.dart';
 
 class CarBookingCard extends StatefulWidget {
@@ -19,7 +20,7 @@ class CarBookingCard extends StatefulWidget {
   });
 
   final Size size;
-  final CarBookingsClass carBookingsDetails;
+  final carSideBookingsClass1 carBookingsDetails;
   // final int itemIndex;
 
   @override
@@ -64,15 +65,18 @@ class _CarBookingCardState extends State<CarBookingCard> {
                   height: 200,
                   width: widget.size.width,
                   decoration: BoxDecoration(
-                    borderRadius: const BorderRadius.only(
-                      topLeft: Radius.circular(20),
-                      topRight: Radius.circular(20),
-                    ),
-                    image: DecorationImage(
-                      image: AssetImage(widget.carBookingsDetails.image),
-                      fit: BoxFit.fill,
-                    ),
-                  ),
+                      borderRadius: const BorderRadius.only(
+                        topLeft: Radius.circular(20),
+                        topRight: Radius.circular(20),
+                      ),
+                      image: DecorationImage(
+                        image: NetworkImage(
+                            widget.carBookingsDetails.image != null &&
+                                    widget.carBookingsDetails.image!.isNotEmpty
+                                ? widget.carBookingsDetails.image
+                                : ''),
+                        fit: BoxFit.fill,
+                      )),
                 ),
               ],
             ),
@@ -195,13 +199,13 @@ class _CarBookingCardState extends State<CarBookingCard> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             const Text(
-                              'Check In',
+                              'Pick up date',
                               style: TextStyle(
                                   fontSize: TextSize.header2,
                                   color: AppColors.grayText),
                             ),
                             Text(
-                              widget.carBookingsDetails.checkinDate,
+                              widget.carBookingsDetails.pickupDate,
                               style: const TextStyle(
                                   fontSize: TextSize.header2,
                                   fontWeight: FontWeight.w500),
@@ -225,13 +229,13 @@ class _CarBookingCardState extends State<CarBookingCard> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 const Text(
-                                  'Check Out',
+                                  'Drop off date',
                                   style: TextStyle(
                                       fontSize: TextSize.header2,
                                       color: AppColors.grayText),
                                 ),
                                 Text(
-                                  widget.carBookingsDetails.checkoutDate,
+                                  widget.carBookingsDetails.dropoffDate,
                                   style: const TextStyle(
                                       fontSize: TextSize.header2,
                                       fontWeight: FontWeight.w500),

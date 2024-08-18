@@ -23,7 +23,8 @@ import '../../../classes/hotel_info_class.dart';
 late User loggedinUser;
 
 class HomeView extends StatefulWidget {
-  const HomeView({super.key});
+  int? tabNumber;
+  HomeView({super.key});
 
   @override
   State<HomeView> createState() => _HomeViewState();

@@ -147,41 +147,55 @@ class HotelSideBookingsController extends GetxController {
           }
           print('Final rating value:');
           print(ratingValue);
-          if (!addedRoomIds.contains(roomId)) {
-            bookingsDetailsUpcoming.add(HotelSideBookingsClass1.fromMap({
-              'checkinDate': bookingData['ArrivalDate'],
-              'checkoutDate': bookingData['DepartureDate'],
-              'hotelName': hotelData['HotelName'],
-              'roomNumber': roomData['RoomNumber'],
-              'totalPrice': bookingData['TotalPrice'],
-              'image': roomData['RoomPhoto'][1].toString(),
-              'location': hotelData['location'],
-              'bookingDate': bookingData['BookingDate'],
-              'priceNight': roomData['Price'],
-              'RoomId': roomId,
-              'RatingRoom':
-                  ratingValue // Ensure the key matches the constructor
-            }));
-            addedRoomIds.add(roomId);
-          }
+
+          hotelData.forEach((key, value) {
+            print(key);
+            if (!addedRoomIds.contains(roomId)) {
+              bookingsDetailsUpcoming.add(HotelSideBookingsClass1.fromMap({
+                'checkinDate': bookingData['ArrivalDate'],
+                'checkoutDate': bookingData['DepartureDate'],
+                'hotelame': value['HotelName'],
+                'roomNumber': roomData['RoomNumber'],
+                'totalPrice': bookingData['TotalPrice'],
+                'image': roomData['RoomPhoto'][1].toString(),
+                'location': value['location'],
+                'bookingDate': bookingData['BookingDate'],
+                'priceNight': roomData['Price'],
+                'RoomId': roomId,
+                'customerName': bookingData['FirstName'],
+
+                'RatingRoom': ratingValue,
+                'email': bookingData[
+                    'Email'] // Ensure the key matches the constructor
+              }));
+              addedRoomIds.add(roomId);
+            }
+          });
         } else {
-          print('No ratings found.');
-          if (!addedRoomIds.contains(roomId)) {
-            bookingsDetailsUpcoming.add(HotelSideBookingsClass1.fromMap({
-              'checkinDate': bookingData['ArrivalDate'],
-              'checkoutDate': bookingData['DepartureDate'],
-              'hotelName': hotelData['HotelName'],
-              'roomNumber': roomData['RoomNumber'],
-              'totalPrice': bookingData['TotalPrice'],
-              'image': roomData['RoomPhoto'][1].toString(),
-              'location': hotelData['location'],
-              'bookingDate': bookingData['BookingDate'],
-              'priceNight': roomData['Price'],
-              'RoomId': roomId,
-              'RatingRoom': 0.0 // Ensure the key matches the constructor
-            }));
-            addedRoomIds.add(roomId);
-          }
+          hotelData.forEach((key, value) {
+            print(key);
+            if (!addedRoomIds.contains(roomId)) {
+              // if (bookingData['HotelId'] == key)
+              bookingsDetailsUpcoming.add(HotelSideBookingsClass1.fromMap({
+                'checkinDate': bookingData['ArrivalDate'],
+                'checkoutDate': bookingData['DepartureDate'],
+                'hotelName': value['HotelName'],
+                'roomNumber': roomData['RoomNumber'],
+                'totalPrice': bookingData['TotalPrice'],
+                'image': roomData['RoomPhoto'][1].toString(),
+                'location': value['location'],
+                'bookingDate': bookingData['BookingDate'],
+                'priceNight': roomData['Price'],
+                'RoomId': roomId,
+                'RatingRoom': 0.0,
+                'customerName': bookingData['FirstName'],
+
+                'email': bookingData[
+                    'Email'] // Ensure the key matches the constructor
+              }));
+              addedRoomIds.add(roomId);
+            }
+          });
         }
 
         update();
@@ -276,41 +290,57 @@ class HotelSideBookingsController extends GetxController {
           }
           print('Final rating value:');
           print(ratingValue);
-          if (!addedRoomIdsFinished.contains(roomId)) {
-            print('mmmmmmmmmmmmmmmm1567890-09876543mmmmmmmmmmmm');
-            bookingsDetailsFinished.add(HotelSideFinishedClass.fromMap({
-              'checkinDate': bookingData['ArrivalDate'],
-              'checkoutDate': bookingData['DepartureDate'],
-              'hotelName': hotelData['HotelName'],
-              'roomNumber': roomData['RoomNumber'],
-              'totalPrice': bookingData['TotalPrice'],
-              'image': roomData['RoomPhoto'][1].toString(),
-              'location': hotelData['location'],
-              'bookingDate': bookingData['BookingDate'],
-              'priceNight': roomData['Price'],
-              'RoomId': roomId,
-              'RatingRoom':
-                  ratingValue // Ensure the key matches the constructor
-            }));
-            addedRoomIdsFinished.add(roomId);
-          }
+          hotelData.forEach((key, value) {
+            if (!addedRoomIdsFinished.contains(roomId)) {
+              print('mmmmmmmmmmmmmmmm1567890-09876543mmmmmmmmmmmm');
+              // if (bookingData['HotelId'] == key)
+              bookingsDetailsFinished.add(HotelSideFinishedClass.fromMap({
+                'checkinDate': bookingData['ArrivalDate'],
+                'checkoutDate': bookingData['DepartureDate'],
+                'hotelName': value['HotelName'],
+                'roomNumber': roomData['RoomNumber'],
+                'totalPrice': bookingData['TotalPrice'],
+                'image': roomData['RoomPhoto'][1].toString(),
+                'location': value['location'],
+                'bookingDate': bookingData['BookingDate'],
+                'priceNight': roomData['Price'],
+                'RoomId': roomId,
+                'RatingRoom': ratingValue,
+                'customerName': bookingData['FirstName'],
+
+                'email': bookingData[
+                    'Email'] // Ensure the key matches the constructor
+              }));
+              addedRoomIdsFinished.add(roomId);
+            }
+          });
         } else {
           print('No ratings found.');
           if (!addedRoomIdsFinished.contains(roomId)) {
-            bookingsDetailsFinished.add(HotelSideFinishedClass.fromMap({
-              'checkinDate': bookingData['ArrivalDate'],
-              'checkoutDate': bookingData['DepartureDate'],
-              'hotelName': hotelData['HotelName'],
-              'roomNumber': roomData['RoomNumber'],
-              'totalPrice': bookingData['TotalPrice'],
-              'image': roomData['RoomPhoto'][1].toString(),
-              'location': hotelData['location'],
-              'bookingDate': bookingData['BookingDate'],
-              'priceNight': roomData['Price'],
-              'RoomId': roomId,
-              'RatingRoom': 0.0 // Ensure the key matches the constructor
-            }));
-            addedRoomIdsFinished.add(roomId);
+            hotelData.forEach((key, value) {
+              if (!addedRoomIdsFinished.contains(roomId)) {
+                // if (bookingData['HotelId'] == key)
+                print('mmmmmmmmmmmmmmmm1567890-09876543mmmmmmmmmmmm');
+                bookingsDetailsFinished.add(HotelSideFinishedClass.fromMap({
+                  'checkinDate': bookingData['ArrivalDate'],
+                  'checkoutDate': bookingData['DepartureDate'],
+                  'hotelName': value['HotelName'],
+                  'roomNumber': roomData['RoomNumber'],
+                  'totalPrice': bookingData['TotalPrice'],
+                  'image': roomData['RoomPhoto'][1].toString(),
+                  'location': value['location'],
+                  'bookingDate': bookingData['BookingDate'],
+                  'priceNight': roomData['Price'],
+                  'RoomId': roomId,
+                  'RatingRoom': 0.0,
+                  'customerName':
+                      '${bookingData['FirstName']} ${bookingData['LastName']}',
+                  'email': bookingData[
+                      'Email'] // Ensure the key matches the constructor
+                }));
+                addedRoomIdsFinished.add(roomId);
+              }
+            });
           }
         }
 

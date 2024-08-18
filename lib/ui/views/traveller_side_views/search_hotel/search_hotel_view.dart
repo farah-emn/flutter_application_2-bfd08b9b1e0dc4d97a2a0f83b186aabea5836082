@@ -1,6 +1,7 @@
 // ignore_for_file: non_constant_identifier_names, prefer_const_constructors, sized_box_for_whitespace, unnecessary_null_comparison, library_private_types_in_public_api, deprecated_member_use, unused_local_variable, use_key_in_widget_constructors, must_be_immutable, unused_import, avoid_print
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 // import 'package:flutter_ocr_sdk/mrz_result.dart';
 import 'package:get/get.dart';
 import 'package:traveling/controllers/search_oneway_controller.dart';
@@ -28,6 +29,7 @@ import 'list_destonation_hotel.dart';
 
 class SearchHotelView extends StatefulWidget {
   String? Destination;
+  var lastFlightKey = ''.obs;
 
   SearchHotelView({this.Destination, Key? key}) : super(key: key);
 
@@ -60,7 +62,19 @@ class SearchHotelViewState extends State<SearchHotelView> {
     if (widget.Destination != null) {
       controller.setDestnation(widget.Destination!);
     }
-    controller.searchForHotel();
+    if (controller.Destnation.value != '') {
+      controller.searchForHotel();
+    } else {
+      controller.isloading.value = false;
+      Fluttertoast.showToast(
+          msg: "Please select all fields",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.grey,
+          textColor: Colors.white,
+          fontSize: 16.0);
+    }
   }
 
   @override
@@ -166,7 +180,7 @@ class SearchHotelViewState extends State<SearchHotelView> {
                       Container(
                         padding: EdgeInsets.only(right: 10, left: 10),
                         width: size.width / 2 - 20,
-                        height: 40,
+                        height: 50,
                         decoration: BoxDecoration(
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(20),
@@ -200,14 +214,14 @@ class SearchHotelViewState extends State<SearchHotelView> {
                                     controller.incrementAdult();
                                   },
                                   child: Icon(Icons.arrow_drop_up_sharp,
-                                      color: AppColors.purple, size: 17),
+                                      color: AppColors.purple, size: 20),
                                 ),
                                 InkWell(
                                   onTap: () {
                                     controller.decrementAdult();
                                   },
                                   child: Icon(Icons.arrow_drop_down_sharp,
-                                      color: AppColors.purple, size: 17),
+                                      color: AppColors.purple, size: 20),
                                 ),
                               ],
                             )
@@ -237,7 +251,7 @@ class SearchHotelViewState extends State<SearchHotelView> {
                       Container(
                         padding: EdgeInsets.only(right: 10, left: 10),
                         width: size.width / 2 - 20,
-                        height: 40,
+                        height: 50,
                         decoration: BoxDecoration(
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(20),
@@ -271,14 +285,14 @@ class SearchHotelViewState extends State<SearchHotelView> {
                                     controller.incrementChild();
                                   },
                                   child: Icon(Icons.arrow_drop_up_sharp,
-                                      color: AppColors.purple, size: 17),
+                                      color: AppColors.purple, size: 20),
                                 ),
                                 InkWell(
                                   onTap: () {
                                     controller.decrementChild();
                                   },
                                   child: Icon(Icons.arrow_drop_down_sharp,
-                                      color: AppColors.purple, size: 17),
+                                      color: AppColors.purple, size: 20),
                                 ),
                               ],
                             )
@@ -299,6 +313,20 @@ class SearchHotelViewState extends State<SearchHotelView> {
                   textColor: AppColors.backgroundgrayColor,
                   backgroundColor: AppColors.lightPurple,
                   widthPercent: size.width,
+                ),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Container(
+                width: 20,
+                height: 20,
+                child: Obx(
+                  () => (controller.isloading.value == true)
+                      ? CircularProgressIndicator(
+                          color: AppColors.purple,
+                        )
+                      : SizedBox(),
                 ),
               ),
             ],

@@ -2,9 +2,13 @@
 
 import 'package:get/get.dart';
 
-class GuestController extends GetxController {
+enum BaggageOption { option15kg, option20kg, option25kg }
+
+class TravellerDetailsView1Controller extends GetxController {
   var AdultList = <dynamic>[].obs;
+  var BaggageAdult = <dynamic>[].obs;
   var ChildList = <dynamic>[].obs;
+  var BaggageChild = <dynamic>[].obs;
   var _EmailContactDetails = ''.obs;
   get EmailContactDetails => _EmailContactDetails;
   var _MobileNumberContactDetails = ''.obs;
@@ -13,11 +17,10 @@ class GuestController extends GetxController {
   get FirstNameContactDetails => _FirstNameContactDetails;
   var _LastNameContactDetails = ''.obs;
   get LastNameContactDetails => _LastNameContactDetails;
-  var errorTextEmail = ''.obs;
-  var errorTextMobileNumber = ''.obs;
-  var errorTextFirstName = ''.obs;
-  var errorTextLastName = ''.obs;
-  var errorText = ''.obs;
+  void addBaggageAdult(dynamic result) {
+    BaggageAdult.add(result);
+  }
+
   void SetEmailContactDetails(String EmailContactDetails) {
     _EmailContactDetails.value = EmailContactDetails;
     update();
@@ -46,39 +49,20 @@ class GuestController extends GetxController {
     AdultList.add(child);
   }
 
-  Future<bool> validateGuest() async {
-    if (_EmailContactDetails.value.length == 0 &&
-        _FirstNameContactDetails.value.length == 0 &&
-        _LastNameContactDetails.value.length == 0 &&
-        _MobileNumberContactDetails.value.length == 0) {
-      errorText.value = 'Please enter all feilds';
-    }
-    if (_EmailContactDetails.value.length < 10 &&
-        _LastNameContactDetails.value.length != 0 &&
-        _MobileNumberContactDetails.value.length != 0 &&
-        _MobileNumberContactDetails.value.length != 0) {
-      errorTextEmail.value = 'Please enter valid a valid email';
-    }
-    final RegExp emailRegExp = RegExp(
-      r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$',
-    );
-    if (!emailRegExp.hasMatch(_EmailContactDetails.value) &&
-        _LastNameContactDetails.value.length != 0 &&
-        _MobileNumberContactDetails.value.length != 0 &&
-        _MobileNumberContactDetails.value.length != 0) {
-      errorTextEmail.value = 'Please enter a valid email';
-    }
-
-    return true;
+  void addBaggageChild(dynamic baggage) {
+    BaggageChild.add(baggage);
   }
 
   void clearData() {
     AdultList.clear();
+    BaggageAdult.clear();
     ChildList.clear();
+    BaggageChild.clear();
     _EmailContactDetails = ''.obs;
     _MobileNumberContactDetails = ''.obs;
     _FirstNameContactDetails = ''.obs;
     _LastNameContactDetails = ''.obs;
+
     update();
   }
 }

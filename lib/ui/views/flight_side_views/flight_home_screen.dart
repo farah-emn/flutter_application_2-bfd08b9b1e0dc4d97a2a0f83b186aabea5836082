@@ -26,15 +26,14 @@ class _FlightHomeState extends State<FlightHome> {
       body: Screens[index],
       bottomNavigationBar: NavigationBarTheme(
         data: const NavigationBarThemeData(
-          indicatorColor: AppColors.lightBlue,
-          backgroundColor: Colors.white,
-          shadowColor: AppColors.Blue,
-        ),
+            indicatorColor: AppColors.darkBlue,
+            indicatorShape: CircleBorder(),
+            backgroundColor: Colors.white),
         child: NavigationBar(
             elevation: 1,
             height: 60,
             selectedIndex: index,
-            labelBehavior: NavigationDestinationLabelBehavior.alwaysShow,
+            labelBehavior: NavigationDestinationLabelBehavior.alwaysHide,
             animationDuration: const Duration(seconds: 2),
             onDestinationSelected: (index) => setState(() {
                   this.index = index;
@@ -43,6 +42,7 @@ class _FlightHomeState extends State<FlightHome> {
               NavigationDestination(
                 icon: Icon(
                   Icons.home_outlined,
+                  color: AppColors.BlueText,
                 ),
                 selectedIcon: Icon(
                   Icons.home_filled,
@@ -53,6 +53,7 @@ class _FlightHomeState extends State<FlightHome> {
               NavigationDestination(
                 icon: Icon(
                   Icons.search_outlined,
+                  color: AppColors.BlueText,
                 ),
                 selectedIcon: Icon(
                   Icons.search_outlined,
@@ -63,6 +64,7 @@ class _FlightHomeState extends State<FlightHome> {
               NavigationDestination(
                 icon: Icon(
                   Icons.add_outlined,
+                  color: AppColors.BlueText,
                 ),
                 selectedIcon: Icon(
                   Icons.add,
@@ -73,6 +75,7 @@ class _FlightHomeState extends State<FlightHome> {
               NavigationDestination(
                 icon: Icon(
                   Icons.business_outlined,
+                  color: AppColors.BlueText,
                 ),
                 selectedIcon: Icon(
                   Icons.business,

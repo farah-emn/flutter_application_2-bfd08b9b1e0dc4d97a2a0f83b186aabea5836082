@@ -4,7 +4,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
-import 'package:traveling/cards/amenities_card.dart';
 import 'package:traveling/classes/amenities_class.dart';
 import 'package:traveling/classes/hotel_room_details_class.dart';
 import 'package:traveling/controllers/currency_controller.dart';
@@ -14,7 +13,6 @@ import 'package:traveling/ui/shared/custom_widgets/custom_button.dart';
 import 'package:traveling/ui/shared/text_size.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:traveling/ui/views/hotel_side_views/hotel_room_photos.dart';
-
 import 'hotel_booking_summary_view.dart';
 
 class RoomView extends StatefulWidget {
@@ -71,6 +69,7 @@ class _RoomViewState extends State<RoomView> {
             bottom: PreferredSize(
               preferredSize: const Size.fromHeight(0.0),
               child: Container(
+                width: size.width,
                 padding: const EdgeInsets.only(top: 15, bottom: 15),
                 decoration: const BoxDecoration(
                   color: AppColors.backgroundgrayColor,
@@ -119,6 +118,8 @@ class _RoomViewState extends State<RoomView> {
           SliverToBoxAdapter(
             child: Container(
               color: AppColors.backgroundgrayColor,
+              width: size.width,
+              height: size.height,
               child: Padding(
                 padding: const EdgeInsets.only(top: 15),
                 child: Column(
@@ -675,7 +676,7 @@ class _RoomViewState extends State<RoomView> {
                                                           .averageRating.value <
                                                   1
                                               ? 1
-                                              : 0),
+                                              : 1),
                                       color: AppColors.purple,
                                       backgroundColor: AppColors.lightPurple,
                                       borderRadius:

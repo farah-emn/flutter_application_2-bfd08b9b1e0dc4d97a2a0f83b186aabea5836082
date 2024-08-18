@@ -1,22 +1,20 @@
+// ignore_for_file: prefer_const_constructors, unnecessary_string_interpolations, prefer_const_literals_to_create_immutables, deprecated_member_use, unnecessary_brace_in_string_interps, await_only_futures, non_constant_identifier_names, unused_local_variable, empty_catches, curly_braces_in_flow_control_structures, prefer_typing_uninitialized_variables
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
-import 'package:traveling/cards/hotel_info_home_view_card.dart';
+import 'package:intl/intl.dart';
+import 'package:traveling/classes/flight_info_class.dart';
+import 'package:traveling/controllers/currency_controller.dart';
 import 'package:traveling/ui/shared/colors.dart';
-import 'package:traveling/ui/shared/custom_widgets/custom_image.dart';
-import 'package:traveling/ui/shared/custom_widgets/custom_servicetext.dart';
-
-import 'package:traveling/ui/shared/utils.dart';
-import 'package:traveling/ui/views/traveller_side_views/menu_view.dart';
-import 'package:traveling/ui/views/traveller_side_views/traveller_welcome_view.dart';
-
+import 'package:traveling/ui/views/flight_side_views/flight_welcome_view.dart';
+import 'package:traveling/ui/views/flight_side_views/menu_view.dart';
+import '../../shared/text_size.dart';
 import '../first_view.dart';
-import '../../../classes/hotel_info_class.dart';
+import 'flight_currency.dart';
 import 'flight_search_view.dart';
-
-late User loggedinUser;
 
 class FlightHomeView extends StatefulWidget {
   const FlightHomeView({super.key});
@@ -26,56 +24,254 @@ class FlightHomeView extends StatefulWidget {
 }
 
 class _FlightHomeViewState extends State<FlightHomeView> {
-  final _auth = FirebaseAuth.instance;
+  late User loggedinUser;
+  final CurrencyController FlightCurrency_Controller =
+      Get.put(CurrencyController());
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  Map<dynamic, dynamic> filteredFlightsData = {};
+  Map<dynamic, dynamic> filteredDepartureAirportData = {};
+  Map<dynamic, dynamic> filteredArrivalAirportData = {};
+  List<FlightInfoClass> flightsList = [];
+  final _auth = FirebaseAuth.instance;
+  late final User? user;
+  late DatabaseReference ref;
+  String CompanyName = '';
+  var Companylogo;
+  var CompanyId = '';
+  double incoming = 0.0;
+  int completedFlight = 0;
+  var isloading = false.obs;
+  @override
+  void initState() {
+    super.initState();
+    ref = FirebaseDatabase.instance.ref('Airline_company');
+    user = _auth.currentUser;
+    getCurrentUser();
+    getData();
+
+    super.initState();
+  }
+
+  void getCurrentUser() async {
+    try {
+      final user = await _auth.currentUser;
+      if (user != null) {
+        loggedinUser = user;
+      }
+      if (_auth.currentUser == null) {
+        Get.offAll(const FlightWelcomeView());
+      }
+    } catch (e) {}
+  }
+
+  void getData() async {
+    CompanyId = user!.uid.toString();
+    final event = await ref.child(CompanyId).get();
+    final userData = Map<dynamic, dynamic>.from(event.value as Map);
+    if (mounted)
+      setState(() {
+        CompanyName = userData['AirlineCompanyName'];
+        Companylogo = userData['logo'];
+      });
+    fetchFlights().then((fetchedFlights) {
+      if (mounted) {
+        setState(() {
+          filteredFlightsData = fetchedFlights;
+          flightsList = fetchedFlights.entries.map((entry) {
+            var stringKeyedMap = Map<dynamic, dynamic>.from(entry.value);
+            return FlightInfoClass.fromMap(stringKeyedMap);
+          }).toList();
+        });
+      }
+    });
+  }
+
+  Future<Map> fetchFlights() async {
+    FirebaseDatabase.instance
+        .reference()
+        .child('booking')
+        .once()
+        .then((DatabaseEvent event) {
+      isloading.value = true;
+      if (event.snapshot.exists) {
+        var bookingData =
+            Map<dynamic, dynamic>.from(event.snapshot.value as Map);
+        bookingData.forEach((bookingDatakey, value) {
+          FirebaseDatabase.instance
+              .reference()
+              .child('Flight')
+              .once()
+              .then((DatabaseEvent event) {
+            if (event.snapshot.exists) {
+              var flightsData =
+                  Map<dynamic, dynamic>.from(event.snapshot.value as Map);
+              flightsData.forEach((flightsDatakey, value) {
+                if (flightsData[flightsDatakey]['AirlinId'] == CompanyId) {
+                  if (bookingData[bookingDatakey]['flightId'] ==
+                      flightsDatakey) {
+                    if (mounted) {
+                      setState(() {
+                        incoming +=
+                            bookingData[bookingDatakey]['TotalTicketPrice'];
+                      });
+                    }
+                  }
+                  try {
+                    final DateTime now = DateTime.now();
+                    final String Deparure_Time =
+                        '${flightsData[flightsDatakey]['DepartureTime']}';
+                    final DateFormat formaatter = DateFormat('h:mm a');
+                    final String Current_Time = formaatter.format(now);
+                    final DateTime CurrentTime =
+                        DateFormat.jm().parse(Current_Time);
+                    final DateTime DeparureTime =
+                        DateFormat.jm().parse(Deparure_Time);
+                    final DateFormat formatter = DateFormat('d. M, y');
+                    final String Currentdate = formatter.format(now);
+                    final DateTime DeparureDate = formatter
+                        .parse(flightsData[flightsDatakey]['DepartureDate']);
+                    final DateTime CurrentDate = formatter.parse(Currentdate);
+                    if (DeparureDate.isAfter(CurrentDate) ||
+                        DeparureDate == CurrentDate) {
+                      FirebaseDatabase.instance
+                          .reference()
+                          .child('Airport')
+                          .once()
+                          .then((DatabaseEvent event) {
+                        if (event.snapshot.exists) {
+                          var AirportData = Map<dynamic, dynamic>.from(
+                              event.snapshot.value as Map);
+                          AirportData.forEach((AirportDatakey, value) {
+                            if (AirportDatakey ==
+                                flightsData[flightsDatakey]
+                                    ['DepartureAirportID']) {
+                              if (mounted) {
+                                setState(() {
+                                  filteredDepartureAirportData = value;
+                                });
+                              }
+                            }
+                            if (AirportDatakey ==
+                                flightsData[flightsDatakey]
+                                    ['ArrivalAirportID']) {
+                              if (mounted) {
+                                setState(() {
+                                  filteredArrivalAirportData = value;
+                                });
+                              }
+                            }
+                          });
+                        }
+                      });
+                      setState(() {
+                        filteredFlightsData[flightsDatakey] =
+                            flightsData[flightsDatakey];
+                      });
+                    } else {
+                      completedFlight = 0;
+                      if (DeparureDate.isBefore(CurrentDate)) {
+                        if (mounted) {
+                          setState(() {
+                            completedFlight += 1;
+                          });
+                        }
+                      }
+                    }
+                  } catch (e) {}
+                }
+              });
+            }
+          });
+        });
+      }
+    });
+    if (filteredFlightsData.isEmpty) {
+      isloading.value = false;
+    }
+
+    return filteredFlightsData;
+  }
+
+  String getTime(String input) {
+    return input.split(' ')[0];
+  }
+
+  String getTimePmAm(String input) {
+    var parts = input.split(' ');
+    if (parts.length > 1)
+      return parts[1];
+    else
+      return '';
+  }
 
   @override
-  @override
   Widget build(BuildContext context) {
+    final CurrencyController currencyController = Get.put(CurrencyController());
     Size size = MediaQuery.of(context).size;
+    String FlightDatakey = '';
+    filteredFlightsData.forEach((key, value) {
+      setState(() {
+        FlightDatakey = key;
+      });
+    });
+    String DepartureCity = '';
+    String ArrivalCity = '';
+    for (var key in filteredDepartureAirportData.keys) {
+      setState(() {
+        DepartureCity = key;
+      });
+    }
+    for (var key in filteredArrivalAirportData.keys) {
+      setState(() {
+        ArrivalCity = key;
+      });
+    }
+
     return Scaffold(
       key: _scaffoldKey,
       drawer: Drawer(
         backgroundColor: AppColors.backgroundgrayColor,
         child: Column(
           children: [
-            const UserAccountsDrawerHeader(
+            UserAccountsDrawerHeader(
                 decoration: BoxDecoration(color: AppColors.Blue),
-                currentAccountPicture: CircleAvatar(
-                  backgroundImage: AssetImage('assets/image/png/girlUser1.png'),
-                ),
-                accountName: Text('data'),
-                accountEmail: Text('data@gmail.com')),
-            ListTile(
-              leading: const Icon(
-                Icons.date_range_rounded,
-                color: AppColors.Blue,
-              ),
-              title: const Text(
-                'Add airplane',
-                style: TextStyle(
-                  color: AppColors.BlueText,
-                ),
-              ),
-              onTap: () {
-                Navigator.pop(context);
-              },
-            ),
-            ListTile(
-              leading: const Icon(
-                Icons.people,
-                color: AppColors.Blue,
-              ),
-              title: const Text(
-                'Clients',
-                style: TextStyle(
-                  color: AppColors.BlueText,
-                ),
-              ),
-              onTap: () {
-                Navigator.pop(context);
-              },
-            ),
+                currentAccountPicture: (Companylogo != null)
+                    ? CircleAvatar(backgroundImage: NetworkImage(Companylogo))
+                    : CircleAvatar(
+                        backgroundImage:
+                            AssetImage('assets/image/png/girlUser1.png')),
+                accountName: Text('Company name'),
+                accountEmail: Text('${CompanyName}')),
+            // ListTile(
+            //   leading: const Icon(
+            //     Icons.date_range_rounded,
+            //     color: AppColors.Blue,
+            //   ),
+            //   title: const Text(
+            //     'Add airplane',
+            //     style: TextStyle(
+            //       color: AppColors.BlueText,
+            //     ),
+            //   ),
+            //   onTap: () {
+            //     Navigator.pop(context);
+            //   },
+            // ),
+            // ListTile(
+            //   leading: const Icon(
+            //     Icons.people,
+            //     color: AppColors.Blue,
+            //   ),
+            //   title: const Text(
+            //     'Clients',
+            //     style: TextStyle(
+            //       color: AppColors.BlueText,
+            //     ),
+            //   ),
+            //   onTap: () {
+            //     Navigator.pop(context);
+            //   },
+            // ),
             ListTile(
               leading: const Icon(
                 Icons.settings,
@@ -88,7 +284,39 @@ class _FlightHomeViewState extends State<FlightHomeView> {
                 ),
               ),
               onTap: () {
-                Navigator.pop(context);
+                Get.to(MenuView());
+              },
+            ),
+            ListTile(
+              leading: const Icon(
+                Icons.currency_exchange_rounded,
+                color: AppColors.Blue,
+              ),
+              title: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text(
+                    'Currency',
+                    style: TextStyle(
+                      color: AppColors.BlueText,
+                      fontSize: TextSize.header2,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                  Obx(
+                    () => Text(
+                      currencyController.selectedCurrency.value,
+                      style: TextStyle(
+                        color: AppColors.BlueText,
+                        fontSize: 15,
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
+                  )
+                ],
+              ),
+              onTap: () {
+                Get.to(CurrencyPage());
               },
             ),
             Container(
@@ -147,7 +375,6 @@ class _FlightHomeViewState extends State<FlightHomeView> {
         ),
       ),
       body: CustomScrollView(
-
         slivers: [
           SliverAppBar(
             backgroundColor: AppColors.IconBlueColor,
@@ -155,7 +382,6 @@ class _FlightHomeViewState extends State<FlightHomeView> {
             pinned: true,
             expandedHeight: 335,
             flexibleSpace: FlexibleSpaceBar(
-              
               background: Container(
                   color: AppColors.StatusBarColor,
                   child: const Padding(
@@ -229,7 +455,6 @@ class _FlightHomeViewState extends State<FlightHomeView> {
                   )),
             ),
             bottom: PreferredSize(
-
               preferredSize: const Size.fromHeight(0.0),
               child: Container(
                 padding: const EdgeInsets.only(top: 15, bottom: 15),
@@ -322,7 +547,7 @@ class _FlightHomeViewState extends State<FlightHomeView> {
             leadingWidth: MediaQuery.of(context).size.width,
             toolbarHeight: 180,
             leading: Padding(
-              padding: const EdgeInsets.only(
+              padding: EdgeInsets.only(
                 left: 15,
                 right: 15,
                 top: 15,
@@ -332,17 +557,25 @@ class _FlightHomeViewState extends State<FlightHomeView> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Row(
+                      Row(
                         children: [
-                          SizedBox(
-                            width: 50,
-                            height: 50,
-                            child: CircleAvatar(
-                              radius: 20,
-                              backgroundImage:
-                                  AssetImage('assets/image/png/girlUser1.png'),
-                            ),
-                          ),
+                          if (Companylogo != null)
+                            SizedBox(
+                                width: 50,
+                                height: 50,
+                                child: CircleAvatar(
+                                  radius: 20,
+                                  backgroundImage: NetworkImage(Companylogo),
+                                ))
+                          else
+                            SizedBox(
+                                width: 50,
+                                height: 50,
+                                child: CircleAvatar(
+                                  radius: 20,
+                                  backgroundImage: AssetImage(
+                                      'assets/image/png/girlUser1.png'),
+                                )),
                           SizedBox(
                             width: 10,
                           ),
@@ -350,14 +583,14 @@ class _FlightHomeViewState extends State<FlightHomeView> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                'User Name',
+                                'Company Name',
                                 style: TextStyle(
                                     color: AppColors.backgroundgrayColor,
                                     fontSize: 17,
                                     fontWeight: FontWeight.w500),
                               ),
                               Text(
-                                'Username@gmail.com',
+                                CompanyName,
                                 style:
                                     TextStyle(color: AppColors.LightGrayColor),
                               ),
@@ -382,7 +615,6 @@ class _FlightHomeViewState extends State<FlightHomeView> {
             ),
           ),
           SliverToBoxAdapter(
-
             child: Padding(
               padding: const EdgeInsets.all(15.0),
               child: Column(
@@ -400,7 +632,7 @@ class _FlightHomeViewState extends State<FlightHomeView> {
                             right: Radius.circular(30),
                           ),
                         ),
-                        child: const Padding(
+                        child: Padding(
                           padding: EdgeInsets.only(left: 10),
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -419,15 +651,17 @@ class _FlightHomeViewState extends State<FlightHomeView> {
                               SizedBox(
                                 height: 5,
                               ),
-                              Row(
-                                children: [
-                                  Text(
-                                    '\$526561',
-                                    style: TextStyle(
-                                        color: Colors.white, fontSize: 16),
-                                  ),
-                                ],
-                              ),
+                              Obx(
+                                () => Row(
+                                  children: [
+                                    Text(
+                                      '\ ${currencyController.convert(currencyController.selectedCurrency.value, incoming)} ${currencyController.selectedCurrency.value}',
+                                      style: TextStyle(
+                                          color: Colors.white, fontSize: 16),
+                                    ),
+                                  ],
+                                ),
+                              )
                             ],
                           ),
                         ),
@@ -442,7 +676,7 @@ class _FlightHomeViewState extends State<FlightHomeView> {
                             right: Radius.circular(30),
                           ),
                         ),
-                        child: const Padding(
+                        child: Padding(
                           padding: EdgeInsets.only(left: 10),
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -464,7 +698,7 @@ class _FlightHomeViewState extends State<FlightHomeView> {
                               Row(
                                 children: [
                                   Text(
-                                    '251',
+                                    '${completedFlight}',
                                     style: TextStyle(
                                         color: Colors.white, fontSize: 16),
                                   ),
@@ -511,19 +745,23 @@ class _FlightHomeViewState extends State<FlightHomeView> {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          const Padding(
+                          Padding(
                             padding: EdgeInsets.all(15.0),
                             child: Column(
                               children: [
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.end,
                                   children: [
-                                    Text(
-                                      'Des. 22, 2024',
-                                      style: TextStyle(
-                                          color: AppColors.grayText,
-                                          fontSize: 15),
-                                    )
+                                    (filteredFlightsData != null)
+                                        ? Text(
+                                            filteredFlightsData[FlightDatakey]
+                                                    ?['DepartureDate'] ??
+                                                '',
+                                            style: TextStyle(
+                                                color: AppColors.TextgrayColor,
+                                                fontSize: 15),
+                                          )
+                                        : Text('')
                                   ],
                                 ),
                                 SizedBox(
@@ -537,28 +775,42 @@ class _FlightHomeViewState extends State<FlightHomeView> {
                                       children: [
                                         Row(
                                           children: [
+                                            (filteredFlightsData != null)
+                                                ? Text(
+                                                    getTime(
+                                                      filteredFlightsData[
+                                                                  FlightDatakey]
+                                                              ?[
+                                                              'DepartureTime'] ??
+                                                          '',
+                                                    ),
+                                                    style: TextStyle(
+                                                        fontSize: 16,
+                                                        fontWeight:
+                                                            FontWeight.w500),
+                                                  )
+                                                : Text(''),
                                             Text(
-                                              '01:12',
+                                              getTimePmAm(
+                                                filteredFlightsData[
+                                                            FlightDatakey]
+                                                        ?['DepartureTime'] ??
+                                                    '',
+                                              ),
                                               style: TextStyle(
-                                                  fontSize: 16,
-                                                  fontWeight: FontWeight.w500),
-                                            ),
-                                            Text(
-                                              'AM',
-                                              style: TextStyle(
-                                                  color:
-                                                      AppColors.grayText,
-                                                  fontSize: 15),
-                                            ),
+                                                color: AppColors.TextgrayColor,
+                                                fontSize: 15,
+                                              ),
+                                            )
                                           ],
                                         ),
                                         Row(
                                           children: [
                                             Text(
-                                              'CAI',
+                                              ' ${DepartureCity}',
                                               style: TextStyle(
                                                   color:
-                                                      AppColors.grayText,
+                                                      AppColors.TextgrayColor,
                                                   fontSize: 15),
                                             ),
                                           ],
@@ -570,16 +822,26 @@ class _FlightHomeViewState extends State<FlightHomeView> {
                                         Row(
                                           children: [
                                             Text(
-                                              '04:45',
+                                              getTime(
+                                                filteredFlightsData[
+                                                            FlightDatakey]
+                                                        ?['ArrivalTime'] ??
+                                                    '',
+                                              ),
                                               style: TextStyle(
                                                   fontSize: 16,
                                                   fontWeight: FontWeight.w500),
                                             ),
                                             Text(
-                                              'AM',
+                                              getTimePmAm(
+                                                filteredFlightsData[
+                                                            FlightDatakey]
+                                                        ?['ArrivalTime'] ??
+                                                    '',
+                                              ),
                                               style: TextStyle(
                                                   color:
-                                                      AppColors.grayText,
+                                                      AppColors.TextgrayColor,
                                                   fontSize: 15),
                                             ),
                                           ],
@@ -587,10 +849,10 @@ class _FlightHomeViewState extends State<FlightHomeView> {
                                         Row(
                                           children: [
                                             Text(
-                                              'RUH',
+                                              ArrivalCity,
                                               style: TextStyle(
                                                   color:
-                                                      AppColors.grayText,
+                                                      AppColors.TextgrayColor,
                                                   fontSize: 15),
                                             ),
                                           ],
@@ -611,7 +873,7 @@ class _FlightHomeViewState extends State<FlightHomeView> {
                                 bottomRight: Radius.circular(15),
                               ),
                             ),
-                            child: const Row(
+                            child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: [
                                 Row(
@@ -621,7 +883,10 @@ class _FlightHomeViewState extends State<FlightHomeView> {
                                       color: Colors.white,
                                     ),
                                     Text(
-                                      '35',
+                                      filteredFlightsData[FlightDatakey]
+                                                  ?['NumberOfEconomySeats']
+                                              .toString() ??
+                                          '',
                                       style: TextStyle(
                                           color: Colors.white, fontSize: 15),
                                     ),
@@ -629,15 +894,27 @@ class _FlightHomeViewState extends State<FlightHomeView> {
                                 ),
                                 Row(
                                   children: [
-                                    Icon(
-                                      Icons.attach_money_sharp,
-                                      color: Colors.white,
-                                    ),
-                                    Text(
-                                      '25514',
-                                      style: TextStyle(
-                                          color: Colors.white, fontSize: 15),
-                                    ),
+                                    // Icon(
+                                    //   Icons.attach_money_sharp,
+                                    //   color: Colors.white,
+                                    // ),
+                                    if (filteredFlightsData[FlightDatakey]
+                                            ?['TicketAdultEconomyPrice'] !=
+                                        null)
+                                      Text(
+                                        '  ${FlightCurrency_Controller.convert(FlightCurrency_Controller.selectedCurrency.value, filteredFlightsData[FlightDatakey]?['TicketAdultEconomyPrice'].toDouble())} ${FlightCurrency_Controller.selectedCurrency.value}',
+                                        style: TextStyle(
+                                            color: Colors.white, fontSize: 15),
+                                      )
+                                    else
+                                      Text(
+                                        '',
+                                        // '  ${FlightCurrency_Controller.convert('USD',
+                                        // FlightCurrency_Controller.selectedCurrency.value,
+                                        //filteredFlightsData[FlightDatakey]?['TicketAdultEconomyPrice'])} ${FlightCurrency_Controller.selectedCurrency.value}',
+                                        style: TextStyle(
+                                            color: Colors.white, fontSize: 15),
+                                      )
                                   ],
                                 ),
                                 Icon(

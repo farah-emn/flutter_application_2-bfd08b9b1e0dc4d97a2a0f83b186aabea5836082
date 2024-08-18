@@ -1,3 +1,5 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:traveling/classes/hotel_bookings_class.dart';
@@ -26,6 +28,44 @@ class HotelSideUpcomingCard extends StatefulWidget {
 }
 
 class _HotelSideUpcomingCardState extends State<HotelSideUpcomingCard> {
+  final _auth = FirebaseAuth.instance;
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  late User loggedinUser;
+  String CompanyName = '';
+  late final User? user;
+  late DatabaseReference ref;
+  var Companyimage;
+  String HotelName = '';
+  var HotelPhoto;
+  var HotelId = '';
+  var CompanyId = '';
+  double incoming = 0.0;
+  int ReservedRooms = 0;
+  final CurrencyController HotelCurrency_Controller =
+      Get.put(CurrencyController());
+
+  @override
+  void initState() {
+    super.initState();
+    ref = FirebaseDatabase.instance.ref('Hotel');
+    user = _auth.currentUser;
+    getData();
+
+    super.initState();
+  }
+
+  void getData() async {
+    CompanyId = user!.uid.toString();
+    final event = await ref.child(CompanyId).get();
+    final userData = Map<dynamic, dynamic>.from(event.value as Map);
+    if (mounted) {
+      setState(() {
+        CompanyName = userData['HotelName'];
+        Companyimage = userData['image'];
+      });
+    }
+  }
+
   CurrencyController currencyController = Get.put(CurrencyController());
   @override
   Widget build(BuildContext context) {
@@ -243,12 +283,7 @@ class _HotelSideUpcomingCardState extends State<HotelSideUpcomingCard> {
                         width: 5,
                       ),
                       Text(
-                        currencyController
-                            .convert(
-                                currencyController.selectedCurrency.value,
-                                widget.hotelBookingsDetails2.totalPrice
-                                    .toDouble())
-                            .toString(),
+                        '${currencyController.convert(currencyController.selectedCurrency.value, widget.hotelBookingsDetails2.totalPrice.toDouble()).toString()} ${currencyController.selectedCurrency.value}',
                         style: const TextStyle(
                             color: AppColors.purple,
                             fontSize: TextSize.header1,

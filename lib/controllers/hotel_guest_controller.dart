@@ -52,12 +52,16 @@ class GuestController extends GetxController {
         _LastNameContactDetails.value.length == 0 &&
         _MobileNumberContactDetails.value.length == 0) {
       errorText.value = 'Please enter all feilds';
+    } else {
+      errorText.value = '';
     }
     if (_EmailContactDetails.value.length < 10 &&
         _LastNameContactDetails.value.length != 0 &&
-        _MobileNumberContactDetails.value.length != 0 &&
+        _FirstNameContactDetails.value.length != 0 &&
         _MobileNumberContactDetails.value.length != 0) {
       errorTextEmail.value = 'Please enter valid a valid email';
+    } else {
+      errorTextEmail.value = '';
     }
     final RegExp emailRegExp = RegExp(
       r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$',
@@ -65,11 +69,19 @@ class GuestController extends GetxController {
     if (!emailRegExp.hasMatch(_EmailContactDetails.value) &&
         _LastNameContactDetails.value.length != 0 &&
         _MobileNumberContactDetails.value.length != 0 &&
-        _MobileNumberContactDetails.value.length != 0) {
+        _FirstNameContactDetails.value.length != 0) {
       errorTextEmail.value = 'Please enter a valid email';
+    } else {
+      errorTextEmail.value = '';
     }
-
-    return true;
+    if (errorText == '' &&
+        errorTextEmail == '' &&
+        errorTextFirstName == '' &&
+        errorTextLastName == '' &&
+        errorTextMobileNumber == '') {
+      return true;
+    }
+    return false;
   }
 
   void clearData() {

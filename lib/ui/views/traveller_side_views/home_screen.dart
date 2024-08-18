@@ -9,8 +9,9 @@ import 'package:traveling/ui/views/traveller_side_views/search_view.dart';
 
 class Home extends StatefulWidget {
   final int initialIndex;
+  int? tabNumber;
 
-  Home({super.key, this.initialIndex = 0});
+  Home({super.key, this.initialIndex = 0, this.tabNumber = 0});
 
   @override
   State<Home> createState() => _HomeState();
@@ -44,9 +45,11 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     final List<Widget> _screens = [
-      const HomeView(),
+      HomeView(),
       SearchView(),
-      BookingsView(),
+      BookingsView(
+        tabNumber: widget.tabNumber,
+      ),
       const ProfileView(),
     ];
 

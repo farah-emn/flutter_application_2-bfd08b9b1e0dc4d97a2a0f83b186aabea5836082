@@ -241,12 +241,7 @@ class _HotelSideFinishedCardState extends State<HotelSideFinishedCard> {
                         width: 5,
                       ),
                       Text(
-                        currencyController
-                            .convert(
-                                currencyController.selectedCurrency.value,
-                                widget.hotelBookingsDetails2.totalPrice
-                                    .toDouble())
-                            .toString(),
+                        '${currencyController.convert(currencyController.selectedCurrency.value, widget.hotelBookingsDetails2.totalPrice.toDouble()).toString()} ${currencyController.selectedCurrency.value}',
                         style: const TextStyle(
                             color: AppColors.purple,
                             fontSize: TextSize.header1,

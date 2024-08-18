@@ -10,6 +10,7 @@ class HotelBookingsClass1 {
   String bookingDate;
   String RoomId;
   double? RatingRoom;
+  String Email;
 
   HotelBookingsClass1(
       {required this.checkinDate,
@@ -22,7 +23,8 @@ class HotelBookingsClass1 {
       required this.bookingDate,
       required this.priceNight,
       required this.RoomId,
-      this.RatingRoom});
+      this.RatingRoom,
+      required this.Email});
 
   factory HotelBookingsClass1.fromMap(Map<dynamic, dynamic> map) {
     return HotelBookingsClass1(
@@ -37,6 +39,7 @@ class HotelBookingsClass1 {
       priceNight: map['priceNight'] is num ? map['priceNight'] : 0,
       RoomId: map['RoomId'] is String ? map['RoomId'] : '',
       RatingRoom: map['RatingRoom'] is double ? map['RatingRoom'] : 0.0,
+      Email: map['Email'] is String ? map['Email'] : '',
     );
   }
 }

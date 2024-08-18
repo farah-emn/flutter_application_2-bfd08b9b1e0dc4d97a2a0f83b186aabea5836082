@@ -23,7 +23,12 @@ class SearchHotelController extends GetxController {
   int get Adultcounter => _Adultcounter;
   int get Roomscounter => _Roomscounter;
   int get Childcounter => _Childcounter;
+  var lastHotelKey = ''.obs;
+  var lastHotelKey1 = ''.obs;
+  var isloading = false.obs;
   int NumberOfHotels = 0;
+  var NumberOfHotels1 = 0.obs;
+
   double totalflightprice = 0;
   var _minPricePerHotel = Map<String, double>().obs;
   Map<String, double> get minPricePerHotel => _minPricePerHotel;
@@ -95,15 +100,35 @@ class SearchHotelController extends GetxController {
     validHotels.clear();
     DatabaseReference ref = FirebaseDatabase.instance.reference();
     final event = await ref.child('Hotel').once();
+    bool hotelFound = false;
+
     if (event.snapshot.exists) {
+      isloading.value = true;
+
       var hotelDetails =
           Map<dynamic, dynamic>.from(event.snapshot.value as Map);
       hotelDetails.forEach((hotelKey, value) {
+        lastHotelKey1.value = hotelDetails.keys.last;
         Map<dynamic, dynamic> hotelData = value;
         if (hotelData['location'].toString() == _Destnation.value) {
+          hotelFound = true;
           searchForSpecificHotel(hotelKey);
         }
       });
+    }
+
+    if (!hotelFound) {
+      isloading.value = false;
+      update();
+
+      Fluttertoast.showToast(
+          msg: "No hotels found",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.grey,
+          textColor: Colors.white,
+          fontSize: 16.0);
     }
   }
 
@@ -131,6 +156,8 @@ class SearchHotelController extends GetxController {
     if (event.snapshot.exists != null) {
       var roomDetails = Map<dynamic, dynamic>.from(event.snapshot.value as Map);
       bool shouldAddHotel = false;
+      lastHotelKey.value = roomDetails.keys.last;
+
       double minPriceForThisHotel = double.infinity;
       roomDetails.forEach((key, room) {
         if (room['HotelId'] == hotelKey) {
@@ -171,8 +198,9 @@ class SearchHotelController extends GetxController {
         minPriceForThisHotel = 0.0;
       }
       Hotels.value = validHotels;
-      if (Hotels.value.isNotEmpty) {
+      if (Hotels.value.isNotEmpty && lastHotelKey.value != '') {
         Get.to(() => AllHotelView(Hotels: Hotels.value));
+        isloading.value = false;
         HotelRooms_Controller.HotelsRooms();
         NumberOfHotels = Hotels.value.length;
       } else {
@@ -221,14 +249,14 @@ class SearchHotelController extends GetxController {
         HotelRooms_Controller.HotelsRooms();
         NumberOfHotels = Hotels.value.length;
       } else {
-        Fluttertoast.showToast(
-            msg: "No hotels found",
-            toastLength: Toast.LENGTH_SHORT,
-            gravity: ToastGravity.BOTTOM,
-            timeInSecForIosWeb: 1,
-            backgroundColor: Colors.grey,
-            textColor: Colors.white,
-            fontSize: 16.0);
+        // Fluttertoast.showToast(
+        //     msg: "No hotels found",
+        //     toastLength: Toast.LENGTH_SHORT,
+        //     gravity: ToastGravity.BOTTOM,
+        //     timeInSecForIosWeb: 1,
+        //     backgroundColor: Colors.grey,
+        //     textColor: Colors.white,
+        //     fontSize: 16.0);
       }
     }
   }

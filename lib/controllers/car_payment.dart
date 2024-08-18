@@ -1,5 +1,6 @@
 // ignore_for_file: deprecated_member_use, non_constant_identifier_names, unused_local_variable, avoid_print, unused_element, unnecessary_brace_in_string_interps
 // import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:traveling/controllers/currency_controller.dart';
@@ -17,6 +18,7 @@ class CarStep3paymentController extends GetxController {
   var errorTextcvv = ''.obs;
   var errorTextYYexpiryDate = ''.obs;
   double totalPriceTicketFlight = 0;
+  var isloading = false.obs;
 
   String Currency = 'USD';
   final List<String> currencies = [
@@ -31,6 +33,7 @@ class CarStep3paymentController extends GetxController {
   ];
 
   Future<bool> validateCreditCard(num price) async {
+    isloading.value = true;
     if (cardNumberController.text!.length < 10) {
       errorTextcardNumber.value = 'Please enter valid Card Number';
     } else {
@@ -73,22 +76,24 @@ class CarStep3paymentController extends GetxController {
         errorTextcardHolder.value.isEmpty &&
         errorTextcardNumber.value.isEmpty &&
         errorTextcvv.value.isEmpty) {
-      // var collection = FirebaseFirestore.instance.collection('CreditCard');
-      // var docSnapshots = await collection.get();
-      // for (var docSnapshot in docSnapshots.docs) {
-      //   Map<String, dynamic>? data = docSnapshot.data();
-      //   if (data['CardNumber'] == cardNumberController.text &&
-      //       _getFormattedExpiryDateMM(data['expiryDate']) ==
-      //           MMexpiryDateController.text &&
-      //       _getFormattedExpiryDateYY(data['expiryDate']) ==
-      //           YYexpiryDateController.text &&
-      //       data['cvvCode'] == cvvController.text &&
-      //       data['balance'] >= price &&
-      //       data['cardholder name'] == cardHolderController.text) {
-      //     await docSnapshot.reference.update({'balance': data['balance']});
-      //     return true;
-      //   }
-      // }
+      var collection = FirebaseFirestore.instance.collection('CreditCard');
+      var docSnapshots = await collection.get();
+      for (var docSnapshot in docSnapshots.docs) {
+        Map<String, dynamic>? data = docSnapshot.data();
+        if (data['CardNumber'] == cardNumberController.text &&
+            _getFormattedExpiryDateMM(data['expiryDate']) ==
+                MMexpiryDateController.text &&
+            _getFormattedExpiryDateYY(data['expiryDate']) ==
+                YYexpiryDateController.text &&
+            data['cvvCode'] == cvvController.text &&
+            data['balance'] >= price &&
+            data['cardholder name'] == cardHolderController.text) {
+          await docSnapshot.reference.update({'balance': data['balance']});
+          isloading.value = false;
+
+          return true;
+        }
+      }
     }
     return false;
   }
