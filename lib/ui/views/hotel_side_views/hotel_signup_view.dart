@@ -54,6 +54,8 @@ class _HoteltSignUpViewState extends State<HoteltSignUpView> {
     super.dispose();
   }
 
+  var isLoading = false.obs;
+
   final TextEditingController _controller = TextEditingController();
   String _selectedCountryCode = '+963'; // Default
   @override

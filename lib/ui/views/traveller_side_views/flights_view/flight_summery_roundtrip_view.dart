@@ -59,7 +59,7 @@ class FlightSummeryRoundTrip extends StatelessWidget {
                       children: [
                         Text(
                           flightdata.DeparureDate,
-                          style: TextStyle(color: AppColors.TextgrayColor),
+                          style: TextStyle(color: AppColors.darkGray),
                         ),
                       ],
                     ),
@@ -82,7 +82,7 @@ class FlightSummeryRoundTrip extends StatelessWidget {
                             Text(
                               getTimePmAm(flightdata.DeparureTime),
                               style: TextStyle(
-                                color: AppColors.TextgrayColor,
+                                color: AppColors.darkGray,
                                 fontSize: 12,
                               ),
                             ),
@@ -94,14 +94,14 @@ class FlightSummeryRoundTrip extends StatelessWidget {
                         Text(
                           flightdata.FlightType ?? '',
                           style: TextStyle(
-                            color: AppColors.TextgrayColor,
+                            color: AppColors.darkGray,
                             fontSize: 12,
                           ),
                         ),
                         Text(
                           flightdata.Flight_Duration,
                           style: TextStyle(
-                            color: AppColors.TextgrayColor,
+                            color: AppColors.darkGray,
                             fontSize: 12,
                           ),
                         ),
@@ -118,7 +118,7 @@ class FlightSummeryRoundTrip extends StatelessWidget {
                             Text(
                               getTimePmAm(flightdata.ArrivalTime),
                               style: TextStyle(
-                                color: AppColors.TextgrayColor,
+                                color: AppColors.darkGray,
                                 fontSize: 12,
                               ),
                             ),
@@ -148,7 +148,7 @@ class FlightSummeryRoundTrip extends StatelessWidget {
                           style: TextStyle(
                               fontWeight: FontWeight.w400,
                               fontSize: 13,
-                              color: AppColors.TextgrayColor),
+                              color: AppColors.darkGray),
                         ),
                         SizedBox(
                           height: 30,
@@ -166,7 +166,7 @@ class FlightSummeryRoundTrip extends StatelessWidget {
                           style: TextStyle(
                               fontWeight: FontWeight.w400,
                               fontSize: 13,
-                              color: AppColors.TextgrayColor),
+                              color: AppColors.darkGray),
                         ),
                       ],
                     )
@@ -187,12 +187,11 @@ class FlightSummeryRoundTrip extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                 
                     Row(
                       children: [
                         Text(
                           ReturnFlightData?.DeparureDate ?? '',
-                          style: TextStyle(color: AppColors.TextgrayColor),
+                          style: TextStyle(color: AppColors.darkGray),
                         ),
                       ],
                     ),
@@ -215,7 +214,7 @@ class FlightSummeryRoundTrip extends StatelessWidget {
                             Text(
                               getTimePmAm(ReturnFlightData!.DeparureTime),
                               style: TextStyle(
-                                color: AppColors.TextgrayColor,
+                                color: AppColors.darkGray,
                                 fontSize: 12,
                               ),
                             ),
@@ -227,14 +226,14 @@ class FlightSummeryRoundTrip extends StatelessWidget {
                         Text(
                           ReturnFlightData?.FlightType ?? '',
                           style: TextStyle(
-                            color: AppColors.TextgrayColor,
+                            color: AppColors.darkGray,
                             fontSize: 12,
                           ),
                         ),
                         Text(
                           ReturnFlightData?.Flight_Duration ?? '',
                           style: TextStyle(
-                            color: AppColors.TextgrayColor,
+                            color: AppColors.darkGray,
                             fontSize: 12,
                           ),
                         ),
@@ -251,7 +250,7 @@ class FlightSummeryRoundTrip extends StatelessWidget {
                             Text(
                               getTimePmAm(ReturnFlightData!.ArrivalTime),
                               style: TextStyle(
-                                color: AppColors.TextgrayColor,
+                                color: AppColors.darkGray,
                                 fontSize: 12,
                               ),
                             ),
@@ -281,7 +280,7 @@ class FlightSummeryRoundTrip extends StatelessWidget {
                           style: TextStyle(
                               fontWeight: FontWeight.w400,
                               fontSize: 13,
-                              color: AppColors.TextgrayColor),
+                              color: AppColors.darkGray),
                         ),
                         SizedBox(
                           height: 30,
@@ -299,7 +298,7 @@ class FlightSummeryRoundTrip extends StatelessWidget {
                           style: TextStyle(
                               fontWeight: FontWeight.w400,
                               fontSize: 13,
-                              color: AppColors.TextgrayColor),
+                              color: AppColors.darkGray),
                         ),
                       ],
                     )

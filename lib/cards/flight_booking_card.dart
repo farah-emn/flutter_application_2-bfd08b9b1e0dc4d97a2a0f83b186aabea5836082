@@ -68,13 +68,13 @@ class _FlightBookingCardState extends State<FlightBookingCard> {
                     const Column(
                       children: [
                         Text(
-                          'CDG',
+                          'CAI',
                           style: TextStyle(
                               fontSize: TextSize.header1,
                               fontWeight: FontWeight.w500),
                         ),
                         Text(
-                          'Paris',
+                          'Cairo',
                           style: TextStyle(
                               fontSize: TextSize.header2,
                               color: AppColors.grayText),
@@ -98,13 +98,13 @@ class _FlightBookingCardState extends State<FlightBookingCard> {
                     const Column(
                       children: [
                         Text(
-                          'PEK',
+                          'DXB',
                           style: TextStyle(
                               fontSize: TextSize.header1,
                               fontWeight: FontWeight.w500),
                         ),
                         Text(
-                          'China',
+                          'Dubai',
                           style: TextStyle(
                               fontSize: TextSize.header2,
                               color: AppColors.grayText),
@@ -200,7 +200,7 @@ class _FlightBookingCardState extends State<FlightBookingCard> {
                               color: AppColors.grayText),
                         ),
                         Text(
-                          '22/5/2024',
+                          '19/8/2024',
                           style: TextStyle(
                               fontSize: TextSize.header1,
                               fontWeight: FontWeight.w500),
@@ -237,18 +237,18 @@ class _FlightBookingCardState extends State<FlightBookingCard> {
                         SizedBox(
                           height: 20,
                         ),
-                        Text(
-                          'Gate',
-                          style: TextStyle(
-                              fontSize: TextSize.header2,
-                              color: AppColors.grayText),
-                        ),
-                        Text(
-                          'C6',
-                          style: TextStyle(
-                              fontSize: TextSize.header1,
-                              fontWeight: FontWeight.w500),
-                        ),
+                        // Text(
+                        //   'Gate',
+                        //   style: TextStyle(
+                        //       fontSize: TextSize.header2,
+                        //       color: AppColors.grayText),
+                        // ),
+                        // Text(
+                        //   'C6',
+                        //   style: TextStyle(
+                        //       fontSize: TextSize.header1,
+                        //       fontWeight: FontWeight.w500),
+                        // ),
                       ],
                     ),
                   ],
@@ -256,41 +256,41 @@ class _FlightBookingCardState extends State<FlightBookingCard> {
               ],
             ),
           ),
-          InkWell(
-            onTap: () {
-              Get.to(const FlightBookingDetailsView());
-            },
-            child: Container(
-              height: 40,
-              width: size.width,
-              padding: EdgeInsets.only(right: 15),
-              decoration: const BoxDecoration(
-                color: AppColors.Blue,
-                borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(15),
-                  bottomRight: Radius.circular(15),
-                ),
-              ),
-              child: const Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Text(
-                    'More Details',
-                    style: TextStyle(
-                      color: Colors.white,
-                    ),
-                  ),
-                  SizedBox(
-                    width: 5,
-                  ),
-                  Icon(
-                    Icons.arrow_forward,
-                    color: Colors.white,
-                  ),
-                ],
-              ),
-            ),
-          ),
+          // InkWell(
+          //   onTap: () {
+          //     Get.to(const FlightBookingDetailsView());
+          //   },
+          //   child: Container(
+          //     height: 40,
+          //     width: size.width,
+          //     padding: EdgeInsets.only(right: 15),
+          //     decoration: const BoxDecoration(
+          //       color: AppColors.Blue,
+          //       borderRadius: BorderRadius.only(
+          //         bottomLeft: Radius.circular(15),
+          //         bottomRight: Radius.circular(15),
+          //       ),
+          //     ),
+          //     child: const Row(
+          //       mainAxisAlignment: MainAxisAlignment.end,
+          //       children: [
+          //         Text(
+          //           'More Details',
+          //           style: TextStyle(
+          //             color: Colors.white,
+          //           ),
+          //         ),
+          //         SizedBox(
+          //           width: 5,
+          //         ),
+          //         Icon(
+          //           Icons.arrow_forward,
+          //           color: Colors.white,
+          //         ),
+          //       ],
+          //     ),
+          //   ),
+          // ),
         ],
       ),
     );

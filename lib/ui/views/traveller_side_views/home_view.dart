@@ -19,6 +19,8 @@ import 'package:traveling/ui/views/traveller_side_views/flight_travellers_view_d
 
 import '../../../cards/car_card_home.dart';
 import '../../../classes/hotel_info_class.dart';
+import '../../../controllers/currency_controller.dart';
+import 'currency_display.dart';
 
 late User loggedinUser;
 
@@ -32,6 +34,7 @@ class HomeView extends StatefulWidget {
 
 class _HomeViewState extends State<HomeView> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  final CurrencyController currencyController = Get.put(CurrencyController());
 
   final _auth = FirebaseAuth.instance;
   @override
@@ -71,8 +74,8 @@ class _HomeViewState extends State<HomeView> {
                 currentAccountPicture: CircleAvatar(
                   backgroundImage: AssetImage('assets/image/png/girlUser1.png'),
                 ),
-                accountName: Text('data'),
-                accountEmail: Text('data@gmail.com')),
+                accountName: Text('Farah'),
+                accountEmail: Text('farah@gmail.com')),
             Container(
               margin: EdgeInsets.symmetric(horizontal: 15),
               height: 0.2,
@@ -95,17 +98,34 @@ class _HomeViewState extends State<HomeView> {
             ),
             ListTile(
               leading: const Icon(
-                Icons.help,
+                Icons.currency_exchange_rounded,
                 color: AppColors.Blue,
               ),
-              title: const Text(
-                'Help',
-                style: TextStyle(
-                  color: AppColors.BlueText,
-                ),
+              title: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text(
+                    'Currency',
+                    style: TextStyle(
+                      color: AppColors.BlueText,
+                      fontSize: TextSize.header2,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                  Obx(
+                    () => Text(
+                      currencyController.selectedCurrency.value,
+                      style: TextStyle(
+                        color: AppColors.BlueText,
+                        fontSize: 15,
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
+                  )
+                ],
               ),
               onTap: () {
-                Navigator.pop(context);
+                Get.to(CurrencyPage());
               },
             ),
             Spacer(),
@@ -329,14 +349,14 @@ class _HomeViewState extends State<HomeView> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                'User Name',
+                                'Farah',
                                 style: TextStyle(
                                     color: AppColors.backgroundgrayColor,
                                     fontSize: 17,
                                     fontWeight: FontWeight.w500),
                               ),
                               Text(
-                                'Username@gmail.com',
+                                'Farah@gmail.com',
                                 style: TextStyle(
                                     color: AppColors.backgroundgrayColor),
                               ),
@@ -390,7 +410,7 @@ class _HomeViewState extends State<HomeView> {
                         Text(
                           'See All',
                           style: TextStyle(
-                              fontSize: 14, color: AppColors.grayText),
+                              fontSize: 14, color: Colors.transparent),
                         ),
                       ],
                     ),
@@ -422,7 +442,7 @@ class _HomeViewState extends State<HomeView> {
                       const Text(
                         'See All',
                         style:
-                            TextStyle(fontSize: 14, color: AppColors.grayText),
+                            TextStyle(fontSize: 14, color: Colors.transparent),
                       ),
                     ],
                   ),

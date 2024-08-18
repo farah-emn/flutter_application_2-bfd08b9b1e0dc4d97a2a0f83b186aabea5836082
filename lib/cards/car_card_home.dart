@@ -6,6 +6,8 @@ import 'package:traveling/ui/shared/colors.dart';
 import 'package:traveling/ui/shared/text_size.dart';
 import 'package:traveling/ui/views/car_side_views/car_details_view.dart';
 
+import '../controllers/currency_controller.dart';
+
 class CarCardHome extends StatefulWidget {
   const CarCardHome({
     super.key,
@@ -23,6 +25,8 @@ class CarCardHome extends StatefulWidget {
 }
 
 class _CarCardHomeState extends State<CarCardHome> {
+  CurrencyController currencyController = Get.put(CurrencyController());
+
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -189,7 +193,7 @@ class _CarCardHomeState extends State<CarCardHome> {
                     ],
                   ),
                   const Spacer(),
-                  const Column(
+                  Column(
                     children: [
                       Text(
                         'Per day:',
@@ -198,7 +202,7 @@ class _CarCardHomeState extends State<CarCardHome> {
                         ),
                       ),
                       Text(
-                        '500\$',
+                        '${currencyController.convert(currencyController.selectedCurrency.value, 100)} ${currencyController.selectedCurrency.value}',
                         style: TextStyle(
                             color: AppColors.darkGray,
                             fontSize: TextSize.header1,

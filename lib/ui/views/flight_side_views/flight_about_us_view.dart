@@ -185,30 +185,30 @@ class _FlightAboutUsViewState extends State<FlightAboutUsView> {
                   const SizedBox(
                     height: 30,
                   ),
-                  const Row(
-                    children: [
-                      SizedBox(
-                        width: 10,
-                      ),
-                      Text(
-                        'Mobile number',
-                        style: TextStyle(
-                            fontSize: 13,
-                            color: AppColors.grayText,
-                            fontWeight: FontWeight.w500),
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 45,
-                    width: size.width,
-                    child: TextField(
-                      keyboardType: TextInputType.phone,
-                      decoration: textFielDecoratiom.copyWith(
-                          prefixIcon: const Icon(Icons.call)),
-                      onChanged: (value) {},
-                    ),
-                  ),
+                  // const Row(
+                  //   children: [
+                  //     SizedBox(
+                  //       width: 10,
+                  //     ),
+                  //     Text(
+                  //       'Mobile number',
+                  //       style: TextStyle(
+                  //           fontSize: 13,
+                  //           color: AppColors.grayText,
+                  //           fontWeight: FontWeight.w500),
+                  //     ),
+                  //   ],
+                  // ),
+                  // SizedBox(
+                  //   height: 45,
+                  //   width: size.width,
+                  //   child: TextField(
+                  //     keyboardType: TextInputType.phone,
+                  //     decoration: textFielDecoratiom.copyWith(
+                  //         prefixIcon: const Icon(Icons.call)),
+                  //     onChanged: (value) {},
+                  //   ),
+                  // ),
                   SizedBox(
                     height: 100,
                   ),

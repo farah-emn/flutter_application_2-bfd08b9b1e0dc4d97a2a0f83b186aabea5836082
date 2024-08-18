@@ -182,9 +182,7 @@ class FlightsViewRound extends StatelessWidget {
           child: Column(
             children: [
               Padding(
-                padding: EdgeInsetsDirectional.only(
-                  top: 8,
-                ),
+                padding: EdgeInsetsDirectional.only(top: 8, start: 10),
                 child: Column(
                   children: [
                     Row(

@@ -33,6 +33,7 @@ class _FlightSignUpViewState extends State<FlightSignUpView> {
   late String errorTextCompanyName = '';
   late String errorTextConfirmPassword = '';
   final _emailController = TextEditingController();
+  var isLoading = false.obs;
   // int IdAirline = 0;
 
   final _AirelineCodeController = TextEditingController();

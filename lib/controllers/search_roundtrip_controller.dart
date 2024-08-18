@@ -242,11 +242,6 @@ class SearchViewRoundTripController extends GetxController {
           var airportData =
               Map<dynamic, dynamic>.from(airportEvent.snapshot.value as Map);
 
-          var planeEvent =
-              await FirebaseDatabase.instance.reference().child('Plane').once();
-          var planeData =
-              Map<dynamic, dynamic>.from(planeEvent.snapshot.value as Map);
-
           bool seatPassengersAdultCondition =
               int.parse(flightsData[key]['NumberOfEconomySeats'].toString()) >=
                   Adultcounter;
@@ -337,10 +332,6 @@ class SearchViewRoundTripController extends GetxController {
               dateAndCityConditions1 &&
               dateAndCityConditions &&
               seatPassengersChildrenCondition1) {
-            var stopLocationEvent = await FirebaseDatabase.instance
-                .reference()
-                .child('Stop_location')
-                .once();
             var flightCompany = await FirebaseDatabase.instance
                 .reference()
                 .child('Airline_company')
@@ -429,10 +420,6 @@ class SearchViewRoundTripController extends GetxController {
     int stopCountDepartureFlight = 0;
     int stopCountReturnFlight = 0;
 
-    var event = await FirebaseDatabase.instance
-        .reference()
-        .child('Stop_location')
-        .once();
     var flightCompany = await FirebaseDatabase.instance
         .reference()
         .child('Airline_company')
@@ -440,109 +427,89 @@ class SearchViewRoundTripController extends GetxController {
     if (flightCompany.snapshot.exists) {
       // print(flightCompanyDetails[]['']);
     }
-    if (event.snapshot.exists) {
-      var stopLocationData =
-          Map<dynamic, dynamic>.from(event.snapshot.value as Map);
-      stopLocationData.forEach((stopKey, value) {
-        filteredDepartureFlightsData.entries.forEach((entry) {
-          if (value['FlighID'] == entry.key) {
-            stopCountDepartureFlight++;
-            stopDurationsForDepartureFlight.add(value['StopDuration']);
-            stopLocationsForDepartureFlight.add(value['StopLocation']);
-          }
-        });
-      });
-      stopLocationData.forEach((stopKey, value) {
-        filteredReturnFlightsData.entries.forEach((entry) {
-          if (value['FlighID'] == entry.key) {
-            stopCountReturnFlight++;
-            stopDurationsForReturnFlight.add(value['StopDuration']);
-            stopLocationsForReturnFlight.add(value['StopLocation']);
-          }
-        });
-      });
-      departureFlightsList.value =
-          filteredDepartureFlightsData.entries.map((entry) {
-        var flightCompanyDetails =
-            Map<dynamic, dynamic>.from(flightCompany.snapshot.value as Map);
 
-        return FlightDetailsClass.fromMap({
-          "FlightID": entry.key,
-          'DeparureDate': entry.value['DepartureDate'],
-          'ArrivalDate': entry.value['ArrivalDate'],
-          'DeparureTime': entry.value['DepartureTime'].toString(),
-          'ArrivalTime': entry.value['ArrivalTime'].toString(),
-          "Flight_Duration": entry.value['FlightDuration'],
-          'DepartureAirport': departureAirport,
-          'ArrivalAirport': arrivalAirport,
-          "TicketAdultEconomyPrice":
-              entry.value['TicketAdultEconomyPrice'].toDouble(),
-          "departure_from": entry.value['DepartureLocation'],
-          "departure_to": entry.value['ArrivalLocation'],
-          "NumberOfEconomySeats": entry.value['NumberOfEconomySeats'],
-          "NumberOfFirstClassSeats": entry.value["NumberOfFirstClassSeats"],
-          "TicketAdultFirstClassPrice":
-              entry.value["TicketAdultFirstClassPrice"].toDouble(),
-          "TicketChildEconomyPrice":
-              entry.value["TicketChildEconomyPrice"].toDouble(),
-          "TicketChildFirstClassPrice":
-              entry.value["TicketChildFirstClassPrice"].toDouble(),
-          "PlaneId": entry.value["PlaneID"],
-          "PlaneManufacturer": entry.value["PlaneManufacturer"],
-          "PlaneModel": entry.value["PlaneModel"],
-          "FlightType": stopCountDepartureFlight > 0
-              ? '${stopCountDepartureFlight} Stop'
-              : 'Direct',
-          "DepartureCity": departureCity,
-          "ArrivalCity": arrivalCity,
-          "FlightCompanyName": flightCompanyDetails[entry.value['AirlinId']]
-              ['AirlineCompanyName'],
-          "FlightCompanyLogo": flightCompanyDetails[entry.value['AirlinId']]
-              ['logo']
-        });
-      }).toList();
-      stopCountDepartureFlight = 0;
+    departureFlightsList.value =
+        filteredDepartureFlightsData.entries.map((entry) {
+      var flightCompanyDetails =
+          Map<dynamic, dynamic>.from(flightCompany.snapshot.value as Map);
 
-      returnFlightsList.value = filteredReturnFlightsData.entries.map((entry) {
-        var flightCompanyDetails =
-            Map<dynamic, dynamic>.from(flightCompany.snapshot.value as Map);
-        return FlightDetailsClass.fromMap({
-          "FlightID": entry.key,
-          'DeparureDate': entry.value['DepartureDate'],
-          'ArrivalDate': entry.value['ArrivalDate'],
-          'DeparureTime': entry.value['DepartureTime'].toString(),
-          'ArrivalTime': entry.value['ArrivalTime'].toString(),
-          "Flight_Duration": entry.value['FlightDuration'],
-          'DepartureAirport': departureAirportReturnFlight,
-          'ArrivalAirport': arrivalAirportReturnFlight,
-          "TicketAdultEconomyPrice":
-              entry.value['TicketAdultEconomyPrice'].toDouble(),
-          "departure_from": entry.value['DepartureLocation'],
-          "departure_to": entry.value['ArrivalLocation'],
-          "NumberOfEconomySeats": entry.value['NumberOfEconomySeats'],
-          "NumberOfFirstClassSeats": entry.value["NumberOfFirstClassSeats"],
-          "TicketAdultFirstClassPrice":
-              entry.value["TicketAdultFirstClassPrice"].toDouble(),
-          "TicketChildEconomyPrice":
-              entry.value["TicketChildEconomyPrice"].toDouble(),
-          "TicketChildFirstClassPrice":
-              entry.value["TicketChildFirstClassPrice"].toDouble(),
-          "PlaneId": entry.value["PlaneID"],
-          "PlaneManufacturer": entry.value["PlaneManufacturer"],
-          "PlaneModel": entry.value["PlaneModel"],
-          "FlightType": stopCountReturnFlight > 0
-              ? '${stopCountReturnFlight} Stop'
-              : 'Direct',
-          "DepartureCity": departureCityReturnFlight,
-          "ArrivalCity": arrivalCityReturnFlight,
-          "FlightCompanyName": flightCompanyDetails[entry.value['AirlinId']]
-              ['AirlineCompanyName'],
-          "FlightCompanyLogo": flightCompanyDetails[entry.value['AirlinId']]
-              ['logo']
-        });
-      }).toList();
-      stopCountReturnFlight = 0;
-    }
+      return FlightDetailsClass.fromMap({
+        "FlightID": entry.key,
+        'DeparureDate': entry.value['DepartureDate'],
+        'ArrivalDate': entry.value['ArrivalDate'],
+        'DeparureTime': entry.value['DepartureTime'].toString(),
+        'ArrivalTime': entry.value['ArrivalTime'].toString(),
+        "Flight_Duration": entry.value['FlightDuration'],
+        'DepartureAirport': departureAirport,
+        'ArrivalAirport': arrivalAirport,
+        "TicketAdultEconomyPrice":
+            entry.value['TicketAdultEconomyPrice'].toDouble(),
+        "departure_from": entry.value['DepartureLocation'],
+        "departure_to": entry.value['ArrivalLocation'],
+        "NumberOfEconomySeats": entry.value['NumberOfEconomySeats'],
+        "NumberOfFirstClassSeats": entry.value["NumberOfFirstClassSeats"],
+        "TicketAdultFirstClassPrice":
+            entry.value["TicketAdultFirstClassPrice"].toDouble(),
+        "TicketChildEconomyPrice":
+            entry.value["TicketChildEconomyPrice"].toDouble(),
+        "TicketChildFirstClassPrice":
+            entry.value["TicketChildFirstClassPrice"].toDouble(),
+        "PlaneId": entry.value["PlaneID"],
+        "PlaneManufacturer": entry.value["PlaneManufacturer"],
+        "PlaneModel": entry.value["PlaneModel"],
+        "FlightType": stopCountDepartureFlight > 0
+            ? '${stopCountDepartureFlight} Stop'
+            : 'Direct',
+        "DepartureCity": departureCity,
+        "ArrivalCity": arrivalCity,
+        "FlightCompanyName": flightCompanyDetails[entry.value['AirlinId']]
+            ['AirlineCompanyName'],
+        "FlightCompanyLogo": flightCompanyDetails[entry.value['AirlinId']]
+            ['logo']
+      });
+    }).toList();
+    stopCountDepartureFlight = 0;
+
+    returnFlightsList.value = filteredReturnFlightsData.entries.map((entry) {
+      var flightCompanyDetails =
+          Map<dynamic, dynamic>.from(flightCompany.snapshot.value as Map);
+      return FlightDetailsClass.fromMap({
+        "FlightID": entry.key,
+        'DeparureDate': entry.value['DepartureDate'],
+        'ArrivalDate': entry.value['ArrivalDate'],
+        'DeparureTime': entry.value['DepartureTime'].toString(),
+        'ArrivalTime': entry.value['ArrivalTime'].toString(),
+        "Flight_Duration": entry.value['FlightDuration'],
+        'DepartureAirport': departureAirportReturnFlight,
+        'ArrivalAirport': arrivalAirportReturnFlight,
+        "TicketAdultEconomyPrice":
+            entry.value['TicketAdultEconomyPrice'].toDouble(),
+        "departure_from": entry.value['DepartureLocation'],
+        "departure_to": entry.value['ArrivalLocation'],
+        "NumberOfEconomySeats": entry.value['NumberOfEconomySeats'],
+        "NumberOfFirstClassSeats": entry.value["NumberOfFirstClassSeats"],
+        "TicketAdultFirstClassPrice":
+            entry.value["TicketAdultFirstClassPrice"].toDouble(),
+        "TicketChildEconomyPrice":
+            entry.value["TicketChildEconomyPrice"].toDouble(),
+        "TicketChildFirstClassPrice":
+            entry.value["TicketChildFirstClassPrice"].toDouble(),
+        "PlaneId": entry.value["PlaneID"],
+        "PlaneManufacturer": entry.value["PlaneManufacturer"],
+        "PlaneModel": entry.value["PlaneModel"],
+        "FlightType": stopCountReturnFlight > 0
+            ? '${stopCountReturnFlight} Stop'
+            : 'Direct',
+        "DepartureCity": departureCityReturnFlight,
+        "ArrivalCity": arrivalCityReturnFlight,
+        "FlightCompanyName": flightCompanyDetails[entry.value['AirlinId']]
+            ['AirlineCompanyName'],
+        "FlightCompanyLogo": flightCompanyDetails[entry.value['AirlinId']]
+            ['logo']
+      });
+    }).toList();
+    stopCountReturnFlight = 0;
+
     // if (returnFlightsList.value.isNotEmpty &&
     //     departureFlightsList.value.isNotEmpty) {
     //   print('Return Flights: ${returnFlightsList.value.length}');

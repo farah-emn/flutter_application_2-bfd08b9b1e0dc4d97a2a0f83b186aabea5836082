@@ -84,10 +84,10 @@ class _TravellerDetailsView1State extends State<TravellerDetailsView1> {
     print(event);
     final userData = Map<dynamic, dynamic>.from(event.value as Map);
 
-    _emailController.text = userData['email'];
-    _mobileNumberController.text = userData['mobile_number'];
-    _firstNameController.text = userData['first_name'];
-    _lastNameController.text = userData['last_name'];
+    // _emailController.text = userData['email'];
+    // _mobileNumberController.text = userData['mobile_number'];
+    // _firstNameController.text = userData['first_name'];
+    // _lastNameController.text = userData['last_name'];
   }
 
   late MRZResult receivedData;
@@ -133,6 +133,12 @@ class _TravellerDetailsView1State extends State<TravellerDetailsView1> {
                   ),
                 ),
               ),
+              Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+                Obx(() => Text(
+                      TravellerDetails_Controller.errorText.value,
+                      style: TextStyle(fontSize: 12, color: Colors.red),
+                    )),
+              ]),
               SizedBox(
                 height: 15,
               ),
@@ -974,15 +980,9 @@ class _TravellerDetailsView1State extends State<TravellerDetailsView1> {
                         ),
                       ),
                     ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-                      Obx(() => Text(
-                            TravellerDetails_Controller.errorText.value,
-                            style: TextStyle(fontSize: 12, color: Colors.red),
-                          )),
-                    ]),
+                    // SizedBox(
+                    //   height: 10,
+                    // ),
                   ],
                 ),
               ),

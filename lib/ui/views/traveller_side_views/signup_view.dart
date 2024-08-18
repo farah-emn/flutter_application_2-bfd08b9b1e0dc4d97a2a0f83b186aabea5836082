@@ -162,31 +162,37 @@ class _SignUpViewState extends State<SignUpView> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             const Text(
-                              'Sign up ',
+                              'Sign in ',
                               style: TextStyle(
                                   fontSize: TextSize.header1,
                                   fontWeight: FontWeight.w700),
                             ),
-                             Obx(
-                          () => (isloading.value == true)
-                              ? Container(
-                                  width: 20,
-                                  height: 20,
-                                  child: Obx(
-                                    () => (isloading.value == true)
-                                        ? CircularProgressIndicator(
-                                            color: AppColors.mainColorBlue,
-                                          )
-                                        : SizedBox(),
-                                  ),
-                                )
-                              : SizedBox(),
-                        ),
+                            Obx(
+                              () => (isloading.value == true)
+                                  ? Container(
+                                      width: 20,
+                                      height: 20,
+                                      child: Obx(
+                                        () => (isloading.value == true)
+                                            ? CircularProgressIndicator(
+                                                color: AppColors.mainColorBlue,
+                                              )
+                                            : SizedBox(),
+                                      ),
+                                    )
+                                  : SizedBox(),
+                            ),
+                            const Text(
+                              'Sign in ',
+                              style: TextStyle(
+                                  color: Colors.transparent,
+                                  fontSize: TextSize.header1,
+                                  fontWeight: FontWeight.w700),
+                            ),
                           ],
                         ),
                         const SizedBox(
@@ -281,6 +287,7 @@ class _SignUpViewState extends State<SignUpView> {
                         ),
                         InkWell(
                             onTap: () async {
+                              print('uuuuuuuuuu');
                               try {
                                 if (_emailController.value.text.isEmpty ||
                                     _passwordController.value.text.isEmpty) {
@@ -304,12 +311,18 @@ class _SignUpViewState extends State<SignUpView> {
                                   });
                                 } else {
                                   try {
+                                    isloading.value = true;
+
                                     final newUser = await _auth
                                         .createUserWithEmailAndPassword(
                                             email: email, password: password);
                                     User? user = _auth.currentUser;
                                     if (newUser != null) {
+                                      isloading.value = true;
+
                                       Get.offAll(Home());
+                                      isloading.value = true;
+
                                       ref.child(user!.uid.toString()).set({
                                         'email': email,
                                         'password': password,
@@ -324,7 +337,11 @@ class _SignUpViewState extends State<SignUpView> {
                                       });
                                     }
                                   } catch (e) {
+                                    isloading.value = false;
+
                                     if (e is FirebaseAuthException) {
+                                      isloading.value == false;
+
                                       switch (e.code) {
                                         case 'weak-password':
                                           setState(() {

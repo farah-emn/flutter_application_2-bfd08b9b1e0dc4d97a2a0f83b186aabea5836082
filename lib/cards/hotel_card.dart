@@ -4,6 +4,8 @@ import 'package:traveling/classes/hotel.dart';
 import 'package:traveling/ui/shared/colors.dart';
 import 'package:traveling/ui/shared/text_size.dart';
 
+import '../controllers/currency_controller.dart';
+
 class HotelCard extends StatefulWidget {
   const HotelCard({
     super.key,
@@ -21,6 +23,8 @@ class HotelCard extends StatefulWidget {
 }
 
 class _HotelCardState extends State<HotelCard> {
+  CurrencyController currencyController = Get.put(CurrencyController());
+
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -138,7 +142,7 @@ class _HotelCardState extends State<HotelCard> {
                     ],
                   ),
                   const Spacer(),
-                  const Column(
+                  Column(
                     children: [
                       Text(
                         'Start from:',
@@ -147,7 +151,7 @@ class _HotelCardState extends State<HotelCard> {
                         ),
                       ),
                       Text(
-                        '500\$',
+                        '${currencyController.convert(currencyController.selectedCurrency.value, 100)} ${currencyController.selectedCurrency.value}',
                         style: TextStyle(
                             color: AppColors.purple,
                             fontSize: TextSize.header1,

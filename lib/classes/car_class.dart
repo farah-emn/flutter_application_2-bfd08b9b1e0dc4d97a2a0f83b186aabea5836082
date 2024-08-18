@@ -41,7 +41,7 @@ List<CarClass> cars = [
     image: 'assets/image/png/car.jpg',
   ),
   CarClass(
-      image: 'assets/image/png/car.jpg',
+      image: 'assets/image/png/download (7).jpg',
       model: 'Elentra',
       color: 'Red',
       company: 'Honday',
@@ -65,7 +65,7 @@ List<CarClass> cars = [
       seats: '4',
       topSpeed: '280'),
   CarClass(
-      image: 'assets/image/png/car.jpg',
+      image: 'assets/image/png/th.jpg',
       model: 'Elentra',
       color: 'Red',
       company: 'Honday',
@@ -77,7 +77,7 @@ List<CarClass> cars = [
       seats: '4',
       topSpeed: '280'),
   CarClass(
-      image: 'assets/image/png/car.jpg',
+      image: 'assets/image/png/download (7).jpg',
       model: 'Elentra',
       color: 'Red',
       company: 'Honday',
