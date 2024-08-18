@@ -536,77 +536,7 @@ class _ProfileViewState extends State<ProfileView> {
                               ),
                             ),
                             const SizedBox(
-                              height: 20,
-                            ),
-                            const Row(
-                              children: [
-                                Text(
-                                  'Date of Birth',
-                                  style: TextStyle(
-                                    fontSize: TextSize.header2,
-                                    color: AppColors.grayText,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            InkWell(
-                              onTap: () async {
-                                DateTime? newDepartureDate =
-                                    await showDatePicker(
-                                        context: context,
-                                        initialDate: Departure_date.value,
-                                        firstDate: minDate,
-                                        lastDate: DateTime(2026));
-
-                                if (newDepartureDate != null) {
-                                  setState(
-                                    () {
-                                      setState(() => Departure_date.value =
-                                          newDepartureDate);
-                                    },
-                                  );
-                                }
-                              },
-                              child: Container(
-                                width: size.width,
-                                height: 40,
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 10),
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(20),
-                                  border: Border.all(
-                                      color: AppColors.LightGrayColor),
-                                ),
-                                child: const Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    Icon(Icons.calendar_month_rounded,
-                                        color: AppColors.lightPurple),
-                                    SizedBox(
-                                      width: 10,
-                                    ),
-                                    Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Text(
-                                          // '${Departure_date.value.day}. ${Departure_date.value?.month}, ${Departure_date.value?.year}',
-                                          '2001',
-                                          style: TextStyle(
-                                            fontSize: TextSize.header2,
-                                            fontWeight: FontWeight.w500,
-                                            color: Colors.black,
-                                          ),
-                                        )
-                                      ],
-                                    )
-                                  ],
-                                ),
-                              ),
-                            ),
-                            const SizedBox(
-                              height: 30,
+                              height: 20 ,
                             ),
                             const Row(
                               children: [

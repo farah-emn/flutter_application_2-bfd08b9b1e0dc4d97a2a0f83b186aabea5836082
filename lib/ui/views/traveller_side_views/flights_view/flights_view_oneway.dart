@@ -80,8 +80,16 @@ class FlightsView extends StatelessWidget {
           Padding(
             padding: EdgeInsets.only(left: 15, right: 15, top: 35),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
+                InkWell(
+                    onTap: () {
+                      Get.back();
+                    },
+                    child: Icon(
+                      Icons.arrow_back_rounded,
+                      color: Colors.white,
+                    )),
                 Text(
                   searchViewOneWayController
                               .flightsList.value[0].DepartureCity +
@@ -180,231 +188,237 @@ class FlightsView extends StatelessWidget {
           ),
         );
       },
-      child: Column(
-        children: [
-          Container(
-            padding: EdgeInsets.all(10),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(20),
-                topRight: Radius.circular(20),
-                bottomLeft: Radius.circular(15),
-                bottomRight: Radius.circular(15),
-              ),
-            ),
-            child: Row(
-              children: [
-                SizedBox(
-                  width: 35,
-                  height: 35,
-                  child: CircleAvatar(
-                      backgroundImage: NetworkImage(flight.FlightCompanyLogo)),
-                ),
-                SizedBox(width: 10),
-                Text(
-                  flight.FlightCompanyName,
-                  style: TextStyle(
-                      fontSize: TextSize.header1, fontWeight: FontWeight.w500),
-                )
-              ],
-            ),
-          ),
-          Container(
-            padding: EdgeInsets.symmetric(horizontal: 10),
-            decoration: BoxDecoration(
+      child: Padding(
+        padding: const EdgeInsets.only(bottom: 10),
+        child: Column(
+          children: [
+            Container(
+              padding: EdgeInsets.all(10),
+              decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(15),
-                  topRight: Radius.circular(15),
-                  bottomLeft: Radius.circular(20),
-                  bottomRight: Radius.circular(20),
-                )),
-            child: Column(
-              children: [
-                SizedBox(
-                  height: 15,
+                  topLeft: Radius.circular(20),
+                  topRight: Radius.circular(20),
+                  bottomLeft: Radius.circular(15),
+                  bottomRight: Radius.circular(15),
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    Column(
-                      children: [
-                        Text(
-                          'Deparure',
-                          style: TextStyle(
-                            fontSize: TextSize.header2,
-                            color: AppColors.grayText,
-                          ),
-                        ),
-                        Text(
-                          getTime(flight.DeparureTime),
-                          style: TextStyle(
-                              fontSize: TextSize.header1,
-                              fontWeight: FontWeight.w500),
-                        ),
-                        
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        Icon(
-                          Icons.circle,
-                          size: 10,
-                          color: AppColors.Blue,
-                        ),
-                        Container(
-                          color: AppColors.Blue,
-                          height: 3.5,
-                          width: 20,
-                        ),
-                        SizedBox(
-                          width: 5,
-                        ),
-                        Container(
-                          color: AppColors.Blue,
-                          height: 3.5,
-                          width: 20,
-                        ),
-                        SizedBox(
-                          width: 3,
-                        ),
-                        Transform.rotate(
-                          angle: math.pi / 2,
-                          child: Icon(
-                            Icons.flight,
-                            size: 30,
-                            color: AppColors.darkBlue,
-                          ),
-                        ),
-                        SizedBox(
-                          width: 4,
-                        ),
-                        Container(
-                          color: AppColors.Blue,
-                          height: 3.5,
-                          width: 20,
-                        ),
-                        Icon(
-                          Icons.arrow_right_alt_rounded,
-                          size: 40,
-                          color: AppColors.Blue,
-                        ),
-                      ],
-                    ),
-                    Column(
-                      children: [
-                        Text(
-                          'Arrival',
-                          style: TextStyle(
-                            fontSize: TextSize.header2,
-                            color: AppColors.grayText,
-                          ),
-                        ),
-                        Text(
-                          getTime(flight.ArrivalTime),
-                          style: TextStyle(
-                              fontSize: TextSize.header1,
-                              fontWeight: FontWeight.w500),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-               
-                // Padding(
-                //   padding: EdgeInsetsDirectional.only(start: 1, end: 22),
-                //   child: Row(
-                //     children: [
-                //       Row(
-                //         children: [
-                //           Text(_getFormattedCity(flight.DeparureCity)),
-                //           SizedBox(width: 2),
-                //           Text(
-                //             _getFormattedDate(flight.DeparureDate),
-                //             style: TextStyle(color: AppColors.grayText),
-                //           ),
-                //           // SizedBox(width: 110),
-                //         ],
-                //       ),
-                //       Spacer(),
-                //       Row(
-                //         children: [
-                //           Text(_getFormattedCity(flight.ArrivalCity)),
-                //           Text(
-                //             _getFormattedDate(flight.ArrivalDate),
-                //             style: TextStyle(color: AppColors.grayText),
-                //           )
-                //         ],
-                //       ),
-                //     ],
-                //   ),
-                // ),
-                const SizedBox(
-                  height: 30,
-                ),
-                Row(
-                  children: [
-                    Row(
-                      children: [
-                        Icon(
-                          Icons.check,
-                          size: 20,
-                          color: AppColors.Blue,
-                        ),
-                        SizedBox(
-                          width: 5,
-                        ),
-                        Text(
-                          flight.FlightType ?? '',
-                          style: TextStyle(color: AppColors.grayText),
-                        ),
-                      ],
-                    ),
-                    const Spacer(),
-                    Row(
-                      children: [
-                        Icon(
-                          Icons.access_time_filled,
-                          size: 20,
-                          color: AppColors.Blue,
-                        ),
-                        SizedBox(
-                          width: 5,
-                        ),
-                        Text(
-                          flight.Flight_Duration,
-                          style: const TextStyle(color: AppColors.grayText),
-                        ),
-                      ],
-                    ),
-                    const Spacer(),
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        Text(
-                          '${controller.convert(controller.selectedCurrency.value, flight.TicketAdultEconomyPrice)}',
-                          style: TextStyle(
-                              color: AppColors.darkBlue,
-                              fontSize: TextSize.header1,
-                              fontWeight: FontWeight.bold),
-                        ),
-                        Text(
-                          controller.selectedCurrency.value,
-                          style: TextStyle(
-                              color: AppColors.grayText,
-                              fontWeight: FontWeight.w500,
-                              fontSize: 12),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-                SizedBox(height: 15,),
-              ],
+              ),
+              child: Row(
+                children: [
+                  SizedBox(
+                    width: 35,
+                    height: 35,
+                    child: CircleAvatar(
+                        backgroundImage:
+                            NetworkImage(flight.FlightCompanyLogo)),
+                  ),
+                  SizedBox(width: 10),
+                  Text(
+                    flight.FlightCompanyName,
+                    style: TextStyle(
+                        fontSize: TextSize.header1,
+                        fontWeight: FontWeight.w500),
+                  )
+                ],
+              ),
             ),
-          ),
-        ],
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: 10),
+              decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(15),
+                    topRight: Radius.circular(15),
+                    bottomLeft: Radius.circular(20),
+                    bottomRight: Radius.circular(20),
+                  )),
+              child: Column(
+                children: [
+                  SizedBox(
+                    height: 15,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      Column(
+                        children: [
+                          Text(
+                            'Deparure',
+                            style: TextStyle(
+                              fontSize: TextSize.header2,
+                              color: AppColors.grayText,
+                            ),
+                          ),
+                          Text(
+                            getTime(flight.DeparureTime),
+                            style: TextStyle(
+                                fontSize: TextSize.header1,
+                                fontWeight: FontWeight.w500),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          Icon(
+                            Icons.circle,
+                            size: 10,
+                            color: AppColors.Blue,
+                          ),
+                          Container(
+                            color: AppColors.Blue,
+                            height: 3.5,
+                            width: 20,
+                          ),
+                          SizedBox(
+                            width: 5,
+                          ),
+                          Container(
+                            color: AppColors.Blue,
+                            height: 3.5,
+                            width: 20,
+                          ),
+                          SizedBox(
+                            width: 3,
+                          ),
+                          Transform.rotate(
+                            angle: math.pi / 2,
+                            child: Icon(
+                              Icons.flight,
+                              size: 30,
+                              color: AppColors.Blue,
+                            ),
+                          ),
+                          SizedBox(
+                            width: 4,
+                          ),
+                          Container(
+                            color: AppColors.Blue,
+                            height: 3.5,
+                            width: 20,
+                          ),
+                          Icon(
+                            Icons.arrow_right_alt_rounded,
+                            size: 40,
+                            color: AppColors.Blue,
+                          ),
+                        ],
+                      ),
+                      Column(
+                        children: [
+                          Text(
+                            'Arrival',
+                            style: TextStyle(
+                              fontSize: TextSize.header2,
+                              color: AppColors.grayText,
+                            ),
+                          ),
+                          Text(
+                            getTime(flight.ArrivalTime),
+                            style: TextStyle(
+                                fontSize: TextSize.header1,
+                                fontWeight: FontWeight.w500),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+
+                  // Padding(
+                  //   padding: EdgeInsetsDirectional.only(start: 1, end: 22),
+                  //   child: Row(
+                  //     children: [
+                  //       Row(
+                  //         children: [
+                  //           Text(_getFormattedCity(flight.DeparureCity)),
+                  //           SizedBox(width: 2),
+                  //           Text(
+                  //             _getFormattedDate(flight.DeparureDate),
+                  //             style: TextStyle(color: AppColors.grayText),
+                  //           ),
+                  //           // SizedBox(width: 110),
+                  //         ],
+                  //       ),
+                  //       Spacer(),
+                  //       Row(
+                  //         children: [
+                  //           Text(_getFormattedCity(flight.ArrivalCity)),
+                  //           Text(
+                  //             _getFormattedDate(flight.ArrivalDate),
+                  //             style: TextStyle(color: AppColors.grayText),
+                  //           )
+                  //         ],
+                  //       ),
+                  //     ],
+                  //   ),
+                  // ),
+                  const SizedBox(
+                    height: 30,
+                  ),
+                  Row(
+                    children: [
+                      Row(
+                        children: [
+                          Icon(
+                            Icons.check,
+                            size: 20,
+                            color: AppColors.Blue,
+                          ),
+                          SizedBox(
+                            width: 5,
+                          ),
+                          Text(
+                            flight.FlightType ?? '',
+                            style: TextStyle(color: AppColors.grayText),
+                          ),
+                        ],
+                      ),
+                      const Spacer(),
+                      Row(
+                        children: [
+                          Icon(
+                            Icons.access_time_filled,
+                            size: 20,
+                            color: AppColors.Blue,
+                          ),
+                          SizedBox(
+                            width: 5,
+                          ),
+                          Text(
+                            flight.Flight_Duration,
+                            style: const TextStyle(color: AppColors.grayText),
+                          ),
+                        ],
+                      ),
+                      const Spacer(),
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Text(
+                            '${controller.convert(controller.selectedCurrency.value, flight.TicketAdultEconomyPrice)}',
+                            style: TextStyle(
+                                color: AppColors.darkBlue,
+                                fontSize: TextSize.header1,
+                                fontWeight: FontWeight.bold),
+                          ),
+                          Text(
+                            controller.selectedCurrency.value,
+                            style: TextStyle(
+                                color: AppColors.grayText,
+                                fontWeight: FontWeight.w500,
+                                fontSize: 12),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 15,
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
