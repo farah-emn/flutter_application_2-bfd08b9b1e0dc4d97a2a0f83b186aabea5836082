@@ -67,7 +67,6 @@ class _HotelHomeViewState extends State<HotelHomeView> {
     CompanyId = user!.uid.toString();
     final event = await ref.child(CompanyId).get();
     final userData = Map<dynamic, dynamic>.from(event.value as Map);
-    final userData = Map<dynamic, dynamic>.from(event.value as Map);
     if (mounted) {
       setState(() {
         CompanyName = userData['HotelName'];
