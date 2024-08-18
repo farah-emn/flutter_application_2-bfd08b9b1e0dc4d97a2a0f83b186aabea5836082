@@ -414,127 +414,133 @@ class _HoteltSignUpViewState extends State<HoteltSignUpView> {
                                   });
                                 }
 
-                            if (_passwordController.value.text !=
-                                _confirmPasswordController.value.text) {
-                              setState(() {
-                                errorTextConfirmPassword =
-                                    "Password and verification do not match";
-                              });
-                            } else {
-                              errorTextConfirmPassword = '';
-                            }
-                            if (_HotelNameController.value.text.isEmpty) {
-                              setState(() {
-                                errorTextCompanyName =
-                                    "Please enter a valid Hotel name";
-                              });
-                            } else {
-                              errorTextCompanyName = '';
-                            }
-                            if (errorTextAirlineCode.isEmpty &&
-                                errorTextEmail.isEmpty &&
-                                errorTextPassword.isEmpty &&
-                                errorTextConfirmPassword.isEmpty) {
-                              try {
-                                final newAirelineCompany =
-                                    await auth.createUserWithEmailAndPassword(
-                                        email: email, password: password);
-                                User? AirelineCompany = auth.currentUser;
-
-                                if (AirelineCompany != null) {
-                                  Get.offAll(HotelSignUpImageView());
-                                  ref
-                                      .child(AirelineCompany.uid.toString())
-                                      .set({
-                                    'email': email,
-                                    'password': password,
-                                    'mobile_number': '',
-                                    'HotelName': _HotelNameController.text,
-                                    "location": ''
+                                if (_passwordController.value.text !=
+                                    _confirmPasswordController.value.text) {
+                                  setState(() {
+                                    errorTextConfirmPassword =
+                                        "Password and verification do not match";
                                   });
+                                } else {
+                                  errorTextConfirmPassword = '';
                                 }
-                              } catch (e) {
-                                if (e is FirebaseAuthException) {
-                                  switch (e.code) {
-                                    case 'weak-password':
-                                      setState(() {
-                                        errorText = 'Password is too weak.';
-                                      });
-                                      break;
-                                    case 'email-already-in-use':
-                                      setState(() {
-                                        errorText =
-                                            'Email is already registered.';
-                                      });
+                                if (_HotelNameController.value.text.isEmpty) {
+                                  setState(() {
+                                    errorTextCompanyName =
+                                        "Please enter a valid Hotel name";
+                                  });
+                                } else {
+                                  errorTextCompanyName = '';
+                                }
+                                if (errorTextAirlineCode.isEmpty &&
+                                    errorTextEmail.isEmpty &&
+                                    errorTextPassword.isEmpty &&
+                                    errorTextConfirmPassword.isEmpty) {
+                                  try {
+                                    final newAirelineCompany = await auth
+                                        .createUserWithEmailAndPassword(
+                                            email: email, password: password);
+                                    User? AirelineCompany = auth.currentUser;
 
-                                      break;
-                                    // Add more cases as needed
-                                    default:
-                                    // Use the default error message
+                                    if (AirelineCompany != null) {
+                                      Get.offAll(HotelSignUpImageView(
+                                        email: email,
+                                        password: password,
+                                        CompanyName: CompanyName,
+                                      ));
+                                      ref
+                                          .child(AirelineCompany.uid.toString())
+                                          .set({
+                                        'email': email,
+                                        'password': password,
+                                        'mobile_number': '',
+                                        'HotelName': _HotelNameController.text,
+                                        "location": ''
+                                      });
+                                    }
+                                  } catch (e) {
+                                    if (e is FirebaseAuthException) {
+                                      switch (e.code) {
+                                        case 'weak-password':
+                                          setState(() {
+                                            errorText = 'Password is too weak.';
+                                          });
+                                          break;
+                                        case 'email-already-in-use':
+                                          setState(() {
+                                            errorText =
+                                                'Email is already registered.';
+                                          });
+
+                                          break;
+                                        // Add more cases as needed
+                                        default:
+                                        // Use the default error message
+                                      }
+                                    }
                                   }
                                 }
-                              }
-                            }
-                          } catch (e) {}
-                        },
-                        child: CustomButton(
-                          backgroundColor: AppColors.purple,
-                          text: 'Sign up',
-                          textColor: AppColors.backgroundgrayColor,
-                          widthPercent: size.width,
-                        )),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    // const Center(
-                    //   child: CustomTextGray(
-                    //     mainText: 'or sign in with ',
-                    //   ),
-                    // ),
-                    // const SizedBox(
-                    //   height: 20,
-                    // ),
-                    // const Row(
-                    //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    //   children: [
-                    //     CustomImage(imagename: 'facebook_icon'),
-                    //     CustomImage(imagename: 'google_icon'),
-                    //     CustomImage(imagename: 'twitter_icon'),
-                    //   ],
-                    // ),
-                    // SizedBox(
-                    //   height: screenHeight(20),
-                    // ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const Text(
-                          'You already have account? ',
-                          style: TextStyle(
-                            color: AppColors.grayText,
-                          ),
+                              } catch (e) {}
+                            },
+                            child: CustomButton(
+                              backgroundColor: AppColors.purple,
+                              text: 'Sign up',
+                              textColor: AppColors.backgroundgrayColor,
+                              widthPercent: size.width,
+                            )),
+                        const SizedBox(
+                          height: 10,
                         ),
-                        InkWell(
-                          onTap: () {
-                            Get.off(const HotelSignInView());
-                          },
-                          child: const Text(
-                            'Sign in',
-                            style: TextStyle(
-                              color: AppColors.purple,
-                              fontWeight: FontWeight.bold,
+                        // const Center(
+                        //   child: CustomTextGray(
+                        //     mainText: 'or sign in with ',
+                        //   ),
+                        // ),
+                        // const SizedBox(
+                        //   height: 20,
+                        // ),
+                        // const Row(
+                        //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        //   children: [
+                        //     CustomImage(imagename: 'facebook_icon'),
+                        //     CustomImage(imagename: 'google_icon'),
+                        //     CustomImage(imagename: 'twitter_icon'),
+                        //   ],
+                        // ),
+                        // SizedBox(
+                        //   height: screenHeight(20),
+                        // ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const Text(
+                              'You already have account? ',
+                              style: TextStyle(
+                                color: AppColors.grayText,
+                              ),
                             ),
-                          ),
+                            InkWell(
+                              onTap: () {
+                                Get.off(const HotelSignInView());
+                              },
+                              child: const Text(
+                                'Sign in',
+                                style: TextStyle(
+                                  color: AppColors.purple,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            )
+                          ],
                         )
                       ],
-                    )
-                  ],
+                    ),
+                  ),
                 ),
               ),
-            
-          ),
-        )
             ],
-          )
+          ),
+        ],
+      ),
+    );
   }
 }
