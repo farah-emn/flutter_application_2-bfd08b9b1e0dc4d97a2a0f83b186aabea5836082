@@ -22,6 +22,7 @@ class FlightImageSignUpView extends StatefulWidget {
   // const FlightImageSignUpView({super.key});
   String email;
   String password;
+
   // String Mobilenumber;
   String comapnyname;
   FlightImageSignUpView(
@@ -41,6 +42,7 @@ class _FlightImageSignUpViewState extends State<FlightImageSignUpView> {
   var AirelineCompanyId = '';
   var AirelineCompanyName = '';
   late String errorText = '';
+  var isloading = false.obs;
 
   final _auth = FirebaseAuth.instance;
   var uid;
@@ -65,6 +67,7 @@ class _FlightImageSignUpViewState extends State<FlightImageSignUpView> {
         FirebaseDatabase.instance.ref("Airline_company");
 
     try {
+      isloading.value = true;
       final newAirelineCompany = await auth.createUserWithEmailAndPassword(
         email: widget.email,
         password: widget.password,
@@ -91,6 +94,8 @@ class _FlightImageSignUpViewState extends State<FlightImageSignUpView> {
       }
     } catch (e) {
       if (e is FirebaseAuthException) {
+        isloading.value = false;
+
         switch (e.code) {
           case 'invalid-email':
             setState(() {
@@ -420,7 +425,40 @@ class _FlightImageSignUpViewState extends State<FlightImageSignUpView> {
                     SizedBox(
                       height: 20,
                     ),
-
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Text(
+                          'Sign in ',
+                          style: TextStyle(
+                              color: Colors.transparent,
+                              fontSize: TextSize.header1,
+                              fontWeight: FontWeight.w700),
+                        ),
+                        Obx(
+                          () => (isloading.value == true)
+                              ? Container(
+                                  width: 20,
+                                  height: 20,
+                                  child: Obx(
+                                    () => (isloading.value == true)
+                                        ? CircularProgressIndicator(
+                                            color: AppColors.mainColorBlue,
+                                          )
+                                        : SizedBox(),
+                                  ),
+                                )
+                              : SizedBox(),
+                        ),
+                        const Text(
+                          'Sign in ',
+                          style: TextStyle(
+                              color: Colors.transparent,
+                              fontSize: TextSize.header1,
+                              fontWeight: FontWeight.w700),
+                        ),
+                      ],
+                    ),
                     //   height: 40,
                     //   width: size.width,
                     //   child: TextField(

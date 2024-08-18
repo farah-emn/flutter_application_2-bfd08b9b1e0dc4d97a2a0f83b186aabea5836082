@@ -380,8 +380,7 @@ class _BookingsViewState extends State<BookingsView>
                   )
                 : Expanded(
                     child: ScrollablePositionedList.builder(
-                      itemCount: flightbookingscontroller
-                          .bookingsDetailsUpcoming.length,
+                      itemCount: 1,
                       itemBuilder: (context, index) => FlightBookingCard(
                         flightBookingModel: flightbookingsDetails[index],
                       ),

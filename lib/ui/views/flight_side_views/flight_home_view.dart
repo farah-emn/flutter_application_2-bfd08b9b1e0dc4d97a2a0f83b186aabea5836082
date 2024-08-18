@@ -13,6 +13,7 @@ import 'package:traveling/ui/views/flight_side_views/flight_welcome_view.dart';
 import 'package:traveling/ui/views/flight_side_views/menu_view.dart';
 import '../../shared/text_size.dart';
 import '../first_view.dart';
+import '../traveller_side_views/contact_us_view.dart';
 import 'flight_currency.dart';
 import 'flight_search_view.dart';
 
@@ -65,7 +66,7 @@ class _FlightHomeViewState extends State<FlightHomeView> {
   }
 
   void getData() async {
-    CompanyId = user!.uid.toString();
+    CompanyId = user?.uid.toString() ?? '';
     final event = await ref.child(CompanyId).get();
     final userData = Map<dynamic, dynamic>.from(event.value as Map);
     if (mounted)
@@ -274,17 +275,17 @@ class _FlightHomeViewState extends State<FlightHomeView> {
             // ),
             ListTile(
               leading: const Icon(
-                Icons.settings,
+                Icons.headphones,
                 color: AppColors.Blue,
               ),
               title: const Text(
-                'Settings',
+                'Contact us',
                 style: TextStyle(
                   color: AppColors.BlueText,
                 ),
               ),
               onTap: () {
-                Get.to(MenuView());
+                Get.to(ContactUsView());
               },
             ),
             ListTile(

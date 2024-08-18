@@ -139,13 +139,13 @@ class _FlightDetailsCardState extends State<FlightDetailsCard> {
                           const SizedBox(
                             height: 30,
                           ),
-                          Text(
-                            widget.flightsList.FlightType ?? '',
-                            style: const TextStyle(
-                              color: AppColors.darkGray,
-                              fontSize: 12,
-                            ),
-                          ),
+                          // Text(
+                          //   widget.flightsList.FlightType ?? '',
+                          //   style: const TextStyle(
+                          //     color: AppColors.darkGray,
+                          //     fontSize: 12,
+                          //   ),
+                          // ),
                           Text(
                             widget.flightsList.Flight_Duration,
                             style: const TextStyle(

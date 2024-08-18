@@ -377,8 +377,10 @@ class _BookingFlightSummaryViewState extends State<BookingFlightSummaryView> {
                     //     fontSize: 16.0);
 
                     onStepCancel: () {
-                      activeStepIndex == 0
-                          ? null
+                      activeStepIndex == -1
+                          ? Get.to(Home(
+                              initialIndex: 1,
+                            ))
                           : setState(() {
                               activeStepIndex -= 1;
                             });

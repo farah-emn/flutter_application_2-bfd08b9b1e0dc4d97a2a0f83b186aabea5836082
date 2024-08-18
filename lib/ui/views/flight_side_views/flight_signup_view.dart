@@ -12,6 +12,7 @@ import 'package:traveling/ui/views/traveller_side_views/signin_view.dart';
 import '../../shared/custom_widgets/custom_textfield2.dart';
 import '../../shared/text_size.dart';
 import 'flight_home_screen.dart';
+import 'flight_image_signup_view.dart';
 
 class FlightSignUpView extends StatefulWidget {
   const FlightSignUpView({super.key});
@@ -35,6 +36,7 @@ class _FlightSignUpViewState extends State<FlightSignUpView> {
   final _emailController = TextEditingController();
   var isLoading = false.obs;
   // int IdAirline = 0;
+  final auth = FirebaseAuth.instance;
 
   final _AirelineCodeController = TextEditingController();
   final _passwordController = TextEditingController();
@@ -275,10 +277,105 @@ class _FlightSignUpViewState extends State<FlightSignUpView> {
                           height: 15,
                         ),
                         InkWell(
-                            onTap: () {
-                              Get.to(
-                                () => const FlightHome(),
-                              );
+                            onTap: () async {
+                              try {
+                                if (_emailController.value.text.isEmpty ||
+                                    !_emailController.value.text.isEmail) {
+                                  setState(() {
+                                    errorTextEmail = "Please enter valid email";
+                                  });
+                                } else {
+                                  setState(() {
+                                    errorTextEmail = '';
+                                  });
+                                }
+                                if (_passwordController.value.text.isEmpty) {
+                                  setState(() {
+                                    errorTextPassword =
+                                        "Please enter a valid password";
+                                  });
+                                } else if (_passwordController
+                                            .value.text.length <
+                                        7 &&
+                                    _passwordController.value.text.isNotEmpty) {
+                                  setState(() {
+                                    errorTextPassword =
+                                        "Password can't be less than 6 charecters";
+                                  });
+                                } else {
+                                  setState(() {
+                                    errorTextPassword = '';
+                                  });
+                                }
+
+                                if (_passwordController.value.text !=
+                                    _confirmPasswordController.value.text) {
+                                  setState(() {
+                                    errorTextConfirmPassword =
+                                        "Password and verification do not match";
+                                  });
+                                } else {
+                                  errorTextConfirmPassword = '';
+                                }
+                                if (_CompanyNameController.value.text.isEmpty) {
+                                  setState(() {
+                                    errorTextCompanyName =
+                                        "Please enter a valid Hotel name";
+                                  });
+                                } else {
+                                  errorTextCompanyName = '';
+                                }
+                                if (errorTextAirlineCode.isEmpty &&
+                                    errorTextEmail.isEmpty &&
+                                    errorTextPassword.isEmpty &&
+                                    errorTextConfirmPassword.isEmpty) {
+                                  Get.offAll(FlightImageSignUpView(
+                                    email: email,
+                                    password: password,
+                                    comapnyname: _CompanyNameController.text,
+                                  ));
+                                }
+                                //   try {
+                                //     final newAirelineCompany =
+                                //         await auth.createUserWithEmailAndPassword(
+                                //             email: email, password: password);
+                                //     User? AirelineCompany = auth.currentUser;
+
+                                //     if (AirelineCompany != null) {
+                                //       Get.offAll(HotelSignUpImageView());
+                                //       ref
+                                //           .child(AirelineCompany.uid.toString())
+                                //           .set({
+                                //         'email': email,
+                                //         'password': password,
+                                //         'mobile_number': '',
+                                //         'HotelName': _CarNameController.text,
+                                //         "location": ''
+                                //       });
+                                //     }
+                                //   } catch (e) {
+                                //     if (e is FirebaseAuthException) {
+                                //       switch (e.code) {
+                                //         case 'weak-password':
+                                //           setState(() {
+                                //             errorText = 'Password is too weak.';
+                                //           });
+                                //           break;
+                                //         case 'email-already-in-use':
+                                //           setState(() {
+                                //             errorText =
+                                //                 'Email is already registered.';
+                                //           });
+
+                                //           break;
+                                //         // Add more cases as needed
+                                //         default:
+                                //         // Use the default error message
+                                //       }
+                                //     }
+                                //   }
+                                // }
+                              } catch (e) {}
                             },
                             child: CustomButton(
                               backgroundColor: AppColors.darkBlue,

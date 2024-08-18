@@ -896,6 +896,66 @@ class _FlightAddViewState extends State<FlightAddView> {
                             ),
                             Row(
                               children: [
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    const Row(
+                                      children: [
+                                        SizedBox(
+                                          width: 10,
+                                        ),
+                                        Text(
+                                          'Arrival Date',
+                                          style: TextStyle(
+                                              fontSize: 13,
+                                              color: AppColors.grayText,
+                                              fontWeight: FontWeight.w500),
+                                        ),
+                                        SizedBox(
+                                          width: 100,
+                                        ),
+                                        Row(
+                                          children: [
+                                            SizedBox(
+                                              width: 10,
+                                            ),
+                                            Text(
+                                              'Depature Date',
+                                              style: TextStyle(
+                                                  fontSize: 13,
+                                                  color: AppColors.grayText,
+                                                  fontWeight: FontWeight.w500),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                    SizedBox(height: 10),
+                                    Column(
+                                      children: [
+                                        DepartureDateArrivalDateDetails(
+                                            onDateSelected:
+                                                _handleDateSelection,
+                                            Departure_date:
+                                                controller.departureDate,
+                                            Return_date: controller.ReturnDate,
+                                            datecontroller:
+                                                DeparturedateController,
+                                            returnDateController:
+                                                ArivaldateController),
+                                      ],
+                                    ),
+
+                                    //  ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                            const SizedBox(
+                              height: 40,
+                            ),
+                            Row(
+                              children: [
                                 Container(
                                   child: Column(
                                     crossAxisAlignment:
@@ -981,63 +1041,7 @@ class _FlightAddViewState extends State<FlightAddView> {
                             const SizedBox(
                               height: 40,
                             ),
-                            Row(
-                              children: [
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    const Row(
-                                      children: [
-                                        SizedBox(
-                                          width: 10,
-                                        ),
-                                        Text(
-                                          'Arrival Date',
-                                          style: TextStyle(
-                                              fontSize: 13,
-                                              color: AppColors.grayText,
-                                              fontWeight: FontWeight.w500),
-                                        ),
-                                        SizedBox(
-                                          width: 100,
-                                        ),
-                                        Row(
-                                          children: [
-                                            SizedBox(
-                                              width: 10,
-                                            ),
-                                            Text(
-                                              'Depature Date',
-                                              style: TextStyle(
-                                                  fontSize: 13,
-                                                  color: AppColors.grayText,
-                                                  fontWeight: FontWeight.w500),
-                                            ),
-                                          ],
-                                        ),
-                                      ],
-                                    ),
-                                    SizedBox(height: 10),
-                                    Column(
-                                      children: [
-                                        DepartureDateArrivalDateDetails(
-                                            onDateSelected:
-                                                _handleDateSelection,
-                                            Departure_date:
-                                                controller.departureDate,
-                                            Return_date: controller.ReturnDate,
-                                            datecontroller:
-                                                DeparturedateController,
-                                            returnDateController:
-                                                ArivaldateController),
-                                      ],
-                                    ),
 
-                                    //  ),
-                                  ],
-                                ),
-                              ],
-                            ),
                             const SizedBox(
                               height: 20,
                             ),

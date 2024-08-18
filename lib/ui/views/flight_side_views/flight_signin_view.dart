@@ -28,6 +28,8 @@ class FlightSignInView extends StatefulWidget {
 class _FlightSignInViewState extends State<FlightSignInView> {
   late String email;
   late String password;
+  var isloading = false.obs;
+
   late String confermPassword;
   late String AirelineCode;
   late String CompanyName;
@@ -172,11 +174,38 @@ class _FlightSignInViewState extends State<FlightSignInView> {
                     const SizedBox(
                       height: 350,
                     ),
-                    const Text(
-                      'Sign in ',
-                      style: TextStyle(
-                          fontSize: TextSize.header1,
-                          fontWeight: FontWeight.w700),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Text(
+                          'Sign in ',
+                          style: TextStyle(
+                              fontSize: TextSize.header1,
+                              fontWeight: FontWeight.w700),
+                        ),
+                        Obx(
+                          () => (isloading.value == true)
+                              ? Container(
+                                  width: 20,
+                                  height: 20,
+                                  child: Obx(
+                                    () => (isloading.value == true)
+                                        ? CircularProgressIndicator(
+                                            color: AppColors.mainColorBlue,
+                                          )
+                                        : SizedBox(),
+                                  ),
+                                )
+                              : SizedBox(),
+                        ),
+                        const Text(
+                          'Sign in ',
+                          style: TextStyle(
+                              color: Colors.transparent,
+                              fontSize: TextSize.header1,
+                              fontWeight: FontWeight.w700),
+                        ),
+                      ],
                     ),
                     const SizedBox(
                       height: 30,
@@ -292,6 +321,7 @@ class _FlightSignInViewState extends State<FlightSignInView> {
                             }
 
                             try {
+                              isloading.value = true;
                               final user =
                                   await _auth.signInWithEmailAndPassword(
                                       email: email, password: password);
@@ -300,6 +330,7 @@ class _FlightSignInViewState extends State<FlightSignInView> {
                               }
                             } catch (e) {
                               if (e is FirebaseAuthException) {
+                                isloading.value = false;
                                 if (e.code == 'user-not-found') {
                                   setState(() {
                                     errorText = 'No user found for that email.';
@@ -318,7 +349,9 @@ class _FlightSignInViewState extends State<FlightSignInView> {
                                 }
                               }
                             }
-                          } catch (e) {}
+                          } catch (e) {
+                            isloading.value = false;
+                          }
                         },
                         child: CustomButton(
                           text: 'Sign up',
