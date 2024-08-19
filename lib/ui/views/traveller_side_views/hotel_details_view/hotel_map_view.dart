@@ -19,7 +19,7 @@ class _HotelMapViewState extends State<HotelMapView> {
   void initState() {
     super.initState();
     _getLatLngFromAddress('${widget.Location}');
-    print('ttyyyyy');
+    print(',ttyyyyy');
   }
 
   void _getLatLngFromAddress(String address) async {
@@ -27,7 +27,7 @@ class _HotelMapViewState extends State<HotelMapView> {
     markerId = MarkerId(address);
 
     setState(() {
-      _center = LatLng(locations[0].latitude, locations[0].longitude);
+      _center = LatLng(30.05059, 31.23194);
       _markers.add(
         Marker(
           markerId: markerId!,

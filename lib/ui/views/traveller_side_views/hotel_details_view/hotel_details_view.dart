@@ -103,7 +103,7 @@ class _HotelDetailsViewState extends State<HotelDetailsView>
                     onTap: () {
                       Get.to(HotelMapView(
                           Location:
-                              '${widget.Hotel!.Name}, ${widget.Hotel!.location}, ${widget.Hotel!.address}'));
+                              '${widget.Hotel!.Name}, ${widget.Hotel!.location}'));
                     },
                     child: Container(
                       padding:

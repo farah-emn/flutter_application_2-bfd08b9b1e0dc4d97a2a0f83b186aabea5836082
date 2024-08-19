@@ -240,6 +240,33 @@ class _FlightSignUpViewState extends State<FlightSignUpView> {
                             },
                           ),
                         ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        const Row(
+                          children: [
+                            Text(
+                              'CompanyName',
+                              style: TextStyle(
+                                  fontSize: 13,
+                                  color: AppColors.grayText,
+                                  fontWeight: FontWeight.w500),
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 45,
+                          child: TextFormField(
+                            keyboardType: TextInputType.text,
+                            decoration: textFielDecoratiom.copyWith(
+                              prefixIcon: Icon(Icons.lock_rounded),
+                            ),
+                            controller: _CompanyNameController,
+                            onChanged: (value) {
+                              password = value;
+                            },
+                          ),
+                        ),
                         const SizedBox(
                           height: 20,
                         ),

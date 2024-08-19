@@ -110,9 +110,6 @@ class _CarAddViewState extends State<CarAddView> {
         });
       }
     });
-    print('nnnnnnnnnnnn5511nn666654366633nnnnnnnnnnnnn');
-    print(isSelected[0]);
-
     super.initState();
   }
 
@@ -898,7 +895,7 @@ class _CarAddViewState extends State<CarAddView> {
                         height: 20,
                       ),
                       InkWell(
-                        // onTap: _confirm,
+                        onTap: _confirm,
                         child: CustomButton(
                           backgroundColor: AppColors.darkGray,
                           text: 'Add',

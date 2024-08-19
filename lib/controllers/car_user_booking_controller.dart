@@ -158,9 +158,9 @@ class CarBookingsController extends GetxController {
         DateTime DropOffDate = formatter.parse(formattedDropOffDate);
         DateTime now = formatter.parse(formattedNow);
         if (DropOffDate.isBefore(now) || DropOffDate == now) {
-          if (bookingData['userId'].toString() == loggedinUser.uid.toString()) {
-            await getBookingDetailsFinished(bookingData, bookingData['CarId']);
-          }
+          // if (bookingData['userId'].toString() == loggedinUser.uid.toString()) {
+          await getBookingDetailsFinished(bookingData, bookingData['CarId']);
+          // }
         } else {
           isLoading.value = false;
         }

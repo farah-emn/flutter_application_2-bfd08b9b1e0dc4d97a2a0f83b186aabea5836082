@@ -103,9 +103,12 @@ class FlightSearchController extends GetxController {
             }
             if (AirportDatakey == flightsData[key]['ArrivalAirportID']) {
               AirportData.forEach((ArrivalAirportCode, ArrivalAirportData) {
-                var ArrivalAirportName = ArrivalAirportData['AirportName'];
+                print(ArrivalAirportData);
+                // var ArrivalAirportName = ArrivalAirportData['AirportName'];
                 filteredFlightsData[key]['ArrivalAirportName'] =
-                    ArrivalAirportName;
+                    ArrivalAirportData['AirportName'];
+                // filteredFlightsData[key]['ArrivalAirportName'] =
+                //     ArrivalAirportName;
                 filteredFlightsData[key]['ArrivalLocation'] =
                     ArrivalAirportData['Location'];
               });

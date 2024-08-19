@@ -165,7 +165,7 @@ class _CarSignUpViewState extends State<CarSignUpView> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.only(top: 350),
+                padding: const EdgeInsets.only(top: 330),
                 child: SingleChildScrollView(
                   reverse: true,
                   child: Padding(
@@ -177,7 +177,7 @@ class _CarSignUpViewState extends State<CarSignUpView> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         const SizedBox(
-                          height: 310,
+                          height: 30,
                         ),
                         Text(
                           'Sign up ',
@@ -281,42 +281,7 @@ class _CarSignUpViewState extends State<CarSignUpView> {
                             : SizedBox(
                                 height: 20,
                               ),
-                        const Row(
-                          children: [
-                            Text(
-                              'Mobile number',
-                              style: TextStyle(
-                                  fontSize: 13,
-                                  color: AppColors.grayText,
-                                  fontWeight: FontWeight.w500),
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          height: 40,
-                          child: TextFormField(
-                            keyboardType: TextInputType.visiblePassword,
-                            decoration: textFielDecoratiom.copyWith(
-                              focusedBorder: OutlineInputBorder(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(18)),
-                                borderSide: BorderSide(
-                                    color: AppColors.darkGray, width: 1.5),
-                              ),
-                              prefixIcon: const Icon(
-                                Icons.phone,
-                                color: AppColors.darkGray,
-                              ),
-                            ),
-                            controller: _mobileNumber,
-                            onChanged: (value) {
-                              password = value;
-                            },
-                          ),
-                        ),
-                        SizedBox(
-                          height: 20,
-                        ),
+
                         const Row(
                           children: [
                             Text(

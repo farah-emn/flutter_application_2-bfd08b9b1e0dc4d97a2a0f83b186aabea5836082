@@ -27,7 +27,7 @@ class _CarMapViewState extends State<CarMapView> {
     markerId = MarkerId(address);
 
     setState(() {
-      _center = LatLng(locations[0].latitude, locations[0].longitude);
+      _center = LatLng(30.0385, 31.2278);
       _markers.add(
         Marker(
           markerId: markerId!,

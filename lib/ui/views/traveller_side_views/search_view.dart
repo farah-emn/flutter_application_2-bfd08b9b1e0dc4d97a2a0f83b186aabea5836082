@@ -1488,10 +1488,10 @@ class _SearchViewState extends State<SearchView>
         ),
         PickupDateDropOffDateDetails(
             onDateSelected: _handleDateSelection,
-            PickupTime: carSearchController.PickUpDate,
-            DropoffTime: carSearchController.DropOffDate,
-            PickupController: PickupDateController,
-            DropOffController: DropOffDateController),
+            ArrivalDate: carSearchController.PickUpDate,
+            DepartureDate: carSearchController.DropOffDate,
+            DeparturedateController: PickupDateController,
+            ArrivalDateController: DropOffDateController),
         const SizedBox(
           height: 20,
         ),

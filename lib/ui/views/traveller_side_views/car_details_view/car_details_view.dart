@@ -294,6 +294,7 @@ class _CarDetailsViewState extends State<CarDetailsView> {
                       SizedBox(
                         height: 30,
                       ),
+
                       Row(
                         children: [
                           SizedBox(
@@ -337,6 +338,9 @@ class _CarDetailsViewState extends State<CarDetailsView> {
                                 color: AppColors.grayText),
                           ),
                         ],
+                      ),
+                      SizedBox(
+                        height: 10,
                       ),
 
                       SizedBox(
@@ -431,7 +435,45 @@ class _CarDetailsViewState extends State<CarDetailsView> {
                       SizedBox(
                         height: 30,
                       ),
-
+                      // InkWell(
+                      //   onTap: () {
+                      //     Get.to(CarMapView(
+                      //       Location: widget.CarDeails.pickupLocation,
+                      //     ));
+                      //   },
+                      //   child: Container(
+                      //     padding:
+                      //         EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                      //     width: size.width / 2 + 20,
+                      //     decoration: BoxDecoration(
+                      //       color: AppColors.darkGray,
+                      //       borderRadius: BorderRadius.all(
+                      //         Radius.circular(15),
+                      //       ),
+                      //     ),
+                      //     child: Row(
+                      //       // mainAxisAlignment: MainAxisAlignment.center,
+                      //       // crossAxisAlignment: CrossAxisAlignment.center,
+                      //       children: [
+                      //         Icon(
+                      //           Icons.location_on_rounded,
+                      //           color: AppColors.lightGray,
+                      //         ),
+                      //         Text(
+                      //           ' Show location on map',
+                      //           style: TextStyle(
+                      //             fontSize: TextSize.header2,
+                      //     9        color: AppColors.lightGray,
+                      //             fontWeight: FontWeight.w500,
+                      //           ),
+                      //         ),
+                      //       ],
+                      //     ),
+                      //   ),
+                      // ),
+                      SizedBox(
+                        height: 10,
+                      ),
                       Row(
                         children: [
                           SizedBox(
@@ -581,7 +623,7 @@ class _CarDetailsViewState extends State<CarDetailsView> {
                                 CarDeails: widget.CarDeails));
                           },
                           child: CustomButton(
-                            text: 'Search',
+                            text: 'booking',
                             textColor: AppColors.backgroundgrayColor,
                             backgroundColor: AppColors.darkGray,
                             widthPercent: size.width,
